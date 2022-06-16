@@ -1,0 +1,48 @@
+00 chuck.cfg
+01 CustomLotus.json
+02 cloud_drop.cfg
+03 platform_megapack/platform_megapack.cfg
+04 piranha_venus_all.json
+05 cobrat.cfg
+06 hoopster.cfg
+07 baron_von_zeppelin.cfg
+08 carryable-pipe.cfg
+09 cobrat.cfg
+0A nipper_smb3.cfg
+
+10 arrowlift.cfg
+11 yispike.cfg
+12 spikemace.cfg
+13 yi_pswitch.cfg
+14 chomprock.cfg
+15 woozyguy.cfg
+16 yiblowhardv2.cfg
+17 floatingrock.cfg
+
+1F star_coin_2.cfg
+20 donutblk.cfg
+21 rev_donutblk.cfg
+22 BooRing.cfg
+23 LeafPlat.cfg
+24 needlenosebullet.cfg
+
+49 growing_pipe_49.cfg
+4B PipeLakitu.json
+
+6E dino_rhino.cfg
+
+80 poison_mushroom.cfg
+9E ball-n-chain-pendulum.cfg
+
+SHOOTER:
+C0 LeafShooter.cfg
+C1 ShellShooter.cfg
+
+GENERATOR:
+D0 l2wave.cfg
+
+EXTENDED:
+00 smb2_ball_proj.asm
+
+CLUSTER:
+00 LotusProjectile.asm

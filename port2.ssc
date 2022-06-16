@@ -1,0 +1,10 @@
+01 0020 Volcano Lotus
+01 0022 -8,0,400 8,0,401 6,-8,402 2,-8,402 10,-4,402 -2,-4,402
+01 0030 Volcano Lotus
+01 0032 6,16,402 2,16,402 10,12,402 -2,12,402 8,0,404 -8,0,403
+04 0020 Undefined Sprite
+04 0022 0,0,0
+4B 0020 A pipe dwelling Lakitu that throws a vanilla sprite.\nExtra byte 1: sprite number that is thrown.\nExtra byte 2: state that the sprite is spawned in. 0 acts the same as 1 (init).\nExtra byte 3: X speed to throw the sprite at.\nExtra byte 4: Y speed to throw the sprite at.
+4B 0022 8,-16,2D 8,0,68
+4B 0030 A pipe dwelling Lakitu that throws a custom sprite.\nExtra byte 1: sprite number that is thrown.\nExtra byte 2: state that the sprite is spawned in. 0 acts the same as 1 (init).\nExtra byte 3: X speed to throw the sprite at.\nExtra byte 4: Y speed to throw the sprite at.
+4B 0032 8,-16,2D 8,0,68

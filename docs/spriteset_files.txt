@@ -1,0 +1,28 @@
+100 - Eeries, boo guys (3.5 tiles available)
+101 - mechakoopa
+102 - Fish (tentative; 4 extra 16x16 slots)
+103 - Chargin Chuck + Clappin Chuck (pt 1)
+104 - Chargin Chuck + Clappin Chuck (pt 2)
+105 - Pitchin'/Puntin' Chuck parts + Football + Baseball
+106 - Diggin' Chuck parts and Diggin' Chuck's Rock
+107 - Volcano Lotus (2 16x16 avail)
+108 - Wood-style platforms, grassy water platforms/rock platforms (use same gfx space), on/off and donut sprite tiles
+109 - Roto-disc (tentative, only 3 16x16s used here)
+10A - YI Cloud Drop (part 1)
+10B - YI Cloud Drop (part 2), bowser bowling ball
+10C - YI Spike (2 16x16 tiles avail)
+10D - Piranha Plants
+10E - Wiggler, SMB2 climbing bug
+10F - Mega Mole
+110 - Boos / Boo Block
+111 - Big Boo 1
+112 - Big Boo 2
+113 - YI Boo - 32x32
+114 - YI Boo block - 32x32
+115 - lakitu + fat piranha plant
+116 - leaf platform, yi needlenose (3 8x8 avail)
+117 - tentative: status bar boss hp lettering
+118 - pipes (only 3 16x16s used)
+119 - smb3 hammer bro
+11A - smb3 giant hammer bro
+11B - amazin' flyin' hammer bro, hammers, boomerangs

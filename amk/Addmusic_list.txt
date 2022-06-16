@@ -1,0 +1,27 @@
+Globals:
+01  originals/01 Miss.txt
+02  originals/02 Game Over.txt
+03  originals/03 Boss Clear.txt
+04  originals/04 Stage Clear.txt
+05  originals/05 Starman.txt
+06  originals/06 P-switch.txt
+07  originals/07 Keyhole.txt
+08  originals/08 Iris Out.txt
+
+Locals:
+0B  green_grass_gradation.txt
+0C  lemon.txt
+0D  powerbabby.txt
+0E  originals/14 Boss.txt
+0F  neo_beat.txt
+10  lb3_underworld_forest.txt
+11  originals/17 Castle.txt
+12  oops_i_slipped.txt
+13  sailor_chibimoon.txt
+14  paradox.txt
+15  originals/21 Title.txt
+16  deepest_red.txt
+
+18  originals/24 Yoshi's Island.txt
+
+1E  sfii_insert_coin.txt

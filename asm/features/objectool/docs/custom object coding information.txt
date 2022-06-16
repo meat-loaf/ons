@@ -1,0 +1,137 @@
+----------------------------------------------------------------
+Placing objects
+----------------------------------------------------------------
+
+To place custom objects in Lunar Magic, you must use the "Add Object Manual" menu (or place one of the original objects and change its settings), which can be accessed by pressing the Insert key while in the main level editor.  Objects in SMW are divided into two types: normal and extended.  Normal objects are things like coins, ledges, and pipes that can be resized, i.e., they have an X and/or Y dimension.  Extended objects are things like doors, Yoshi coins, and powerup blocks that cannot be resized and only have one possible arrangement of blocks.  Normal objects in SMW can have numbers ranging from 00 to 3F; objects 00-21 and 2E-3F are used by the original game, and 22-2D are used by Lunar Magic for various purposes.  All custom objects are considered object 2D; the "Extension" field is where you place the custom object number, in addition to one optional extra byte that can be used as an additional parameter or subtype.  Custom normal objects can have numbers from 00-FF.  Extended objects in SMW always count as normal object 00, and the byte that would normally specify the size, the "Size/Type/Ext" field, instead specifies the extended object number.  Extended objects 00, 01, and 10-97 are used by the original game, while 02 and 03 are used by Lunar Magic, and 04-0F and 98-FF are available for custom use (but this patch no longer supports extended objects 04-0F just in case future versions of Lunar Magic use any of those).  As of this writing (July 2020), Lunar Magic does not support displaying custom objects correctly, so they will appear as a group of glitchy tiles in the editor.  (Some extended objects may also display tiles that would normally send you to a screen exit, so they may trigger Lunar Magic's warning about unassigned screen exits, even though the object code itself may not have anything to do with them.)
+
+----------------------------------------------------------------
+Basic custom object creation
+----------------------------------------------------------------
+
+This patch comes with a variety of subroutines that you can use to set up simple custom objects with only a few lines of code and data.  Included in this version are the following:
+
+- "Objects2x2", which creates 4 Map16 tiles in a 2x2 arrangement.  This routine is usually used for extended objects.
+- "Objects1x1", which creates a single Map16 tile.  This routine is usually used for extended objects.
+- "Objects2x1", which creates 2 tiles in a 2x1 arrangement.  This routine is usually used for extended objects.
+- "Objects1x2", which creates 2 tiles in a 1x2 arrangement.  This routine is usually used for extended objects.
+- "SquareObjects" and its variant "BigSquareObjects", which create an array of tiles that can be stretched along both axes according to the size in Lunar Magic.  The "big" variation also uses the extra byte for 8 additional size bits (yyyyxxxx) to allow making the object larger (note, however, that Lunar Magic will not take the extra size bits into account when displaying the object in the editor).  This routine is usually used for normal objects.
+- "SquareObjects2" and its variant "BigSquareObjects2", which are like the first square object routine, but their tiles change when over top of a non-blank tile.  This routine is usually used for normal objects.
+- "ClusterExObjects" and its variant "ClusterExObjectsEntry1", which create a group of Map16 tiles with a specified set of dimensions.  This routine is usually used for extended objects.
+- "Horiz2EndObjects", which creates an array of tiles that can be stretched horizontally only.  This routine is usually used for normal objects.
+- "Vert2EndObjects", which creates an array of tiles that can be stretched vertically only.  This routine is usually used for normal objects.
+- "UnidimensionalObjects", which creates an array of tiles that can be stretched in only one direction and checks which direction that is.  This routine is usually used for normal objects.
+- "UnidimensionalObjects2", which is like the first unidimensional object routine, but its tiles change when over top of a specific tile number.  This routine is usually used for normal objects.
+- "UnidimensionalObjectsWide", which is like the first unidimensional object routine, except that the object is 2 tiles wide instead of 1.  This routine is usually used for normal objects.
+- "SingleBlockObjects", which creates an array of a single Map16 tile that can be stretched in both directions and can also be set to take item memory into account.  This routine is usually used for normal objects.
+- "LedgeObjects", which creates an array of tiles that can be stretched in both directions, be set to have any combination of 4 edges, and will change according to which tiles it is placed over.  This routine is usually used for normal objects.
+- "SlopeObjects", which can create a variety of slope types.  This routine is usually used for normal objects.
+
+To use most of these routines, all that must be done is to set up a table of Map16 tiles and load an index into A before calling it.  For instance, for the 2x2 object routine, you can put this in the main object routine (for instance, CustExObj98):
+
+LDA #$00
+JMP Objects2x2
+
+and then fill in the 4 tiles you want to use in the "Obj2x2Tiles" table.  For instance, to create the top of a pipe, which is composed of Map16 tiles 133 and 134 for the end and 135 and 136 for the middle, the table would look like this:
+
+Obj2x2Tiles:
+	dw $0133,$0134,$0135,$0136
+
+Then if you wanted to add another object with the same routine, you'd do the same thing, except that the LDA #$00 would be LDA #$01 instead, and the table would have a second row (for instance, dw $0145,$0148,$014D,$014F would make a 4-sided block of ground).  After that, calling the routine with A = #$02 would access the third set of 4 tiles, and so on.  All routines use this system except the ledge object routine, which, in addition to A, also uses X as input; the single block object routine, which uses X and 2 bytes of scratch RAM; the slope object routine, which uses A and Y; and the 2-ended object routines, which also require setting the size beforehand (see below for details).
+
+Specific usage notes for each routine:
+
+- The 2x2, 1x1, 2x1, and 1x2 routines have basically already been explained.  All you need is the Map16 tiles specified in the tables for them and the index to those tables.
+
+- The square object routines use tables of 16 Map16 tiles each.  The first 9 are for the top-left corner, top ledge, top-right corner, left edge, middle, right edge, bottom-left corner, bottom edge, and bottom right corner in that order when the object is larger than 1 block in both directions.  The next 3 are for the left end, middle, and right end when the object is only 1 tile tall but more than 1 tile wide.  The next 3 are for the top end, middle, and bottom end when the object is only 1 tile wide but more than 1 tile tall.  The last one is for when the object is only a single block.  The alternative versions of both routines use the same format, but there are two tables instead of one; the second one is for the "filled-in" version of the tiles when part or all of the object is placed above a non-blank tile.
+
+- The "cluster" object routine uses three tables: one to specify the dimensions, one for pointers to the tile number table, and one for the actual tile numbers.  In addition, calling the routine with A = #$00 will use the first byte of the specified scratch RAM ($0910 by default) for the size and the remaining bytes for the tile table.  In the size table, the first digit is the Y dimension and the second is the X (and both are 1 less than the actual value, so $21 will create a 3x2 object, as the example shows).  The pointers specify where the Map16 tile table is, and the Map16 table, of course, specifies which tiles the object will create.  This table must be as large as the total number of blocks in the rectangular area (so for a 3x2 object, it should have 6 tile numbers).  Specifying a tile number as $FFFF will cause the routine to skip over that block.
+
+- The horizontal and vertical 2-ended object routines use tables of 4 tiles each, the first for the left or top end, the second for the middle, the third for the right or bottom end, and the fourth for when the object is only a single block.  The index to these tables is in A before calling the routine, as usual.  The size should also be set up beforehand in $08 for the horizontal one and $09 for the vertical one; a simple LDA $58 : AND #$0F : STA $08 or LDA $58 : LSR #4 : STA $09 will do, though you may wish to use the extra 4 bits that would normally be used for the other dimension as extra size bits or a subtype (the original game does the latter for most of its unidimensional objects such as pipes).
+
+- The first two invariable 2-ended object routines also use tables of 4 tiles.  The format for the simpler variant is the same as it is for the "only horizontal" and "only vertical" routines, though this one doesn't require setting the size manually.  For the more complex variant, there are three tables: one for the basic Map16 tiles, one for tile numbers to check, and one for tile numbers to replace them with.  This allows you to make them change only when over a specific Map16 tile.  For instance, if you set the "check" tile for the middle of the object to $002B and the "replace" tile to $0130, then every instance of that middle tile that is placed over top of a coin would become a cement block.  You can use this to make things such as intersecting pipes and bridges with waterfalls behind them without needing to place extra Map16 tiles.
+
+- The wide invariable 2-ended object routine uses tables of 6 tiles.  It doesn't have data for when the object is only a single block.  Note that if it's a horizontal object, the order of the tile numbers in the table is top left end, top middle, top right end, bottom left end, bottom middle, bottom right end, while if it's a vertical object, the order of the tile numbers is top left end, top right end, left middle, right middle, bottom left end, bottom right end.  Also note that even though the object is 2 tiles wide or tall, it must still only be stretched in one direction in Lunar Magic.  Also
+
+- The "single block" object simply creates one specified Map16 tile that can be stretched in both directions and can also be set to check item memory (as coins do to determine if they've already been collected).  The tile number is set by scratch RAM $0C-$0D, while loading X with any non-zero value will cause it to take item memory into account (loading X with 0 will skip the item memory check).  Note that actually setting the item memory bit must be done in the code of the blocks that make up the object, so you cannot make an object with this out of a vanilla Map16 tile that doesn't use item memory (such as a throw block) and have it work the intended way.
+
+- The ledge object routine is probably the most complex of them all, and it requires a little bit more ASM knowledge to take advantage of.  It requires two inputs: A indexes the data tables to determine the subtype, as usual, and X determines which corners will be present.  Bits 0-3 indicate the top-left, top-right, bottom-left, and bottom-right corners in that order, and it sets the edges accordingly.  For instance, LDX #$04 will give you a bottom-left corner with a left edge and a bottom edge, and LDX #$03 will create an object with both top corners, a top edge, a left edge, and a right edge.  The table format, for each subtype, starts with 9 16-bit tile numbers for the basic tiles, then 8 bytes for the "filled-in" versions of them for when they're over non-blank tiles (there is no filled-in variant of the middle tile).  These are in the same order as the other 9-tile objects.  The next 4 bytes after that are for the inside corners (bottom left and right, then top left and right), and the last 2 are for overlapping edges (which usually end up being identical to either the normal edge tiles, the filled-in versions of them, or the middle tile).  You can use this routine for both solid and passable ledges.
+
+- The slope object routines are quite complex as well.  They depend on lists of Map16 numbers for the different slope types.  The sample tilemap data has a table of pointers, and at the location of each pointer is a table of offsets followed by Map16 tile numbers.  There are four example tables here, each of a different size.  The offsets indicate where the data for each slope starts relative to the pointer.  At maximum, the table can have 11 offsets and all 10 slope types.  The first offset is for the fill tile, then there are two for the steep slopes, two for the normal ones, two for the gradual ones, two for the upside-down steep ones, and two for the upside-down normal ones.  The example tables are organized such that each line of Map16 tile numbers corresponds to an offset and, except for the first one, a slope type.  The order of the tile numbers is all the tiles on the top of the slope, then the tiles below them, then the filled-in top tiles.  For instance, a normal slope has 2 top tiles, 2 bottom tiles, and 2 filled-in tiles, for a total of 6.  You can see this in the first example table, which has all of the tiles for the original game's slope objects (though SMW doesn't normally have filled-in upside-down slopes, so those are left as 0000).  You can also leave out some slope types if a particular tileset lacks them, which is shown by the other three example tables.  The second table has no gradual slopes, though note that they still require bytes in the offset table because there is data after them; the two $FF bytes correspond to the offsets for the gradual slopes, but these could be anything because they are never read (or, at least, they shouldn't be).  The third table is missing both gradual slopes and upside-down slopes.  Note that here, the offset table can be truncated because all of the missing slopes are in a row at the end of the table.  The fourth table has only steep and normal slopes like the third, but it also lacks filled-in tiles, so the lines only have 2 and 4 tile numbers rather than 3 and 6 (notice that this also changes most of the offsets).  When placing these in Lunar Magic, stretching them horizontally will make the slope bigger, and stretching them vertically will create more fill tiles below the slope.
+
+Note: By default, the patch already has normal objects 00-1F set up to use some of these routines.  It's not necessary to keep them that way, but they are there if needed.  If you do keep them, they are as follows:
+- 00: Cluster object
+- 01: Square object type 1
+- 02: Square object type 2
+- 03: Unidimensional object type 1
+- 04: Unidimensional object type 2
+- 05: 2-tile-wide unidimensional object
+- 06: Steep slope facing left
+- 07: Steep slope facing right
+- 08: Normal slope facing left
+- 09: Normal slope facing right
+- 0A: Gradual slope facing left
+- 0B: Gradual slope facing right
+- 0C: Upside-down steep slope facing left
+- 0D: Upside-down steep slope facing right
+- 0E: Upside-down normal slope facing left
+- 0F: Upside-down normal slope facing right
+- 10: Ground ledge with no edges
+- 11: Ground ledge with left edge and corner
+- 12: Ground ledge with right edge and corner
+- 13: Ground ledge with left and right edges and corners
+- 14: Ceiling with no edges
+- 15: Ceiling with left edge and corner
+- 16: Ceiling with right edge and corner
+- 17: Ceiling with left and right edges and corners
+- 18: Left wall with no edges
+- 19: Right wall with no edges
+- 1A: Left wall with top and bottom corners
+- 1B: Right wall with top and bottom corners
+- 1C: Ground and ceiling with dirt in between
+- 1D: Left and right walls with dirt in between
+- 1E: 4-sided block of ground
+- 1F: Block of ground with 4 inside corners
+
+----------------------------------------------------------------
+Advanced custom object coding
+----------------------------------------------------------------
+
+RAM addresses to know:
+
+$57 - The position of an object within the current subscreen.  Usually used to index [$6B] and [$6E].  In object code, Y is normally equal to the value of this.
+$58 - Unused in the original SMW; I used it to hold the extra settings byte for normal objects (which can be used for subtype, extra size bits, etc.).
+$59 - The settings byte for normal objects; the object number for extended objects.
+$5A - The object number for normal objects.
+[$6B] - 24-bit pointer to the low byte of the Map16 tile (in the table at $7EC800) at the position of the object that is currently being processed.  It should be indexed by $57, i.e., [$6B],y, where Y = the contents of $57.
+[$6E] - 24-bit pointer to the high byte of the Map16 tile (in the table at $7FC800) at the position of the object that is currently being processed.  It should be indexed by $57, i.e., [$6E],y, where Y = the contents of $57.
+$1928 - Screen number on which the current object is placed.
+$1931 - The object tileset.
+$1BA1 - Screen number on which the current tile is placed.  Similar to $1928, but this may be changed within an object's code, while $1928 will not.
+
+Subroutine notes:
+
+These are described in the ASM file, but I will reiterate those descriptions here.
+
+- ShiftObjRight: This moves the current tile position 1 block to the right.  (You can't simply add 1 to $57 because then the object wouldn't work correctly when placed across screen boundaries.)
+- ShiftObjDown: This moves the current tile position 1 block down.  It also resets the X position to where it started out.
+- ShiftObjDownAlt: Same as ShiftObjDown, except that it doesn't reset the X position.
+- ShiftObjLeft: This moves the current tile position 1 block to the left.
+- ShiftObjUp: This moves the current tile position 1 block up.  It also resets the X position to where it started out.
+- ShiftObjUpAlt: Same as ShiftObjUp, except that it doesn't reset the X position.
+- ShiftObjRight2: This moves the current tile position a specified number of blocks to the right (input in A).
+- ShiftObjLeft2: This moves the current tile position a specified number of blocks to the left (input in A).
+- ObjectInitStd: This is a common initialization routine for objects.  It stores the object's X position to $06, Y position to $07, width to $08, and height to $09; copies the width to $00 and $02 and the height to $01; and then backs up the low byte of the Map16 pointers, copying $6B to $04 and $6E to $05.
+- BackUpPtrs: This backs up the Map16 pointers as described above.  (To be honest, this routine seems to have some odd usage in vanilla SMW...sometimes it just overwrites the backup RAM anyway?)
+- RestorePtrs: This restores the Map16 pointers from their backups, as well as the current screen number being processed.  Note that this does not work properly in conjunction with the alternative versions of the position-shifting routines.
+- StoreNybbles: This stores object variables to scratch RAM $06-$09 as described above.
+- GetItemMemoryBit: This checks whether an item memory flag is set for the current position.  It returns a value in A that will be 0 if that bit is not set and a nonzero value if it is.  Note that setting the item memory bit should be done in the code of the blocks that make up the object.
+
+Also, there are several "custom" subroutine variants, which do basically the same thing as the regular ones but use a different system for indexing the Map16 tile tables.  These are used by the slope objects for easier manipulation of the current tile position.  These routines should NOT be used together with the standard ones, because their variables are used in different ways.  See the notes under the header for them in the ASM file.
+
+Other notes:
+
+A common method for coding objects, especially rectangular ones, is to iterate over the tiles that compose it line by line by storing a tile number, shifting the position right, decrementing the tile counter (usually $00), repeating this process until there are no more tiles to draw on the current line, then shifting the position down and resetting the "tiles in current line" counter to maximum (usually storing $08 to $00; $02 is sometimes used as a backup instead), and then repeating the whole process for each successive line until all tiles in the object have been created.  Sometimes along the way, it will be necessary to create different tiles depending on which part of the object you're on (edge and corner tiles, for instance), and you'll need to check the counters.  Remember that, assuming you're decrementing the counters rather than incrementing them, if the counter is equal to the number of tiles to draw (usually, this means $00 = $08 or $01 = $09), then you're at the top row or leftmost column, and if the counter is equal to 0 (usually, this means $00 = #$00 or $01 = #$00), then you're at the bottom row or rightmost column.  You can also use bitwise operations to do things such as alternating middle tiles, or even alternating them based on their position relative to the level rather than the object (which is useful for Super Mario Bros. 2 graphics, to name just one example).  You can also use more than two dimension values for an object (such as the pulley wires from the original Super Mario Bros., which have a width and two height values, one for the left wire and one for the right) or even combine multiple subroutines to create an object with multiple variables (such as a tree where the trunk and the leafy part can both be resized).
+
+You can also replace the pointers for the original objects should you so desire, though that isn't included in this patch as a feature.  The extended objects have a table of 0x100 24-bit pointers starting at $0DA10F.  The normal objects have 5 different tables of 0x40 pointers for each of 5 different object sets (which is what the "T" value in Lunar Magic's GFX bypass represents, the tileset-specific object set), which are at $0DA44B (object set 0, GFX sets 0/7/C), $0DC190 (object set 1, GFX set 1), $0DCD90 (object set 2, GFX sets 2/6/8), $0DD990 (object set 3, GFX sets 3/9/A/B/E), and $0DE890 (object set 4, GFX sets 4/5/D).  Note that even though the pointers are 24-bit, they expect a 16-bit return and don't change the data bank from 0D, so unless you change the routines, any custom code used this way will require finishing with a JML to an RTS in bank 0D, and they will use 0D as the data bank by default.
+
+

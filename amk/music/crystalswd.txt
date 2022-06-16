@@ -1,0 +1,79 @@
+#amk 2
+
+#spc
+{
+	#game		"Arcana/Cardmaster"
+	#title		"Crystal Sword"
+	#author		"Jun Ishikawa, Hirokazu Ando"
+	#comment	"Ported by Teows"
+}
+
+#path	"crystalswd"
+#samples
+{
+	#default
+	"Harp.brr"
+	"Electric Piano.brr"
+	"Vibraphone.brr"
+	"String Ensemble.brr"
+}
+#instruments
+{
+	"Harp.brr"		$8F $D1 $00 $04 $00	; @30
+	"Electric Piano.brr"	$8F $D1 $00 $04 $00	; @31
+	"Vibraphone.brr"	$00 $00 $D5 $04 $00	; @32
+	"String Ensemble.brr"	$8F $E0 $00 $03 $C7	; @33
+}
+
+t48 w255
+
+$EF$FF$46$46
+$F1$06$3C$01
+
+#0
+[
+@32 ;;Vibraphone
+o2 v150
+$E8$06$64d+2.$E8$60$3C^1^4 $E8$06$64c+2.$E8$60$3C^1^4
+]2
+
+#1
+y6 (1)[
+@31
+o4 v100
+c2
+@33
+v30 $E8$C0$8E c1 $E8$60$50 ^2
+@31
+v110 < g+2
+@33
+v30 $E8$C0$8E g+1 $E8$60$50 ^2
+]2
+
+#2
+y2 $FA$02$02 (1)2
+
+#3
+y10 $FA$02$07 (1)2
+
+#4
+[
+@30
+o3 v60 y16 l4
+d v80 d+ f v60 g y4 d v80 d+ f v60 g y16 c v80 c+ d+ v60 f y4 c v80 c+ d+ v60 f
+]2
+
+#5
+[
+@30
+o3 v50 l4 y4
+f8 v60 d d+ f y16 v50 g v60 d d+ f y4 v50 g v60 c c+ d+ y16 v50 f v60 c c+ d+ v50 f8
+]2
+
+#6
+[
+@30
+o2 v50 l4 y4
+g+8 v80 g > v60 c < v80 g > v60 c < y16 v80 g > v60 c < v80 g > v60 c <
+y4 v80 d+ v60 g+ v80 d+ v60 g+ y16 v80 d+ v60 g+ v80 d+ v60 g+8
+]2

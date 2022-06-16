@@ -1,0 +1,138 @@
+;Global sprites: 
+autoclean $928008
+autoclean $9280F7
+autoclean $928CB1
+autoclean $928D50
+autoclean $929206
+autoclean $929265
+autoclean $9294E2
+autoclean $9294EA
+autoclean $929925
+autoclean $92998E
+autoclean $929CDD
+autoclean $929D01
+autoclean $929F75
+autoclean $929F84
+autoclean $92A0A3
+autoclean $92A0B5
+autoclean $92A2D8
+autoclean $92A2E3
+autoclean $929CDD
+autoclean $929D01
+autoclean $92A865
+autoclean $92A883
+autoclean $93800D
+autoclean $938024
+autoclean $92ABB7
+autoclean $92ABC5
+autoclean $92D008
+autoclean $92D001
+autoclean $948045
+autoclean $94805A
+autoclean $94A223
+autoclean $94A22C
+autoclean $94C6DA
+autoclean $94C710
+autoclean $92E16A
+autoclean $92E1B6
+autoclean $96A015
+autoclean $96A01B
+autoclean $A8800D
+autoclean $A8803E
+autoclean $92EE84
+autoclean $92EE85
+autoclean $92F04A
+autoclean $92F04B
+autoclean $92F111
+autoclean $92F142
+autoclean $92F40F
+autoclean $92F424
+autoclean $92F51D
+autoclean $92F515
+autoclean $92F5C9
+autoclean $92F5DA
+autoclean $92F71F
+autoclean $92F73A
+autoclean $93F4B3
+autoclean $93F4C0
+autoclean $92F940
+autoclean $92F939
+autoclean $9A999F
+autoclean $9A99AF
+autoclean $92FA1E
+autoclean $92FA1E
+autoclean $92FAD2
+autoclean $92FAD2
+autoclean $92FBD2
+;Global sprite custom pointers: 
+
+
+;Routines:
+autoclean $92F8B6
+	org $03E065
+	dl $FFFFFF
+autoclean $92AAE7
+	org $03E06B
+	dl $FFFFFF
+autoclean $92FA84
+	org $03E06E
+	dl $FFFFFF
+autoclean $92A255
+	org $03E071
+	dl $FFFFFF
+autoclean $92E127
+	org $03E077
+	dl $FFFFFF
+autoclean $90EE38
+	org $03E07A
+	dl $FFFFFF
+autoclean $94F8E6
+	org $03E07D
+	dl $FFFFFF
+autoclean $92EF49
+	org $03E083
+	dl $FFFFFF
+autoclean $96EDDD
+	org $03E092
+	dl $FFFFFF
+autoclean $92EE41
+	org $03E095
+	dl $FFFFFF
+autoclean $90FEFC
+	org $03E098
+	dl $FFFFFF
+autoclean $90FF7E
+	org $03E09B
+	dl $FFFFFF
+autoclean $94F92F
+	org $03E0A4
+	dl $FFFFFF
+autoclean $90F57E
+	org $03E0AD
+	dl $FFFFFF
+autoclean $94FD61
+	org $03E0BF
+	dl $FFFFFF
+autoclean $94FCDE
+	org $03E0C8
+	dl $FFFFFF
+autoclean $90FFE6
+	org $03E0D1
+	dl $FFFFFF
+autoclean $92FEEB
+	org $03E0DD
+	dl $FFFFFF
+autoclean $90F5FD
+	org $03E0E0
+	dl $FFFFFF
+autoclean $93FFBB
+	org $03E0E9
+	dl $FFFFFF
+
+
+;Cluster:
+autoclean $92FCD5
+
+
+;Extended:
+autoclean $94FDE8

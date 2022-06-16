@@ -1,0 +1,12 @@
+
+
+v. 0.5: Update for Lunar Magic 3.00 and its dynamic level system (and dropped support for extended objects 02-0F in case Lunar Magic uses more of them in the future).  Also rewrote and simplified the readme, included more template subroutines, added information about coding custom objects and using said subroutines, and moved the pointers to the main patch (changing the system that references them in the process).
+
+v. 0.42?: Update for recent Lunar Magic versions that make use of extended object 02.
+
+v. 0.41?: Added template subroutines.
+
+v. 0.4: My version of the patch, which includes extended objects 02-0F.
+
+v. 0.3: 1024's original patch.
+

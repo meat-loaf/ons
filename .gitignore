@@ -1,0 +1,6 @@
+*.smc~
+*.png
+bak/*
+uberasm/asm/work/*
+*.bak*.*
+.ts

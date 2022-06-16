@@ -1,0 +1,279 @@
+#amk 2
+
+#define ECHO 0
+;If 1 or above, the echo will be enabled, like in the original.
+;If 0, the echo will be disabled, in case you don't like the echo the original has (like i do).
+
+#SPC
+
+{
+	#title "Theme of Sailor Chibimoon"
+	#game "Sailor Moon Super S"
+	#author "I actually have no idea"
+	#comment "ported by S1Z2"
+}
+
+#path "SailorChibimoon"
+
+#samples
+{
+#default
+"Kick & Hat.brr"
+"Hat.brr"
+"Kick.brr"
+"Snare.brr"
+"Slap Bass.brr"
+"Marimba.brr"
+"Steel Drum.brr"
+"Sine Wave.brr"
+"Xylophone.brr"
+"Choir.brr"
+}
+
+#instruments
+{
+"Kick & Hat.brr"    $FF $E0 $7F $07 $B0 ; @30
+"Hat.brr"           $FF $E0 $7F $07 $B0 ; @31
+"Kick.brr"          $FF $E0 $7F $07 $B0 ; @32
+"Snare.brr"         $FF $E0 $7F $07 $B0 ; @33
+"Slap Bass.brr"     $FF $EB $7F $04 $80 ; @34
+"Steel Drum.brr"    $CF $2F $7F $03 $B0 ; @35
+"Sine Wave.brr"     $FF $F2 $7F $09 $00 ; @36
+"Xylophone.brr"     $EF $32 $7F $03 $A0 ; @37
+"Marimba.brr"       $CF $30 $7F $02 $F0 ; @38
+"Choir.brr"         $F7 $E9 $7F $02 $E0 ; @39
+}
+
+#if ECHO != 0
+$EF $3C $AB $AB
+$F1 $01 $50 $01
+$F5 $0C $21 $2B $2B $13 $FE $F3 $F9
+#endif
+
+"KH=@30"
+"CH=@31"
+"KK=@32"
+"SS=@33"
+
+#0 w255 t27
+
+$F4 $02
+
+/
+
+v130 o4 l32 y10
+
+[[
+(1)[KH q7f c16 CH q7c c KK q7e c SS c+16 KH q7c c16] (2)[CH q78 c<b>c<b> SS q7e c+16 KH q7c c16]
+]]7
+(1) CH q78 c<b>c<b> SS q7e c+16 q7c c+ q7e c+
+
+[[
+(1)(2)
+]]7
+(1) CH q78 c q76 <b> q78 c<b> SS q7a c+ q7c c+ q7d c+ q7e c+
+
+[[
+KH q7e c16 CH q7a c KK q7d c SS q7e c+16
+KH q7c c16 CH q78 c16 KH q7c c16 CH q79 c16 SS q7e c+16
+]]4
+
+[[
+KH q7e c16 CH q7a c16 SS q7e c16 CH q7a c16
+]]14
+
+SS q7e c+16. q7d c+16. q7e c+8 KH q7e c16 SS c+ q7a c+ q7c c+ q7e c+
+
+#1
+v100 o4 @34 l32 y10
+
+(3)[q7f g16. q3f gr16 q7f e8..r q3f er
+q7f a16. q3f ar16 q7f >d8] (4)[q3f <f+r q7f a16 q3f f+r>]
+(3)q3f er q7f f+16 q3f dr
+(3)(4)
+(3)q3f <ar q7f f+16> q3f dr
+
+(3)(4)
+(3)q3f er q7f f+16 q3f dr<
+(3)(4)
+
+q7f g16. q3f gr16 q7f e8..r q3f er>
+q7f d16. q3f dr16 q7f <g8a16b16>d16
+
+[q7f c16.c16.c8 q3f >c<r16. cr<]2
+$FA $02 $FF
+*
+$FA $02 $F8
+*
+$FA $02 $00
+
+(8)[a16]8
+
+(9)[>d16<]8
+
+[[b16]]8
+
+[[e16]]8
+
+(8)8
+
+[[>c+16]]8
+
+(9)8
+
+q7f d16. q3f dr16 q7f d16 r4
+
+#2
+v118 o5 @35 l32 y10
+
+(5)[q7f d q75 d16<
+q7f b q75 b16
+q7f g q75 g8.. r8.>
+q7f c q75 c
+q7f c q75 c<
+q7f b q75 b
+q7f a q75 a
+q7f g q75 g
+q7f a q75 a]
+q7f b q75 b8^
+q7f d q75 d2.r
+(5)
+q7f a q75 a8^
+q7f bag q75 g2^8..
+
+(5)
+q7f b q75 b8^
+q7f d q75 d2.r
+(5)
+q7f a q75 a8^
+q7f bag q75 g2^16.
+q7f g q75 g16.>
+
+(13)[q7f d q75 d16.] q7f d q75 d (13) (14)[q7f c q75 c] (15)[q7f <b q75 b>] (14)
+(13) (14) q7f <b q75 b16.> q7f c q75 c8r8^<
+
+(15)2 q7f b q75 b16.> (14)
+q7f d q75 d q7f f q75 f16. q7f e q75 e (13) q7f c q75 c16.
+
+(15) q7f c q75 c8.r8^< q7f e q75 e
+q7f f q75 f q7f f+ q75 f+8.r8^ q7f d q75 d16r>
+
+q7f e q75 e16. q7f d q75 d q7f d q75 d8^r16
+(14) q7f <b q75 b16. q7f b q75 b16.> q7f c q75 c16.
+
+(13) q7f c q75 c4^16.r8<
+q7f b q75 b16. q7f a q75 a16. q7f g q75 g16. (15)
+
+q7f a q75 a1^
+
+#3
+v56 o4 @36 l32 y10
+
+q5f
+
+[[
+(6)[grbb]4
+ergg
+er>cc<
+ar>cc<
+ar>cc<
+]]7
+(6)4
+fr>cc<
+[[frbb]]3
+
+v70 o3 @37
+
+[br]8
+[[ar]]16
+*8
+[grgr>crcrerercrcr<]
+arar>crcrdrdrcrcr<
+frfrararbrbrarar
+brbr>drdrererdrdr<
+*
+grgrararbrbrgrgr
+*
+q5c >cr16cr16c16r4<
+
+#4
+v52 o4 @36 l32 y10
+
+q5f
+
+[[
+(7)[drgg]4
+cree
+craa
+f+raa
+f+raa
+]]7
+(7)4
+draa
+(7)3
+
+v70 o3 @37
+
+[[er]]8
+[[d+r]]8
+[[f+r]]8
+[[g+r]]8
+
+(10)[ererarar>crcr<arar]
+
+[f+rf+rarar]2
+$FA $02 $FC
+*2
+$FA $02 $02
+*2
+$FA $02 $00
+
+(10)
+
+[[erererergrgr]]2
+>crcr<grgr
+ar16ar16a16r4
+
+#5
+v126 o4 @38 l16 y10
+
+r1r4^16
+
+
+(11)[q7f gb>de8c8<a8f+8] (12)[q7f g8 q7a g8 q78 g8 q74 g8 r2.^]
+q7a b>dge8c8<a8>d8< (12)
+(11)(12)
+
+v96 o3 @39
+
+b>dgf8e8defg
+e2d+2d2<g+2a2.>
+c4<f4a4g+4a8b8a4g4e8f+8g8>e8d2
+>d32rd32rdr4
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

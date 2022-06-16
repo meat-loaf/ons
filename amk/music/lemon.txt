@@ -1,0 +1,241 @@
+﻿#amk 2
+
+#path "la07"
+#samples {
+	"../optimized/00 SMW @0.brr"
+	"../optimized/01 SMW @1.brr"
+	"../optimized/02 SMW @2.brr"
+	"../optimized/03 SMW @3.brr"
+	"../optimized/04 SMW @4.brr"
+	"../EMPTY.brr"
+	"../optimized/06 SMW @22.brr"
+	"../optimized/07 SMW @5.brr"
+	"../optimized/08 SMW @6.brr"
+	"../EMPTY.brr"
+	"../optimized/0A SMW @9.brr"
+	"../optimized/0B SMW @10.brr"
+	"../EMPTY.brr"
+	"../EMPTY.brr"
+	"../optimized/0E SMW @29.brr"
+	"../optimized/0F SMW @21.brr"
+	"../optimized/10 SMW @12.brr"
+	"../EMPTY.brr"
+	"../optimized/12 SMW @15.brr"
+	"../optimized/13 SMW Thunder.brr"
+"slapbass.brr"
+"wv1.brr"
+"ldgt.brr"
+"piandong_.brr"
+"lowsyn.brr"
+"fmbell.brr"
+"bgsyn.brr"
+"synbr.brr"
+"string.brr"
+"ngt.brr"
+"dsqr.brr"
+"higt.brr"
+"kick.brr"
+"snare.brr"
+"hhc.brr"
+"hho.brr"
+}
+
+#instruments {
+"slapbass.brr"	$bf $8c $df $0c $03 ;@30 slap bass
+"wv1.brr"		$bf $47 $df $04 $02 ;@31
+"ldgt.brr"		$00 $00 $7f $04 $31 ;@32 lead synth guitar
+"piandong_.brr"	$ff $f1 $df $03 $f4 ;@33 piano
+"lowsyn.brr"	$00 $00 $df $03 $f1 ;@34 bass synth
+"fmbell.brr"	$00 $00 $4f $02 $00 ;@35 fm bell
+"bgsyn.brr"		$00 $00 $df $08 $06 ;@36 high synth
+"synbr.brr"		$00 $00 $df $04 $03 ;@37 synth brass
+"string.brr"	$00 $00 $64 $01 $03 ;@38 octave string ens
+"ngt.brr"		$ff $f1 $df $04 $03 ;@39 plucked ac
+"dsqr.brr"		$00 $00 $69 $03 $f9 ;@40 dirty square
+"higt.brr"		$00 $00 $76 $04 $06 ;@41 high lead guitar
+"kick.brr"		$00 $00 $69 $02 $d0 ;@42 kick
+"snare.brr"		$9f $f5 $df $06 $90 ;@43 snare
+"hhc.brr"		$00 $00 $df $07 $00 ;@44 closed hat
+"hho.brr"		$00 $00 $5f $06 $e0 ;@45 open hat
+}
+
+#spc {
+#title "LA07.FMX"
+#game "レモンエンジェル"
+#author "荒川 憲一"
+}
+
+tuning[31]=5
+tuning[32]=8
+tuning[33]=7
+tuning[34]=-5
+tuning[35]=5
+tuning[37]=5
+tuning[39]=-7
+tuning[38]=1
+tuning[40]=-9
+
+$E4 $FF
+
+(!1)[@40]
+
+#0 w175
+$f4$02
+$ef$be$24$dc$f1$03$14$01/
+@30 t53 l8 v250
+(100)[o3 c+c+c+d16d+d+16<a+>d+<a+>ccd+e16ff16cfd+]4
+@31 [o3 f>f [[o3f16>f]]4 ]3 o3f$e8$18$00^4.
+@30 v250 t40 o4 f16 t80 d+16 t40 c16 t80 <a+16 t40 g+16 t80 f16 t40 d+16 t80 c16
+t52 [o3 f4.fc+.c+.c+d+4.d+c4d+4]4
+[o3 [[c+]]8 < [[a+]]8 > [[c]]8 ] ffffd+d+d+d+
+* o4 cccccccc
+(100)4
+
+#1
+@32 $de$19$10$95 y9 v225
+[o4 fgg+a+ b32 $dd$06$06 >c^^32 o4a+16.r16. g4
+g+ a32 $dd$06$06 a+^16.d+a32 $dd$06$06 a+^^32 g+16rf4
+o4 gg+a+ b32 $dd$06$06 >c^^32 o4a+16.r16.> e32 $dd$06$06 f^..
+e32 $dd$06$06 f^16.d+c] o4a+.g+.f
+* o5 e32 $dd$06$06 f^4...
+y8 @33 o4 $df v187
+[r a+.a+.g+.g+.g+]3 r1
+@34 y10 l16 v190
+[[ [r8 o3 frd+fr8frd+fr8fr8.frd+f]r a+32 $dd$06$06 >c^8^32 o3a+>c<a+8g+8
+* r8 a+ $dd$0c$06 >c^  o4d+$f4$01^f8d+$f4$01^]]2
+o3 v212 g+1f1g1g+1g+1f1g1 a+32 $dd$06$06 >c^2....
+l32
+[o3c+rc+rg+8c+rc+rg+8d+rd+ra+8d+rd+ra+8crcra+8crcra+8frfr>c8<frfr>c8]4
+
+#2
+@36 y12 v84 l16
+"G7F=$ed$80$7f"
+"G4F=$ed$80$4f"
+"G2F=$ed$80$2f"
+"G1F=$ed$80$1f"
+"G0F=$ed$80$0f"
+[o5r8G7FcG4F^<G7Fa+>cG4F^G1F^G7FcG4F^<G7Fa+>cG4F^G1F^r8]3
+o5r8G7FcG4F^<G7Fa+>cG4F^G1F^G7Fc<a+g+fa+G4F^G7Fg+G4F^
+*2
+o5r8G7FcG4F^<G7Fa+>cG4F^G1F^G7FcG4F^<G7Fa+>cG4F^G1F^G7FfG4F^G1F^r
+G7FfG4F^G7Fd+G4F^G7FcG4F^G7Fffd+cfG4F^G1F^r
+y10 @33 o5 l8 v187
+[r c.c.c.c.c]3 r1
+y8 @35 v196
+o4 [g+4.g+g+.g+.g+g4.gg4g4]4
+@37 l32 v190
+"SBF=G7Fy11"
+"SBH=G2Fy8"
+"SBL=G0Fy13"
+[r8o4SBFf16rSBHfSBFc16d+16rSBHd+16rSBFf16rSBHfSBFd+16f16rSBHf16rSBLf16r16]2
+r8SBFf16rSBHfSBFc16d+16rSBFd+SBFf16rSBHf16rSBFf16rSBHfSBFd+16rSBHdSBFf16rSBHf
+SBF>c8SBHc8SBF<a+8SBHa+8SBFg+8SBHg+8SBFf8SBHf8
+*3
+SBFf16rSBHfSBFg16rSBHgSBFg+16rSBHg+SBFa+16rSBHa+SBF>c8SBHc8SBFc8SBHc8
+[o5r1^8 SBFf16rSBHfSBFc16d+16rSBHd+SBFg+16rSBHg+16rSBFg16rSBHgSBFf16rSBHfSBFd+16rSBHd+
+o5r1^8 SBFf16rSBHfSBFc16d+16rSBHd+SBF>c16rSBHc16rSBF<a+16rSBHa+SBFg+16rSBHg+SBFf16rSBHf]2
+
+#3
+@39 y10 v172 l8
+r o4 (101)[g+.g+.a+.a+.a+4g.g.g+.g+.g+4]3
+g+.g+.a+.a+.a+4g.g.g+.g+.g+
+@33 v187 y12
+o4rf.f.f.f.f4f.f.f.f.f4f.f.f.f.fr1
+y12 @35 v196
+[o4c4.cc+.c+.c+<a+4.a+a+4>c4]4
+y10 v200 @38
+o5 f1c+1d+1f2d+2f1c+1r1g1
+@39 v172
+r o4 (101)3
+g+.g+.a+.a+.a+4g.g.g+.g+.g+
+
+#4
+@38 v216 y10
+o5 [f2g2d+2f2]4
+@33 v187
+o4[r c.c.c.c.c]3 r1
+@38 v208
+o5[f2c+2d+2c4d+4]4
+v200
+o5 g+1g+1g1g+2g2g+1g+1g1>c1
+o5 [f2g2d+2f2]4
+
+#5
+@40 $de$19$10$65 y10 v120
+[o4 g+a+>cc+ d32 $dd$06$06 d+^^32 c+16.r16. <a+4
+>c c32 $dd$06$06 c+^16.cc32 $dd$06$06 c+^.. c<g+4
+o4 a+>cc+ d32 $dd$06$06 d+^^32 o5c+16.r16. g32 $dd$06$06 g+^..
+g32 $dd$06$06 g+^16.gd+] o4f.d+.c
+* o5 g32 $dd$06$06 g+^4...
+@38 v208 y10
+o5f1^1^1r1
+@41 v232 y9
+$de$15$10$8e
+[r o4 f16.r32f16.r32f16.r32f.g.g+16.r32g16 $dd$06$06 g+^g.f16.r32d+2
+r o4 f16.r32f16.r32f16.r32f.g.g+16.r32g16 $dd$06$06 g+ $f4$01 ^ a+ $dd$18$0c <a+ $f4$01 ^16
+o4g+16.r32g4d+4]2
+[o5 v207rf16.r32f16.r32f16.r32e16 $dd$06$06 f^d+.c16.r32<v232a+4.g+16.r32f4G1F^@41f16.r32
+a $dd$06$06 a+^4g+16.r32f16.r32d+16.r32f16.r32g+16.r32a $dd$06$06 a+^4>c16.r32<b $dd$06$06 >c^4.]2
+@41 v232 y9
+$de$15$10$8e
+[o4 rf16.r32f16.r32f16.r32e16 $dd$06$06 f^d+^32r32e $dd$06$06 f^f16.r32d+16.r32c16.r32<a+4g+4
+o4 rf16.r32f16.r32f16.r32e16 $dd$06$06 f^d+^32r32g $dd$06$06 g+^
+o4g16 $dd$06$06 g+ $f4$01^16g16$f4$01^32r32d+16.r32]c2
+* o3 e4 $dd$06$06 f^4
+
+
+#7
+@39 y11 v172 $df
+r o4 [f.f.g.g.g4d+.d+.f.f.f4]4
+r1^1^1...
+@35 v196
+[o4f4.ff.f.fd+4.d+d+4d+4]4
+@40  (!1,-1) y11 v130 $f4$01
+(107)[o4G7Ff32r64G4Ff64
+G7Fg32r64G4Fg64
+G7Fg+32r64G4Fg+64
+>G7Fc32r64G4Fc64
+G7Ff32r64G4Ff64
+G7Fg32r64G4Fg64
+G7Fg+32r64G4Fg+64
+>G7Fc32r64G4Fc64]4
+[o4G7Fd+32r64G4Fd+64
+G7Ff32r64G4Ff64
+G7Fg32r64G4Fg64
+G7Fa+32r64G4Fa+64
+>G7Fd+32r64G4Fd+64
+G7Ff32r64G4Ff64
+G7Fg32r64G4Fg64
+G7Fa+32r64G4Fa+64]2
+(107)6
+$f4$01 (!0,0)
+o5a $dd$06$06 a+^4g+16.r32f16.r32d+16.r32f16.r32g+16.r32a $dd$06$06 a+^4>c16.r32<b $dd$06$06 >c^4.
+@41
+$de$15$10$8e
+v158 y10
+[o4 rg+16.r32g+16.r32g+16.r32g16 $dd$06$06 g+^g^32r32g $dd$06$06 g+^g+16.r32g16.r32d+16.r32<g4f4
+o4 rg+16.r32g+16.r32g+16.r32g16 $dd$06$06 g+^g^32r32b $dd$06$06 >c^
+o4b16 $dd$06$06 >c $f4$01^16o4a+16$f4$01^32r32g+16.r32]f2
+* o4 b4 $dd$06$06 >c^4
+
+#6
+$fa$03$70
+v255 y10 l16 o4
+"K=@42c"
+"S=@43c"
+"HC=@44c"
+"HO=@45c"
+(111)[ [[KHCHO8S8HCK8HCK8S8HO8]]3
+KHCHO8S8HCK8HCK8ScK8]2
+[KHCHO8S8HCK8HCK8S8HO8]3
+K2S8K8Scc8
+
+[KHCHO8S8K8cHCHOKS8HO8
+KHCHO8S8Kc8HCK8S8]HO8 *HOS *HO8
+KHCHO8S8K8cHCHOKS8HO8
+KHCHO8S8Kc8HCS8c8cc
+
+[KHCHOHCS8HOHC]7 KHCHOHCS8HOS
+*6 KHCS8c8HOKScK8S8KS
+
+(111)2

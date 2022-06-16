@@ -1,0 +1,236 @@
++-----------------------------------------------------------------------------------------------------+
+|                                          OBJECTS LISTING                                            |
++- notes ---------------------------------------------------------------------------------------------+
+| * Square brackets [xx] indicate the argument for the size field                                     |
+| * Round brackets (xx) indicate the argument for the first extension byte.                           |
+| * Curly brackets {xx} indicate the argument for the second extension byte.                          |
+|   * The notes field may be useful here also.                                                        |
+| * Entries marked *ex* should have an object number of 0, and use the value as the size field        |
+| * There aren't too many edits to tileset specific objects, but these changes were made under the    |
+|   assumption that the `Underground' tilesets will always be used (particularly Underground 1)       |
+| * Object 2D and Extended objects greater than 97 will not show up properly in Lunar Magic.          |
+| * The following sprites have been modified to set item memory:                                      |
+|   * Sprite 79, the growing vine.                                                                    |
++-----------+-------------------------------------+---------------------------------------------------+
+| object id | description                         | notes                                             |
++-----------+-------------------------------------+---------------------------------------------------+
+| 17 [2x]   | Muncher                             | Use `2' as the high nybble of the size.           |
++-----------+-------------------------------------+---------------------------------------------------+
+| 17 [3x]   | Muncher: upside-down                | Use `3' as the high nybble of the size.           |
++-----------+-------------------------------------+---------------------------------------------------+
+| 17 [5x]   | Donut Blocks                        | Use `5' as the high nybble of the size.           |
++-----------+-------------------------------------+---------------------------------------------------+
+| 17 [6x]   | Reverse Donut Blocks                | Use `6' as the high nybble of the size.           |
++-----------+-------------------------------------+---------------------------------------------------+
+| 17 [Ex]   | Straight line guide - top           | Use `E' as the high nybble of the size.           |
++-----------+-------------------------------------+---------------------------------------------------+
+| 17 [Fx]   | Straight line guide - bottom        | Use `F' as the high nybble of the size.           |
++-----------+-------------------------------------+---------------------------------------------------+
+| 1E [x2]   | Straight line guide - left          | Use `2' as low nybble of size.                    |
++-----------+-------------------------------------+---------------------------------------------------+
+| 1E [x3]   | Straight line guide - right         | Use `3' as low nybble of size.                    |
++-----------+-------------------------------------+---------------------------------------------------+
+| 1E [x4]   | Vine when item memory is set.       | Use `4' as low nybble of size. Uses item memory.  |
++-----------+-------------------------------------+---------------------------------------------------+
+| 2D (00)   | SMB1 mushroom platform              |                                                   |
++-----------+-------------------------------------+---------------------------------------------------+
+| 2D (01)   | SMB3 block with screws in corner    | Argument 00 through 07, determines which palette  |
+|           |                                     | to use.                                           |
++-----------+-------------------------------------+---------------------------------------------------+
+| 2D (02)   | Vertical screen scrolling pipes,    | Arg 00: green, enterable from top                 |
+|           | other 'wide' vertical objects       | Arg 01: green, enterable from bottom              |
+|           |                                     | Arg 02: blue, enterable from both sides           |
+|           |                                     | Arg 03: green, enter top special turn left        |
+|           |                                     | Arg 04: green, enter top special turn up          |
+|           |                                     | Arg 05: green, enter top special turn right       |
+|           |                                     | Arg 06: green, enter top special turn down        |
+|           |                                     | Arg 07: green, enter bottom special turn left     |
+|           |                                     | Arg 08: green, enter bottom special turn up       |
+|           |                                     | Arg 09: green, enter bottom special turn right    |
+|           |                                     | Arg 0A: green, enter bottom special turn down     |
+|           |                                     | Arg 0B: blue, special turn left                   |
+|           |                                     | Arg 0C: blue, special turn up                     |
+|           |                                     | Arg 0D: blue, special turn right                  |
+|           |                                     | Arg 0E: blue, special turn down                   |
+|           |                                     | Arg 0F: thicc tree trunk for forests              |
+|           |                                     | Arg 10: pipe, end on left/right, palette 0        |
+|           |                                     | Arg 11: pipe, end on left/right, palette 1        |
+|           |                                     | Arg 12: pipe, end on left/right, palette 2        |
+|           |                                     | Arg 13: pipe, end on left/right, palette 3        |
+|           |                                     | Arg 14: pipe, end on left/right, palette 4        |
+|           |                                     | Arg 15: pipe, end on left/right, palette 5        |
+|           |                                     | Arg 16: pipe, end on left/right, palette 6        |
+|           |                                     | Arg 17: pipe, end on left/right, palette 7        |
+|           |                                     |                                                   |
+|           |                                     | If width > 2, width - 2 is used as high           |
+|           |                                     | nybble of height, allowing for really             |
+|           |                                     | tall objects (each extra height is a full screen) |
+|           |                                     |                                                   |
+|           |                                     | Pipes replace all typical ledge tiles (corners,   |
+|           |                                     | sides, top and bottom ledges) with pipe passable  |
+|           |                                     | versions if pipes are in front of these tiles.    |
+|           |                                     |                                                   |
+|           |                                     | The tree trunk replaces ledges and lava (tiles    |
+|           |                                     | 04 and 05) with tree version of same act as.      |
++-----------+-------------------------------------+---------------------------------------------------+
+| 2D (03)   | Horizontal screen scrolling pipes   | Arg 00: green, enterable from left                |
+|           |                                     | Arg 01: green, enterable from right               |
+|           |                                     | Arg 02: blue, enterable form both sides           |
+|           |                                     | Arg 03: green, enter left special turn left       |
+|           |                                     | Arg 04: green, enter left special turn up         |
+|           |                                     | Arg 05: green, enter left special turn right      |
+|           |                                     | Arg 06: green, enter left special turn down       |
+|           |                                     | Arg 07: green, enter right special turn left      |
+|           |                                     | Arg 08: green, enter right special turn up        |
+|           |                                     | Arg 09: green, enter right special turn right     |
+|           |                                     | Arg 0A: green, enter right special turn down      |
+|           |                                     | Arg 0B: blue, special turn left                   |
+|           |                                     | Arg 0C: blue, special turn up                     |
+|           |                                     | Arg 0D: blue, special turn right                  |
+|           |                                     | Arg 0E: blue, special turn down                   |
+|           |                                     | Arg 0F: available slot                            |
+|           |                                     | Arg 10: pipe, end on top/bottom, palette 0        |
+|           |                                     | Arg 11: pipe, end on top/bottom, palette 1        |
+|           |                                     | Arg 12: pipe, end on top/bottom, palette 2        |
+|           |                                     | Arg 13: pipe, end on top/bottom, palette 3        |
+|           |                                     | Arg 14: pipe, end on top/bottom, palette 4        |
+|           |                                     | Arg 15: pipe, end on top/bottom, palette 5        |
+|           |                                     | Arg 16: pipe, end on top/bottom, palette 6        |
+|           |                                     | Arg 17: pipe, end on top/bottom, palette 7        |
+|           |                                     |                                                   |
+|           |                                     | If pipe height > 2, height - 2 is used as high    |
+|           |                                     | nybble of pipe height, allowing for really        |
+|           |                                     | long pipes                                        |
++-----------+-------------------------------------+---------------------------------------------------+
+| 2D (04)   | 1 block tall horizontal objects     | Arg 00: 'pipe' (tileset specific graphics), pal 0 |
+|           |                                     | Arg 01: 'pipe' (tileset specific graphics), pal 1 |
+|           |                                     | Arg 02: 'pipe' (tileset specific graphics), pal 2 |
+|           |                                     | Arg 03: 'pipe' (tileset specific graphics), pal 3 |
+|           |                                     | Arg 04: 'pipe' (tileset specific graphics), pal 4 |
+|           |                                     | Arg 05: 'pipe' (tileset specific graphics), pal 5 |
+|           |                                     | Arg 06: 'pipe' (tileset specific graphics), pal 6 |
+|           |                                     | Arg 07: 'pipe' (tileset specific graphics), pal 7 |
+|           |                                     | Arg 08: one block tall standard ground            |
+|           |                                     | Arg 09: Bush 1 (forest, map16 tile 0x004B)        |
++-----------+-------------------------------------+---------------------------------------------------+
+| 2D (05)   | 1 block wide vertical objects       | Args 0 through 7: pipe, palettes 0 through 7      |
+|           |                                     | Arg 08: one block wide standard ground            |
+|           |                                     | Arg 09: tree trunk for forest tilesets (no prio)  |
+|           |                                     | Arg 0A: tree trunk for forest tilesets (prio)     |
++-----------+-------------------------------------+---------------------------------------------------+
+| 2D (06)   | Bramble: Vertical                   | If width > 4 units, width - 4 used as high byte   |
+|           |                                     | of height, allowing for very tall objects.        |
++-----------+-------------------------------------+---------------------------------------------------+
+| 2D (07)   | Bramble: Horizontal                 | If height > 4 units, height - 4 used as high byte |
+|           |                                     | of width, allowing for very wide objects.         |
++-----------+-------------------------------------+---------------------------------------------------+
+| 2D (08)   | TODO: Alternating brick objects     |                                                   |
++-----------+-------------------------------------+---------------------------------------------------+
+| 2D (09)   | 1x1 objects (todo: use item mem)    | Arg 00: ice block                                 |
++-----------+-------------------------------------+---------------------------------------------------+
+| 2D (0A)   | Cluster object sectionals           | Make a section of an extended cluster object.     |
+|           |                                     | Extended object A6 through AD are clusters,       |
+|           |                                     | so subtract A6 fro the argument for this arg.     |
+|           |                                     |   note: starts from top-left and works down/right |
++-----------+-------------------------------------+---------------------------------------------------+
+| 30        | Ledge tile for non-solid edges      | ledge originally used in yoshi's house.           |
+|           |                                     | remember to check if it needs to be patched into  |
+|           |                                     | any other tilesets.                               |
+|           |                                     | Mostly superceded by object 39.                   |
++-----------+-------------------------------------+---------------------------------------------------+
+| 33 [xN]   | Line guide slopes                   | note: looks like junk in editor                   |
+|           |                                     | Arg 00: Normal slope left                         |
+|           |                                     | Arg 01: Steep slope left                          |
+|           |                                     | Arg 02: Normal slope right                        |
+|           |                                     | Arg 03: Steep slope right                         |
+|           |                                     | Arg 04: ON/OFF steep left                         |
+|           |                                     | Arg 05: ON/OFF steep slope right                  |
++-----------+-------------------------------------+---------------------------------------------------+
+| 39        | Lava/terrain slope                  | Either background walkable terrain slope or a     |
+|           |                                     | lava slope, depending on bit 0 of                 |
+|           |                                     | level_status_flags_1.                             |
++-----------+-------------------------------------+---------------------------------------------------+
+| 3A        | Lava/terrain with top               | Same as object 39, only except its a ledge.       |
++-----------+-------------------------------------+---------------------------------------------------+
+| 3B        | Lava/terrain background             | Same as object 39, only except its a background.  |
++-----------+-------------------------------------+---------------------------------------------------+
+| 10 *ex*   | Brick block with flower inside      | Uses item memory.                                 |
++-----------+-------------------------------------+---------------------------------------------------+
+| 15 *ex*   | Brick block with feather inside     | Uses item memory.                                 |
++-----------+-------------------------------------+---------------------------------------------------+
+| 19 *ex*   | Brick block with key inside         | Uses item memory.                                 |
++-----------+-------------------------------------+---------------------------------------------------+
+| 1A *ex*   | Brick block with spring inside      | Uses item memory.                                 |
++-----------+-------------------------------------+---------------------------------------------------+
+| 1B *ex*   | Question block with spring inside   | Uses item memory.                                 |
++-----------+-------------------------------------+---------------------------------------------------+
+| 1C *ex*   | Brick block with poison inside      | Uses item memory.                                 |
++-----------+-------------------------------------+---------------------------------------------------+
+| 1D *ex*   | Question block with poison inside   | Uses item memory.                                 |
++-----------+-------------------------------------+---------------------------------------------------+
+| 21 *ex*   | Top of vine (SMB2)                  |                                                   |
++-----------+-------------------------------------+---------------------------------------------------+
+| 22 *ex*   | Bottom of vine (SMB2)               |                                                   |
++-----------+-------------------------------------+---------------------------------------------------+
+| 24 *ex*   | ON/OFF block                        | Requires spriteset with ExGFX108.                 |
++-----------+-------------------------------------+---------------------------------------------------+
+| 41 *ex*   | Vertical key lock block             | Disappears when approached with key.              |
+|           |                                     | Uses item memory.                                 |
++-----------+-------------------------------------+---------------------------------------------------+
+| 7F *ex*   | Pipe intersection tile              | 'Smart' decorative pipe corner tile. If there is  |
+|           |                                     | a non-air tile behind a corner, it changes from   |
+|           |                                     | rounded to square. Shows up as all square in LM.  |
++-----------+-------------------------------------+---------------------------------------------------+
+| 98 *ex*   | SSPipe turn with corner: DtL/UtR    | Down to left/up to right                          |
++-----------+-------------------------------------+---------------------------------------------------+
+| 99 *ex*   | SSPipe turn with corner: LtU/DtR    | Left to up/down to right                          |
++-----------+-------------------------------------+---------------------------------------------------+
+| 9A *ex*   | SSPipe turn with corner: UtR/LtD    | Up to right/left to down                          |
++-----------+-------------------------------------+---------------------------------------------------+
+| 9B *ex*   | SSPipe turn with corner: RtD/UtL    | Right to down/Up to left                          |
++-----------+-------------------------------------+---------------------------------------------------+
+| 9C *ex*   | SSPipe turn no corner: special turn |                                                   |
++-----------+-------------------------------------+---------------------------------------------------+
+| 9D *ex*   | SSPipe pass through square          |                                                   |
++-----------+-------------------------------------+---------------------------------------------------+
+| 9E *ex*   | SSPipe turn w/o corner: DtL/UtR     | Down to left/up to right                          |
++-----------+-------------------------------------+---------------------------------------------------+
+| 9F *ex*   | SSPipe turn w/o corner: LtU/DtR     | Left to up/down to right                          |
++-----------+-------------------------------------+---------------------------------------------------+
+| A0 *ex*   | SSPipe turn w/o corner: UtR/LtD     | Up to right/left to down                          |
++-----------+-------------------------------------+---------------------------------------------------+
+| A1 *ex*   | SSPipe turn w/o corner: RtD/UtL     | Right to down/Up to left                          |
++-----------+-------------------------------------+---------------------------------------------------+
+| A2 *ex*   | Bramble - top-left corner           |                                                   |
++-----------+-------------------------------------+---------------------------------------------------+
+| A3 *ex*   | Bramble - top-right corner          |                                                   |
++-----------+-------------------------------------+---------------------------------------------------+
+| A4 *ex*   | Bramble - bottom-left corner        |                                                   |
++-----------+-------------------------------------+---------------------------------------------------+
+| A5 *ex*   | Bramble - bottom-right corner       |                                                   |
++-----------+-------------------------------------+---------------------------------------------------+
+| A6 *ex*   | Dirt window - Equal Diamond         | Size: 4x4: Palette 2                              |
++-----------+-------------------------------------+---------------------------------------------------+
+| A7 *ex*   | Dirt window - Equal Diamond         | Size: 4x4 Palette 3                               |
++-----------+-------------------------------------+---------------------------------------------------+
+| A8 *ex*   | Dirt window - Equal Diamond         | Size: 4x4 Alternate terrain                       |
++-----------+-------------------------------------+---------------------------------------------------+
+| A9 *ex*   | Dirt window - Oblong Diamond        | Size: 5x4 Palette 2                               |
+|           |                                     | Top left and bottom right are 'long'              |
++-----------+-------------------------------------+---------------------------------------------------+
+| AA *ex*   | Outside-facing dirt window          | Size: 4x4: Alternate terrain. 'Outside-facing'    |
+|           |                                     | meaning the edges face outward instead of inward  |
++-----------+-------------------------------------+---------------------------------------------------+
+| AB *ex*   | Centered Pipe: 5x2                  | A pipe centered within standard dirt tiles.       |
+|           |                                     | 5 tiles wide and 2 tiles tall.                    |
++-----------+-------------------------------------+---------------------------------------------------+
+| AC *ex*   | 3x3 Ice staircase: face left        |                                                   |
++-----------+-------------------------------------+---------------------------------------------------+
+| AD *ex*   | 3x3 Ice staircase: face right       |                                                   |
++-----------+-------------------------------------+---------------------------------------------------+
+| FD *ex*   | Specialized ss pipe turn: LtU/DtR   | Pipe turn: looks like ground (left/up, right/down)|
++-----------+-------------------------------------+---------------------------------------------------+
+| FE *ex*   | Specialized ss pipe turn: LtU/DtR   | Pipe turn with ground tiles as bottom, for 102    |
++-----------+-------------------------------------+---------------------------------------------------+
+| FF *ex*   | Forest tree platform                |                                                   |
++-----------+-------------------------------------+---------------------------------------------------+

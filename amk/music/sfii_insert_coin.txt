@@ -1,0 +1,35 @@
+#amk 2
+#spc
+{
+#title "Insert Coin"
+#game "Street Fighter II"
+#comment "Ported by brickblock369"
+}
+
+#option NoLoop
+#instruments
+{
+@0 $FF $F4 $00 $03 $00
+}
+
+t46
+
+#0
+o4
+@30
+f+8 q78 f+8 q72 f+8 r=15
+
+#1
+o4
+@30
+r=5 b8 q78 b8 q72 b8 r=10
+
+#2
+@30
+o5
+r=10 e8  q78 e8  q72 e8 r=5
+
+#3
+@30
+o5
+r=15 a8  q78 a8  q72 a8
