@@ -209,9 +209,10 @@ Bounce8:	; SMB3 brick
 BounceA:
 	JSR SUB_OFFSCREEN	; check if offscreen
 	BCS Bounce9_OnOffSkipGfx	; skip graphics if offscreen
-	LDX !current_spriteset
-	LDA.l leaf_plat_offs,x
-	STA $0F
+;	LDX !current_spriteset
+;	LDA.l leaf_plat_offs,x
+;	STA $0F
+	STZ $0F
 	LDA #$06
 	STA $0E
 	LDA #$01
@@ -226,9 +227,9 @@ Bounce9: ;>OnOff block
 				; carry set if offscreen
 	BCS .OnOffSkipGfx	; skip graphics if offscreen
 
-	LDX !current_spriteset
-	LDA.l Platforms1_Offsets,x
-	STA $0F
+;	LDX !current_spriteset
+;	LDA.l Platforms1_Offsets,x
+	STZ $0F
 	LDA #$0C
 	STA $0E
 .oam_start
