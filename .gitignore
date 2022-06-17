@@ -13,3 +13,5 @@ sysLMRestore
 *.s16
 *.srm
 *.ssc
+*.extmod
+amk/SPCs

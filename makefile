@@ -88,6 +88,7 @@ GPS_RT_DIR=${GPS_DIR}/routines
 
 UBERASM_DIR=uberasm
 UBERASM_ASM_FILES= \
+	${UBERASM_DIR}/list.txt \
 	$(wildcard ${UBERASM_DIR}/gamemode/*.asm) \
 	$(wildcard ${UBERASM_DIR}/level/*.asm) \
 	$(wildcard ${UBERASM_DIR}/library/*.asm) \
@@ -137,6 +138,7 @@ all_export: level_export m16_export globalani_export
 
 level_export:
 	${LUNAR_MAGIC} -ExportMultLevels ${ROM_NAME} ${MWL_DIR}/level
+	scripts/mwl_clean.py ${MWL_DIR}/level\ *.mwl
 	touch ${MWL_FAKE_TS}
 
 m16_export:
@@ -173,7 +175,7 @@ ${GPS_FAKE_TS}: ${gps_asm_sources} ${GPS_DIR}/list.txt
 	touch $@
 
 # paths are relative to the uberasm directory, no matter where its run from...insanity
-${UBER_FAKE_TS}: ${UBERASM_ASM_FILES} ${PIXI_FAKE_TS}
+${UBER_FAKE_TS}: ${UBERASM_ASM_FILES}
 	bash -c 'mono ${UBERASM_DIR}/UberASMTool.exe list.txt ../${ROM_NAME} 2>/dev/null <<< '\n' && echo'
 	touch $@
 
@@ -189,7 +191,6 @@ ${M16_FAKE_TS}: ${M16_FILE}
 	${LUNAR_MAGIC} -ImportAllMap16 ${ROM_NAME} $<
 	touch $@
 
-#${MWL_FAKE_TS}: ${MWL_FILES} ${GFX_FAKE_TS}
 ${MWL_FAKE_TS}: ${MWL_DIR}/level\ *.mwl ${GFX_FAKE_TS}
 	${LUNAR_MAGIC} -ImportMultLevels ${ROM_NAME} ./${MWL_DIR}
 	touch $@

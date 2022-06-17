@@ -5,7 +5,6 @@ verbose: off
 
 ; Level list. Valid values: 000-1FF.
 level:
-01 brk.asm
 0C5 c5.asm
 103 103.asm
 ;137 l2wave.asm
