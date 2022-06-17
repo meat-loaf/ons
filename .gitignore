@@ -4,3 +4,12 @@ bak/*
 uberasm/asm/work/*
 *.bak*.*
 .ts
+*.smc
+sysLMRestore
+*.dsc
+*.msc
+*.mw2
+*.mwt
+*.s16
+*.srm
+*.ssc

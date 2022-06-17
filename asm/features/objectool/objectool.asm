@@ -14,6 +14,10 @@
 ;header
 lorom
 
+incsrc "../../main.asm"
+; incsrc "item_memory.asm"
+; incsrc "obj_tiles.asm"
+
 !dp = $0000
 !addr = $0000
 !bank = $800000

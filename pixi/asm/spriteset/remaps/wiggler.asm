@@ -49,7 +49,6 @@ pullpc
 wiggler_init_find_segslot:
 	TYA               ; \ restore code
 	STA.w !157C,x     ; /
-	WDM
 	LDY #$03
 .findslot_loop
 	LDX.w !wiggler_segment_slots,y

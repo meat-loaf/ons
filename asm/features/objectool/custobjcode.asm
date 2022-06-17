@@ -1,4 +1,5 @@
 @includefrom objectool.asm
+includeonce
 
 !object_position    = $57
 !object_argument    = $58

@@ -1,45 +1,74 @@
 LUNAR_MAGIC=lunar_magic_330
+ASAR=asar
 
-#ROM_NAME=port2.smc
-ROM_NAME=ons.smc
+ROM_NAME_BASE=ons
+ROM_NAME=${ROM_NAME_BASE}.smc
 
-.PHONY: one_night_stand clean
+GLOBALANI_SRC_ROM=rom_src/ani.smc
+OVERWORLD_SRC_ROM=rom_src/ow.smc
+
+.PHONY: one_night_stand \
+	clean all_export \
+	level_export \
+	m16_export \
+	globalani_export \
+	overworld_export \
 
 asm_dir=asm
 asm_features_dir=${asm_dir}/features
+asm_tweaks_dir=${asm_dir}/tweaks
 
-ASM_PATCHES=custom_bounce_blocks.asm dsx.asm item_memory.asm oam_alloc.asm
+M16_FILE=AllMap16.map16
+
+ASM_PATCHES=custom_bounce_blocks.asm dsx.asm oam_alloc.asm
 ASM_PATCH_TS=$(addprefix ${TS_DIR}/, $(patsubst %.asm,%_ts,$(ASM_PATCHES)))
 ASM_PATCHES_FULL=$(addprefix ${asm_features_dir}/, ${ASM_PATCHES})
+
+ASM_TWEAKS=optimize_2132_store.asm \
+	yoshi_egg_spawn_fix.asm \
+	vram_optimize.asm \
+	solid_slope_assist_131.asm \
+	obj_tiles.asm \
+	no_death_scroll.asm \
+	sspipe_fixes.asm \
+
+ASM_TWEAK_TS=$(addprefix ${TS_DIR}/, $(patsubst %.asm,%_ts,$(ASM_TWEAKS)))
+ASM_TWEAKS_FULL=$(addprefix ${asm_tweaks_dir}/, ${ASM_TWEAKS})
 
 TS_DIR=.ts
 
 AMK_FAKE_TS=${TS_DIR}/addmusic
 PIXI_FAKE_TS=${TS_DIR}/pixi_run
 GPS_FAKE_TS=${TS_DIR}/gps_run
+UBER_FAKE_TS=${TS_DIR}/uberasm_run
 GFX_FAKE_TS=${TS_DIR}/gfx_ins
 SBAR_FAKE_TS=${TS_DIR}/statusbar_code
 M16_FAKE_TS=${TS_DIR}/all_map16
 MWL_FAKE_TS=${TS_DIR}/mwl_insert
 GLOBAL_ANI_TS=${TS_DIR}/globalani
+OVERWORLD_TS=${TS_DIR}/overworld
 OBJTOOL_TS=${TS_DIR}/objtool
 INIT_LEVEL_TS=${TS_DIR}/initial_level
+FT_IMEM_TS=${TS_DIR}/item_mem
+8x8_DMA_TS=${TS_DIR}/8x8dyn
 
-# order is important here! when building clean,
-# things that force LM to insert hijacks (levels, graphics)
-# need to be done first, before the tools run
 CORE_BUILD_RULES= \
-	${INIT_LEVEL_TS} \
 	${GFX_FAKE_TS} \
+	${INIT_LEVEL_TS} \
+	${OVERWORLD_TS} \
+	${GLOBAL_ANI_TS} \
 	${PIXI_FAKE_TS} \
 	${MWL_FAKE_TS} \
 	${M16_FAKE_TS} \
-	${GLOBAL_ANI_TS} \
+	${OBJTOOL_TS} \
 	${GPS_FAKE_TS} \
 	${AMK_FAKE_TS} \
+	${UBER_FAKE_TS} \
 	${SBAR_FAKE_TS} \
-	${OBJTOOL_TS} \
 	${ASM_PATCH_TS} \
+	${ASM_TWEAK_TS} \
+	${FT_IMEM_TS} \
+	${8x8_DMA_TS} \
 
 # should list _all_ the deps here but too many files have spaces.
 # it's a ton of stuff to change and not currently worth the effort
@@ -56,6 +85,13 @@ GPS_FLAGS+=
 GPS_DIR=gps
 GPS_BLK_DIR=${GPS_DIR}/blocks
 GPS_RT_DIR=${GPS_DIR}/routines
+
+UBERASM_DIR=uberasm
+UBERASM_ASM_FILES= \
+	$(wildcard ${UBERASM_DIR}/gamemode/*.asm) \
+	$(wildcard ${UBERASM_DIR}/level/*.asm) \
+	$(wildcard ${UBERASM_DIR}/library/*.asm) \
+	$(wildcard ${UBERASM_DIR}/overworld/*.asm)
 
 sprites_dir=${PIXI_DIR}/sprites
 clusspr_dir=${PIXI_DIR}/cluster
@@ -85,24 +121,42 @@ pixi_asm_sources= \
 	$(wildcard ${shooter_dir}/*.cfg) \
 	$(wildcard ${clusspr_dir}/*.asm)
 
-gps_asm_sources= ${GPS_DIR}/main.asm \
+gps_asm_sources=${GPS_DIR}/main.asm \
 	$(wildcard ${GPS_BLK_DIR}/*.asm) \
 	$(wildcard ${GPS_RT_DIR}/*.asm)
 
 MWL_DIR=lvl
 MWL_FNAME_BASE=level
-MWL_FILES=$(wildcard ${MWL_DIR}/${MWL_FNAME_BASE}\\ *.mwl)
+#MWL_FILES=$(wildcard ${MWL_DIR}/${MWL_FNAME_BASE}\ *.mwl)
 
 OBJTOOL_DIR=${asm_features_dir}/objectool
 
 one_night_stand: ${TS_DIR} ${ROM_NAME} ${CORE_BUILD_RULES}
+
+all_export: level_export m16_export globalani_export
+
+level_export:
+	${LUNAR_MAGIC} -ExportMultLevels ${ROM_NAME} ${MWL_DIR}/level
+	touch ${MWL_FAKE_TS}
+
+m16_export:
+	${LUNAR_MAGIC} -ExportAllMap16 ${ROM_NAME} ${M16_FILE}
+	touch ${M16_FAKE_TS}
+
+globalani_export:
+	${LUNAR_MAGIC} -TransferLevelGlobalExAnim ${GLOBALANI_SRC_ROM} ${ROM_NAME}
+	touch ${GLOBAL_ANI_TS}
+
+overworld_export:
+	${LUNAR_MAGIC} -TransferOverworld ${OVERWORLD_SRC_ROM} ${ROM_NAME}
+	touch ${OVERWORLD_TS}
 
 ${ROM_NAME}:
 	cp rom_src/smw_c.smc ${ROM_NAME}
 
 # really, all these rules should have ${ROM_NAME} as a dependency...
 
-${INIT_LEVEL_TS}: rom_src/smw_orig_1ff.mwl
+${INIT_LEVEL_TS}: rom_src/smw_orig_1ff_2.mwl ${GFX_FAKE_TS}
 	${LUNAR_MAGIC} -ImportLevel ${ROM_NAME} $< 1FF
 	touch $@
 
@@ -110,7 +164,7 @@ ${AMK_FAKE_TS}: ${AMK_MUSIC_DEPS}
 	cd ./amk && WINEPREFIX=~/.wineprefix/smw_amk wine AddmusicK.exe ../${ROM_NAME}
 	touch $@
 
-${PIXI_FAKE_TS}: ${pixi_asm_sources} ${PIXI_LIST}
+${PIXI_FAKE_TS}: ${pixi_asm_sources} ${PIXI_LIST} ${INIT_LEVEL_TS}
 	${PIXI_DIR}/pixi ${PIXI_FLAGS} -l ${PIXI_LIST} ${ROM_NAME}
 	touch $@
 
@@ -118,37 +172,60 @@ ${GPS_FAKE_TS}: ${gps_asm_sources} ${GPS_DIR}/list.txt
 	cd gps && ./gps ../${ROM_NAME} ${GPS_FLAGS}
 	touch $@
 
+# paths are relative to the uberasm directory, no matter where its run from...insanity
+${UBER_FAKE_TS}: ${UBERASM_ASM_FILES} ${PIXI_FAKE_TS}
+	bash -c 'mono ${UBERASM_DIR}/UberASMTool.exe list.txt ../${ROM_NAME} 2>/dev/null <<< '\n' && echo'
+	touch $@
+
 ${GFX_FAKE_TS}: ${gfx_files}
 	${LUNAR_MAGIC} -ImportAllGraphics ${ROM_NAME}
 	touch $@
 
 ${SBAR_FAKE_TS}: ${statusbar_main} ${statusbar_deps} ${asm_base_deps}
-	asar $< ${ROM_NAME}
+	${ASAR} $< ${ROM_NAME}
 	touch $@
 
-${M16_FAKE_TS}: AllMap16.map16
+${M16_FAKE_TS}: ${M16_FILE}
 	${LUNAR_MAGIC} -ImportAllMap16 ${ROM_NAME} $<
 	touch $@
 
-${MWL_FAKE_TS}: ${MWL_FILES}
+#${MWL_FAKE_TS}: ${MWL_FILES} ${GFX_FAKE_TS}
+${MWL_FAKE_TS}: ${MWL_DIR}/level\ *.mwl ${GFX_FAKE_TS}
 	${LUNAR_MAGIC} -ImportMultLevels ${ROM_NAME} ./${MWL_DIR}
 	touch $@
 
-${GLOBAL_ANI_TS}: rom_src/ani.smc
+${GLOBAL_ANI_TS}: ${GLOBALANI_SRC_ROM}
 	${LUNAR_MAGIC} -TransferLevelGlobalExAnim ${ROM_NAME} $<
 	touch $@
 
-${OBJTOOL_TS}: ${OBJTOOL_DIR}/objectool.asm ${OBJTOOL_DIR}/custobjcode.asm
-	asar $< ${ROM_NAME}
+${OVERWORLD_TS}: ${OVERWORLD_SRC_ROM}
+	${LUNAR_MAGIC} -TransferOverworld ${ROM_NAME} $<
 	touch $@
 
+${OBJTOOL_TS}: ${OBJTOOL_DIR}/objectool.asm ${OBJTOOL_DIR}/custobjcode.asm ${FT_IMEM_TS}
+	${ASAR} $< ${ROM_NAME}
+	touch $@
+
+# this feels immensely cursed
 ${ASM_PATCH_TS}: ${ASM_PATCHES_FULL}
-	# this feels immensely cursed
-	asar $(patsubst ${TS_DIR}%, ${asm_features_dir}%, $(patsubst %_ts, %.asm, $@) ${ROM_NAME})
+	${ASAR} $(patsubst ${TS_DIR}%, ${asm_features_dir}%, $(patsubst %_ts, %.asm, $@) ${ROM_NAME})
+	touch $@
+
+# see above
+${ASM_TWEAK_TS}: ${ASM_TWEAKS_FULL}
+	${ASAR} $(patsubst ${TS_DIR}%, ${asm_tweaks_dir}%, $(patsubst %_ts, %.asm, $@) ${ROM_NAME})
+	touch $@
+
+${FT_IMEM_TS}: ${asm_features_dir}/item_memory.asm
+	${ASAR} $< ${ROM_NAME} > ${asm_dir}/headers/routines/item_memory_rts.asm
+	touch $@
+
+${8x8_DMA_TS}: ${asm_features_dir}/mario_8x8_dma/mario_8x8_dma.asm ${asm_features_dir}/mario_8x8_dma/mario_ext_tiles.bin
+	${ASAR} $< ${ROM_NAME}
 	touch $@
 
 ${TS_DIR}:
 	mkdir -p ${TS_DIR}
+
 clean:
-	rm -rf ${TS_DIR}
-	rm ${ROM_NAME}
+	rm -rf ${TS_DIR} ${ROM_NAME_BASE}.*

@@ -16,8 +16,8 @@ check bankcross on
 Sta1To6ePointer      = $0DAA08
 StzTo6ePointer       = $0DAA0D
 StoreLoShiftObjRight = $0DA95B
-ShiftObjRight        = $0DA95D
-ShiftObjDown         = $0DA97D
+ShiftObjRightOrig        = $0DA95D
+ShiftObjDownOrig         = $0DA97D
 BackupMap16Lo        = $0DA6B1
 RestoreMap16Lo       = $0DA6BA
 
@@ -140,7 +140,7 @@ vert_key_lock_block:
 	STA [$6E],y
 	LDA #$2D
 	STA [$6B],y
-	JSR ShiftObjDown
+	JSR ShiftObjDownOrig
 	LDA #$03
 	STA.b [$6E],y
 	LDA #$2E
@@ -354,12 +354,12 @@ StoreLavaSlopeChunkNrm:
 	STA [$6B],y
 	LDA .norm_lava_slope_tiles_data+1,x
 	STA [$6E],y
-	JSR ShiftObjRight
+	JSR ShiftObjRightOrig
 	LDA .norm_lava_slope_tiles_data+2,x
 	STA [$6B],y
 	LDA .norm_lava_slope_tiles_data+3,x
 	STA [$6E],y
-	JSR ShiftObjRight
+	JSR ShiftObjRightOrig
 	RTS
 .norm_lava_slope_tiles_data:
 	dw $02E8, $02E9, $02F8, $00EA     ; alternate slope left
@@ -374,7 +374,7 @@ StoreLavaSlopeChunkSteep:
 	STA [$6B],y
 	LDA .steep_lava_slope_tiles_data+1,x
 	STA [$6E],y
-	JSR ShiftObjRight
+	JSR ShiftObjRightOrig
 	RTS
 .alt
 	LDX $0F
@@ -400,7 +400,7 @@ LavaRepTile:
 	STA [$6B],y
 	LDA .tiles+1,x
 	STA [$6E],y
-	JSR ShiftObjRight
+	JSR ShiftObjRightOrig
 	LDX $0D
 	RTS
 .tiles:
@@ -429,7 +429,7 @@ LavaLedgeObjSetTile:
 	STA [$6B],y
 	LDA.l .tiles+1,x
 	STA [$6E],y
-	JSR ShiftObjRight
+	JSR ShiftObjRightOrig
 	RTS
 .tiles:
 dw $0107,$00EA
@@ -694,7 +694,7 @@ pipe_square:
 	JSR pipe_square_tiles_off
 	BNE .loop
 	JSR RestoreMap16Lo
-	JSR ShiftObjDown
+	JSR ShiftObjDownOrig
 	CPX #$04
 	BNE .loop
 	RTS
@@ -820,7 +820,7 @@ slope_dirt_store:
 	LDA #$3F
 	JMP StoreLoShiftObjRight
 +
-	JMP ShiftObjRight
+	JMP ShiftObjRightOrig
 
 ;pushpc
 ;org $0DB4B7
