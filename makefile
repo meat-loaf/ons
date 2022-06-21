@@ -3,14 +3,18 @@ ASAR=asar
 TEST_EMU=snes9x-gtk
 DBG_EMU=bsnes
 FLIPS=flips
-CLEAN_ROM_NAME=smw_c.smc
-CLEAN_ROM_FULL=rom_src/${CLEAN_ROM_NAME}
+CLEAN_ROM_NAME=smw.smc
+ROM_BASE_PATH=rom_src
+CLEAN_ROM_FULL=${ROM_BASE_PATH}/${CLEAN_ROM_NAME}
+#CLEAN_ROM_SHA1=da39a3ee5e6b4b0d3255bfef95601890afd80709
 
 ROM_NAME_BASE=ons
 ROM_NAME=${ROM_NAME_BASE}.smc
 
 GLOBALANI_SRC_ROM=rom_src/ani.smc
+GLOBALANI_SRC_P  =rom_src/ani.bps
 OVERWORLD_SRC_ROM=rom_src/ow.smc
+OVERWORLD_SRC_P  =rom_src/ow.bps
 
 .PHONY: one_night_stand \
 	clean all_export \
@@ -159,16 +163,30 @@ m16_export:
 	${LUNAR_MAGIC} -ExportAllMap16 ${ROM_NAME} ${M16_FILE}
 	touch ${M16_FAKE_TS}
 
-globalani_export:
+globalani_export: ${CLEAN_ROM_FULL}
+	cp ${CLEAN_ROM_FULL} ${GLOBALANI_SRC_ROM}
 	${LUNAR_MAGIC} -TransferLevelGlobalExAnim ${GLOBALANI_SRC_ROM} ${ROM_NAME}
+	flips --create --bps-delta ${CLEAN_ROM_FULL} ${GLOBALANI_SRC_ROM} ${GLOBALANI_SRC_P}
 	touch ${GLOBAL_ANI_TS}
 
 overworld_export:
+	cp ${CLEAN_ROM_FULL} ${OVERWORLD_SRC_ROM}
 	${LUNAR_MAGIC} -TransferOverworld ${OVERWORLD_SRC_ROM} ${ROM_NAME}
+	flips --create --bps-delta ${CLEAN_ROM_FULL} ${OVERWORLD_SRC_ROM} ${OVERWORLD_SRC_P}
 	touch ${OVERWORLD_TS}
 
-${ROM_NAME}:
-	cp rom_src/smw_c.smc ${ROM_NAME}
+${CLEAN_ROM_FULL}:
+	$(info Base SMW ROM Image not found at ${CLEAN_ROM_FULL}. Aborting.)
+	exit 1
+
+${ROM_NAME}: ${CLEAN_ROM_FULL}
+	cp ${CLEAN_ROM_FULL} ${ROM_NAME}
+
+${GLOBALANI_SRC_ROM}: ${GLOBALANI_SRC_P}
+	flips --apply ${GLOBALANI_SRC_P} ${CLEAN_ROM_FULL} ${GLOBALANI_SRC_ROM}
+
+${OVERWORLD_SRC_ROM}: ${OVERWORLD_SRC_P}
+	flips --apply ${OVERWORLD_SRC_P} ${CLEAN_ROM_FULL} ${OVERWORLD_SRC_ROM}
 
 # really, all these rules should have ${ROM_NAME} as a dependency...
 
@@ -243,4 +261,4 @@ ${TS_DIR}:
 	mkdir -p ${TS_DIR}
 
 clean:
-	rm -rf ${TS_DIR} ${ROM_NAME_BASE}.*
+	rm -rf ${TS_DIR} ${ROM_NAME_BASE}.* ${GLOBALANI_SRC_ROM} ${OVERWORLD_SRC_ROM}
