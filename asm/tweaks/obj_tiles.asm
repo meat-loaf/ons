@@ -42,6 +42,9 @@ YoshiHouseLedgeObjRt = $0DF02B
 ;replaces yoshi coins
 %replace_pointer_long($0DA1D2,vert_key_lock_block)
 
+org $0DEC66|!bank
+	db $FD,$FC
+
 org $0DE957             ; extended objects 57 through 5E: originally some random junk on page 0
 ; priority tree branch left, right
 db $C3,$C4

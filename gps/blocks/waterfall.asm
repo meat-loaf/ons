@@ -1,6 +1,6 @@
 incsrc "../../asm/main.asm"
 
-;Acts like 130 or 100 depending on if you want Mario to be able to jump up through it.
+; Acts like 130 or 100 depending on if you want Mario to be able to jump up through it.
 
 db $42
 JMP MarioBelow : JMP MarioAbove : JMP MarioSide

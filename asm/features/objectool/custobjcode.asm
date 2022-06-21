@@ -2543,7 +2543,9 @@ HorzObjTiles:
 	dw $03F4,$03F5,$03F6,$03F7
 	dw $02F0,$02F1,$02F2,$02F3
 	dw $0055,$0055,$0055,$0055
-	dw $004B,$004C,$004D,$0051  ; smb1 dancing bush; use ExGFXF0 in AN2
+	dw $004B,$004C,$004D,$0051  ; smb1 dancing bush 1; use ExGFXF0 in AN2
+	dw $004E,$004F,$0050,$0051  ; smb1 dancing bush 2; use ExGFXF0 in AN2
+	dw $0056,$0056,$0056,$0056
 HorzObjects:
 	REP #$30
 	AND #$00FF

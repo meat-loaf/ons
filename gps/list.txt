@@ -1,4 +1,6 @@
 ; GPS block list
+00FC:0130        infturn.asm
+
 0312:0130        OnOffBlock.asm
 032D:0130        key_unlock/16x32_V_Keyblk_T.asm
 032E:0130        key_unlock/16x32_V_Keyblk_B.asm
@@ -8,7 +10,9 @@
 
 0374:0025        frame/hurt_frames_0_7.asm
 0375:0025        frame/hurt_frames_8_F.asm
+03A8:0000        waterfall2.asm
 03A9:0130        waterfall.asm
+03AA:0000        waterfall2.asm
 03AB:0130        waterfall.asm
 03B9:0130        solids/mario_actslike_sprite_water.asm
 03BB:0130        solids/mario_actslike_sprite_water.asm

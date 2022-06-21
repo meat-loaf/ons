@@ -112,6 +112,8 @@
 |           |                                     | Arg 07: 'pipe' (tileset specific graphics), pal 7 |
 |           |                                     | Arg 08: one block tall standard ground            |
 |           |                                     | Arg 09: Bush 1 (forest, map16 tile 0x0055)        |
+|           |                                     | Arg 0A: SMAS SMB1 Danching bush - not centered    |
+|           |                                     | Arg 0B: SMAS SMB1 Dancing bush - centered         |
 +-----------+-------------------------------------+---------------------------------------------------+
 | 2D (05)   | 1 block wide vertical objects       | Args 0 through 7: pipe, palettes 0 through 7      |
 |           |                                     | Arg 08: one block wide standard ground            |
