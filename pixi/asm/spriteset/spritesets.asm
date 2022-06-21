@@ -706,7 +706,7 @@ spriteset_setup_lm:
 	; if neither, fall through to original code (decomp gfx)
 .skip:
 	PLP : PLA : PLY : PLX
-	JML.l $0FF900|!bank
+	JML.l extract_exgfx
 .set_spriteset_and_upload:
 	; already have 8-bit A here
 	; low byte of graphics file number (only used for SP3)
@@ -741,7 +741,7 @@ spriteset_setup_lm:
 .gfx_loop:
 	LDA.l spriteset_gfx_listing,x
 	; decomp gfx
-	JSL.l $0FF900|!bank
+	JSL.l extract_exgfx
 	LDA.b $00
 	CLC
 	; 1KB file

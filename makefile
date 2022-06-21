@@ -16,6 +16,7 @@ GLOBALANI_SRC_P  =rom_src/ani.bps
 OVERWORLD_SRC_ROM=rom_src/ow.smc
 OVERWORLD_SRC_P  =rom_src/ow.bps
 
+
 .PHONY: one_night_stand \
 	clean all_export \
 	level_export \
@@ -28,6 +29,8 @@ OVERWORLD_SRC_P  =rom_src/ow.bps
 asm_dir=asm
 asm_features_dir=${asm_dir}/features
 asm_tweaks_dir=${asm_dir}/tweaks
+
+GEN_ROUTINE_FILES=$(wildcard ${asm_dir}/headers/routines/*.asm)
 
 M16_FILE=AllMap16.map16
 
@@ -261,4 +264,4 @@ ${TS_DIR}:
 	mkdir -p ${TS_DIR}
 
 clean:
-	rm -rf ${TS_DIR} ${ROM_NAME_BASE}.* ${GLOBALANI_SRC_ROM} ${OVERWORLD_SRC_ROM}
+	rm -rf ${TS_DIR} ${ROM_NAME_BASE}.* ${GLOBALANI_SRC_ROM} ${OVERWORLD_SRC_ROM} ${GEN_ROUTINE_FILES}
