@@ -191,6 +191,8 @@ endif
      lda !extra_byte_1,x
 ++   %SpawnSpriteSafe()
      bcs .return
+     LDA #$02
+     STA !extra_byte_1,y
 if !ThrowCoinsWhenSilverPActive
      lda $14AE|!addr
      beq +

@@ -111,7 +111,7 @@
 |           |                                     | Arg 06: 'pipe' (tileset specific graphics), pal 6 |
 |           |                                     | Arg 07: 'pipe' (tileset specific graphics), pal 7 |
 |           |                                     | Arg 08: one block tall standard ground            |
-|           |                                     | Arg 09: Bush 1 (forest, map16 tile 0x004B)        |
+|           |                                     | Arg 09: Bush 1 (forest, map16 tile 0x0055)        |
 +-----------+-------------------------------------+---------------------------------------------------+
 | 2D (05)   | 1 block wide vertical objects       | Args 0 through 7: pipe, palettes 0 through 7      |
 |           |                                     | Arg 08: one block wide standard ground            |
@@ -227,6 +227,10 @@
 | AC *ex*   | 3x3 Ice staircase: face left        |                                                   |
 +-----------+-------------------------------------+---------------------------------------------------+
 | AD *ex*   | 3x3 Ice staircase: face right       |                                                   |
++-----------+-------------------------------------+---------------------------------------------------+
+| AE *ex*   | Specialized ss pipe turn: DtL/UtR   | Pipe turn: looks like 'solid' water: bottom only  |
++-----------+-------------------------------------+---------------------------------------------------+
+| AF *ex*   | Specialized ss pipe turn: LtU/DtR   | Pipe turn: looks like 'solid' water: bottom only  |
 +-----------+-------------------------------------+---------------------------------------------------+
 | FD *ex*   | Specialized ss pipe turn: LtU/DtR   | Pipe turn: looks like ground (left/up, right/down)|
 +-----------+-------------------------------------+---------------------------------------------------+

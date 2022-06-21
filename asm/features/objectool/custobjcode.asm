@@ -51,11 +51,11 @@ CustExObjAA:
 CustExObjAB:
 CustExObjAC:
 CustExObjAD:
+CustExObjAE:
+CustExObjAF:
 	LDA !ext_obj_type
 	SEC : SBC #!cluster_exobjs_start
 	JMP ClusterExObjects
-CustExObjAE:
-CustExObjAF:
 CustExObjB0:
 CustExObjB1:
 CustExObjB2:
@@ -131,9 +131,13 @@ CustExObjF7:
 CustExObjF8:
 CustExObjF9:
 CustExObjFA:
-CustExObjFB:
-CustExObjFC:
 	RTS
+CustExObjFB:
+	LDA #$0D
+	JMP Objects2x2
+CustExObjFC:
+	LDA #$0C
+	JMP Objects2x2
 CustExObjFD:
 	LDA #$0B
 	JMP Objects2x2
@@ -721,6 +725,8 @@ Obj2x2Tiles:
 	dw $02BC,$02E5,$02BE,$02BF
 	dw $02B4,$02B5,$02F7,$0500
 	dw $0500,$0500,$04F0,$0565
+	dw $03B9,$03B9,$031E,$03B9
+	dw $03B9,$03B9,$03B9,$031F
 Objects2x2:
 	ASL #3
 	TAX
@@ -2536,7 +2542,8 @@ HorzObjTiles:
 	dw $03E4,$03E5,$03E6,$03E7
 	dw $03F4,$03F5,$03F6,$03F7
 	dw $02F0,$02F1,$02F2,$02F3
-	dw $004B,$004B,$004B,$004B
+	dw $0055,$0055,$0055,$0055
+	dw $004B,$004C,$004D,$0051  ; smb1 dancing bush; use ExGFXF0 in AN2
 HorzObjects:
 	REP #$30
 	AND #$00FF
@@ -2796,9 +2803,10 @@ DoubleTallHorzObjAlternateRows:
 .done
 	RTS
 
-; dimensions of extended objects consisting of a large group of tiles: low nybble is width, high nybble is height
+; dimensions of extended objects consisting of a large group of tiles: low nybble is width (minus 1), high nybble is height (minus 1)
 ClusterExObjSize:
-	db $33,$33,$33,$34,$33,$14,$22,$22
+	db $33,$33,$33,$34,$33,$14,$22
+	db $22,$01,$01
 
 ; pointers to the tilemaps of extended objects consisting of a large group of tiles (index 00 will use a table starting at the specified scratch RAM address plus 1)
 ClusterExObjPtrs:
@@ -2810,6 +2818,8 @@ ClusterExObjPtrs:
 	dw .CenterPipe
 	dw .IceStaircaseLeft
 	dw .IceStaircaseRight
+	dw .PipeTurnWater1
+	dw .PipeTurnWater2
 
 .WindowEqualDiamondP2
 	dw $FFFF,$01ED,$01EC,$FFFF
@@ -2847,6 +2857,10 @@ ClusterExObjPtrs:
 	dw $049E,$FFFF,$FFFF
 	dw $04AE,$04BE,$FFFF
 	dw $04BE,$04BC,$04BD
+.PipeTurnWater1
+	dw $031E,$03B9
+.PipeTurnWater2
+	dw $03B9,$031F
 
 ;------------------------------------------------
 ; make a non-rectangular arrangement of blocks

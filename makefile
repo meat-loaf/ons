@@ -1,5 +1,10 @@
 LUNAR_MAGIC=lunar_magic_330
 ASAR=asar
+TEST_EMU=snes9x-gtk
+DBG_EMU=bsnes
+FLIPS=flips
+CLEAN_ROM_NAME=smw_c.smc
+CLEAN_ROM_FULL=rom_src/${CLEAN_ROM_NAME}
 
 ROM_NAME_BASE=ons
 ROM_NAME=${ROM_NAME_BASE}.smc
@@ -13,6 +18,8 @@ OVERWORLD_SRC_ROM=rom_src/ow.smc
 	m16_export \
 	globalani_export \
 	overworld_export \
+	test \
+	debug \
 
 asm_dir=asm
 asm_features_dir=${asm_dir}/features
@@ -124,6 +131,7 @@ pixi_asm_sources= \
 
 gps_asm_sources=${GPS_DIR}/main.asm \
 	$(wildcard ${GPS_BLK_DIR}/*.asm) \
+	$(wildcard ${GPS_BLK_DIR}/**/*.asm) \
 	$(wildcard ${GPS_RT_DIR}/*.asm)
 
 MWL_DIR=lvl
@@ -132,7 +140,13 @@ MWL_FNAME_BASE=level
 
 OBJTOOL_DIR=${asm_features_dir}/objectool
 
-one_night_stand: ${TS_DIR} ${ROM_NAME} ${CORE_BUILD_RULES}
+one_night_stand: ${CLEAN_ROM_FULL} ${TS_DIR} ${ROM_NAME} ${CORE_BUILD_RULES}
+
+test: one_night_stand
+	${TEST_EMU} ${ROM_NAME}
+
+debug: one_night_stand
+	${DBG_EMU} ${ROM_NAME}
 
 all_export: level_export m16_export globalani_export
 

@@ -1,3 +1,3 @@
-item_mem_divide = $90F0DC
-write_item_memory = $90F12E
-read_item_memory = $90F14B
+item_mem_divide = $90F367
+write_item_memory = $90F3B9
+read_item_memory = $90F3D6

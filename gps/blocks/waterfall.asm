@@ -7,8 +7,8 @@ JMP MarioBelow : JMP MarioAbove : JMP MarioSide
 JMP SpriteV : JMP SpriteH : JMP MarioCape : JMP MarioFireball
 JMP TopCorner : JMP BodyInside : JMP HeadInside
 
-MarioBelow:
 MarioAbove:
+MarioBelow:
 MarioSide:
 
 TopCorner:
@@ -50,19 +50,9 @@ LDA #$00
 +
 STA $7D
 
-LDA $16
-BPL ++;allow jumping up while falling down
-LDA #$B0
-STA $7D
-LDA #$01
-STA $1DFA|!addr
-LDA #$50
-STA $149F|!addr
-LDA #$0B
-STA $72
 ++
 
-LDA #$25
+LDA #$00
 STA $1693|!addr
 LDY #$00
 

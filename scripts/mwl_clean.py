@@ -30,7 +30,7 @@ if len(sys.argv) < 2:
 
 for mwl_file_name in sys.argv[1:]:
 	plocs = []
-	with open(sys.argv[1], "rb+") as mwl_file:
+	with open(mwl_file_name, "rb+") as mwl_file:
 		mwl_file.seek(mwl_header_generic_text_pos)
 		if (mwl_file.read(len(mwl_header_generic_text)).decode(mwl_string_encoding) != mwl_header_generic_text):
 			print("Header check failed: this doesn't appear to be a MWL file.")
@@ -47,6 +47,9 @@ for mwl_file_name in sys.argv[1:]:
 			if debug:
 				print ("Writing null pointer to offset {} (old val: {})".format(hex(pointer), hex(read_nbytes_as_le(mwl_file, 4))))
 				mwl_file.seek(pointer)
-			mwl_file.write(nullptr)
+			x = mwl_file.write(nullptr)
+			if x != 4:
+				print("File {}: Couldn't write all bytes (Wrote {}, expected {}). Exiting.".format(mwl_file_name, x, 4))
+				sys.exit(1);
 			mwl_file.seek(pointer)
-	print("{}: pointers written to {}, {}, {}, {}".format(mwl_file_name, *plocs))
+	print("{}: null pointers written to {}, {}, {}, {}".format(mwl_file_name, *plocs))

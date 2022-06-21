@@ -55,20 +55,20 @@ autoclean $94F6B0
 autoclean $94F6CB
 autoclean $97F01B
 autoclean $97F028
-autoclean $94F8D1
-autoclean $94F8CA
+autoclean $94F8D6
+autoclean $94F8CF
 autoclean $95F8E6
 autoclean $95F8F6
-autoclean $94F9AF
-autoclean $94F9AF
-autoclean $94FA1B
-autoclean $94FA1B
-autoclean $94FB1B
+autoclean $94F9B4
+autoclean $94F9B4
+autoclean $94FA20
+autoclean $94FA20
+autoclean $94FB20
 ;Global sprite custom pointers: 
 
 
 ;Routines:
-autoclean $94F847
+autoclean $94F84C
 	org $03E065
 	dl $FFFFFF
 autoclean $93C260
@@ -86,7 +86,7 @@ autoclean $93F8A0
 autoclean $92F8AA
 	org $03E07A
 	dl $FFFFFF
-autoclean $94FEDD
+autoclean $94FEE2
 	org $03E07D
 	dl $FFFFFF
 autoclean $93F9D8
@@ -113,25 +113,25 @@ autoclean $92F9BE
 autoclean $95FF43
 	org $03E0BF
 	dl $FFFFFF
-autoclean $94FF26
+autoclean $94FF2B
 	org $03E0C8
 	dl $FFFFFF
 autoclean $92FE25
 	org $03E0D1
 	dl $FFFFFF
-autoclean $94FE34
+autoclean $94FE39
 	org $03E0DD
 	dl $FFFFFF
 autoclean $92FB27
 	org $03E0E0
 	dl $FFFFFF
-autoclean $94FFA9
+autoclean $94FFAE
 	org $03E0E9
 	dl $FFFFFF
 
 
 ;Cluster:
-autoclean $94FC1E
+autoclean $94FC23
 
 
 ;Extended:
