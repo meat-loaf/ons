@@ -12,7 +12,7 @@
 ;; Uses first extra bit: NO
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-        !DONUT_MAP16_NUM = $0353             ; map16 value of the donut block in hex        
+        !DONUT_MAP16_NUM = $0153             ; map16 value of the donut block in hex        
         !DONUT_SPRITE_TILE = $0E             ; graphic tile to use for donut sprite
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

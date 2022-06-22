@@ -53,7 +53,7 @@ db $53,$54
 
 org $0DB3BB             ; table of tiles on page 1 for object 17. Up to 16 entries
 obj_17_tiles:
-	db $05,$06,$2F,$10,$10,$53,$FF,$FF
+	db $05,$06,$2F,$10,$10,$53,$55,$FF
 	db $FF,$FF,$FF,$FF,$FF,$FF,$08,$09
 warnpc $0DB3CB
 
@@ -486,9 +486,9 @@ new_cloud_rope_obj_code:
 	LDA #$01
 	CPX #$0E                    ; \ Handle type E and F specially
 	BCS .handle_lineguides      ; /
-	CPX #$03                    ; \ 3 through D go on page 3
-	BCC .cont                   ; |
-	LDA #$03                    ; /
+;	CPX #$05                    ; \ 5 through D go on page 3
+;	BCC .cont                   ; |
+;	LDA #$03                    ; /
 .cont
 	STA [$6E],y
 	LDA.l obj_17_tiles,x

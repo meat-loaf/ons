@@ -1,4 +1,4 @@
-LUNAR_MAGIC=lunar_magic_330
+LUNAR_MAGIC=lunar_magic_331
 ASAR=asar
 TEST_EMU=snes9x-gtk
 DBG_EMU=bsnes
@@ -45,6 +45,8 @@ ASM_TWEAKS=optimize_2132_store.asm \
 	obj_tiles.asm \
 	no_death_scroll.asm \
 	sspipe_fixes.asm \
+	qblocks_item_mem.asm \
+	level_constrain.asm \
 
 ASM_TWEAK_TS=$(addprefix ${TS_DIR}/, $(patsubst %.asm,%_ts,$(ASM_TWEAKS)))
 ASM_TWEAKS_FULL=$(addprefix ${asm_tweaks_dir}/, ${ASM_TWEAKS})

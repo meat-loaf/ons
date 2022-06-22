@@ -151,6 +151,20 @@ includeonce
 ; repurposed: low nybble used as bitfield for object generation parameters
 !sprite_memory_header    = $1692|!addr
 
+!dyn_slot_dest = $1864|!addr
+; 2 bytes
+!dyn_slot_ptr  = $1869|!addr
+!dyn_slots     = $1879|!addr
+!dyn_slot_bank = $188A|!addr
+
+; 1 byte
+; Toggles the use of item memory.
+; ------r- : Disable reading (everything will always respawn).
+; -------w : Disable writing.
+!item_memory_mask = $18BB|!addr
+
+
+
 !level_general_purpose_1 = $1923|!addr
 !level_general_purpose_2 = !level_general_purpose_1+$01
 
@@ -172,17 +186,6 @@ includeonce
 !spr_shooter_extra_byte_1 = !spr_shoot_exbyte_1
 !spr_shooter_extra_byte_2 = !spr_shoot_exbyte_2
 !spr_shooter_extra_byte_3 = !spr_shoot_exbyte_3
-
-
-; gets cleared at strange times, so a good contender for this
-; XXX: currently unused
-!pause_phase = $188A|!addr
-
-; 1 byte
-; Toggles the use of item memory.
-; ------r- : Disable reading (everything will always respawn).
-; -------w : Disable writing.
-!item_memory_mask = $18BB|!addr
 
 !level_load_obj_tile   = $1BA1
 

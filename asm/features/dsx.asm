@@ -18,7 +18,7 @@ incsrc "../main.asm"
 
 lorom
 
-!slots_used	= $06FE		;how many slots have been used
+!slots_used	= !dyn_slots ;how many slots have been used
 !dsx_buffer = !dynamic_buffer
 
 				;change to 0 if you don't want to install it.

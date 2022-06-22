@@ -1,10 +1,11 @@
 ; GPS block list
 00FC:0130        infturn.asm
 
+0153:0153        donutblk.asm
+
 0312:0130        OnOffBlock.asm
 032D:0130        key_unlock/16x32_V_Keyblk_T.asm
 032E:0130        key_unlock/16x32_V_Keyblk_B.asm
-0353:0130        donutblk.asm
 0354:0130        solids/sprite_solid.asm
 ; 0356:0130        donutblk.asm
 

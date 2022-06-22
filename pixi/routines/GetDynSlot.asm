@@ -12,10 +12,15 @@
 !Temp = $09
 !Timers = $0B
 
-!SlotPointer = $0660|!Base2			;16bit pointer for source GFX
-!SlotBank = $0662|!Base2			;bank
-!SlotDestination = $0663|!Base2			;VRAM address
-!SlotsUsed = $06FE|!Base2			;how many slots have been used
+;!SlotPointer = $0660|!Base2			;16bit pointer for source GFX
+;!SlotBank = $0662|!Base2			;bank
+;!SlotDestination = $0663|!Base2			;VRAM address
+;!SlotsUsed = $06FE|!Base2			;how many slots have been used
+
+!SlotPointer = !dyn_slot_ptr
+!SlotBank = !dyn_slot_bank
+!SlotDestination = !dyn_slot_dest
+!SlotsUsed = !dyn_slots
 
 !MAXSLOTS = $04			;maximum selected slots
 	STX $8A

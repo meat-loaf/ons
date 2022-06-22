@@ -37,44 +37,46 @@ autoclean $97A01B
 autoclean $97A067
 autoclean $97ACFF
 autoclean $97AD05
+autoclean $93F8DB
+autoclean $93F8D4
 autoclean $98800D
 autoclean $98803E
-autoclean $93F913
-autoclean $93F914
-autoclean $93FAD9
-autoclean $93FADA
+autoclean $93F9DA
+autoclean $93F9DB
 autoclean $93FBA0
-autoclean $93FBD1
-autoclean $93FE9E
-autoclean $93FEB3
-autoclean $94F4AE
-autoclean $94F4A6
-autoclean $94F55A
-autoclean $94F56B
-autoclean $94F6B0
-autoclean $94F6CB
+autoclean $93FBA1
+autoclean $93FC67
+autoclean $93FC98
+autoclean $94F4AD
+autoclean $94F4C2
+autoclean $94F5BB
+autoclean $94F5B3
+autoclean $94F667
+autoclean $94F678
+autoclean $94F7BD
+autoclean $94F7D8
 autoclean $97F01B
 autoclean $97F028
-autoclean $94F8D6
-autoclean $94F8CF
+autoclean $94F960
+autoclean $94F959
 autoclean $95F8E6
 autoclean $95F8F6
-autoclean $94F9B4
-autoclean $94F9B4
-autoclean $94FA20
-autoclean $94FA20
-autoclean $94FB20
+autoclean $94FA3E
+autoclean $94FA3E
+autoclean $94FAF2
+autoclean $94FAF2
+autoclean $94FBF2
 ;Global sprite custom pointers: 
 
 
 ;Routines:
-autoclean $94F84C
+autoclean $93FF5E
 	org $03E065
 	dl $FFFFFF
 autoclean $93C260
 	org $03E06B
 	dl $FFFFFF
-autoclean $93FFA4
+autoclean $94FAA4
 	org $03E06E
 	dl $FFFFFF
 autoclean $92FF54
@@ -86,16 +88,16 @@ autoclean $93F8A0
 autoclean $92F89D
 	org $03E07A
 	dl $FFFFFF
-autoclean $94FEE2
+autoclean $95FF43
 	org $03E07D
 	dl $FFFFFF
-autoclean $93F9D8
+autoclean $93FA9F
 	org $03E083
 	dl $FFFFFF
-autoclean $97FF46
+autoclean $9BD1A1
 	org $03E092
 	dl $FFFFFF
-autoclean $93F8D0
+autoclean $93F997
 	org $03E095
 	dl $FFFFFF
 autoclean $92FA30
@@ -110,29 +112,29 @@ autoclean $97FB23
 autoclean $92F9B1
 	org $03E0AD
 	dl $FFFFFF
-autoclean $95FF43
+autoclean $97FEE2
 	org $03E0BF
 	dl $FFFFFF
-autoclean $94FF2B
+autoclean $97FE5F
 	org $03E0C8
 	dl $FFFFFF
 autoclean $92FE18
 	org $03E0D1
 	dl $FFFFFF
-autoclean $94FE39
+autoclean $94FF0B
 	org $03E0DD
 	dl $FFFFFF
 autoclean $92FB1A
 	org $03E0E0
 	dl $FFFFFF
-autoclean $94FFAE
+autoclean $9BD15E
 	org $03E0E9
 	dl $FFFFFF
 
 
 ;Cluster:
-autoclean $94FC23
+autoclean $94FCF5
 
 
 ;Extended:
-autoclean $97FE5F
+autoclean $9BD077
