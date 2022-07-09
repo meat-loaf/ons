@@ -201,6 +201,10 @@ macro nonstandard_sprset_init(snum_table, off_table, on_wram_mirror, sprset_tabl
 	<return>
 endmacro
 
+; fix the game not clearing the full sprite load status table
+org $02ABF3|!bank
+	db $7F
+
 ;; bank 00 hijacks ;;
 
 ; hijack gamemode 11 to do spriteset graphics upload

@@ -26,10 +26,10 @@
 !DisableSpriteInteractionTimer = $08
 
 ; GFX stuff
-!WatchTile  = $00   ; Head tile when looking around
-!ThrowTile  = $02   ; Head tile when throwing something
-!DeathTile  = $04   ; Head tile when dead and falling down
-!BottomTile = $06   ; Body tile
+!WatchTile  = $0A   ; Head tile when looking around
+!ThrowTile  = $0C   ; Head tile when throwing something
+!DeathTile  = $06   ; Head tile when dead and falling down
+!BottomTile = $08   ; Body tile
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; sprite init JSL

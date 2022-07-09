@@ -75,9 +75,11 @@
 02A4:0130        ssp/bottom_vertical_pipe_cap_L.asm
 02A5:0130        ssp/bottom_vertical_pipe_cap_R.asm
 
-02A6:0130        ssp/pass_if_in_pipe.asm
+;02A6:0130        ssp/pass_if_in_pipe.asm
+02A6:0130        ssp/left_horizontal_pipe_cap_B.asm
 02A7:0130        ssp/pass_if_in_pipe.asm
-02A8:0130        ssp/pass_if_in_pipe.asm
+; 02A8:0130        ssp/pass_if_in_pipe.asm
+02A8:0130        ssp/right_horizontal_pipe_cap_B.asm
 
 02A9:0130        ssp/left_horizontal_pipe_cap_B.asm
 02AA:0130        ssp/pass_if_in_pipe.asm

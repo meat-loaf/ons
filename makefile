@@ -119,6 +119,7 @@ asm_base_deps=${asm_dir}/main.asm \
 	$(wildcard ${asm_dir}/headers/*.asm)
 
 gfx_files= \
+	$(wildcard gfx/*.bin) \
 	$(wildcard Graphics/*.bin) \
 	$(wildcard ExGraphics/*.bin)
 
@@ -203,7 +204,7 @@ ${AMK_FAKE_TS}: ${AMK_MUSIC_DEPS}
 	cd ./amk && WINEPREFIX=~/.wineprefix/smw_amk wine AddmusicK.exe ../${ROM_NAME}
 	touch $@
 
-${PIXI_FAKE_TS}: ${pixi_asm_sources} ${PIXI_LIST} ${INIT_LEVEL_TS}
+${PIXI_FAKE_TS}: ${pixi_asm_sources} ${PIXI_LIST} ${INIT_LEVEL_TS} ${OBJTOOL_TS}
 	${PIXI_DIR}/pixi ${PIXI_FLAGS} -l ${PIXI_LIST} ${ROM_NAME}
 	touch $@
 
@@ -228,7 +229,7 @@ ${M16_FAKE_TS}: ${M16_FILE}
 	${LUNAR_MAGIC} -ImportAllMap16 ${ROM_NAME} $<
 	touch $@
 
-${MWL_FAKE_TS}: ${MWL_DIR}/level\ *.mwl ${GFX_FAKE_TS}
+${MWL_FAKE_TS}: ${MWL_DIR}/level\ *.mwl
 	${LUNAR_MAGIC} -ImportMultLevels ${ROM_NAME} ./${MWL_DIR}
 	touch $@
 

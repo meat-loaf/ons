@@ -176,8 +176,8 @@ if !cSupportCustomSprites
 	db $14,$10,$08,$10,$0C,$08,$04,$10 ; 00-07
 	db $04,$00,$04,$00,$00,$00,$00,$00 ; 08-0F
 	db $10,$14,$10,$10,$10,$10,$18,$10 ; 10-17
-	db $00,$00,$00,$00,$00,$00,$00,$10 ; 18-1F
-	db $04,$00,$28,$10,$04,$00,$00,$00 ; 20-27
+	db $04,$00,$00,$00,$00,$00,$00,$10 ; 18-1F
+	db $04,$00,$32,$10,$04,$00,$00,$00 ; 20-27
 	db $00,$00,$00,$00,$00,$00,$00,$00 ; 28-2F
 	db $00,$00,$00,$00,$00,$00,$00,$00 ; 30-37
 	db $00,$00,$00,$00,$00,$00,$00,$00 ; 38-3F
@@ -253,12 +253,10 @@ endif
 ; Shift Mario's oam slot by 1. This fixes Super Mario's head disappearing while
 ; carrying certain items, such as MechaKoopas.
 ;org $00E2B2 : db $14,$D4,$14,$E8
-org $00E2B2 : db $10,$D4,$10,$E8
 
 ; Shift Yoshi's oam slot by 1 while turning around. This fixes Yoshi's head
 ; disappearing while riding Lakitu's cloud.
 ;org $01EF62 : db $08
-org $01EF62 : db $04
 
 ; Prevent Lakitu's cloud from using hardcoded slots. This allows us to free 8
 ; oam slots while Mario is behind the scenery (e.g. climbing nets).

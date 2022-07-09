@@ -14,14 +14,22 @@ JMP TopCorner : JMP BodyInside : JMP HeadInside
 JMP WallFeet : JMP WallBody
 
 
-; only act like water to fish
+; only act like water to fish, and custom sprites that act like fish
 SpriteV: : SpriteH:
 LDA !9E,x
 CMP #$15
-BCC MarioBelow
+BCC ret
 CMP #$19
-BCS MarioBelow
-
+BCC .cont
+; rip van fish
+CMP #$3D
+BEQ .cont
+; ...or dolphins
+CMP #$41
+BCC ret
+CMP #$44
+BCS ret
+.cont:
 LDY.b #!ActsLike>>8
 LDA.b #!ActsLike
 STA $1693|!addr

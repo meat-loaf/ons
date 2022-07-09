@@ -90,3 +90,16 @@ else
 org $02E114|!bank
 	JSL.l $018042|!bank
 endif
+
+
+org $01C1E9|!bank
+vine_hijack:
+	JSL.l vine_item_mem|!bank
+.done:
+
+
+pullpc
+vine_item_mem:
+	JSL.l write_item_memory|!bank
+	JML.l generate_tile|!bank
+pushpc

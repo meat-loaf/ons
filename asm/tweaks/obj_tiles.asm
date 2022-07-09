@@ -23,6 +23,8 @@ RestoreMap16Lo       = $0DA6BA
 
 YoshiHouseLedgeObjRt = $0DF02B
 
+%replace_pointer_long($0DA28C,pipe_square|!bank)
+
 %replace_pointer_long($0DA497,new_cloud_rope_obj_code|!bank)
 
 %replace_pointer_long($0DC1DC,new_cloud_rope_obj_code|!bank)
@@ -687,35 +689,33 @@ pushpc
 org $0DDA9E
 pipe_square_tiles:
 	db $0C,$0D,$0E,$0F
+warnpc $0DDAC4
+pullpc
 pipe_square:
+;	WDM
 	LDY !object_load_pos
 	LDX #$00
 	JSR BackupMap16Lo
 .loop
-	LDA #$03 : STA.b [$6E],y
-	LDA.L pipe_square_tiles,x
-	JSR pipe_square_tiles_off
+	LDA [$6B],y
+	CMP #$25
+	BEQ +
+	LDA #$01
+	BRA ++
++
+	LDA #$03
+++
+	STA [$6E],y
+	LDA.l pipe_square_tiles,x
+	JSR StoreLoShiftObjRight
+	INX
+	TXA
+	AND #$01
 	BNE .loop
 	JSR RestoreMap16Lo
 	JSR ShiftObjDownOrig
 	CPX #$04
 	BNE .loop
-	RTS
-warnpc $0DDAC4
-pullpc
-pipe_square_tiles_off:
-	STA $0F
-	LDA.b [$6B],y
-	CMP #$25
-	BNE .nosub
-	LDA $0F
-	SEC : SBC #$04
-	BRA .done
-.nosub
-	LDA $0F
-.done
-	JSR StoreLoShiftObjRight
-	INX : TXA : AND #$01
 	RTS
 
 ; ripped from ragey's patch
@@ -825,16 +825,4 @@ slope_dirt_store:
 +
 	JMP ShiftObjRightOrig
 
-;pushpc
-;org $0DB4B7
-;	JSR StzTo6ePointer
-;org $0DB4F2
-;	JSR StzTo6ePointer
-;org $0DB517
-;	JSR StzTo6ePointer
-;pullpc
-
 print "bank 0D end location: $",pc
-
-warnpc $0E0000
-warnpc $0E8000

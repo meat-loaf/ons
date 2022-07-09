@@ -221,15 +221,15 @@ if !pixi_installed
 	dw spritesets_null_spriteset          ; custom sprite 0D
 	dw spritesets_null_spriteset          ; custom sprite 0E
 	dw spritesets_null_spriteset          ; custom sprite 0F
-	dw spritesets_null_spriteset          ; custom sprite 10
-	dw spritesets_null_spriteset          ; custom sprite 11
-	dw spritesets_null_spriteset          ; custom sprite 12
-	dw spritesets_null_spriteset          ; custom sprite 13
-	dw spritesets_null_spriteset          ; custom sprite 14
-	dw spritesets_null_spriteset          ; custom sprite 15
-	dw spritesets_null_spriteset          ; custom sprite 16
-	dw spritesets_null_spriteset          ; custom sprite 17
-	dw spritesets_null_spriteset          ; custom sprite 18
+	dw spritesets_null_spriteset          ; custom sprite 10 - yi arrowlift (dyn)
+	dw spritesets_null_spriteset          ; custom sprite 11 - yi spike
+	dw spritesets_null_spriteset          ; custom sprite 12 - yi spinning spike mace (dyn)
+	dw spritesets_null_spriteset          ; custom sprite 13 - yi pswitch (dyn)
+	dw spritesets_null_spriteset          ; custom sprite 14 - yi chomp rock (dyn)
+	dw spritesets_null_spriteset          ; custom sprite 15 - yi woozy guy (dyn)
+	dw spritesets_null_spriteset          ; custom sprite 16 - yi blowhard (partial dyn)
+	dw spritesets_null_spriteset          ; custom sprite 17 - yi floating rock (dyn)
+	dw spritesets_fish                    ; custom sprite 18 - fish that jumps like dolphin
 	dw spritesets_null_spriteset          ; custom sprite 19
 	dw spritesets_null_spriteset          ; custom sprite 1A
 	dw spritesets_null_spriteset          ; custom sprite 1B
