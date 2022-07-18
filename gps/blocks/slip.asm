@@ -19,8 +19,6 @@ TopCorner:
 ;	CMP $96			;|the top of the block, thats why I choose $001C instead of $0020.
 ;	SEP #$20		;|
 ;	BCC done		;/
-;^Bah, not nesscessary, bottom is smaller (1-frame is too small and weak to notice), but if
-;you want it so badly against glitches, then feel free to remove the semicolons (";").
 
 LDA #$01                ;Note: you can copy this entire code and paste them
 STA !mario_slip         ;in other blocks to make them slippery like Icy Melting Blocks
@@ -34,7 +32,6 @@ HeadInside:
 ;WallBody:
 SpriteH:
 MarioCape:
-MarioFireball:
 SpriteV:
 	RTL
 ;SpriteV:
@@ -43,4 +40,40 @@ SpriteV:
 ;	LDA #$01
 ;	STA !spr_sprite_slip,x
 ;	RTL
+MarioFireball:
+	LDA.b $03
+	CMP.b #$AF
+	BEQ .melt_coin
+	CMP.b #$BF
+	BEQ .melt_muncher
+	CMP.b #$9F
+	BEQ .melt_rev_muncher
+	CMP.b #$BE
+	BNE done
+.melt_empty:
+	REP.b #$10
+	LDX.w #$0025
+	BRA .finish
+.melt_coin:
+	REP.b #$10
+	LDX.w #$002B
+	BRA .finish
+.melt_rev_muncher:
+	REP.b #$10
+	LDX.w #$0110
+	BRA .finish
+.melt_muncher:
+	REP.b #$10
+	LDX.w #$012F
+.finish:
+	%change_map16()
+	SEP.b #$10
+	%create_smoke()
+	JSL write_item_memory
+	LDX $15E9|!addr
+	STZ $170B|!addr,x
+	STZ $1729|!addr,x
+	STZ $1733|!addr,x
+	RTL
+
 print "A slippery block."

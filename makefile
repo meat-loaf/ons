@@ -34,7 +34,7 @@ GEN_ROUTINE_FILES=$(wildcard ${asm_dir}/headers/routines/*.asm)
 
 M16_FILE=AllMap16.map16
 
-ASM_PATCHES=custom_bounce_blocks.asm dsx.asm oam_alloc.asm
+ASM_PATCHES=custom_bounce_blocks.asm dsx.asm oam_alloc.asm death_restart.asm
 ASM_PATCH_TS=$(addprefix ${TS_DIR}/, $(patsubst %.asm,%_ts,$(ASM_PATCHES)))
 ASM_PATCHES_FULL=$(addprefix ${asm_features_dir}/, ${ASM_PATCHES})
 
@@ -134,7 +134,10 @@ pixi_asm_sources= \
 	$(wildcard ${PIXI_DIR}/asm/spriteset/remaps/*.asm) \
 	$(wildcard ${PIXI_DIR}/routines/*.asm) \
 	$(wildcard ${sprites_dir}/*.asm) \
+	$(wildcard ${sprites_dir}/**/*.asm) \
+	$(wildcard ${sprites_dir}/**/*.cfg) \
 	$(wildcard ${sprites_dir}/*.cfg) \
+	$(wildcard ${sprites_dir}/*.json) \
 	$(wildcard ${shooter_dir}/*.asm) \
 	$(wildcard ${shooter_dir}/*.cfg) \
 	$(wildcard ${clusspr_dir}/*.asm)
@@ -158,7 +161,7 @@ test: one_night_stand
 debug: one_night_stand
 	${DBG_EMU} ${ROM_NAME}
 
-all_export: level_export m16_export globalani_export
+all_export: level_export m16_export globalani_export overworld_export
 
 level_export:
 	${LUNAR_MAGIC} -ExportMultLevels ${ROM_NAME} ${MWL_DIR}/level

@@ -10,9 +10,6 @@
 ; It is adapted from the subroutine at $03B760
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-   LDA !spr_spriteset_off,x
-   STA !tile_off_scratch
-
    STZ !186C,x
    LDA !14E0,x
    XBA
@@ -66,6 +63,9 @@
    INC !186C,x
 .OnScreenY
    LDY !15EA,x
+
+   LDA !spr_spriteset_off,x
+   STA !tile_off_scratch
    RTL
 .Invalid
    PLA             ; destroy the JSL

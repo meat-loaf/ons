@@ -82,7 +82,7 @@ spriteset_off_ptrs:
 	dw spritesets_monty_mole_pokey        ; sprite 4E - ledge monty mole
 	dw spritesets_piranhas                ; sprite 4F - jumpin' piranha plant
 	dw spritesets_piranhas                ; sprite 50 - jumpin' piranha plant, spits fire
-	dw spritesets_null_spriteset          ; sprite 51
+	dw spritesets_ninji                   ; sprite 51 - ninji
 	dw spritesets_null_spriteset          ; sprite 52
 	dw spritesets_null_spriteset          ; sprite 53
 	dw spritesets_null_spriteset          ; sprite 54
@@ -242,7 +242,7 @@ if !pixi_installed
 	dw spritesets_boo_booblock            ; custom sprite 22 - boo ring
 	dw spritesets_null_spriteset          ; custom sprite 23 - a fucking leaf
 	dw spritesets_null_spriteset          ; custom sprite 24
-	dw spritesets_null_spriteset          ; custom sprite 25
+	dw spritesets_bumpty                  ; custom sprite 25 - bumpty
 	dw spritesets_null_spriteset          ; custom sprite 26
 	dw spritesets_null_spriteset          ; custom sprite 27
 	dw spritesets_null_spriteset          ; custom sprite 28
@@ -289,7 +289,7 @@ if !pixi_installed
 	dw spritesets_null_spriteset          ; custom sprite 51
 	dw spritesets_null_spriteset          ; custom sprite 52
 	dw spritesets_null_spriteset          ; custom sprite 53
-	dw spritesets_null_spriteset          ; custom sprite 54
+	dw spritesets_ninji                   ; custom sprite 54 - sideways ninji
 	dw spritesets_null_spriteset          ; custom sprite 55
 	dw spritesets_null_spriteset          ; custom sprite 56
 	dw spritesets_null_spriteset          ; custom sprite 57
@@ -317,7 +317,7 @@ if !pixi_installed
 	dw spritesets_null_spriteset          ; custom sprite 6D
 	dw spritesets_null_spriteset          ; custom sprite 6E
 	dw spritesets_null_spriteset          ; custom sprite 6F
-	dw spritesets_null_spriteset          ; custom sprite 70
+	dw spritesets_cluster_spawner         ; custom sprite 70 - cluster spawner
 	dw spritesets_null_spriteset          ; custom sprite 71
 	dw spritesets_null_spriteset          ; custom sprite 72
 	dw spritesets_null_spriteset          ; custom sprite 73
@@ -365,7 +365,7 @@ if !pixi_installed
 	dw spritesets_null_spriteset          ; custom sprite 9D
 	dw spritesets_null_spriteset          ; custom sprite 9E
 	dw spritesets_null_spriteset          ; custom sprite 9F
-	dw spritesets_null_spriteset          ; custom sprite A0
+	dw spritesets_null_spriteset          ; custom sprite A0 
 	dw spritesets_null_spriteset          ; custom sprite A1
 	dw spritesets_null_spriteset          ; custom sprite A2
 	dw spritesets_null_spriteset          ; custom sprite A3
@@ -568,7 +568,7 @@ if !remap_message_box
 endif
 if !remap_jumpin_pplant_vine
 .piranhas:
-	db $A0,$00,$E0,$00,$C0,$00,$00,$00    ; spritesets 00-07
+	db $A0,$00,$E0,$00,$C0,$00,$00,$20    ; spritesets 00-07
 	db $00,$A0,$00,$00,$00,$00,$00,$00    ; spritesets 08-0F
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 10-17
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 18-1F
@@ -806,6 +806,26 @@ endif
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 28-2F
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 30-37
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 38-3F
+.cluster_spawner:
+.bumpty:
+	db $00,$00,$00,$00,$00,$00,$00,$40    ; spritesets 00-07
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 08-0F
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 10-17
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 18-1F
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 20-27
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 28-2F
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 30-37
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 38-3F
+.ninji:
+	db $00,$00,$00,$00,$00,$00,$00,$60    ; spritesets 00-07
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 08-0F
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 10-17
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 18-1F
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 20-27
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 28-2F
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 30-37
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 38-3F
+
 
 if !hijack_lm_code == 0
 ;
@@ -821,7 +841,8 @@ spriteset_gfx_listing:
 	dw $0105,$0110,$0104,$011A,$010A,$0109,$0108,$0107		; spriteset 04: all chucks, spike top, buzzy, swooper, blargg
 	dw $007F,$007F,$007F,$010D,$0100,$0112,$0111,$0110		; spriteset 05: boos, big boo
 	dw $007F,$007F,$007F,$007F,$007F,$007F,$011F,$007F		; spriteset 06: lakitu
-	dw $0124,$0123,$0122,$0121,$0120,$0119,$0118,$0110		; spriteset 07: castle -- dry bones, thwomps, climbing koopas, etc
+	;dw $0124,$0123,$0122,$0121,$0120,$0119,$0118,$0110		; spriteset 07: castle -- dry bones, thwomps, climbing koopas, etc
+	dw $007F,$007F,$007F,$007F,$011D,$011C,$010D,$0108		; spriteset 07: snow outside -- platforms, piranhas, bumptys, ninji
 	dw $007F,$007F,$007F,$007F,$007F,$0111,$0127,$007F		; spriteset 08: athletic
 	dw $007F,$007F,$0110,$010F,$010A,$0128,$0108,$0107		; spriteset 09: underground with diggin chucks
 	dw $007F,$007F,$007F,$007F,$012B,$012A,$0129,$007F		; spriteset 0A: mechakoopa

@@ -54,14 +54,25 @@
 |           |                                     | Arg 0D: blue, special turn right                  |
 |           |                                     | Arg 0E: blue, special turn down                   |
 |           |                                     | Arg 0F: thicc tree trunk for forests              |
-|           |                                     | Arg 10: pipe, end on left/right, palette 0        |
-|           |                                     | Arg 11: pipe, end on left/right, palette 1        |
-|           |                                     | Arg 12: pipe, end on left/right, palette 2        |
-|           |                                     | Arg 13: pipe, end on left/right, palette 3        |
-|           |                                     | Arg 14: pipe, end on left/right, palette 4        |
-|           |                                     | Arg 15: pipe, end on left/right, palette 5        |
-|           |                                     | Arg 16: pipe, end on left/right, palette 6        |
-|           |                                     | Arg 17: pipe, end on left/right, palette 7        |
+|           |                                     | Arg 10: pipe, end on top/bottom, palette 0        |
+|           |                                     | Arg 11: pipe, end on top/bottom, palette 1        |
+|           |                                     | Arg 12: pipe, end on top/bottom, palette 2        |
+|           |                                     | Arg 13: pipe, end on top/bottom, palette 3        |
+|           |                                     | Arg 14: pipe, end on top/bottom, palette 4        |
+|           |                                     | Arg 15: pipe, end on top/bottom, palette 5        |
+|           |                                     | Arg 16: pipe, end on top/bottom, palette 6        |
+|           |                                     | Arg 17: pipe, end on top/bottom, palette 7        |
+|           |                                     | Arg 18 through 1F: available slots                |
+|           |                                     | Arg 20: pipe, end on top/bottom, palette 0 (exit) |
+|           |                                     | Arg 21: pipe, end on top/bottom, palette 1 (exit) |
+|           |                                     | Arg 22: pipe, end on top/bottom, palette 2 (exit) |
+|           |                                     | Arg 23: pipe, end on top/bottom, palette 3 (exit) |
+|           |                                     | Arg 24: pipe, end on top/bottom, palette 4 (exit) |
+|           |                                     | Arg 25: pipe, end on top/bottom, palette 5 (exit) |
+|           |                                     | Arg 26: pipe, end on top/bottom, palette 6 (exit) |
+|           |                                     | Arg 27: pipe, end on top/bottom, palette 7 (exit) |
+|           |                                     |                                                   |
+|           |                                     |                                                   |
 |           |                                     |                                                   |
 |           |                                     | If width > 2, width - 2 is used as high           |
 |           |                                     | nybble of height, allowing for really             |
@@ -90,14 +101,23 @@
 |           |                                     | Arg 0D: blue, special turn right                  |
 |           |                                     | Arg 0E: blue, special turn down                   |
 |           |                                     | Arg 0F: available slot                            |
-|           |                                     | Arg 10: pipe, end on top/bottom, palette 0        |
-|           |                                     | Arg 11: pipe, end on top/bottom, palette 1        |
-|           |                                     | Arg 12: pipe, end on top/bottom, palette 2        |
-|           |                                     | Arg 13: pipe, end on top/bottom, palette 3        |
-|           |                                     | Arg 14: pipe, end on top/bottom, palette 4        |
-|           |                                     | Arg 15: pipe, end on top/bottom, palette 5        |
-|           |                                     | Arg 16: pipe, end on top/bottom, palette 6        |
-|           |                                     | Arg 17: pipe, end on top/bottom, palette 7        |
+|           |                                     | Arg 10: pipe, end on left/right, palette 0        |
+|           |                                     | Arg 11: pipe, end on left/right, palette 1        |
+|           |                                     | Arg 12: pipe, end on left/right, palette 2        |
+|           |                                     | Arg 13: pipe, end on left/right, palette 3        |
+|           |                                     | Arg 14: pipe, end on left/right, palette 4        |
+|           |                                     | Arg 15: pipe, end on left/right, palette 5        |
+|           |                                     | Arg 16: pipe, end on left/right, palette 6        |
+|           |                                     | Arg 17: pipe, end on left/right, palette 7        |
+|           |                                     | Arg 18 through 1F: available slots                |
+|           |                                     | Arg 20: pipe, end on left/right, palette 0 (exit) |
+|           |                                     | Arg 21: pipe, end on left/right, palette 1 (exit) |
+|           |                                     | Arg 22: pipe, end on left/right, palette 2 (exit) |
+|           |                                     | Arg 23: pipe, end on left/right, palette 3 (exit) |
+|           |                                     | Arg 24: pipe, end on left/right, palette 4 (exit) |
+|           |                                     | Arg 25: pipe, end on left/right, palette 5 (exit) |
+|           |                                     | Arg 26: pipe, end on left/right, palette 6 (exit) |
+|           |                                     | Arg 27: pipe, end on left/right, palette 7 (exit) |
 |           |                                     |                                                   |
 |           |                                     | If pipe height > 2, height - 2 is used as high    |
 |           |                                     | nybble of pipe height, allowing for really        |
@@ -129,7 +149,13 @@
 +-----------+-------------------------------------+---------------------------------------------------+
 | 2D (08)   | TODO: Alternating brick objects     |                                                   |
 +-----------+-------------------------------------+---------------------------------------------------+
-| 2D (09)   | 1x1 objects (todo: use item mem)    | Arg 00: ice block                                 |
+| 2D (09)   | 1x1 objects (uses item memory)      | Arg 00: Green switch cement blocks                |
+|           |                                     | Arg 01: Yellow switch cement blocks               |
+|           |                                     | Arg 02: Ice block, melts by fireball: has nothing |
+|           |                                     | Arg 03: Ice block, melts by fireball: has coin    |
+|           |                                     | Arg 04:   ... has rightside-up muncher            |
+|           |                                     | Arg 05:   ... has upside-down muncher             |
+|           |                                     |                                                   |
 +-----------+-------------------------------------+---------------------------------------------------+
 | 2D (0A)   | Cluster object sectionals           | Make a section of an extended cluster object.     |
 |           |                                     | Extended object A6 through AD are clusters,       |

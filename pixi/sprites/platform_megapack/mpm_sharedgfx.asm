@@ -12,13 +12,18 @@ Shared_GFX:
 	
 		%GetDrawInfo()
 	
+		LDA !spr_extra_bits,x
+		AND #$04
+		BEQ .no_ex_bit
 		LDA !15F6,x
+		AND #$01
+		ORA #$0C
+		BRA .ex_bit
+.no_ex_bit:
+		LDA !15F6,x
+.ex_bit
 		ORA $64
 		STA $03
-
-;		LDX !current_spriteset
-;		LDA.l Platforms1_Offsets,x
-;		STA $0F
 
 GraphicLoop:
 		LDX $04
@@ -76,6 +81,6 @@ GraphicLoop:
 FinishGFX:
 		LDA $04
 		LDY #$02
-		JSL $01B7B3		; Finish OAM write
+		%FinishOAMWrite()
 		
 		RTS

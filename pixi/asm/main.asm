@@ -537,7 +537,6 @@ endif
 	RTL
 .IsCustom
 	JSL SetSpriteTables
-;	JSL SpriteSprsetInit
 	JSL sprset_init
 	LDA !new_code_flag
 	BEQ .R

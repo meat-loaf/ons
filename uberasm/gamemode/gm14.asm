@@ -21,9 +21,9 @@ main:
 	%waterfall_timer()
 	%timer(!on_off_cooldown)
 
-	LDA !level_status_flags_1    ; this logic is a bit involved,
-	AND #!level_status_flag_enable_slip
-	BEQ .out
+;	LDA !level_status_flags_1    ; this logic is a bit involved,
+;	AND #!level_status_flag_enable_slip
+;	BEQ .out
 ; enable slippery block functionality
 	LDA #$00
 	CMP !mario_slip

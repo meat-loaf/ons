@@ -26,11 +26,15 @@
 22 BooRing.cfg
 23 LeafPlat.cfg
 24 needlenosebullet.cfg
+25 bumpty.cfg
 
 49 growing_pipe_49.cfg
 4B PipeLakitu.json
 
+54 sideways_ninji.cfg
+
 6E dino_rhino.cfg
+70 sandstormspawn.json
 
 80 poison_mushroom.cfg
 9E ball-n-chain-pendulum.cfg
@@ -47,3 +51,4 @@ EXTENDED:
 
 CLUSTER:
 00 LotusProjectile.asm
+01 sandstorm.asm

@@ -555,10 +555,12 @@ BitTable:
 
 
 Obj1x1TilesUnset:
-	dw $006A,$006B,$04BE
+	dw $02F9,$02FA,$04BE,$04AF,$04BF,$049F
 Obj1x1TilesSet:
-	dw $02F9,$02FA,$0025
+	dw $0025,$0025,$0025,$0025,$012F,$0110
 
+Obj1x1SwitchCementOutline:
+	dw $006A,$006B
 
 Obj2x1Tiles:
 	dw $0000,$0000
@@ -757,17 +759,6 @@ Objects2x2:
 	STA [$6E],y
 	RTS
 
-; an object consisting of a single block
-;Objects1x1:
-;	ASL
-;	TAX
-;	LDY !object_position
-;	LDA.w Obj1x1Tiles,x
-;	STA [$6B],y
-;	LDA.w Obj1x1Tiles+1,x
-;	STA [$6E],y
-;	RTS
-
 Objects1x1Stretchable:
 	STA $00
 	ASL
@@ -777,34 +768,49 @@ Objects1x1Stretchable:
 	JSR BackUpPtrs
 	LDA $00
 	CMP #$02
-	BCS .not_switch_cement
+	BCS .std
 	PHX
 	TAX
 	LDA $1F27|!addr,x
 	PLX
 	CMP #$00
-	BNE .object_set
-	BRA .object_unset
-.not_switch_cement:
-	; TODO check item memory
-.object_unset
+	BNE .std
+.switch_outline:
+	LDA Obj1x1SwitchCementOutline,x
+	STA !ObjScratch+0
+	STA !ObjScratch+2
+	LDA Obj1x1SwitchCementOutline+1,x
+	STA !ObjScratch+1
+	STA !ObjScratch+3
+	BRA .h_loop_start
+.std:
+	
 	LDA Obj1x1TilesUnset,x
-	STA !ObjScratch
+	STA !ObjScratch+0
 	LDA Obj1x1TilesUnset+1,x
 	STA !ObjScratch+1
-	BRA .h_loop_start
-.object_set:
 	LDA Obj1x1TilesSet,x
-	STA !ObjScratch
+	STA !ObjScratch+2
 	LDA Obj1x1TilesSet+1,x
-	STA !ObjScratch+1
-.h_loop_start
+	STA !ObjScratch+3
+.h_loop_start:
 	LDX !scratch_obj_width
 .h_loop
-	LDA !ObjScratch
+	JSR do_read_item_memory
+	LDA.b $0F
+	BEQ .unset
+.set:
+	LDA !ObjScratch+2
+	STA [$6B],y
+	LDA !ObjScratch+3
+	STA [$6E],y
+	BRA .next
+.unset:
+	LDA !ObjScratch+0
 	STA [$6B],y
 	LDA !ObjScratch+1
 	STA [$6E],y
+.next:
 	JSR ShiftObjRight
 	DEX
 	BPL .h_loop
@@ -2333,6 +2339,22 @@ WideVertObjTiles:
 	dw $06A0,$06A1,$06A2,$06A3,$06A0,$06A1 ; vertical pipe, palette 5
 	dw $06B0,$06B1,$06B2,$06B3,$06B0,$06B1 ; vertical pipe, palette 6
 	dw $06C0,$06C1,$06C2,$06C3,$06C0,$06C1 ; vertical pipe, palette 7
+	dw $FFFF,$FFFF,$FFFF,$FFFF,$FFFF,$FFFF  ; available slot
+	dw $FFFF,$FFFF,$FFFF,$FFFF,$FFFF,$FFFF  ; available slot
+	dw $FFFF,$FFFF,$FFFF,$FFFF,$FFFF,$FFFF  ; available slot
+	dw $FFFF,$FFFF,$FFFF,$FFFF,$FFFF,$FFFF  ; available slot
+	dw $FFFF,$FFFF,$FFFF,$FFFF,$FFFF,$FFFF  ; available slot
+	dw $FFFF,$FFFF,$FFFF,$FFFF,$FFFF,$FFFF  ; available slot
+	dw $FFFF,$FFFF,$FFFF,$FFFF,$FFFF,$FFFF  ; available slot
+	dw $FFFF,$FFFF,$FFFF,$FFFF,$FFFF,$FFFF  ; available slot
+	dw $0654,$0655,$0652,$0653,$0654,$0655 ; vertical pipe, palette 4, exit enabled (both ends)
+	dw $0664,$0665,$0662,$0663,$0664,$0665 ; vertical pipe, palette 5, exit enabled (both ends)
+	dw $0674,$0675,$0672,$0673,$0674,$0675 ; vertical pipe, palette 2, exit enabled (both ends)
+	dw $0684,$0685,$0682,$0683,$0684,$0685 ; vertical pipe, palette 3, exit enabled (both ends)
+	dw $0694,$0695,$0692,$0693,$0694,$0695 ; vertical pipe, palette 4, exit enabled (both ends)
+	dw $06A4,$06A5,$06A2,$06A3,$06A4,$06A5 ; vertical pipe, palette 5, exit enabled (both ends)
+	dw $06B4,$06B5,$06B2,$06B3,$06B4,$06B5 ; vertical pipe, palette 6, exit enabled (both ends)
+	dw $06C4,$06C5,$06C2,$06C3,$06C4,$06C5 ; vertical pipe, palette 7, exit enabled (both ends)
 
 
 ; creates an object that is two tiles wide with different ends, with varying height.
@@ -2452,6 +2474,23 @@ TallHorzObjTiles:
 	dw $06A6,$06A7,$06A8,$06A9,$06AA,$06AB  ; pipe, end on left/right. palette 5
 	dw $06B6,$06B7,$06B8,$06B9,$06BA,$06BB  ; pipe, end on left/right. palette 6
 	dw $06C6,$06C7,$06C8,$06C9,$06CA,$06CB  ; pipe, end on left/right. palette 7
+	dw $FFFF,$FFFF,$FFFF,$FFFF,$FFFF,$FFFF  ; available slot
+	dw $FFFF,$FFFF,$FFFF,$FFFF,$FFFF,$FFFF  ; available slot
+	dw $FFFF,$FFFF,$FFFF,$FFFF,$FFFF,$FFFF  ; available slot
+	dw $FFFF,$FFFF,$FFFF,$FFFF,$FFFF,$FFFF  ; available slot
+	dw $FFFF,$FFFF,$FFFF,$FFFF,$FFFF,$FFFF  ; available slot
+	dw $FFFF,$FFFF,$FFFF,$FFFF,$FFFF,$FFFF  ; available slot
+	dw $FFFF,$FFFF,$FFFF,$FFFF,$FFFF,$FFFF  ; available slot
+	dw $FFFF,$FFFF,$FFFF,$FFFF,$FFFF,$FFFF  ; available slot
+	dw $0656,$0657,$0658,$065C,$065A,$065D  ; pipe, end on left/right, exit enabled (both ends). palette 0
+	dw $0666,$0667,$0668,$066C,$066A,$066D  ; pipe, end on left/right, exit enabled (both ends). palette 1
+	dw $0676,$0677,$0678,$067C,$067A,$067D  ; pipe, end on left/right, exit enabled (both ends). palette 2
+	dw $0686,$0687,$0688,$068C,$068A,$068D  ; pipe, end on left/right, exit enabled (both ends). palette 3
+	dw $06C6,$0697,$0698,$0699,$069A,$069D  ; pipe, end on left/right, exit enabled (both ends). palette 4
+	dw $06A6,$06A7,$06A8,$06AC,$06AA,$06AD  ; pipe, end on left/right, exit enabled (both ends). palette 5
+	dw $06D6,$06B7,$06B8,$06BC,$06BA,$06BB  ; pipe, end on left/right, exit enabled (both ends). palette 6
+	dw $06C6,$06C7,$06C8,$06CC,$06CA,$06CD  ; pipe, end on left/right, exit enabled (both ends). palette 7
+
 
 TallHorzObjects:
 	REP #$30
@@ -2944,3 +2983,40 @@ ClusterObjsMain:
 	DEC $01
 	BPL .Loop
 	RTS
+
+; ripped from ragey's patch (copy of same routine in bank 0D)
+; if $0F is nonzero, item memory is set at the current position
+do_read_item_memory:
+	PHX
+	PHY
+	LDA $1BA1|!addr
+	STA $9B ; ---xxxxx : horizontal screen number
+	TYA
+	AND #$0F
+	ASL #4
+	STA $9A ; xxxx---- : x-position, low
+	PEI ($00)
+	PEI ($02)
+	REP #$20
+	LDA $57
+	AND #$00F0
+	CLC
+	ADC $6B
+	SEC
+	SBC #$C800
+	STA $00
+	LDA !exlvl_screen_size
+	STA $02
+	JSL item_mem_divide
+	LDA $02
+	STA $98
+	PLA
+	STA $02
+	PLA
+	STA $00
+	SEP #$20
+	JSL read_item_memory
+	PLY
+	PLX
+	RTS
+

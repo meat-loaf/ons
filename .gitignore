@@ -15,3 +15,4 @@ sysLMRestore
 *.ssc
 *.extmod
 amk/SPCs
+amk/asm/SNES/bin/*

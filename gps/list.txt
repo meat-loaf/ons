@@ -36,12 +36,30 @@
 049C:0130        slip.asm
 049D:0130        slip.asm
 049E:0130        slip.asm
+049F:0130        slip.asm
 04AC:0130        slip.asm
 04AD:0130        slip.asm
 04AE:0130        slip.asm
+04AF:0130        slip.asm
 04BC:0130        slip.asm
 04BD:0130        slip.asm
 04BE:0130        slip.asm
+04BF:0130        slip.asm
+
+0670:0133        slip.asm
+0671:0134        slip.asm
+0672:0135        slip.asm
+0673:0136        slip.asm
+0674:0137        slip.asm
+0675:0138        slip.asm
+0676:013B        slip.asm
+0677:013D        slip.asm
+0678:013B        slip.asm
+0679:013C        slip.asm
+067A:013E        slip.asm
+067B:013C        slip.asm
+067C:013F        slip.asm
+067D:013F        slip.asm
 
 0290:0130        ssp/top_vertical_pipe_cap_L.asm
 0291:0130        ssp/top_vertical_pipe_cap_R.asm

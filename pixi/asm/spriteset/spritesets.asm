@@ -525,6 +525,25 @@ mexsprite_spawn_bank2:
                  !mex_off_on_wram_mirror,mex_sprset_init|!bank, RTS)
 warnpc $02D580|!bank
 
+; first 33 bytes used by pixi
+org $02B5EC+$21|!bank
+rot_plat_gfx_stuff:
+	LDY.b #$33
+	LDA   !spr_extra_bits,x
+	AND.b #$04
+	BEQ +
+	LDY.b #$3D
++
+	STY.b $02
+	JSR.w $02D378|!bank  ; get draw info
+	JMP.w $02D848|!bank
+bnc_ball_draw_call_hijack:
+	LDA.b #$33
+	STA.b $02
+	JMP.w $02D813|!bank
+warnpc $02B630|!bank
+
+
 ;; bank 03 hijacks ;;
 
 ; bank3 getdrawinfo

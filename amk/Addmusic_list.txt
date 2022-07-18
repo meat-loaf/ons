@@ -23,5 +23,6 @@ Locals:
 16  deepest_red.txt
 
 18  originals/24 Yoshi's Island.txt
+19  snow_road.txt
 
 1E  sfii_insert_coin.txt

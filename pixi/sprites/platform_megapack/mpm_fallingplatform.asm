@@ -16,10 +16,14 @@ FallingPlatform:
 		JSR DoYouFall
 
 		JSL $01B44F				; Solid platform routine thing
-		BCC +
-		
+		BCC .nofall
+			LDA !spr_extra_bits,x
+			AND #$04
+			BEQ .not_slippery
+			STA !mario_slip
+.not_slippery:
 			LDA !behavior,x
-			BNE +
+			BNE .nofall
 			
 			LDA #$01
 			STA !behavior,x
@@ -27,7 +31,7 @@ FallingPlatform:
 			LDA #20
 			STA !falldown_timer,x
 			
-		+
+.nofall:
 		
 		RTS
 		
