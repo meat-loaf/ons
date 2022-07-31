@@ -6,17 +6,7 @@ prot StarCoinGFX
 ; clear = in front
 ; set = behind
 
-; Extra byte 1 (extension): determines the coin number. Valid values range from 00 to 07.
-; 00 = 1st coin
-; 01 = 2nd coin
-; 02 = 3rd coin
-; 03 = 4th coin
-; 04 = 5th coin
-; 05 = 6th coin
-; 06 = 7th coin
-; 07 = 8th coin
-
-; Extra byte 2 (extension): Position offset
+; Extra byte 1 (extension): Position offset
 ; High nybble is the Y offset, low Nybble is the X offset
 
 ; SHELL-LIKE-COLLECTIBLE
@@ -40,6 +30,11 @@ print "INIT ",pc
 	INC !1632,x      ; make sprite go behind layer 1
 .notset
 	%sprite_init_do_pos_offset(!extra_byte_1,x)
+	%sprite_item_memory_invoc(read_item_memory|!bank)
+	LDA $0F
+	BEQ .nodelete
+	STZ !14C8,x
+.nodelete:
 	RTL
 
 print "MAIN ",pc
@@ -133,6 +128,9 @@ CollectIt:
 	CLC
 	ADC !yoshi_coins_collected
 	%spawn_score_sprite()
+
+	%sprite_item_memory_invoc(write_item_memory|!bank)
+
 
 	; kill self
 	STZ !14C8,x

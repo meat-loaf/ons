@@ -514,29 +514,28 @@ square_objs_low_bytes:
 	db $13,$1E,$24,$2E,$54,$30,$32,$65
 org $0DA8D8
 square_objs_routine:
-	LDA.l .uses_item_mem,x
-	BEQ .no_item_mem
-	STA $09
 	JSR do_read_item_memory
 	LDA $0F
 	BEQ .no_item_mem
-	LDA $09
-	BPL .dont_draw
+	LDA.l .uses_item_mem,x
+	BEQ .no_item_mem
+	BPL .dont_draw_this
 	LDA #$01
 	STA.B [$6E],y
 	LDA #$32
-	BRA .finish_draw
-warnpc $0DA92E
-org $0DA92E
+	BRA .finish_draw_this
+warnpc $0DA928
+org $0DA928
+.dont_draw_this:
+	JSR.w $0DA95D|!bank
+	JMP.w $0DA943|!bank
 	NOP #8
 .no_item_mem:
 	LDA.L .square_objs_high_bytes,x
 	STA.B [$6E],y
 	LDA.L square_objs_low_bytes,x
-.finish_draw
+.finish_draw_this
 	warnpc $0DA940
-org $0DA943
-.dont_draw
 pullpc
 ; a negative value spawns a brown block, a positive one doesn't draw anything.
 ; zero doesn't use item memory
@@ -692,7 +691,6 @@ pipe_square_tiles:
 warnpc $0DDAC4
 pullpc
 pipe_square:
-;	WDM
 	LDY !object_load_pos
 	LDX #$00
 	JSR BackupMap16Lo

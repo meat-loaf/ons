@@ -64,8 +64,6 @@
 .OnScreenY
    LDY !15EA,x
 
-   LDA !spr_spriteset_off,x
-   STA !tile_off_scratch
    RTL
 .Invalid
    PLA             ; destroy the JSL

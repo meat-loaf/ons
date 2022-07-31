@@ -106,8 +106,6 @@ Graphics:
 	AND #$01
 	TAX
 	LDA Tilemap,x
-	CLC
-	ADC !tile_off_scratch
 	STA $0302|!Base2,y
 	LDX $02
 	LDA Props,x
@@ -119,7 +117,7 @@ Graphics:
 	; effectively loads 0 into A (on sane configurations).
 	; saves 1 cycle over LDA.b #$00
 	TDC
-	JSL $01B7B3
+	%FinishOAMWrite()
 	RTS
 
 Props:

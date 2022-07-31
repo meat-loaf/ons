@@ -24,8 +24,8 @@ org $02D7BB|!bank
 ;org $02D85F|!bank
 ;	JSR.w store_tile1_bank2
 
-org $02D754|!bank
-	JSR.w bnc_ball_draw_call_hijack
+;org $02D754|!bank
+;	JSR.w bnc_ball_draw_call_hijack
 
 org $02D732|!bank
 	JSL.l rot_plat_exbit_slip|!bank

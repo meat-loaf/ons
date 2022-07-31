@@ -128,9 +128,94 @@ CustExObjF4:
 CustExObjF5:
 CustExObjF6:
 CustExObjF7:
+; 7 square ice blocks: draw if flag unset
 CustExObjF8:
+	LDA !level_state_flags_curr
+	AND.b #%00000001
+	BEQ CustExObjF9
+	LDA.b #$03
+	BRA CustExObjF9_draw
+; 7 square ice blocks: always draw
 CustExObjF9:
+	LDA #$07
+.draw:
+	STA.b $0A  ; loop counter
+
+	LDY !object_position
+	JSR BackUpPtrs
+	LDX.b #$00
+.loop:
+	LDA .tbl,x
+	STA.b [$6B],y
+	LDA.b #$04
+	STA.b [$6E],y
+	JSR ShiftObjRight
+	INX
+	LDA .tbl,x
+	STA.b [$6B],y
+	LDA.b #$04
+	STA.b [$6E],y
+	DEC $0A
+	BMI .done
+	JSR RestorePtrs
+	JSR ShiftObjDown
+	INX
+	LDA .tbl,x
+	STA.b [$6B],y
+	LDA.b #$04
+	STA.b [$6E],y
+	JSR ShiftObjRight
+	INX
+	LDA .tbl,x
+	STA.b [$6B],y
+	LDA.b #$04
+	STA.b [$6E],y
+	DEC $0A
+	BMI .done
+	JSR RestorePtrs
+	JSR ShiftObjDown
+	LDX #$00
+	BRA .loop
+.done
+	RTS
+.tbl:
+	db $9C,$9D,$AC,$AD
+; object drawn if bit 0 of !level_state_flags_curr is set:
+; ice block bridge, 16 tiles (1 screen) wide
 CustExObjFA:
+	LDA !level_state_flags_curr
+	AND.b #%00000001
+	BEQ .no_draw
+	LDA.b #$26
+	STA !ObjScratch+0
+	STZ !ObjScratch+1
+
+	LDY !object_position
+	JSR BackUpPtrs
+	LDA.b #$01
+	STA.b $0B
+	LDA.b #$0F
+	STA.b $0A
+.loop:
+	LDA !ObjScratch+0
+	STA [$6B],y
+	LDA !ObjScratch+1
+	STA [$6E],y
+	JSR ShiftObjRight
+	DEC $0A
+	BPL .loop
+	JSR RestorePtrs
+	DEC $0B
+	BMI .no_draw
+	JSR ShiftObjDown
+	LDA.b #$0F
+	STA.b $0A
+	LDA.b #$BE
+	STA !ObjScratch+0
+	LDA.b #$04
+	STA !ObjScratch+1
+	BRA .loop
+.no_draw:
 	RTS
 CustExObjFB:
 	LDA #$0D
@@ -286,6 +371,7 @@ CustObj06:
 CustObj07:
 	LDA !object_argument
 	JMP DoubleTallHorzObjAlternateRows
+; TODO
 CustObj08:
 	LDA !object_argument
 	JMP AlternatingBrickObjs
@@ -297,6 +383,7 @@ CustObj09:
 CustObj0A:
 	LDA !object_argument
 	JMP ClusterNormObjects
+
 CustObj0B:
 CustObj0C:
 CustObj0D:
@@ -2333,13 +2420,13 @@ WideVertObjTiles:
 	dw $0577,$0578,$0577,$0578,$0577,$0578 ; tree trunk. replaces ledges and lava
 	dw $0650,$0651,$0652,$0653,$0650,$0651 ; vertical pipe, palette 0
 	dw $0660,$0661,$0662,$0663,$0660,$0661 ; vertical pipe, palette 1
-	dw $0670,$0671,$0672,$0673,$0670,$0671 ; vertical pipe, palette 2
+	dw $0670,$0671,$0672,$0673,$0670,$0671 ; vertical pipe, palette 2, slippery
 	dw $0680,$0681,$0682,$0683,$0680,$0681 ; vertical pipe, palette 3
 	dw $0690,$0691,$0692,$0693,$0690,$0691 ; vertical pipe, palette 4
 	dw $06A0,$06A1,$06A2,$06A3,$06A0,$06A1 ; vertical pipe, palette 5
 	dw $06B0,$06B1,$06B2,$06B3,$06B0,$06B1 ; vertical pipe, palette 6
 	dw $06C0,$06C1,$06C2,$06C3,$06C0,$06C1 ; vertical pipe, palette 7
-	dw $FFFF,$FFFF,$FFFF,$FFFF,$FFFF,$FFFF  ; available slot
+	dw $0672,$0673,$0672,$0673,$0672,$0673 ; vertical pipe, palette 2, slippery, no ends
 	dw $FFFF,$FFFF,$FFFF,$FFFF,$FFFF,$FFFF  ; available slot
 	dw $FFFF,$FFFF,$FFFF,$FFFF,$FFFF,$FFFF  ; available slot
 	dw $FFFF,$FFFF,$FFFF,$FFFF,$FFFF,$FFFF  ; available slot
@@ -2348,7 +2435,7 @@ WideVertObjTiles:
 	dw $FFFF,$FFFF,$FFFF,$FFFF,$FFFF,$FFFF  ; available slot
 	dw $FFFF,$FFFF,$FFFF,$FFFF,$FFFF,$FFFF  ; available slot
 	dw $0654,$0655,$0652,$0653,$0654,$0655 ; vertical pipe, palette 4, exit enabled (both ends)
-	dw $0664,$0665,$0662,$0663,$0664,$0665 ; vertical pipe, palette 5, exit enabled (both ends)
+	dw $0664,$0665,$0662,$0663,$0664,$0665 ; vertical pipe, palette 5, exit enabled (both ends), slippery
 	dw $0674,$0675,$0672,$0673,$0674,$0675 ; vertical pipe, palette 2, exit enabled (both ends)
 	dw $0684,$0685,$0682,$0683,$0684,$0685 ; vertical pipe, palette 3, exit enabled (both ends)
 	dw $0694,$0695,$0692,$0693,$0694,$0695 ; vertical pipe, palette 4, exit enabled (both ends)
@@ -2466,14 +2553,15 @@ TallHorzObjTiles:
 	dw $02A6,$02DC,$02A8,$02A9,$02DD,$02AB  ; blue, special turn right
 	dw $02A6,$02DE,$02A8,$02A9,$02DF,$02AB  ; blue, special turn down
 	dw $FFFF,$FFFF,$FFFF,$FFFF,$FFFF,$FFFF  ; available slot
-	dw $0656,$0657,$0658,$0659,$065A,$065B  ; pipe, end on left/right. palette 0
-	dw $0666,$0667,$0668,$0669,$066A,$066B  ; pipe, end on left/right. palette 1
-	dw $0676,$0677,$0678,$0679,$067A,$067B  ; pipe, end on left/right. palette 2
-	dw $0686,$0687,$0688,$0689,$068A,$068B  ; pipe, end on left/right. palette 3
-	dw $0696,$0697,$0698,$0699,$069A,$069B  ; pipe, end on left/right. palette 4
-	dw $06A6,$06A7,$06A8,$06A9,$06AA,$06AB  ; pipe, end on left/right. palette 5
-	dw $06B6,$06B7,$06B8,$06B9,$06BA,$06BB  ; pipe, end on left/right. palette 6
-	dw $06C6,$06C7,$06C8,$06C9,$06CA,$06CB  ; pipe, end on left/right. palette 7
+	dw $0656,$0657,$0658,$0659,$065A,$065B  ; horizontal pipe, end on left/right. palette 0
+	dw $0666,$0667,$0668,$0669,$066A,$066B  ; horizontal pipe, end on left/right. palette 1
+	dw $0676,$0677,$0678,$0679,$067A,$067B  ; horizontal pipe, end on left/right. palette 2, slip
+	dw $0686,$0687,$0688,$0689,$068A,$068B  ; horizontal pipe, end on left/right. palette 3
+	dw $0696,$0697,$0698,$0699,$069A,$069B  ; horizontal pipe, end on left/right. palette 4
+	dw $06A6,$06A7,$06A8,$06A9,$06AA,$06AB  ; horizontal pipe, end on left/right. palette 5
+	dw $06B6,$06B7,$06B8,$06B9,$06BA,$06BB  ; horizontal pipe, end on left/right. palette 6
+	dw $06C6,$06C7,$06C8,$06C9,$06CA,$06CB  ; horizontal pipe, end on left/right. palette 7
+	dw $0677,$0677,$0677,$067A,$067A,$067A  ; horizontal pipe, end on left/right. palette 2, slip, no ends
 	dw $FFFF,$FFFF,$FFFF,$FFFF,$FFFF,$FFFF  ; available slot
 	dw $FFFF,$FFFF,$FFFF,$FFFF,$FFFF,$FFFF  ; available slot
 	dw $FFFF,$FFFF,$FFFF,$FFFF,$FFFF,$FFFF  ; available slot
@@ -2481,15 +2569,14 @@ TallHorzObjTiles:
 	dw $FFFF,$FFFF,$FFFF,$FFFF,$FFFF,$FFFF  ; available slot
 	dw $FFFF,$FFFF,$FFFF,$FFFF,$FFFF,$FFFF  ; available slot
 	dw $FFFF,$FFFF,$FFFF,$FFFF,$FFFF,$FFFF  ; available slot
-	dw $FFFF,$FFFF,$FFFF,$FFFF,$FFFF,$FFFF  ; available slot
-	dw $0656,$0657,$0658,$065C,$065A,$065D  ; pipe, end on left/right, exit enabled (both ends). palette 0
-	dw $0666,$0667,$0668,$066C,$066A,$066D  ; pipe, end on left/right, exit enabled (both ends). palette 1
-	dw $0676,$0677,$0678,$067C,$067A,$067D  ; pipe, end on left/right, exit enabled (both ends). palette 2
-	dw $0686,$0687,$0688,$068C,$068A,$068D  ; pipe, end on left/right, exit enabled (both ends). palette 3
-	dw $06C6,$0697,$0698,$0699,$069A,$069D  ; pipe, end on left/right, exit enabled (both ends). palette 4
-	dw $06A6,$06A7,$06A8,$06AC,$06AA,$06AD  ; pipe, end on left/right, exit enabled (both ends). palette 5
-	dw $06D6,$06B7,$06B8,$06BC,$06BA,$06BB  ; pipe, end on left/right, exit enabled (both ends). palette 6
-	dw $06C6,$06C7,$06C8,$06CC,$06CA,$06CD  ; pipe, end on left/right, exit enabled (both ends). palette 7
+	dw $0656,$0657,$0658,$065C,$065A,$065D  ; horizontal pipe, end on left/right, exit enabled (both ends). palette 0
+	dw $0666,$0667,$0668,$066C,$066A,$066D  ; horizontal pipe, end on left/right, exit enabled (both ends). palette 1
+	dw $0676,$0677,$0678,$067C,$067A,$067D  ; horizontal pipe, end on left/right, exit enabled (both ends). palette 2
+	dw $0686,$0687,$0688,$068C,$068A,$068D  ; horizontal pipe, end on left/right, exit enabled (both ends). palette 3
+	dw $06C6,$0697,$0698,$0699,$069A,$069D  ; horizontal pipe, end on left/right, exit enabled (both ends). palette 4
+	dw $06A6,$06A7,$06A8,$06AC,$06AA,$06AD  ; horizontal pipe, end on left/right, exit enabled (both ends). palette 5
+	dw $06D6,$06B7,$06B8,$06BC,$06BA,$06BB  ; horizontal pipe, end on left/right, exit enabled (both ends). palette 6
+	dw $06C6,$06C7,$06C8,$06CC,$06CA,$06CD  ; horizontal pipe, end on left/right, exit enabled (both ends). palette 7
 
 
 TallHorzObjects:

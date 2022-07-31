@@ -32,7 +32,7 @@ endif
 !frames_before_waterfall_reset = $04
 !frames_for_on_off_cooldown    = $0A
 
-!level_status_flag_enable_slip       = %00000001
+!level_status_flag_always_slip       = %00000001
 !level_status_flag_goal_walk_left    = %00000010
 !level_status_flag_sprite_water      = %10000000
 

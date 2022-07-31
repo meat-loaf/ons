@@ -41,3 +41,18 @@ macro sprite_init_do_pos_offset(spr_table,index)
 
 endmacro
 
+macro sprite_item_memory_invoc(routine)
+	LDA !D8,x
+	AND #$F0
+	STA $98
+	LDA !E4,x
+	AND #$F0
+	STA $9A
+	LDA !14D4,x
+	AND #$F0
+	STA $99
+	LDA !14E0,x
+	AND #$F0
+	STA $9B
+	JSL <routine>
+endmacro

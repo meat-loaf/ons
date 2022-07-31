@@ -31,13 +31,18 @@
 49 growing_pipe_49.cfg
 4B PipeLakitu.json
 
+4F piranha_plant_v2.json
+
 54 sideways_ninji.cfg
 
-6E dino_rhino.cfg
+60 flat_switch_60.cfg
+
 70 sandstormspawn.json
 
 80 poison_mushroom.cfg
 9E ball-n-chain-pendulum.cfg
+A0 rotating-gray-platform-pendulum-slip.cfg
+A3 rotating-gray-platform-pendulum.cfg
 
 SHOOTER:
 C0 LeafShooter.cfg

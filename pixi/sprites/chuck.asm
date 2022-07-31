@@ -580,8 +580,12 @@ Return02C478:
 	RTS                       ; / Return if no free slots
 
 ADDR_02C479:
-	LDA #$0D                ; \ Extended sprite = Baseball
-	STA $170B|!Base2,y             ; /
+	LDA #$0D                  ; \ Extended sprite = Baseball
+	STA $170B|!Base2,y        ; /
+	LDA !spr_spriteset_off,x
+	TYX
+	STA !ext_spriteset_off,x
+	LDX $15E9|!addr
 	LDA !E4,x
 	STA $00
 	LDA !14E0,x
@@ -1225,7 +1229,6 @@ ADDR_02C8D8:
 	EOR $0F
 	STA $0303|!Base2,y
 	LDA ChuckHeadTiles,x
-	CLC : ADC !tile_off_scratch
 	STA $0302|!Base2,y
 	TYA
 	LSR
@@ -1344,11 +1347,8 @@ ADDR_02CA36:
 	LDA $01
 	STA $0305|!Base2,y
 	LDA ChuckBody1,x
-	CLC
-	ADC !tile_off_scratch
 	STA $0302|!Base2,y
 	LDA ChuckBody2,x
-	ADC !tile_off_scratch
 	STA $0306|!Base2,y
 
 	LDA $08
@@ -1422,8 +1422,6 @@ ADDR_02CAA6:
 	STA $0301|!Base2,y
 	STA $0305|!Base2,y
 	LDA ClappinChuckTiles,x
-	CLC
-	ADC !tile_off_scratch
 	STA $0302|!Base2,y
 	STA $0306|!Base2,y
 	LDA $08
@@ -1464,8 +1462,6 @@ ADDR_02CAFC:
 	ADC $00
 	STA $0304|!Base2,y
 	LDA #!ChuckShoulderTile
-	CLC
-	ADC !tile_off_scratch
 	STA $0302|!Base2,y
 	INC A
 	STA $0306|!Base2,y
@@ -1522,7 +1518,6 @@ ADDR_02CB5E:
 	STA $0301|!Base2,y
 
 	LDA #!ChuckBaseballTile
-	CLC : ADC $0F
 	STA $0302|!Base2,y
 
 	LDA #$09
@@ -1598,7 +1593,6 @@ ADDR_02CBB9:
 	STA $0301|!Base2,y
 	LDA DigChuckTiles,x
 
-	CLC : ADC !tile_off_scratch
 	STA $0302|!Base2,y
 
 	TYA

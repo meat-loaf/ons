@@ -167,7 +167,6 @@ PROP:	db $00,$00
 	db $40,$00
 
 GFX:
-wdm
 	%GetDrawInfo()
 	STZ $08		;reset
 	STZ $06

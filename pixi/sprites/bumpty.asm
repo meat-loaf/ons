@@ -6,11 +6,16 @@
 ;
 ;Uses first extra bit: YES
 ;Clear
-;X0 = Walks
-;X1 = Tackles
+;  Walk/Tackle
+;
 ;Set
-;X0 = Flies
-;X1 = Flies and won't change direction
+; Flies left and right in a wave, back and forth/flies left or right and doesn't change direction
+;
+; Extra Byte 1: bitfield ------dk
+; -: unused
+; d: initial facing direction: unset is left, set is right
+; k: kind. Toggles the alternate behavior, as controlled by the extra bit.
+;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 !BoingSFX = $08
@@ -711,7 +716,6 @@ NoFlipLegHorz:		CLC
 			STA $0301|!Base2,y
 
 			LDA LegTileMap,x
-			CLC : ADC !tile_off_scratch
 			STA $0302|!Base2,y
 
 			LDA LegProperty,x
@@ -759,7 +763,6 @@ DrawBodyTile:		TYA
 
 			LDX $04
 			LDA BodyTile,x
-			CLC : ADC !tile_off_scratch
 			STA $0302|!Base2,y
 
 			INY

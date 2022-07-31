@@ -58,8 +58,6 @@
 !MoveTStop = $20		; time below which the sprite will not move back and forth
 
 Tilemap:
-;	db $00,$02,$04,$06
-;	db $A0,$A2,$A4,$A6	; closed mouth sideways, open, closed upright, open
 	db $08,$0A,$0C,$0E
 
 
@@ -335,7 +333,6 @@ S03_SpitFire:
 ;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 SubGFX:
-;	JSL !GetDrawInfoPlus
 	%GetDrawInfo()
 	LDA !15F6,x
 	ORA $64
@@ -359,16 +356,12 @@ SubGFX:
 	STA $0301|!Base2,y
 	LDX $04
 	LDA.w Tilemap,x
-;	CLC
-;	ADC $02
-	CLC : ADC !tile_off_scratch
 	STA $0302|!Base2,y
 	LDA $03
 	STA $0303|!Base2,y
 	LDX $15E9|!Base2
 	LDY #$02
 	LDA #$00
-;	JSL $01B7B3|!BankB
 	%FinishOAMWrite()
 	RTS
 

@@ -83,7 +83,7 @@ endif
 ; Standard Sprite table (12 bytes on non-SA1, 20 bytes on SA1) used to hold sprite offset.
 !spriteset_offset = !spr_spriteset_off
 ; Extended Sprite table (10 bytes)
-!ext_spriteset_offset = $9D00|!extram_bank
+!ext_spriteset_offset = !ext_spriteset_off
 ; Cluster Sprite table (20 bytes)
 !cls_spriteset_offset = !cls_spriteset_off
 ; Minor extended sprite table (12 bytes)
@@ -526,7 +526,8 @@ mexsprite_spawn_bank2:
 warnpc $02D580|!bank
 
 ; first 33 bytes used by pixi
-org $02B5EC+$21|!bank
+org $02B5EC+$22|!bank
+;org $02B60D
 rot_plat_gfx_stuff:
 	LDY.b #$33
 	LDA   !spr_extra_bits,x
@@ -607,7 +608,8 @@ sprset_init:
 	PHX
 
 	LDA.b #spritesets>>16
-	STA.b $8C
+;	STA.b $8C
+	STA.b $8F
 
 if !pixi_installed
 	LDA   !extra_bits,x
@@ -630,10 +632,10 @@ endif
 	TAX
 	LDA.l spriteset_off_ptrs,x
 .custom_done
-	STA.b $8A
+	STA.b $8D
 	SEP #$30
 	LDY   !current_spriteset
-	LDA.b [$8A],y
+	LDA.b [$8D],y
 	PLX
 	STA   !spriteset_offset,x
 	PLY

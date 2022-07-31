@@ -1,3 +1,0 @@
-init:
-	WDM
-	RTL

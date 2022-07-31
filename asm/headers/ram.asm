@@ -91,7 +91,7 @@ includeonce
 !asstd_state_flags_1    = $0DDB|!addr
 
 ; value to use when slippery blocks can be slippery
-!mario_slip             = $0DDC|!addr
+!mario_slip             = $140A|!addr
 
 !mario_on_ground        = $13EF|!addr
 
@@ -99,6 +99,9 @@ includeonce
 
 !horz_scroll_setting    = $1411|!addr
 !vert_scroll_setting    = $1412|!addr
+
+!level_state_flags_curr = $1415|!addr      ; current live set
+!level_state_flags_midp = $1416|!addr      ; midpoint backup set
 
 !yoshi_coins_collected  = $1420|!addr
 
@@ -163,12 +166,10 @@ includeonce
 ; -------w : Disable writing.
 !item_memory_mask = $18BB|!addr
 
-
-
 !level_general_purpose_1 = $1923|!addr
 !level_general_purpose_2 = !level_general_purpose_1+$01
 
-; XXX: in SA1 add |!addr define to these
+; XXX: in SA1 add |!addr define to these, but you cant do them all!
 !spr_extra_bits         = $19F8                            ; 384 bytes free due to relocating item memory (up until $1B84)
 !spr_new_sprite_num     = !spr_extra_bits+!num_sprites     ; $1A04
 !spr_extra_byte_1       = !spr_new_sprite_num+!num_sprites ; $1A10
@@ -180,7 +181,8 @@ includeonce
 !spr_shoot_exbyte_3     = !spr_shoot_exbyte_2+!num_sprites ; $1A58 currently not setup?
 !pixi_new_code_flag     = !spr_shoot_exbyte_3+!num_sprites ; $1A64
 !spr_spriteset_off      = !pixi_new_code_flag+$1           ; $1A65 (12 bytes)
-!cls_spriteset_off      = !spr_spriteset_off+$12           ; $1A71 (20 bytes)
+!cls_spriteset_off      = !spr_spriteset_off+$0C           ; $1A71 (20 bytes)
+!ext_spriteset_off      = !cls_spriteset_off+$14           ; $1A85 (x bytes)
 
 ; alt name of above
 !spr_shooter_extra_byte_1 = !spr_shoot_exbyte_1

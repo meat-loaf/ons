@@ -1,5 +1,5 @@
 load:
-	LDA #(!level_status_flag_enable_slip|!level_status_flag_slope_no_dirt)
+	LDA #!level_status_flag_slope_no_dirt
 	TSB !level_status_flags_1
 	RTL
 init:

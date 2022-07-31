@@ -339,11 +339,9 @@ LDA #$80
 .NoAlter
 STA $02
 
-WDM
 LDA !1602,x			;
 TAX				;
 LDA Tilemap,x			; set the sprite tilemap
-CLC : ADC !tile_off_scratch
 STA $0302|!Base2,y			;
 
 LDX $15E9|!Base2			;

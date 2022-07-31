@@ -48,7 +48,6 @@ GraphicLoop:
 			LDA #$01		; middle of the platform
 			
 		Draw:
-			CLC : ADC !tile_off_scratch
 			STA $02			; store which tile here
 				
 			TXA				; x times 16 = tile x-disp

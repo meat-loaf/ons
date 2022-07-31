@@ -722,7 +722,6 @@ SubGFX:
 	ADC $05
 	TAX
 	LDA .Tilemap,x
-	CLC : ADC !tile_off_scratch
 	PLX
 	STA $0302|!addr,y
 
@@ -802,7 +801,6 @@ SubGFX:
 	ADC $05
 	TAX
 	LDA .Tilemap,x
-	CLC : ADC !tile_off_scratch
 	PLX
 	STA $0302|!addr,y
 

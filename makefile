@@ -32,6 +32,8 @@ asm_tweaks_dir=${asm_dir}/tweaks
 
 GEN_ROUTINE_FILES=$(wildcard ${asm_dir}/headers/routines/*.asm)
 
+ASM_HEADERS=$(wildcard ${asm_dir}/headers/*.asm) $(wildcard ${asm_dir}/headers/**/*.asm)
+
 M16_FILE=AllMap16.map16
 
 ASM_PATCHES=custom_bounce_blocks.asm dsx.asm oam_alloc.asm death_restart.asm
@@ -156,10 +158,10 @@ OBJTOOL_DIR=${asm_features_dir}/objectool
 one_night_stand: ${CLEAN_ROM_FULL} ${TS_DIR} ${ROM_NAME} ${CORE_BUILD_RULES}
 
 test: one_night_stand
-	${TEST_EMU} ${ROM_NAME}
+	${TEST_EMU} ${ROM_NAME} & >/dev/null 2>&1
 
 debug: one_night_stand
-	${DBG_EMU} ${ROM_NAME}
+	${DBG_EMU} ${ROM_NAME} &
 
 all_export: level_export m16_export globalani_export overworld_export
 
@@ -207,16 +209,16 @@ ${AMK_FAKE_TS}: ${AMK_MUSIC_DEPS}
 	cd ./amk && WINEPREFIX=~/.wineprefix/smw_amk wine AddmusicK.exe ../${ROM_NAME}
 	touch $@
 
-${PIXI_FAKE_TS}: ${pixi_asm_sources} ${PIXI_LIST} ${INIT_LEVEL_TS} ${OBJTOOL_TS}
+${PIXI_FAKE_TS}: ${pixi_asm_sources} ${PIXI_LIST} ${INIT_LEVEL_TS} ${OBJTOOL_TS} ${ASM_HEADERS}
 	${PIXI_DIR}/pixi ${PIXI_FLAGS} -l ${PIXI_LIST} ${ROM_NAME}
 	touch $@
 
-${GPS_FAKE_TS}: ${gps_asm_sources} ${GPS_DIR}/list.txt
+${GPS_FAKE_TS}: ${gps_asm_sources} ${GPS_DIR}/list.txt ${ASM_HEADERS}
 	cd gps && ./gps ../${ROM_NAME} ${GPS_FLAGS}
 	touch $@
 
 # paths are relative to the uberasm directory, no matter where its run from...insanity
-${UBER_FAKE_TS}: ${UBERASM_ASM_FILES}
+${UBER_FAKE_TS}: ${UBERASM_ASM_FILES} ${ASM_HEADERS}
 	bash -c 'mono ${UBERASM_DIR}/UberASMTool.exe list.txt ../${ROM_NAME} 2>/dev/null <<< '\n' && echo'
 	touch $@
 

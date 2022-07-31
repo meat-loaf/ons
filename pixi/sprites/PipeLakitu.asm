@@ -255,11 +255,8 @@ CODE_02E9EC:
 	LDA !1602,X
 	TAX
 	LDA PipeLakitu1,X
-	CLC
-	ADC !tile_off_scratch
 	STA $0302|!Base2,Y
 	LDA #!BottomTile
-	ADC !tile_off_scratch
 	STA $0306|!Base2,Y
 	PLX
 	LDA !157C,X
@@ -272,5 +269,5 @@ CODE_02E9EC:
 	STA $0307|!Base2,Y
 	LDA #$01
 	LDY #$02
-	JSL $01B7B3|!BankB
+	%FinishOAMWrite()
 	RTS                       ; Return

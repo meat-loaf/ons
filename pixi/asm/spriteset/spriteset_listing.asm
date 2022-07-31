@@ -222,7 +222,7 @@ if !pixi_installed
 	dw spritesets_null_spriteset          ; custom sprite 0E
 	dw spritesets_null_spriteset          ; custom sprite 0F
 	dw spritesets_null_spriteset          ; custom sprite 10 - yi arrowlift (dyn)
-	dw spritesets_null_spriteset          ; custom sprite 11 - yi spike
+	dw spritesets_yi_spike                ; custom sprite 11 - yi spike
 	dw spritesets_null_spriteset          ; custom sprite 12 - yi spinning spike mace (dyn)
 	dw spritesets_null_spriteset          ; custom sprite 13 - yi pswitch (dyn)
 	dw spritesets_null_spriteset          ; custom sprite 14 - yi chomp rock (dyn)
@@ -301,7 +301,7 @@ if !pixi_installed
 	dw spritesets_null_spriteset          ; custom sprite 5D
 	dw spritesets_null_spriteset          ; custom sprite 5E
 	dw spritesets_null_spriteset          ; custom sprite 5F
-	dw spritesets_null_spriteset          ; custom sprite 60
+	dw spritesets_switch                  ; custom sprite 60 - event switch
 	dw spritesets_null_spriteset          ; custom sprite 61
 	dw spritesets_null_spriteset          ; custom sprite 62
 	dw spritesets_null_spriteset          ; custom sprite 63
@@ -365,10 +365,10 @@ if !pixi_installed
 	dw spritesets_null_spriteset          ; custom sprite 9D
 	dw spritesets_null_spriteset          ; custom sprite 9E
 	dw spritesets_null_spriteset          ; custom sprite 9F
-	dw spritesets_null_spriteset          ; custom sprite A0 
+	dw spritesets_wood_checkered_plats    ; custom sprite A0 - pendulum platform (slippery)
 	dw spritesets_null_spriteset          ; custom sprite A1
 	dw spritesets_null_spriteset          ; custom sprite A2
-	dw spritesets_null_spriteset          ; custom sprite A3
+	dw spritesets_wood_checkered_plats    ; custom sprite A3 - pendulim platform (noslip)
 	dw spritesets_null_spriteset          ; custom sprite A4
 	dw spritesets_null_spriteset          ; custom sprite A5
 	dw spritesets_null_spriteset          ; custom sprite A6
@@ -516,7 +516,7 @@ endif ; remap_koopa
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 30-37
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 38-3F
 .chucks:
-	db $00,$20,$00,$00,$00,$00,$00,$00    ; spritesets 00-07
+	db $00,$20,$00,$00,$00,$00,$00,$80    ; spritesets 00-07
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 08-0F
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 10-17
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 18-1F
@@ -744,7 +744,7 @@ endif
 .rock_grass_plats:
 .wood_checkered_plats:
 	db $80,$00,$00,$00,$00,$00,$00,$00    ; spritesets 00-07
-	db $40,$00,$00,$80,$00,$00,$00,$00    ; spritesets 08-0F
+	db $40,$00,$00,$80,$A0,$00,$00,$00    ; spritesets 08-0F
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 10-17
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 18-1F
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 20-27
@@ -809,7 +809,7 @@ endif
 .cluster_spawner:
 .bumpty:
 	db $00,$00,$00,$00,$00,$00,$00,$40    ; spritesets 00-07
-	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 08-0F
+	db $00,$00,$00,$00,$60,$00,$00,$00    ; spritesets 08-0F
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 10-17
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 18-1F
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 20-27
@@ -818,6 +818,15 @@ endif
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 38-3F
 .ninji:
 	db $00,$00,$00,$00,$00,$00,$00,$60    ; spritesets 00-07
+	db $00,$00,$00,$00,$80,$00,$00,$00    ; spritesets 08-0F
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 10-17
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 18-1F
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 20-27
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 28-2F
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 30-37
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 38-3F
+.yi_spike:
+	db $00,$00,$00,$00,$00,$00,$00,$80    ; spritesets 00-07
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 08-0F
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 10-17
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 18-1F
@@ -825,7 +834,15 @@ endif
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 28-2F
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 30-37
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 38-3F
-
+.switch:
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 00-07
+	db $00,$00,$00,$00,$20,$00,$00,$00    ; spritesets 08-0F
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 10-17
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 18-1F
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 20-27
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 28-2F
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 30-37
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 38-3F
 
 if !hijack_lm_code == 0
 ;
@@ -841,13 +858,12 @@ spriteset_gfx_listing:
 	dw $0105,$0110,$0104,$011A,$010A,$0109,$0108,$0107		; spriteset 04: all chucks, spike top, buzzy, swooper, blargg
 	dw $007F,$007F,$007F,$010D,$0100,$0112,$0111,$0110		; spriteset 05: boos, big boo
 	dw $007F,$007F,$007F,$007F,$007F,$007F,$011F,$007F		; spriteset 06: lakitu
-	;dw $0124,$0123,$0122,$0121,$0120,$0119,$0118,$0110		; spriteset 07: castle -- dry bones, thwomps, climbing koopas, etc
-	dw $007F,$007F,$007F,$007F,$011D,$011C,$010D,$0108		; spriteset 07: snow outside -- platforms, piranhas, bumptys, ninji
+	dw $007F,$007F,$007F,$010C,$011D,$011C,$010D,$0108		; spriteset 07: snow outside -- platforms, piranhas, bumptys, ninji, yi spike
 	dw $007F,$007F,$007F,$007F,$007F,$0111,$0127,$007F		; spriteset 08: athletic
 	dw $007F,$007F,$0110,$010F,$010A,$0128,$0108,$0107		; spriteset 09: underground with diggin chucks
 	dw $007F,$007F,$007F,$007F,$012B,$012A,$0129,$007F		; spriteset 0A: mechakoopa
 	dw $007F,$007F,$010F,$0108,$010C,$010E,$0107,$010D		; spriteset 0B: wiggler, volcano lotus, piranha plants, platforms, mega mole
-	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 0C: none
+	dw $007F,$007F,$0108,$011D,$011C,$0105,$011E,$0103		; spriteset 0C: snow 2: chucks (pitchin), bumpty, ninji, plats
 	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 0D: none
 	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 0E: none
 	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 0F: none

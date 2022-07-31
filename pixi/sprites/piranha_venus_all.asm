@@ -485,7 +485,7 @@ JSR DrawHead		; the head tile is always drawn
 PLA			;
 LDY #$02			;
 LDX $15E9|!Base2		;
-JSL $01B7B3|!BankB		;
+%FinishOAMWrite()
 RTS			;
 
 StemOnly:		;
@@ -513,7 +513,6 @@ ADC HeadYOffset,x		; set the Y offset for the head tile
 STA $0301|!Base2,y		;
 
 LDA HeadTilemap,x		; set the tile for the head
-CLC : ADC !tile_off_scratch
 STA $0302|!Base2,y
 
 LDX $15E9|!Base2		;
@@ -564,7 +563,6 @@ ADC StemYOffset,x		; set the Y offset for the stem tile
 STA $0301|!Base2,y		;
 
 LDA StemTilemap,x		; set the tile for the stem
-CLC : ADC !tile_off_scratch
 STA $0302|!Base2,y
 
 LDA TileFlip,x		; load the XY flip for the tiles

@@ -87,12 +87,15 @@ Run:
 	;STA !15F6,x	;
 
 	LDA #$00 : %SubOffScreen()
+	LDA !14C8,x
+	CMP #($03+$01)
+	BCC RETURN_L
 	JSR SubGFX			;draw sprite
 
 	LDA !14C8,x
-	CMP #$08          	 
+	EOR #$08
+	ORA $9D			;locked sprites?
 	BNE RETURN_L           
-	LDA $9D			;locked sprites?
 	ORA !15D0,x		;yoshi eating?
 	BNE RETURN_L
 
@@ -215,7 +218,8 @@ RETURNGL:
 
 SubGFX:
 	%GetDrawInfo()
-	LDA !15F6,x	;properties...
+	LDA !15F6,x	; properties...
+	ORA #$01        ; for skooshed ani, 15F6 should have no tilemap high bit
 	STA !PROPRAM
 
 	LDA !1570,x	;test for ROTATING case

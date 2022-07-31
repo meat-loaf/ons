@@ -1,6 +1,26 @@
 !hdma_free_indir = $7FC7FC
 
 init:
+	LDX.b #!num_sprites-1
+.loop:
+	LDA   !14C8,x
+	BEQ.b .found
+	DEX
+	BPL.b .loop
+	BRA .noslot
+.found:
+	LDA.b #$70
+	STA   !9E,x
+	JSL.l $07F7D2|!bank
+	LDA   !9E,x
+	STA   !spr_new_sprite_num,x
+	JSL.l $0187A7|!bank
+	LDA.b #$08
+	STA   !spr_extra_bits,x
+	LDA.b #$01
+	STA   !14C8,x
+.noslot:
+
 	REP #$20
 	; ram init for scrolling
 	LDA.w #$0000

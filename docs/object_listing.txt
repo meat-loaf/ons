@@ -56,13 +56,14 @@
 |           |                                     | Arg 0F: thicc tree trunk for forests              |
 |           |                                     | Arg 10: pipe, end on top/bottom, palette 0        |
 |           |                                     | Arg 11: pipe, end on top/bottom, palette 1        |
-|           |                                     | Arg 12: pipe, end on top/bottom, palette 2        |
+|           |                                     | Arg 12: pipe, end on top/bottom, palette 2 (slip) |
 |           |                                     | Arg 13: pipe, end on top/bottom, palette 3        |
 |           |                                     | Arg 14: pipe, end on top/bottom, palette 4        |
 |           |                                     | Arg 15: pipe, end on top/bottom, palette 5        |
 |           |                                     | Arg 16: pipe, end on top/bottom, palette 6        |
 |           |                                     | Arg 17: pipe, end on top/bottom, palette 7        |
-|           |                                     | Arg 18 through 1F: available slots                |
+|           |                                     | Arg 18: pipe, no ends, palette 2 (slip)           |
+|           |                                     | Arg 19 through 1F: available slots                |
 |           |                                     | Arg 20: pipe, end on top/bottom, palette 0 (exit) |
 |           |                                     | Arg 21: pipe, end on top/bottom, palette 1 (exit) |
 |           |                                     | Arg 22: pipe, end on top/bottom, palette 2 (exit) |
@@ -103,13 +104,14 @@
 |           |                                     | Arg 0F: available slot                            |
 |           |                                     | Arg 10: pipe, end on left/right, palette 0        |
 |           |                                     | Arg 11: pipe, end on left/right, palette 1        |
-|           |                                     | Arg 12: pipe, end on left/right, palette 2        |
+|           |                                     | Arg 12: pipe, end on left/right, palette 2 (slip) |
 |           |                                     | Arg 13: pipe, end on left/right, palette 3        |
 |           |                                     | Arg 14: pipe, end on left/right, palette 4        |
 |           |                                     | Arg 15: pipe, end on left/right, palette 5        |
 |           |                                     | Arg 16: pipe, end on left/right, palette 6        |
 |           |                                     | Arg 17: pipe, end on left/right, palette 7        |
-|           |                                     | Arg 18 through 1F: available slots                |
+|           |                                     | Arg 18: pipe, no end, palette 2 (slip)            |
+|           |                                     | Arg 19 through 1F: available slots                |
 |           |                                     | Arg 20: pipe, end on left/right, palette 0 (exit) |
 |           |                                     | Arg 21: pipe, end on left/right, palette 1 (exit) |
 |           |                                     | Arg 22: pipe, end on left/right, palette 2 (exit) |

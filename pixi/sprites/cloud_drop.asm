@@ -284,7 +284,6 @@ OAM_Loop:
 	PHX
 	TAX
 	LDA TILEMAP,x
-	CLC : ADC !tile_off_scratch
 	STA $0302|!Base2,y	;CHR
 
 	PHY
@@ -425,7 +424,6 @@ Vert:
 	PHX
 	TAX
 	LDA VTILEMAP,x
-	CLC : ADC !tile_off_scratch
 	STA $0302|!Base2,y	;CHR
 
 	PHY
