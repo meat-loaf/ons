@@ -30,7 +30,6 @@ incsrc "remaps/goomba.asm"
 incsrc "remaps/grey_lava_plat.asm"
 incsrc "remaps/grinders.asm"
 incsrc "remaps/hothead.asm"
-incsrc "remaps/koopas.asm"
 ;incsrc "remaps/lakitu.asm"
 incsrc "remaps/mechakoopa.asm"
 incsrc "remaps/magikoopa.asm"
@@ -73,3 +72,6 @@ incsrc "remaps/ext_bone.asm"
 
 ; minor extended sprite remaps
 incsrc "remaps/mex_boostream.asm"
+
+; assorted stuff that doesnt use spritesets
+incsrc "remaps/sp01_stuff.asm"
