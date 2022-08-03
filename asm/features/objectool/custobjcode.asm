@@ -43,6 +43,8 @@ CustExObjA5:
 	LDA !ext_obj_type
 	SEC : SBC #!3x3_exobjs_start
 	JMP Objects3x3
+; 'cluster' objects of arbitrary size follow.
+; These can also be drawn with object 2D/A
 CustExObjA6:
 CustExObjA7:
 CustExObjA8:
@@ -53,10 +55,10 @@ CustExObjAC:
 CustExObjAD:
 CustExObjAE:
 CustExObjAF:
+CustExObjB0:
 	LDA !ext_obj_type
 	SEC : SBC #!cluster_exobjs_start
 	JMP ClusterExObjects
-CustExObjB0:
 CustExObjB1:
 CustExObjB2:
 CustExObjB3:
@@ -2934,7 +2936,7 @@ DoubleTallHorzObjAlternateRows:
 ; dimensions of extended objects consisting of a large group of tiles: low nybble is width (minus 1), high nybble is height (minus 1)
 ClusterExObjSize:
 	db $33,$33,$33,$34,$33,$14,$22
-	db $22,$01,$01
+	db $22,$01,$01,$14
 
 ; pointers to the tilemaps of extended objects consisting of a large group of tiles (index 00 will use a table starting at the specified scratch RAM address plus 1)
 ClusterExObjPtrs:
@@ -2943,11 +2945,12 @@ ClusterExObjPtrs:
 	dw .WindowEqualDiamondAltTerrain
 	dw .WindowOblongDiamondLTSBP2
 	dw .OutsideDiamondAltTerrain
-	dw .CenterPipe
+	dw .CenterPipeD
 	dw .IceStaircaseLeft
 	dw .IceStaircaseRight
 	dw .PipeTurnWater1
 	dw .PipeTurnWater2
+	dw .CenterPipeU
 
 .WindowEqualDiamondP2
 	dw $FFFF,$01ED,$01EC,$FFFF
@@ -2974,7 +2977,7 @@ ClusterExObjPtrs:
 	dw $0490,$04A0,$04A1,$0491
 	dw $04A6,$0496,$0497,$04A7
 	dw $FFFF,$04A6,$04A7,$FFFF
-.CenterPipe
+.CenterPipeD
 	dw $04EB,$04EC,$04ED,$04EE,$04EF
 	dw $04FB,$04FC,$04FD,$04FE,$04FF
 .IceStaircaseLeft
@@ -2989,6 +2992,10 @@ ClusterExObjPtrs:
 	dw $031E,$03B9
 .PipeTurnWater2
 	dw $03B9,$031F
+.CenterPipeU
+	dw $04CB,$04CC,$04CD,$04CE,$04CF
+	dw $04DB,$04DC,$04DD,$04DE,$04DF
+
 
 ;------------------------------------------------
 ; make a non-rectangular arrangement of blocks

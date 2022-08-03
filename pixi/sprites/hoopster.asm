@@ -18,8 +18,6 @@ Yspeed:			db $08,$FA,$16,$F0	;slow up, slow down, fast up, fast down
 
 			print "INIT ",pc
 
-;			%store_spriteset_off_long(WigglerSpritesetTable)
-
 			LDA $96
 			CMP !D8,x
 			LDA $97
@@ -159,7 +157,6 @@ Graphic000:		AND #$01
 			SEP #$20
 			LDX $03
 			LDA TileMap,x
-			CLC : ADC !tile_off_scratch
 			STA $0302|!Base2,y
 			LDX $02
 			LDA Property,x

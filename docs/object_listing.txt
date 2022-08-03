@@ -253,7 +253,7 @@
 |           |                                     | meaning the edges face outward instead of inward  |
 +-----------+-------------------------------------+---------------------------------------------------+
 | AB *ex*   | Centered Pipe: 5x2                  | A pipe centered within standard dirt tiles.       |
-|           |                                     | 5 tiles wide and 2 tiles tall.                    |
+|           |  Faces down.                        | 5 tiles wide and 2 tiles tall.                    |
 +-----------+-------------------------------------+---------------------------------------------------+
 | AC *ex*   | 3x3 Ice staircase: face left        |                                                   |
 +-----------+-------------------------------------+---------------------------------------------------+
@@ -262,6 +262,9 @@
 | AE *ex*   | Specialized ss pipe turn: DtL/UtR   | Pipe turn: looks like 'solid' water: bottom only  |
 +-----------+-------------------------------------+---------------------------------------------------+
 | AF *ex*   | Specialized ss pipe turn: LtU/DtR   | Pipe turn: looks like 'solid' water: bottom only  |
++-----------+-------------------------------------+---------------------------------------------------+
+| B0 *ex*   | Centered Pipe: 5x2                  | A pipe centered within standard dirt tiles.       |
+|           |  Faces up.                          | 5 tiles wide and 2 tiles tall.                    |
 +-----------+-------------------------------------+---------------------------------------------------+
 | FD *ex*   | Specialized ss pipe turn: LtU/DtR   | Pipe turn: looks like ground (left/up, right/down)|
 +-----------+-------------------------------------+---------------------------------------------------+

@@ -88,14 +88,18 @@ Run:
 
 	LDA #$00 : %SubOffScreen()
 	LDA !14C8,x
-	CMP #($03+$01)
-	BCC RETURN_L
+	CMP #$08
+	BEQ .norm
+	CMP #$03
+	BEQ RETURN_L
+	CMP #$02
+	BNE RETURN_L
+.norm
 	JSR SubGFX			;draw sprite
 
 	LDA !14C8,x
 	EOR #$08
 	ORA $9D			;locked sprites?
-	BNE RETURN_L           
 	ORA !15D0,x		;yoshi eating?
 	BNE RETURN_L
 

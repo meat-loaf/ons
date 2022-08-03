@@ -1,44 +1,20 @@
 includefrom "remaps.asm"
-; koopa tilemap
-if !remap_koopa
-; shell koopa tiles
-org $019B83|!bank
-	db $00,$04,$00,$06,$02,$08
-	; next three bytes are the shell tilemap, which is unchanged
-; naked koopa; 4th byte unused
-org $019B8C|!bank
-	db $0A,$0C,$0C
-	skip 1
-	db $0E,$26,$28
-; shelless blue koopa; 4th byte unused
-org $019B93|!bank
-	db $20,$22,$22
-	skip 1
-	db $24,$26,$28
-; sprites 00-0C, 166E tweaker byte
-org $07F3FE|!bank
-	db $0B,$09,$07,$05,$0B,$09,$07,$05
-        db $0B,$0B,$09,$09,$05
-else
-; shell koopa tiles
-org $019B83|!bank
-	db $82,$A0,$82,$A2,$84,$A4
-	; next three bytes are the shell tilemap, which is unchanged
-; naked koopa; 4th byte unused
-org $019B8C|!bank
-	db $C8,$CA,$CA
-	skip 1
-	db $CC,$86,$4E
-; shelless blue koopa; 4th byte unused
-org $019B93|!bank
-	db $E0,$E2,$E2
-	skip 1
-	db $E4,$E0,$E0
+; point all shelless koopas at the same tmap
+org $019C7F|!bank
+	db $10,$10,$10,$10
 
-; sprites 00-0C, 166E tweaker byte
-org $07F3FE|!bank
-	db $0A,$08,$06,$04,$0A,$08,$06,$04
-        db $0A,$0A,$08,$08,$04
-endif
+; make all shelless koopas kick shells
+org $01A713|!bank
+	db $03     ; immediate argument to CMP
+	db $F0     ; BEQ opcode
+skip 1
+cont:
 
+org $01A77F|!bank
+	db $02
 
+; yellow takes branch here: overwrites now-unused 'jump in shell' code
+org $01A72E|!bank
+	STA.w !187B,y
+	BRA.b cont
+warnpc $01A75D|!bank

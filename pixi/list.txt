@@ -48,9 +48,6 @@ SHOOTER:
 C0 LeafShooter.cfg
 C1 ShellShooter.cfg
 
-GENERATOR:
-D0 l2wave.cfg
-
 EXTENDED:
 00 smb2_ball_proj.asm
 

@@ -158,7 +158,7 @@ OBJTOOL_DIR=${asm_features_dir}/objectool
 one_night_stand: ${CLEAN_ROM_FULL} ${TS_DIR} ${ROM_NAME} ${CORE_BUILD_RULES}
 
 test: one_night_stand
-	${TEST_EMU} ${ROM_NAME} & >/dev/null 2>&1
+	${TEST_EMU} ${ROM_NAME} >/dev/null 2>&1 &
 
 debug: one_night_stand
 	${DBG_EMU} ${ROM_NAME} &
