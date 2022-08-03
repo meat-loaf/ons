@@ -23,9 +23,6 @@ org $01C19E|!bank
 org $01C1A2|!bank
 	db $02
 
-; growing vine tilestore
-org $01C1A3|!bank
-	JSR.w store_tile1_bank1
 ; 166E vals
 org ($07F3FE+$4F)|!bank
 	db $09,$09
@@ -52,10 +49,6 @@ org $01C19E
 org $01C1A2
 	db $AE
 
-; growing vine tilestore
-org $01C1A3|!bank
-	STA.w $0302|!addr,y
-
 ; 166E vals
 org ($07F3FE+$4F)|!bank
 	db $08,$08
@@ -70,36 +63,3 @@ org $(07F3FE+$1A)|!bank
 org $(07F3FE+$2A)|!bank
 	db $08
 endif
-
-if !remap_jumpin_pplant_vine && !jumpin_pirana_stem_sp0_1
-org $02E114|!bank
-	JSL jumpin_piranha_stem_hijack
-pullpc
-jumpin_piranha_stem_hijack:
-; the jumpin' piranha plant calls the LoadSpriteTables subroutine,
-; which will reload this value before the graphics routine runs in the following frame
-  if !spriteset_off_on_wram_mirror
-	STZ !spriteset_offset,x
-  else
-	LDA #$00
-	STA !spriteset_offset,x
-  endif
-	JML.l $018042|!bank
-pushpc
-else
-org $02E114|!bank
-	JSL.l $018042|!bank
-endif
-
-
-org $01C1E9|!bank
-vine_hijack:
-	JSL.l vine_item_mem|!bank
-.done:
-
-
-pullpc
-vine_item_mem:
-	JSL.l write_item_memory|!bank
-	JML.l generate_tile|!bank
-pushpc

@@ -141,9 +141,8 @@ wiggler_no_angery_eb:
 	LDA.w !1504,x
 	ORA.w !151C,x
 	JMP.w $02F277|!bank
-	; pads the graphics routine: all this is one byte shorter
-	; than where we need to end up
-	NOP
+	; pads the graphics routine
+	NOP #7
 wiggler_segment_buff_offs:
 	db $00,$1E,$3E,$5E,$7E
 wiggler_segment_yoffs:
@@ -209,8 +208,8 @@ wiggler_gfx:
 	LDX.b $06
 	LDA.w wiggler_body_tiles,x
 .draw_head:
-	CLC
-	ADC.b !tile_off_scratch
+;	CLC
+;	ADC.b !tile_off_scratch
 	LDY.b $0A
 	STA.w $0302|!addr,y
 	LDA.b $07
@@ -233,8 +232,8 @@ wiggler_gfx:
 	ORA.w !157C,x           ; horz facing dir
 	TAX
 	LDA.w wiggler_small_tiles,x
-	CLC
-	ADC.b !tile_off_scratch
+;	CLC
+;	ADC.b !tile_off_scratch
 	STA.w $0302|!addr,y
 	; carry clear free from above: won't overflow
 	LDA.w $0304|!addr,y
