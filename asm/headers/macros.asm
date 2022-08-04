@@ -1,5 +1,7 @@
 includeonce
 
+function pack_props(flip, priority, palette, page) = ((flip&03)<<$06)|((priority&03)<<$04)|((palette&$07)<<1)|(page&$01)
+
 macro replace_pointer_long(addr,ptr)
 	pushpc
 	org <addr>

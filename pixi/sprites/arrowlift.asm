@@ -443,7 +443,7 @@ SETTILES:	LDA !TILESDRAWN		; \ don't do it
 		BEQ NODRAW		; / if no tiles
 		LDY #$02		; #$02 means 16x16
 		DEC A			; A = # tiles - 1
-		%FinishOAMWrite()
+		JSL finish_oam_write
 NODRAW:		RTS
 
 SPRITEGFX:

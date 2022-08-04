@@ -207,17 +207,15 @@ Bounce8:	; SMB3 brick
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ; Put your own bounce block sprites here
+!yoshiblk_tile_num = $C8
 BounceA:
-	JSR SUB_OFFSCREEN	; check if offscreen
-	BCS Bounce9_OnOffSkipGfx	; skip graphics if offscreen
-;	LDX !current_spriteset
-;	LDA.l leaf_plat_offs,x
-;	STA $0F
-	STZ $0F
-	LDA #$06
-	STA $0E
 	LDA #$01
 	STA $0D
+	JSR SUB_OFFSCREEN	; check if offscreen
+	BCS Bounce9_OnOffSkipGfx	; skip graphics if offscreen
+	WDM
+	LDA #!yoshiblk_tile_num
+	STA $0E
 	BRA Bounce9_oam_start
 
 Bounce9: ;>OnOff block
@@ -228,9 +226,6 @@ Bounce9: ;>OnOff block
 				; carry set if offscreen
 	BCS .OnOffSkipGfx	; skip graphics if offscreen
 
-;	LDX !current_spriteset
-;	LDA.l Platforms1_Offsets,x
-	STZ $0F
 	LDA #$0C
 	STA $0E
 .oam_start
@@ -244,12 +239,11 @@ Bounce9: ;>OnOff block
 	STA $0201|!addr,x		; store to OAM
 
 	LDA $0E			; tile number
-	CLC : ADC $0F
 	STA $0202|!addr,x	; store to OAM
 
 	LDA $1901|!addr,y		; properties
-	ORA #$01
-	ORA #($0D<<1)
+;	ORA #$01
+;	ORA #($0D<<1)
 	ORA $64			; add in prority bits from level settings
 	STA $0203|!addr,x		; store to OAM
 

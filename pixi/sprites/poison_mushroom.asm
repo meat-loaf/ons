@@ -17,7 +17,7 @@
 ;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 !XSpd		= $10	; how fast it moves horizontally
-!Tile		= $C0	; tile number to use, properties are defined in the JSON
+!Tile		= $20	; tile number to use, properties are defined in the JSON
 
 ;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ; main routine wrapper

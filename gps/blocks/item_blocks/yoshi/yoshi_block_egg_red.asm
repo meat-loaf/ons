@@ -29,7 +29,7 @@ JMP MarioCorner : JMP MarioInside : JMP MarioHead
 !bounce_num			= $0A	; See RAM $1699 for more details. If set to 0, the block changes into the Map16 tile directly
 !bounce_direction	= $00	; Should be generally $00
 !bounce_block		= $0A	; See RAM $9C for more details. Can be set to $FF to change the tile manually
-!bounce_properties	= $09	; YXPPCCCT properties
+!bounce_properties	= $08	; YXPPCCCT properties
 
 ; If !bounce_block is $FF.
 !map16_tile = $0132		; Changes into the Map16 tile directly (also used if !bounce_num is 0x00)

@@ -2,9 +2,9 @@ includefrom "remaps.asm"
 
 if !remap_jumpin_pplant_vine
 org $019BBD|!bank
-	db $00,$04,$02,$04
+	db $04,$0E,$06,$0E
   if !jumpin_pirana_stem_sp0_1
-	db $83,$83,$C4,$C4,$83,$83,$C5,$C5
+	db $83,$83,$A6,$A6,$83,$83,$A7,$A7
   else
 	db $16,$16,$06,$06,$16,$16,$07,$07
   endif
@@ -17,11 +17,15 @@ org $02E10E|!bank
 	db $0B
   endif
 
-; growing vine
+; growing vine tiles
 org $01C19E|!bank
-	db $00
+	db $04
 org $01C1A2|!bank
-	db $02
+	db $06
+
+; uses generic sprite routine into late tilestore
+org $01C1A3|!bank
+	JSR.w store_tile1_bank1|!bank
 
 ; 166E vals
 org ($07F3FE+$4F)|!bank

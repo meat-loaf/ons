@@ -164,7 +164,7 @@ spriteset_off_ptrs:
 	dw spritesets_null_spriteset          ; sprite A0
 	dw spritesets_bowling_ball            ; sprite A1 - bowser's bowling ball
 	dw spritesets_mechakoopa              ; sprite A2 - mechakoopa
-	dw spritesets_wood_checkered_plats    ; sprite A3 - single grey wood platform on chain
+	dw spritesets_null_spriteset          ; sprite A3 - single grey wood platform on chain
 	dw spritesets_null_spriteset          ; sprite A4
 	dw spritesets_fuzzy_and_sparky        ; sprite A5 - wall following fuzzy/sparky
 	dw spritesets_big_hothead             ; sprite A6 - large wall following hothead
@@ -365,10 +365,10 @@ if !pixi_installed
 	dw spritesets_null_spriteset          ; custom sprite 9D
 	dw spritesets_null_spriteset          ; custom sprite 9E
 	dw spritesets_null_spriteset          ; custom sprite 9F
-	dw spritesets_wood_checkered_plats    ; custom sprite A0 - pendulum platform (slippery)
+	dw spritesets_null_spriteset          ; custom sprite A0 - pendulum platform (slippery)
 	dw spritesets_null_spriteset          ; custom sprite A1
 	dw spritesets_null_spriteset          ; custom sprite A2
-	dw spritesets_wood_checkered_plats    ; custom sprite A3 - pendulim platform (noslip)
+	dw spritesets_null_spriteset          ; custom sprite A3 - pendulum platform (noslip)
 	dw spritesets_null_spriteset          ; custom sprite A4
 	dw spritesets_null_spriteset          ; custom sprite A5
 	dw spritesets_null_spriteset          ; custom sprite A6
@@ -568,7 +568,7 @@ if !remap_message_box
 endif
 if !remap_jumpin_pplant_vine
 .piranhas:
-	db $A0,$00,$E0,$00,$C0,$00,$00,$20    ; spritesets 00-07
+	db $A0,$00,$E0,$00,$C0,$80,$00,$20    ; spritesets 00-07
 	db $00,$A0,$00,$00,$00,$00,$00,$00    ; spritesets 08-0F
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 10-17
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 18-1F

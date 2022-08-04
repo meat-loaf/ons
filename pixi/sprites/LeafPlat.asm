@@ -185,5 +185,5 @@ BPL GFXLoop		;keep looping while X is positive.
 LDX $15E9|!addr         ; only retards push/pull the sprite index
 LDY #$02		;load value into Y (means all tiles are 16x16)
 LDA #$01		;load value into A (amount of tiles drawn, minus one)
-%FinishOAMWrite()
+JSL finish_oam_write
 RTS			;return.

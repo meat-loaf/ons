@@ -674,7 +674,7 @@ GraphicLast:		PLX
 			LDY #$FF
 			LDA $0F
 			DEC A
-			%FinishOAMWrite()
+			JSL finish_oam_write
 			RTS
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;

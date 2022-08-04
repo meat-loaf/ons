@@ -117,7 +117,7 @@ Graphics:
 	; effectively loads 0 into A (on sane configurations).
 	; saves 1 cycle over LDA.b #$00
 	TDC
-	%FinishOAMWrite()
+	JSL finish_oam_write
 	RTS
 
 Props:

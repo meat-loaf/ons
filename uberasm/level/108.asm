@@ -11,9 +11,11 @@ init:
 .found:
 	LDA.b #$70
 	STA   !9E,x
+	STA   !spr_new_sprite_num,x
+	LDA.b #$08
+	STA   !spr_extra_bits,x
 	JSL.l $07F7D2|!bank
 	LDA   !9E,x
-	STA   !spr_new_sprite_num,x
 	JSL.l $0187A7|!bank
 	LDA.b #$08
 	STA   !spr_extra_bits,x

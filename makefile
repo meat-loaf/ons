@@ -147,6 +147,7 @@ pixi_asm_sources= \
 gps_asm_sources=${GPS_DIR}/main.asm \
 	$(wildcard ${GPS_BLK_DIR}/*.asm) \
 	$(wildcard ${GPS_BLK_DIR}/**/*.asm) \
+	$(wildcard ${GPS_BLK_DIR}/**/**/*.asm) \
 	$(wildcard ${GPS_RT_DIR}/*.asm)
 
 MWL_DIR=lvl

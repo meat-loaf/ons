@@ -827,7 +827,7 @@ SubGFX:
 	LDY #$FF
 	LDA $0F
 	LDX $15E9|!addr
-	%FinishOAMWrite()
+	JSL finish_oam_write|!bank
 	RTS
 .SetTileSize
 	XBA

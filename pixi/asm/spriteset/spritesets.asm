@@ -162,8 +162,8 @@ SubSprGFX1:
 	JMP.w $01A3DF|!bank
 
 brown_plat_main:
-	; extra bit set: set flag for spin
 	LDY.b #pack_props($00,$03,$00,$00)
+	; extra bit set: set flag for spin
 	LDA !spr_extra_bits,x
 	AND #$04
 	STA !1594,x
@@ -309,11 +309,11 @@ org $02B5EC+$22|!bank
 ;org $02B60D
 ; TODO reevaluate if these are still necessary
 rot_plat_gfx_stuff:
-	LDY.b #$33
+	LDY.b #pack_props($0,$3,$1,$0)
 	LDA   !spr_extra_bits,x
 	AND.b #$04
 	BEQ +
-	LDY.b #$3D
+	LDY.b #pack_props($0,$3,$6,$0)
 +
 	STY.b $02
 	JSR.w $02D378|!bank  ; get draw info
@@ -401,7 +401,7 @@ if !pixi_installed == 1
 	LDA   !extra_bits,x
 	AND.b #$08
 	BEQ.b .notcustom
-	LDA   !7FAB9E,x
+	LDA   !new_sprite_num,x
 	REP.b #$30
 	AND.w #$00FF
 	ASL
@@ -418,7 +418,7 @@ endif
 	LDA.l spriteset_off_ptrs,x
 .custom_done
 	STA.b $8D
-	SEP #$30
+	SEP.b #$30
 	LDY   !current_spriteset
 	LDA.b [$8D],y
 	PLX
@@ -519,7 +519,7 @@ ss_set_spriteset:
 	LDA.w #$0000
 .spriteset_ok
 	SEP.b #$30
-	STA !current_spriteset
+	STA   !current_spriteset
 	JML.l ss_hijack_done|!bank
 ; AXY are 16 bit here. $8A contains a pointer to the level's ExGFX list, and Y
 ; is the index to the current file to be uploaded. We will use the lower 8 bits

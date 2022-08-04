@@ -97,6 +97,10 @@ org $0291F1|!bank
 	db !note_block_tile
 	db !qmark_block_tile
 	db !side_bounce_blk_tile
-	db $EA
+	db $EA  ; transparent bounce block tile
 	db !onoff_block_tile
 	db !turn_block_tile
+
+; coin sparkle minor extended sprite
+org $028ECC|!bank
+	db $E6

@@ -368,7 +368,7 @@ CODE_02D7AF:		LDA $00				;\ set tile x position
 			LDA $01				;\ set tile y position
 			STA !OAM_DispY,y		;/
 			; ball tile num
-			LDA #$04
+			LDA #$2E
 			STA !OAM_Tile,y			;/
 			LDA $0F
 			ORA #%00110000
@@ -414,7 +414,7 @@ CODE_02D7AF:		LDA $00				;\ set tile x position
 			LDX $15E9|!addr
 			LDY #$02			; the tiles drawn were 16x16
 			LDA #$05			; six tiles were drawn
-			%FinishOAMWrite()
+			JSL finish_oam_write|!bank
 			RTS				; return
 
 CODE_02D800:		NOP				;\ this routine exists for the sole purpose of wasting cycles
@@ -423,7 +423,7 @@ Return02D806:		RTS				; return
 
 XOffset:		db $00,$F0,$00,$0F
 
-Tilemap:		db $04,$00,$01,$02
+Tilemap:		db $2E,$86,$87,$88
 
 PlatformGFX:
 			%GetDrawInfo()

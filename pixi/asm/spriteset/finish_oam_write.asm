@@ -27,8 +27,8 @@ org $01FF4F|!bank
 	JMP.w _finish_oam_write|!bank
 
 ; stick tile offset in finishoamwrite
-org $01B7B3|!bank
-finish_oam_write:
+org finish_oam_write
+;finish_oam_write:
 ; the phb/phk/plb wrapper isnt at all necessary, so don't do it
 JSR.w _finish_oam_write|!bank
 RTL
