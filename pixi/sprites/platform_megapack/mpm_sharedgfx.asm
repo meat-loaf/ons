@@ -35,17 +35,17 @@ GraphicLoop:
 		GetTileNumber:
 			CPX $04
 			BNE ++
-				LDA #$02	; Right edge of the platform
+				LDA #$88	; Right edge of the platform
 				BRA Draw
 				
 		++
 			CPX #$00
 			BNE ++
-				LDA #$00	; Left edge of the platform
+				LDA #$86	; Left edge of the platform
 				BRA Draw
 				
 		++
-			LDA #$01		; middle of the platform
+			LDA #$87		; middle of the platform
 			
 		Draw:
 			STA $02			; store which tile here

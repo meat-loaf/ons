@@ -14,17 +14,21 @@ includefrom "spritesets.asm"
 ; moving some of them can reduce sp1/2 pressure for something like
 ; a sprite status bar, if desired.
 
-!remap_koopa              = 0
+!remap_koopa               = 0
 ; remaps growing vine and jumpin' piranha plant
-!remap_jumpin_pplant_vine = 1
+!remap_jumpin_pplant_vine  = 1
+
 ; put the flapping part of the jumpin' piranha plant on SP0/SP1.
 ; Turns out the SMB3 sideways piranhas/venuses fit nicely in 1 file
 ; and there's no room for the jumpin' piranha plant's tail, so this
 ; define installs a small hack to keep it on page 0.
-!jumpin_pirana_stem_sp0_1 = 1
+!jumpin_pirana_stem_sp0_1  = 1
 
 ; put the goal sphere on low part of sprite tiles
-!goal_sphere_on_sp0_sp1   = 0
+!goal_sphere_on_sp0_sp1    = 0
+
+!yoshi_egg_on_sp0_sp1      = 1
+!yoshi_fireball_on_sp0_sp1 = 1
 
 ; alternate behavior for sprite A5 (originally, the game
 ; used the sprite tilemap setting)
@@ -50,7 +54,7 @@ includefrom "spritesets.asm"
 
 ; the rotating brown platform is a funny sprite, and has some
 ; slightly special handling...its a lot easier to put this here.
-!brown_plat_ball_tile_num = $04
+!brown_plat_ball_tile_num = $2E
 
 ; with these settings enabled, the relevant sprite type
 ; will inherit the tile offset from the normal sprite that is
@@ -95,12 +99,10 @@ endif
 ;; ----- end freeram ----- ;;
 
 ; This needs to be on direct page, it's best not to change it.
-;!tile_off_scratch         = $5A
-; a small amount of sprites will precalculate a certain tile
-; before storing. Currently, only the brown spinning platform
-; does this.
-!precalc_single_scratch   = $45
-!brown_plat_props_scratch = $46
+; defined in main.asm
+;!tile_off_scratch         = 
+
+!brown_plat_props_scratch = $45
 
 ; check if spriteset offset table can use y-indexing and stz
 if bank(!spriteset_offset) == bank(!extram_bank)

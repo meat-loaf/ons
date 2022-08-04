@@ -48,8 +48,6 @@ mega_mole_gfx:
 	ADC.b $03
 	TAX
 	LDA.w mega_mole_tiles,x
-	CLC
-	ADC.b !tile_off_scratch
 	STA.w $0302|!addr,y
 	LDA.b #$01
 	LDX.b $02
@@ -66,8 +64,7 @@ mega_mole_gfx:
 	BPL .loop
 	LDX.w $15E9|!addr
 	; jump to grey castle block's version of the below
-	JMP.w $038EE1|!bank
-	;LDY.b #$02
-	;LDA.b #$03
-	;JSL.l $01B7B4|!bank
+	LDY.b #$02
+	LDA.b #$03
+	JSL.l finish_oam_write|!bank
 warnpc $03889F|!bank

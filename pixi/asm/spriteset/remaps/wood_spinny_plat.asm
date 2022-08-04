@@ -6,19 +6,19 @@ includefrom "remaps.asm"
 
 org $01C9BB|!bank
 brown_chain_plat_tiles:
-	db $00,$01,$01,$02
+	db $86,$87,$87,$88
 
 org $01C8F7|!bank
-	JSR.w store_tile1_bank1
+	STA.w $0302|!addr,y
 
 org $01C7E9|!bank
-	LDA.b !precalc_single_scratch
+	LDA.b #!brown_plat_ball_tile_num
 	STA.w $0302|!bank,y
 org $01C870|!bank
-	LDA.b !precalc_single_scratch
+	LDA.b #!brown_plat_ball_tile_num
 	STA.w $0302|!bank,y
 org $01C8C6|!bank
-	LDA.b !precalc_single_scratch
+	LDA.b #!brown_plat_ball_tile_num
 	STA.w $0302|!bank,y
 
 ; extra bit set: spin at extra byte speed
@@ -37,5 +37,3 @@ org $01C8CB|!bank
 	LDA.b !brown_plat_props_scratch
 org $01C8FA|!bank
 	LDA.b !brown_plat_props_scratch
-
-

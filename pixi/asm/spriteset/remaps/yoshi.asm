@@ -2,12 +2,12 @@ includefrom "remaps.asm"
 
 ; all of the misc yoshi tiles are moved to SP1, in
 ; place of a flopping fish tile
-!yoshi_throat_tile = $DF
-!yoshi_tongue_c_tile = $DE
-!yoshi_tongue_e_tile = $CE
-!yoshi_egg_fragment_tile = $CF
+!yoshi_throat_tile = $1B
+!yoshi_tongue_c_tile = $1A
+!yoshi_tongue_e_tile = $0A
+!yoshi_egg_fragment_tile = $0B
 
-!yoshi_tongue_props = pack_props($00,$00,$04,$00)
+!yoshi_tongue_props   = pack_props($00,$00,$04,$00)
 !yoshi_egg_frag_props = pack_props($00,$00,$01,$00)
 
 org $01F08B|!bank
@@ -27,12 +27,14 @@ org $028EBC|!bank
 	db !yoshi_egg_frag_props
 
 ; full egg
-!yoshi_egg_tile_1 = $00
+!yoshi_egg_tile_1 = $A8
 ; cracked egg
-!yoshi_egg_tile_2 = $02
+!yoshi_egg_tile_2 = $AA
 ; there seems to have been another egg tile at some point,
 ; but both of these frames point to the cracked egg
-!yoshi_egg_tile_3 = $02
+!yoshi_egg_tile_3 = $AA
+
+!yoshi_egg_smoke_tile = $E2
 
 ; yoshi palettes when placed in level also contain tilemap bit
 org $018335|!bank
@@ -62,7 +64,7 @@ yoshi_egg_tiles_hibit:
 	db $00,$01,$01,$01
 endif
 yoshi_egg_tiles:
-	db $62,!yoshi_egg_tile_3,!yoshi_egg_tile_2,!yoshi_egg_tile_1
+	db !yoshi_egg_smoke_tile,!yoshi_egg_tile_3,!yoshi_egg_tile_2,!yoshi_egg_tile_1
 
 org $01F767|!bank
 yoshi_egg:

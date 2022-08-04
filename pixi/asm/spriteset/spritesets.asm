@@ -48,7 +48,6 @@ org $019CFC|!bank
 	CLC
 	ADC.b $01
 	STA.b $01
-;	LDY   !9E,x
 	%sprite_num(LDY,x)
 	LDA.w !1602,x
 	ASL   #2
@@ -67,7 +66,6 @@ subspr_gfx0_drawloop:
 	ADC.b $04
 	TAX
 	LDA.w $019B83|!bank,x
-	ADC.b !tile_off_scratch
 	LDX.b $04
 	STA.w $0302|!addr,y
 	LDA.b $00
@@ -164,21 +162,15 @@ SubSprGFX1:
 	JMP.w $01A3DF|!bank
 
 brown_plat_main:
-	LDA   !spriteset_offset,x
-	STA.b !tile_off_scratch
-	CLC
-	ADC #!brown_plat_ball_tile_num
-	STA.b !precalc_single_scratch
 	; extra bit set: set flag for spin
-	LDY #$31
+	LDY.b #pack_props($00,$03,$00,$00)
 	LDA !spr_extra_bits,x
 	AND #$04
-	STA $1594,x
-	BEQ +
-
+	STA !1594,x
+	BEQ .no_exbit
 	; use palette 9
-	LDY #($31|(1<<1))
-+
+	LDY.b #pack_props($00,$03, $01,$00)
+.no_exbit:
 	STY !brown_plat_props_scratch
 	; the original main
 	JMP.w $01C773|!bank
@@ -315,6 +307,7 @@ warnpc $02D580|!bank
 ; first 33 bytes used by pixi
 org $02B5EC+$22|!bank
 ;org $02B60D
+; TODO reevaluate if these are still necessary
 rot_plat_gfx_stuff:
 	LDY.b #$33
 	LDA   !spr_extra_bits,x
@@ -392,6 +385,7 @@ sprset_init:
 if !pixi_installed == 1
 	STZ.w !1504,x
 	STZ.w !1FD6,x
+	PHP
 else
 	LDA.b #$01
 	STA.w !15A0,x
@@ -431,6 +425,7 @@ endif
 	STA   !spriteset_offset,x
 	PLY
 if !pixi_installed == 1
+	PLP
 	JML.l sprset_sprload_hijack_done
 else
 	RTL

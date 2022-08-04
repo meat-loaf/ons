@@ -122,6 +122,7 @@ BOUNCE_OAM: 			; OAM addresses for bounce extended sprites
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
+!smb3_brick_bounce_tile = $C0
 Bounce8:	; SMB3 brick
 	; graphics
 
@@ -140,7 +141,7 @@ Bounce8:	; SMB3 brick
 	LDA $01			; y pos
 	STA $0201|!addr,x		; store to OAM
 
-	LDA #$C2		; tile number
+	LDA #!smb3_brick_bounce_tile    ; tile number
 	STA $0202|!addr,x 		; store to OAM
 
 	LDA $1901|!addr,y		; properties

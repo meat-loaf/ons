@@ -1,7 +1,7 @@
 ;Act as $0130
 
 !bounce_num		= $09	;>The bounce block sprite number
-!bounce_properties	= $07	;>The properties of bounce blocks (palette, tile number high byte)
+!bounce_properties	= $06	;>The properties of bounce blocks (palette, tile number high byte)
 
 !map16_tile             = $0312 ; The tile the block will use.
 

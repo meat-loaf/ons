@@ -96,7 +96,7 @@ spriteset_off_ptrs:
 	dw spritesets_wood_checkered_plats    ; sprite 5C - checkered platform, floats
 	dw spritesets_rock_grass_plats        ; sprite 5D - floating grass platform
 	dw spritesets_rock_grass_plats        ; sprite 5E - grass platform, goes on forever if no buoyancy
-	dw spritesets_wood_checkered_plats    ; sprite 5F - brown platform on chain (moves when mario stands on it)
+	dw spritesets_null_spriteset          ; sprite 5F - brown platform on chain (moves when mario stands on it)
 	dw spritesets_null_spriteset          ; sprite 60
 	dw spritesets_lava_skull_raft         ; sprite 61 - skull raft
 	dw spritesets_wood_checkered_plats    ; sprite 62 - brown line guided platform (starts on its own)
