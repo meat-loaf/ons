@@ -105,7 +105,9 @@ includeonce
 
 !yoshi_coins_collected  = $1420|!addr
 
-!boo_tile_offset        = $1473|!addr
+!red_coin_total         = $1473|!addr
+
+!red_coin_counter       = $1475|!addr
 
 ; 4 bytes
 !wiggler_segment_slots  = $1487|!addr
@@ -154,7 +156,8 @@ includeonce
 ; repurposed: low nybble used as bitfield for object generation parameters
 !sprite_memory_header    = $1692|!addr
 
-!dyn_slot_dest = $1864|!addr
+;!dyn_slot_dest = $1864|!addr
+!dyn_slot_dest = $0DC3|!addr
 ; 2 bytes
 !dyn_slot_ptr  = $1869|!addr
 !dyn_slots     = $1879|!addr

@@ -67,7 +67,6 @@ F	0F Door.txt
 18	18 Thunder.txt
 19	19 Clap + pop.txt
 1A	flower.txt
-
 1C	1C Switch palace block ejection.txt
 1D	1D Time low 2.txt
 1E	1E Whistle.txt
@@ -94,3 +93,5 @@ F	0F Door.txt
 33	33 Podoboo 71% pan.txt
 34	34 Podoboo 100% pan.txt
 35 ?	35 Jump.txt
+36	red_coin.txt
+37	last_red_coin.txt

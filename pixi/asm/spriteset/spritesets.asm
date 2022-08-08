@@ -94,7 +94,7 @@ warnpc $019D5F|!bank
 spr_tmap_off = $019C7F|!bank
 spr_tiles    = $019B83|!bank
 org $019D67|!bank
-SubSprGFX1:
+sub_spr_gfx_1:
 	JSR.w getdrawinfo_generic_prefix|!bank
 	LDA.w !15F6,x
 	STA.b $02
@@ -181,6 +181,7 @@ brown_plat_main:
 warnpc $019E0D|!bank
 
 ; subsprgfx 2 optimization
+sub_spr_gfx_2:
 org $019F0F|!bank
 	JSR.w getdrawinfo_generic_prefix|!bank
 org $019F27|!bank
@@ -302,6 +303,16 @@ mexsprite_spawn_bank2:
 %altsprite_spawn($17F0|!addr,!mex_spriteset_offset, \
                  !minorextended_sprites_inherit_parent, "!spriteset_offset,x", \
                  !mex_off_on_wram_mirror,mex_sprset_init|!bank, RTS)
+spin_coin_hijack:
+	LDY.b #$04
+	LDA.w $17D0|!addr,x
+;	CMP.b #$02
+	LSR
+	BCS.b .no_alt_coin_prop
+	LDY.b #$08
+.no_alt_coin_prop:
+	STY.b $0C
+	JMP.w $0299F1|!bank
 warnpc $02D580|!bank
 
 ; first 33 bytes used by pixi
@@ -318,12 +329,29 @@ rot_plat_gfx_stuff:
 	STY.b $02
 	JSR.w $02D378|!bank  ; get draw info
 	JMP.w $02D848|!bank
-bnc_ball_draw_call_hijack:
-	LDA.b #$33
-	STA.b $02
-	JMP.w $02D813|!bank
+;bnc_ball_draw_call_hijack:
+;	LDA.b #$33
+;	STA.b $02
+;	JMP.w $02D813|!bank
+sc2:
+	LDA.w $17D0|!addr,x
+	LSR
+	BCC.b .noscore
+	JMP.w $029AA8|!bank
+.noscore:
+	JMP.w $029AD4|!bank
 warnpc $02B630|!bank
 
+org $029A05|!bank
+	JMP.w sc2|!bank
+;org $029A85|!bank
+;	STA.w $0305,y
+
+org $0299DC|!bank
+	JSR.w spin_coin_hijack|!bank
+; spinning coin properties from scratch
+org $029A53|!addr
+	LDA.b $0C
 
 ;; bank 03 hijacks ;;
 

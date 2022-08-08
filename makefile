@@ -92,7 +92,7 @@ CORE_BUILD_RULES= \
 # it's a ton of stuff to change and not currently worth the effort
 # windows users truly do deserve the gulag
 AMK_MUSIC_DEPS= \
-	$(wildcard ./amk/music/*.txt)
+	$(wildcard ./amk/music/*.txt) \
 
 PIXI_DIR=pixi
 PIXI_FLAGS+=-d255spl
@@ -206,7 +206,7 @@ ${INIT_LEVEL_TS}: rom_src/smw_orig_1ff_2.mwl ${GFX_FAKE_TS}
 	${LUNAR_MAGIC} -ImportLevel ${ROM_NAME} $< 1FF
 	touch $@
 
-${AMK_FAKE_TS}: ${AMK_MUSIC_DEPS}
+${AMK_FAKE_TS}: ${AMK_MUSIC_DEPS} ./amk/Addmusic_list.txt ./amk/Addmusic_sample\ groups.txt ./amk/Addmusic_sound\ effects.txt ./amk/asm/InstrumentData.asm
 	cd ./amk && WINEPREFIX=~/.wineprefix/smw_amk wine AddmusicK.exe ../${ROM_NAME}
 	touch $@
 
@@ -227,7 +227,7 @@ ${GFX_FAKE_TS}: ${gfx_files}
 	${LUNAR_MAGIC} -ImportAllGraphics ${ROM_NAME}
 	touch $@
 
-${SBAR_FAKE_TS}: ${statusbar_main} ${statusbar_deps} ${asm_base_deps}
+${SBAR_FAKE_TS}: ${statusbar_main} ${statusbar_deps} ${asm_base_deps} ${ASM_HEADERS}
 	${ASAR} $< ${ROM_NAME}
 	touch $@
 
@@ -252,12 +252,12 @@ ${OBJTOOL_TS}: ${OBJTOOL_DIR}/objectool.asm ${OBJTOOL_DIR}/custobjcode.asm ${FT_
 	touch $@
 
 # this feels immensely cursed
-${ASM_PATCH_TS}: ${ASM_PATCHES_FULL}
+${ASM_PATCH_TS}: ${ASM_PATCHES_FULL} ${asm_base_deps}
 	${ASAR} $(patsubst ${TS_DIR}%, ${asm_features_dir}%, $(patsubst %_ts, %.asm, $@) ${ROM_NAME})
 	touch $@
 
 # see above
-${ASM_TWEAK_TS}: ${ASM_TWEAKS_FULL}
+${ASM_TWEAK_TS}: ${ASM_TWEAKS_FULL} ${asm_base_deps}
 	${ASAR} $(patsubst ${TS_DIR}%, ${asm_tweaks_dir}%, $(patsubst %_ts, %.asm, $@) ${ROM_NAME})
 	touch $@
 

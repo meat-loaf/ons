@@ -1,4 +1,9 @@
 ; GPS block list
+002C:0025        red_coin.asm
+00E0:0130        item_blocks/rcoin_blocks.asm
+00E1:0130        item_blocks/rcoin_blocks.asm
+00E2:0130        item_blocks/rcoin_blocks.asm
+
 00FC:0130        infturn.asm
 
 0153:0153        donutblk.asm
@@ -60,6 +65,25 @@
 067B:013C        slip.asm
 067C:013F        slip.asm
 067D:013F        slip.asm
+
+064C:013F        ssp/left_horizontal_pipe_cap_B.asm
+064D:013F        ssp/right_horizontal_pipe_cap_B.asm
+065C:013F        ssp/left_horizontal_pipe_cap_B.asm
+065D:013F        ssp/right_horizontal_pipe_cap_B.asm
+066C:013F        ssp/left_horizontal_pipe_cap_B.asm
+066D:013F        ssp/right_horizontal_pipe_cap_B.asm
+067C:013F        ssp/left_horizontal_pipe_cap_B.asm
+067D:013F        ssp/right_horizontal_pipe_cap_B.asm
+068C:013F        ssp/left_horizontal_pipe_cap_B.asm
+068D:013F        ssp/right_horizontal_pipe_cap_B.asm
+069C:013F        ssp/left_horizontal_pipe_cap_B.asm
+069D:013F        ssp/right_horizontal_pipe_cap_B.asm
+06AC:013F        ssp/left_horizontal_pipe_cap_B.asm
+06AD:013F        ssp/right_horizontal_pipe_cap_B.asm
+06BC:013F        ssp/left_horizontal_pipe_cap_B.asm
+06BD:013F        ssp/right_horizontal_pipe_cap_B.asm
+06CC:013F        ssp/left_horizontal_pipe_cap_B.asm
+06CD:013F        ssp/right_horizontal_pipe_cap_B.asm
 
 0290:0130        ssp/top_vertical_pipe_cap_L.asm
 0291:0130        ssp/top_vertical_pipe_cap_R.asm

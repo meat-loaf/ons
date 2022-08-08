@@ -213,7 +213,6 @@ BounceA:
 	STA $0D
 	JSR SUB_OFFSCREEN	; check if offscreen
 	BCS Bounce9_OnOffSkipGfx	; skip graphics if offscreen
-	WDM
 	LDA #!yoshiblk_tile_num
 	STA $0E
 	BRA Bounce9_oam_start

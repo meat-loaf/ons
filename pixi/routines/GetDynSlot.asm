@@ -17,27 +17,29 @@
 ;!SlotDestination = $0663|!Base2			;VRAM address
 ;!SlotsUsed = $06FE|!Base2			;how many slots have been used
 
-!SlotPointer = !dyn_slot_ptr
-!SlotBank = !dyn_slot_bank
-!SlotDestination = !dyn_slot_dest
-!SlotsUsed = !dyn_slots
+!SlotPointer      = !dyn_slot_ptr
+!SlotBank         = !dyn_slot_bank
+!SlotDestination  = !dyn_slot_dest
+!SlotsUsed        = !dyn_slots
 
-!MAXSLOTS = $04			;maximum selected slots
+!MAXSLOTS = $04                                  ;maximum selected slots
+
+	STZ !Timers     ; initialize
 	STX $8A
-	LDX $15E9|!addr
 	SEP #$10
-	PHY		;preserve OAM index
-	PHA		;preserve frame
-	LDA !SlotsUsed	;test if slotsused == maximum allowed
+	PHY		; preserve OAM index
+	PHA		; preserve frame
+	LDA !SlotsUsed	; test if slotsused == maximum allowed
 	CMP #!MAXSLOTS
-	BNE +
+	BNE ?slot_avail
 		
 	PLA
 	PLY
 	LDA #$00	;zero on no free slots
 	RTL
 
-+	PLA		;pop frame
+?slot_avail:
+	PLA		;pop frame
 	REP #$20	;16bit A
 	AND.w #$00FF	;wipe high
 	XBA		;<< 8
@@ -51,16 +53,15 @@
 	PHB : PLA
 	STA !SlotBank	;store bank to 24bit pointer
 
-	PHX		;This is how I made your boi a routine
-	LDX !SlotsUsed		;calculate VRAM address + tile number
-	LDA.L .SlotsTable,X	;get tile# in VRAM
-	PLX
-	PHA		;preserve for eventual pull
+	LDX   !SlotsUsed     ; calculate VRAM address + tile number
+	LDA.l .SlotsTable,x  ; get tile# in VRAM
+	LDX.w $15E9|!addr
+	PHA                  ;preserve for eventual pull
 	SEC
-	SBC #$C0	;staRTL at C0h, they start at C0 in tilemap
-	REP #$20	;16bit math
-	AND.w #$00FF	;wipe high byte
-	ASL A		;multiply by 32, since 32 bytes/16 words equates to 1 32bytes tile
+	SBC #$C0	     ; staRTL at C0h, they start at C0 in tilemap
+	REP #$20	     ; 16bit math
+	AND.w #$00FF	     ; wipe high byte
+	ASL A		     ; multiply by 32, since 32 bytes/16 words equates to 1 32bytes tile
 	ASL A
 	ASL A
 	ASL A
@@ -71,8 +72,8 @@ else
 	CLC : ADC.w #!dynamic_buffer
 endif
 	STA !SlotDestination	;destination address in the buffer
-	SEP #$20
-	STZ !Timers
+;	SEP #$20
+;	STZ !Timers
 	
 ;;;;;;;;;;;;;;;;
 ;Transfer routine
@@ -147,7 +148,7 @@ if !SA1 == 1
 +
 else
 ;common DMA settings
-	REP #$20
+;	REP #$20
 	STZ $4300	;1 reg only
 	LDY #$80	;to 2180, RAM write/read
 	STY $4301
@@ -200,5 +201,5 @@ endif
 	PLY
 	RTL
 
-.SlotsTable			;avaliable slots.  Any more transfers and it's overflowing by a dangerous amount.
-	db $CC,$C8,$C4,$C0			
+.SlotsTable                 ;avaliable slots.  Any more transfers and it's overflowing by a dangerous amount.
+	db $CC,$C8,$C4,$C0

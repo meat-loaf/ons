@@ -28,6 +28,10 @@
 24 needlenosebullet.cfg
 25 bumpty.cfg
 
+38 beezo_eerielike.cfg
+39 para_beetle.cfg
+3A fly_guy.cfg
+
 49 growing_pipe_49.cfg
 4B PipeLakitu.json
 

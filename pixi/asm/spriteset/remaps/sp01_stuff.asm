@@ -11,8 +11,70 @@ includefrom "remaps.asm"
 !note_block_tile  = $48
 !side_bounce_blk_tile = !turn_block_tile
 
+!spinning_coin_tile_full = $CA
+!spinning_coin_top       = $40
+!spinning_coin_bottom    = $50
+
 !wing_out_tile = $EC
 !wing_in_tile  = $FE
+
+; moving coin normal sprite: 16x16
+org $01C653|!bank
+	db !spinning_coin_tile_full
+; moving coin normal sprite: 8x8s
+org $01C66D|!bank
+	db !spinning_coin_top
+	db !spinning_coin_bottom
+	db !spinning_coin_top
+
+org $01C4CF|!bank
+	JSL.l spinning_coin_red_exbit|!bank
+pullpc
+spinning_coin_red_exbit:
+	LDA   !spr_extra_bits,x
+	AND.b #$04
+	BNE.b .red
+	JML.l $05B34A|!bank    ; coin + sfx
+.red:
+	INC.w !red_coin_counter
+	LDY.b #!red_coin_sfx_id
+	LDA.w !red_coin_total
+	CLC
+	ADC.w !red_coin_counter
+	CMP.b #20
+	BCC.b .not_final_coin
+	INY
+.not_final_coin:
+	STY.w $1DFC|!addr
+	
+	LDY.w $1865|!addr
+	BPL.b .nofix
+	LDY.b #$03
+	STY.w $1865|!addr
+.nofix:
+	LDA.b #$02
+	STA.w $17D0|!addr,y
+
+	LDA   !D8,x
+	STA.w $17D4|!addr,y
+	LDA.w !14D4,x
+	STA.w $17E8|!addr,y
+	LDA   !E4,x
+	STA.w $17E0|!addr,y
+	LDA.w !14E0,x
+	STA.w $17EC|!addr,y
+
+	LDA.b #$D0
+	STA.w $17D8|!addr,y
+
+	DEC $1865|!addr
+
+	PLA                ; \
+	PLA                ; | destroy the JSL
+	PLA                ; /
+	JML $01C4FA|!addr  ; 'return' to an RTS
+pushpc
+
 ; goomba wings
 org $018DE1|!bank
 	db !wing_out_tile, !wing_out_tile
@@ -24,6 +86,21 @@ org $019A4E|!bank
 ; extended smoke tiles
 org $02A347|!bank
 	db $E6,$E4,$E0,$E2
+; water splash tiles
+org $028D42|!bank
+	db $E8,$E8,$EA,$EA,$EA,$E2,$E2,$E2
+	db $E4,$E4,$E4,$E4,$E6
+
+; pswitch - jsr to jmp (why does it write the tile again...?)
+org $01A21D|!bank
+	db $4C
+
+org shared_spr_routines_tile_addr($3E)
+	db $6A
+
+; pswitch skooshed frame
+org $01E723|!addr
+	db $1F
 
 ; springboard
 org shared_spr_routines_tile_addr($2F)|!bank
@@ -87,10 +164,12 @@ org $029922|!bank
 ; spinning coin from block sprite tiles
 ; 16x16
 org $029A4F|!bank
-	db $4E
+	db !spinning_coin_tile_full
 ; 8x8s
 org $029A6E|!bank
-	db $40,$50,$40
+	db !spinning_coin_top
+	db !spinning_coin_bottom
+	db !spinning_coin_top
 
 org $0291F1|!bank
 	db !turn_block_tile

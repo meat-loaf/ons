@@ -111,7 +111,8 @@
 |           |                                     | Arg 16: pipe, end on left/right, palette 6        |
 |           |                                     | Arg 17: pipe, end on left/right, palette 7        |
 |           |                                     | Arg 18: pipe, no end, palette 2 (slip)            |
-|           |                                     | Arg 19 through 1F: available slots                |
+|           |                                     | Arg 19: screen scrolling pipe, exit-enabled ends  |
+|           |                                     | Arg 1A through 1F: available slots                |
 |           |                                     | Arg 20: pipe, end on left/right, palette 0 (exit) |
 |           |                                     | Arg 21: pipe, end on left/right, palette 1 (exit) |
 |           |                                     | Arg 22: pipe, end on left/right, palette 2 (exit) |

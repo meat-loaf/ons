@@ -16,8 +16,8 @@ check bankcross on
 Sta1To6ePointer      = $0DAA08
 StzTo6ePointer       = $0DAA0D
 StoreLoShiftObjRight = $0DA95B
-ShiftObjRightOrig        = $0DA95D
-ShiftObjDownOrig         = $0DA97D
+ShiftObjRightOrig    = $0DA95D
+ShiftObjDownOrig     = $0DA97D
 BackupMap16Lo        = $0DA6B1
 RestoreMap16Lo       = $0DA6BA
 
@@ -42,7 +42,22 @@ YoshiHouseLedgeObjRt = $0DF02B
 %replace_pointer_long($0DD9F1,net_edge_obj|!bank)
 
 ;replaces yoshi coins
-%replace_pointer_long($0DA1D2,vert_key_lock_block)
+%replace_pointer_long($0DA1D2,vert_key_lock_block|!bank)
+
+!single_remap_counter = $00
+while !single_remap_counter < $30
+  ; green star block
+  if !single_remap_counter != $07
+    !val #= !single_remap_counter*3
+    %replace_pointer_long($0DA13F+!val,single_tile_objs|!bank)
+  endif
+  !single_remap_counter #= !single_remap_counter+1
+endif
+
+; random junk to imem blocks
+%replace_pointer_long($0DA220,single_tile_objs|!bank)
+%replace_pointer_long($0DA223,single_tile_objs|!bank)
+%replace_pointer_long($0DA226,single_tile_objs|!bank)
 
 org $0DEC66|!bank
 	db $FD,$FC
@@ -52,6 +67,8 @@ org $0DE957             ; extended objects 57 through 5E: originally some random
 db $C3,$C4
 ; smb2 vine top, bottom
 db $53,$54
+; coin blocks (image only)
+db $E0,$E1,$E2
 
 org $0DB3BB             ; table of tiles on page 1 for object 17. Up to 16 entries
 obj_17_tiles:
@@ -559,7 +576,8 @@ SingleTileExtTiles:
 	db $1F,$20,$21,$22,$23,$25,$26,$27  ; extended objs 30-37
 	db $28,$2A,$DE,$E0,$E2,$E4,$EC,$ED  ; extended objs 38-3F
 	db $2C,$25,$2D                      ; extended objs 40, 41 (unused here), and the green star block
-
+	skip $14
+	db $FF,$FF,$FF,$FF,$E0,$E1,$E2,$FF  ; extended obj 57-5E
 single_tile_objs:
 	TXA
 	SEC : SBC #$10
@@ -611,6 +629,8 @@ db $01,$01,$01,$01,$01,$01,$01,$01     ; extended objs 28-2F
 db $01,$01,$01,$01,$01,$01,$01,$01     ; extended objs 30-37
 db $01,$01,$01,$01,$01,$01,$01,$01     ; extended objs 38-3F
 db $01,$01,$01                         ; extended objs 40, 41 (unused here), and the green star block.
+skip $14
+db $00,$00,$00,$00,$00,$00,$00,$00     ; extended obj 57-5E
 
 .use_item_memory:
 db $01,$01,$00,$00,$00,$01,$00,$00     ; extended objs 10-17 (object 17 actually uses index 32?)
@@ -620,6 +640,9 @@ db $01,$01,$01,$01,$01,$01,$01,$01     ; extended objs 28-2F
 db $01,$01,$01,$01,$01,$01,$01,$01     ; extended objs 30-37
 db $01,$01,$00,$00,$00,$00,$00,$00     ; extended objs 38-3F
 db $00,$00,$01                         ; extended objs 40,41 (unused here), and the green star block.
+skip $14
+db $00,$00,$00,$00,$01,$01,$01,$00     ; extended obj 57-5E
+
 
 .filled_tiles_high_byte
 db $01,$01,$01,$00,$00,$01,$00,$01     ; extended objs 10-17 (object 17 actually uses index 32?)
@@ -629,6 +652,8 @@ db $01,$01,$01,$01,$01,$01,$01,$01     ; extended objs 28-2F
 db $01,$01,$01,$01,$01,$01,$01,$01     ; extended objs 30-37
 db $01,$01,$01,$01,$01,$01,$01,$01     ; extended objs 38-3F
 db $01,$01,$01                         ; extended objs 40, 41 (unused here), and the green star block.
+skip $14
+db $01,$01,$01,$01,$01,$01,$01,$01     ; extended obj 57-5E
 
 .filled_tiles_low_byte
 db $32,$32,$13,$00,$00,$32,$00,$32     ; extended objs 10-17 (object 17 actually uses index 32?)
@@ -638,6 +663,8 @@ db $32,$32,$32,$32,$32,$32,$32,$32     ; extended objs 28-2F
 db $32,$32,$32,$32,$32,$32,$32,$32     ; extended objs 30-37
 db $32,$32,$00,$00,$00,$00,$00,$00     ; extended objs 38-3F
 db $00,$00,$32                         ; extended objs 40, 41 (unused here), and the green star block.
+skip $14
+db $32,$32,$32,$32,$32,$32,$32,$32     ; extended obj 57-5E
 
 ; objs 18-1B override
 pushpc

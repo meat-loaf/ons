@@ -21,8 +21,6 @@ lorom
 !slots_used	= !dyn_slots ;how many slots have been used
 !dsx_buffer = !dynamic_buffer
 
-				;change to 0 if you don't want to install it.
-
 ;org $00A08A
 ;	autoclean jml garble
 ;	LDA $1B9C

@@ -6,8 +6,6 @@ incsrc "statusbar_defs.asm"
 
 !cpu_meter      = 1
 
-function pack_props(flip, priority, palette, page) = (flip)|(priority|((palette&$07)<<1)|(page&$01))
-
 macro get_next_oam_tile(oam_tiles_tbl, abort_func)
 ?loop:
 	DEX
@@ -20,7 +18,7 @@ macro get_next_oam_tile(oam_tiles_tbl, abort_func)
 	BNE ?loop
 endmacro
 
-macro draw_static_tile(x_pos,y_pos,tile,tileflip,palette,page,size)
+macro draw_static_tile_propram(x_pos,y_pos,tile,tileflip,palette,page,size,use_propram,propram,propram_w)
 	LDA.B #<x_pos>
 	STA.W $0200|!addr,y
 	LDA.B #<y_pos>
@@ -28,27 +26,59 @@ macro draw_static_tile(x_pos,y_pos,tile,tileflip,palette,page,size)
 	LDA.B #<tile>
 	STA $0202|!addr,y
 	LDA.B #pack_props(<tileflip>,!status_prio_props,<palette>,<page>)
+	if <use_propram> != 0
+	  ORA.<propram_w> <propram>
+	endif
 	STA $0203|!addr,y
 	LDY.W .oam_tiles_small,x
 	LDA.B #<size>
 	STA.W $0420|!addr,y
 endmacro
 
-macro draw_digit_tile(x_pos,y_pos,source_addr,addr_width,tileflip,palette,page,size)
+macro draw_static_tile(x_pos,y_pos,tile,tileflip,palette,page,size)
+	%draw_static_tile_propram(<x_pos>,<y_pos>,<tile>,<tileflip>,<palette>,<page>,<size>,$00,$00,L)
+endmacro
+
+macro draw_digit_tile_sk_prop(x_pos,y_pos,source_addr,addr_width,tileflip,palette,page,size,do_skip,ix_skip,branch_skip,use_propram,propram,propram_w)
 	LDA.B #<x_pos>
 	STA.W $0200|!addr,y
 	LDA.B #<y_pos>
 	STA.W $0201|!addr,y
 	LDY.<addr_width> <source_addr>
+	if <do_skip> != 0
+	  if <ix_skip> != 0
+	    CPY #<ix_skip>
+	  endif
+	  BNE ?cont
+	  LDY.W .oam_tiles,x
+	  BRA <branch_skip>
+	endif
+?cont
 	LDA.W .number_tilenums,y
 	LDY.W .oam_tiles,x
 	STA.W $0202|!addr,y
 	LDA.B #pack_props(<tileflip>,!status_prio_props,<palette>,<page>)
+	if <use_propram> != 0
+	  ORA.<propram_w> <propram>
+	endif
 	STA $0203|!addr,y
 	LDY.W .oam_tiles_small,x
 	LDA.B #<size>
 	STA.w $0420|!addr,y
 endmacro
+
+macro draw_digit_tile_sk(x_pos,y_pos,source_addr,addr_width,tileflip,palette,page,size,do_skip,ix_skip,branch_skip)
+	%draw_digit_tile_sk_prop(<x_pos>,<y_pos>,<source_addr>,<addr_width>,<tileflip>,<palette>,<page>,<size>,<do_skip>,<ix_skip>,<branch_skip>,$00,$00,L)
+endmacro
+
+macro draw_digit_tile_propram(x_pos,y_pos,source_addr,addr_width,tileflip,palette,page,size,use_propram,propram,propram_w)
+	%draw_digit_tile_sk_prop(<x_pos>,<y_pos>,<source_addr>,<addr_width>,<tileflip>,<palette>,<page>,<size>,$00,$00,L,<use_propram>,<propram>,<propram_w>)
+endmacro
+
+macro draw_digit_tile(x_pos,y_pos,source_addr,addr_width,tileflip,palette,page,size)
+	%draw_digit_tile_sk_prop(<x_pos>,<y_pos>,<source_addr>,<addr_width>,<tileflip>,<palette>,<page>,<size>,$00,$00,L,$00,$00,L)
+endmacro
+
 
 macro draw_item_box(return)
 	%get_next_oam_tile(status_bar_oam_tiles, no_oam_left)
@@ -87,22 +117,28 @@ macro draw_timer(return)
 endmacro
 
 macro draw_score(return)
+?sc:
 	%get_next_oam_tile(status_bar_oam_tiles, no_oam_left)
-	%draw_digit_tile(!score_mils_xpos,!score_mils_ypos,$0F29|!ramlo|!addr,W,\
-			!tile_noflip,$00,$00,$00)
+	%draw_digit_tile_sk(!score_mils_xpos,!score_mils_ypos,$0F29|!ramlo|!addr,W,\
+			!tile_noflip,$00,$00,$00, !do_skip,!blank_digit_index,.sc_skip_1)
 	%get_next_oam_tile(status_bar_oam_tiles, no_oam_left)
-	%draw_digit_tile(!score_hunthous_xpos,!score_hunthous_ypos,$0F2A|!ramlo|!addr,W,\
-			!tile_noflip,$00,$00,$00)
+.sc_skip_1:
+	%draw_digit_tile_sk(!score_hunthous_xpos,!score_hunthous_ypos,$0F2A|!ramlo|!addr,W,\
+			!tile_noflip,$00,$00,$00,!do_skip,!blank_digit_index,.sc_skip_2)
 	%get_next_oam_tile(status_bar_oam_tiles, no_oam_left)
-	%draw_digit_tile(!score_10thous_xpos,!score_10thous_ypos,$0F2B|!ramlo|!addr,W,\
-			!tile_noflip,$00,$00,$00)
+.sc_skip_2:
+	%draw_digit_tile_sk(!score_10thous_xpos,!score_10thous_ypos,$0F2B|!ramlo|!addr,W,\
+			!tile_noflip,$00,$00,$00,!do_skip,!blank_digit_index,.sc_skip_3)
 	%get_next_oam_tile(status_bar_oam_tiles, no_oam_left)
-	%draw_digit_tile(!score_thous_xpos,!score_thous_ypos,$0F2C|!ramlo|!addr,W,\
-			!tile_noflip,$00,$00,$00)
+.sc_skip_3:
+	%draw_digit_tile_sk(!score_thous_xpos,!score_thous_ypos,$0F2C|!ramlo|!addr,W,\
+			!tile_noflip,$00,$00,$00,!do_skip,!blank_digit_index,.sc_skip_4)
 	%get_next_oam_tile(status_bar_oam_tiles, no_oam_left)
-	%draw_digit_tile(!score_100s_xpos,!score_100s_ypos,$0F2D|!ramlo|!addr,W,\
-			!tile_noflip,$00,$00,$00)
+.sc_skip_4:
+	%draw_digit_tile_sk(!score_100s_xpos,!score_100s_ypos,$0F2D|!ramlo|!addr,W,\
+			!tile_noflip,$00,$00,$00,!do_skip,!blank_digit_index,.sc_skip_5)
 	%get_next_oam_tile(status_bar_oam_tiles, no_oam_left)
+.sc_skip_5:
 	%draw_digit_tile(!score_tens_xpos,!score_tens_ypos,$0F2E|!ramlo|!addr,W,\
 			!tile_noflip,$00,$00,$00)
 	%get_next_oam_tile(status_bar_oam_tiles, no_oam_left)
@@ -156,15 +192,28 @@ macro draw_coins(return)
 	%get_next_oam_tile(status_bar_oam_tiles, no_oam_left)
 	%draw_static_tile(!coins_xpos_1,!coins_ypos,!coin_tile,\
 		!tile_noflip,$08,$00,$00)
-	%get_next_oam_tile(status_bar_oam_tiles, no_oam_left)
-	%draw_static_tile(!coins_xpos_2,!coins_ypos,!x_tile,\
-		!tile_noflip,$08,$00,$00)
+;	%get_next_oam_tile(status_bar_oam_tiles, no_oam_left)
+;	%draw_static_tile(!coins_xpos_2,!coins_ypos,!x_tile,\
+;		!tile_noflip,$08,$00,$00)
 	%get_next_oam_tile(status_bar_oam_tiles, no_oam_left)
 	%draw_digit_tile(!coins_xpos_3,!coins_ypos,$0F13|!ramlo|!addr,W,\
 			!tile_noflip,$08,$00,$00)
 	%get_next_oam_tile(status_bar_oam_tiles, no_oam_left)
 	%draw_digit_tile(!coins_xpos_4,!coins_ypos,$0F14|!ramlo|!addr,W,\
 			!tile_noflip,$0C,$00,$00)
+	<return>
+endmacro
+
+macro draw_red_coins(return)
+	%get_next_oam_tile(status_bar_oam_tiles, no_oam_left)
+	%draw_static_tile(!rcoins_xpos, !rcoins_ypos,!rcoin_tile,
+		!tile_noflip,$0C,$00,$00)
+	%get_next_oam_tile(status_bar_oam_tiles, no_oam_left)
+	%draw_digit_tile(!rcoins_xpos_1,!rcoins_ypos,$0EFA|!ramlo|!addr,W,\
+			!tile_noflip,$08,$00,$00)
+	%get_next_oam_tile(status_bar_oam_tiles, no_oam_left)
+	%draw_digit_tile(!rcoins_xpos_2,!rcoins_ypos,$0EFB|!ramlo|!addr,W,\
+			!tile_noflip,$08,$00,$00)
 	<return>
 endmacro
 
@@ -205,6 +254,22 @@ org $008FED
 org $008FF6
 	db $05
 
+; red coin counter, replace bonus stars bonus game check
+org $008F5B|!addr
+rcoin_counter:
+	LDA.w !red_coin_counter
+	BEQ .done
+	DEC.w !red_coin_counter
+	INC.w !red_coin_total
+.done:
+	LDA.w !red_coin_total
+	; hex to dec
+	JSR.w $009045|!bank
+	STA.w $0EFB
+	STX.w $0EFA
+	NOP
+warnpc $008F73|!addr
+
 freecode
 ; abort
 no_oam_left:
@@ -236,6 +301,7 @@ status_bar:
 	JSR .item_box
 	JSR .timer
 	JSR .coins
+	JSR .rcoins
 	JSR .lives
 	JSR .star_coins
 	JSR .score
@@ -261,6 +327,8 @@ status_bar:
 	%draw_lives(RTS)
 .coins:
 	%draw_coins(RTS)
+.rcoins:
+	%draw_red_coins(RTS)
 
 .cpu_meter:
 	%get_next_oam_tile(status_bar_oam_tiles, no_oam_left)
@@ -273,6 +341,9 @@ status_bar:
 	STA $0203,y
 	LDA #$00
 	STA $0200,y
+
+	LDY.W .oam_tiles_small,x
+	STA.w $0420|!addr,y
 
 	STZ $045B
 	RTS

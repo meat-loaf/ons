@@ -1,11 +1,11 @@
 includefrom "status.asm"
 includeonce
 
-!status_prio_props = %00110000
+!status_prio_props = %00000011
 
 !tile_noflip         = %00000000
-!tile_yflip          = %10000000
-!tile_xflip          = %01000000
+!tile_yflip          = %00000010
+!tile_xflip          = %00000001
 !tile_yxflip         = !tile_yflip|!tile_xflip
 
 !empty_coin_tile     = $1D
@@ -35,6 +35,12 @@ includeonce
 !coin_tile           = $72
 !m_t1_tile           = $73
 !m_t2_tile           = !m_t1_tile+$01
+!rcoin_tile          = $4A
+
+!do_skip             = $1
+!blank_digit_index   = 17
+
+!use_propram         = $1
 
 !item_box_tl_xpos    = $70
 !item_box_tl_ypos    = $07
@@ -56,7 +62,7 @@ includeonce
 !timer_ones_ypos     = !timer_ypos
 
 !ccoin_xpos_base     = $3C
-!ccoin_ypos_base     = !item_box_tl_ypos+$0C
+!ccoin_ypos_base     = !item_box_tl_ypos+$08
 !ccoin_1_x           = !ccoin_xpos_base
 !ccoin_2_x           = !ccoin_1_x+$08
 !ccoin_3_x           = !ccoin_2_x+$08
@@ -71,13 +77,19 @@ includeonce
 !lives_xpos_3        = !lives_xpos_2+$08
 !lives_xpos_4        = !lives_xpos_3+$08
 
-!coins_xpos          = $10
+!coins_xpos          = !lives_xpos+$2
 !coins_ypos          = !item_box_tl_ypos+$10
 
 !coins_xpos_1        = !coins_xpos+$02
-!coins_xpos_2        = !coins_xpos_1+$06
+!coins_xpos_2        = !coins_xpos_1+$04
 !coins_xpos_3        = !coins_xpos_2+$08
 !coins_xpos_4        = !coins_xpos_3+$08
+
+!rcoins_ypos         = !ccoin_ypos_base+$08
+!rcoins_xpos         = !ccoin_xpos_base
+
+!rcoins_xpos_1       = !rcoins_xpos+$0C
+!rcoins_xpos_2       = !rcoins_xpos_1+$08
 
 
 !score_ypos          = !item_box_tl_ypos+$10

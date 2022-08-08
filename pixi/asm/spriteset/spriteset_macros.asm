@@ -1,7 +1,5 @@
 includefrom "spritesets.asm"
 
-function shared_spr_routines_tile_addr(spr_num) = $019B83+read1($019C7F+spr_num)
-
 macro sprite_num(operation, index)
 if not(!sa1)
 	<operation>.b $9E,<index>

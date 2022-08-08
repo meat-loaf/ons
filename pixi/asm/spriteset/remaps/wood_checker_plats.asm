@@ -3,6 +3,7 @@ includefrom "remaps.asm"
 ; technically its now slower than before but it fits in the alotted space (barely)
 ; far better than the 'insert jsrs for each tile store' solution though'
 org $01B326|!bank
+wood:
 	LDX.b #$00
 	LDA.b $01
 	BEQ.b .wood
@@ -10,23 +11,22 @@ org $01B326|!bank
 .wood:
 	CLC
 	LDA.w plat_tiles|!bank,x
-	ADC !tile_off_scratch
 	STA $0302|!addr,y
 	INX
 	LDA.w plat_tiles|!bank,x
-	ADC !tile_off_scratch
 	STA $0306|!addr,y
 	INX
 	LDA.w plat_tiles|!bank,x
-	ADC !tile_off_scratch
 	STA $030A|!addr,y
 	STA $030E|!addr,y
 	INX
 	LDA.w plat_tiles|!bank,x
-	ADC !tile_off_scratch
 	STA $0312|!addr,y
 	LDX $15E9|!addr
-	NOP
+	BRA .cont
+	NOP #7
+.cont:
+assert .cont == $01B359|!bank
 warnpc $01B359|!bank
 
 org $01B359|!bank
@@ -42,8 +42,12 @@ org $01B36D|!bank
 ; note| draw junk
 plat_tiles:
 	; wood: left, center, right
-	db $00,$01,$02
+	db $86,$87,$88
 	; wood: left, center, center, right
 	db $06,$07,$07,$08
 skip:
 warnpc $01B376|!bank
+
+; line guided wood plat: use first gfx page
+org $07F3FE+$62|!bank
+	db $E0

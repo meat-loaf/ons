@@ -2,35 +2,37 @@
 
 ;will swoosh back and forth between an area defined by range.
 ;DOESN'T USE EXTRA BIT
-;EXTRA PROP 1: Range.  Keep it sane or it'll rush offscreen.
+; extra byte 1: range. Keep it sane or it'll rush offscreen. Ensure its not 0
+; extra byte 2: initial position offset. Format yyyyxxxx
 
 ;Graphics defines:
 ; Horizontal
-!Head1 =	$0A	;head frame 1
-!Head2 =	$0C	;head frame 2
-!Head3 =	$0E	;head frame 3
-!Head4 =	$20	;head frame 4
-!Head5 =	$22	;head frame 5
-!Tail =		$34	;tail
+!Head1 =	$0A	; head frame 1
+!Head2 =	$0C	; head frame 2
+!Head3 =	$0E	; head frame 3
+!Head4 =	$20	; head frame 4
+!Head5 =	$22	; head frame 5
+!Tail =		$34	; tail
 !Tail2 =        $35     ; second tail frame
 
 ; Vertical
-!VHead1 =	$00	;head frame 1
-!VHead2 =	$02	;head frame 2
-!VHead3 =	$04	;head frame 3
-!VHead4 =	$06	;head frame 4
-!VHead5 =	$08	;head frame 5
-!VTail  =	$24	;tail
+!VHead1 =	$00	; head frame 1
+!VHead2 =	$02	; head frame 2
+!VHead3 =	$04	; head frame 3
+!VHead4 =	$06	; head frame 4
+!VHead5 =	$08	; head frame 5
+!VTail  =	$24	; tail
+
+print "INIT ", hex(cloud_drop_init)
+print "MAIN ", hex(cloud_drop_main)
 
 
 INCDECTBL:	db $FF,$01	;right, left.  Sub if going right, add if going left.
 EORTBL:		db $00,$FF
 TWOCTBL:	db $00,$01
 
-print "INIT ",pc
-
-;	%store_spriteset_off_long(cloud_drop_offs)
-
+cloud_drop_init:
+	%sprite_init_do_pos_offset(!extra_byte_2,x)
 	LDA !extra_byte_1,x
 	BMI .backwards
 	INC !157C,x
@@ -76,7 +78,7 @@ print "INIT ",pc
 	STZ !1570,x	;reset turning byte
 	RTL
 
-print "MAIN ",pc
+cloud_drop_main:
 	PHB
 	PHK
 	PLB
@@ -93,6 +95,7 @@ Run:
 	ORA $9D			;locked sprites?
 	ORA !15D0,x		;being eaten by yoshi?
 	BNE Return_B
+	LDA #$03
 	%SubOffScreen()
 
 	LDA !1570,x	;turning byte..
@@ -207,9 +210,6 @@ PROP:	db $00,$00
 GFX:
 	%GetDrawInfo()
 
-;	LDA !spr_spriteset_off,x
-;	STA $0E
-
 	STZ $08		; reset
 	STZ $06
 	STZ $07
@@ -315,7 +315,7 @@ OAM_Loop:
 	LDX $15E9|!addr
 	LDY #$FF
 	LDA #$01
-	%FinishOAMWrite()
+	JSL finish_oam_write|!bank
 	RTS
 
 VTILEMAP:
@@ -392,7 +392,7 @@ Vert:
 	ADC $09
 	STA $05
 	
-	PHX		;preserve sprite index
+	;PHX		;preserve sprite index
 	LDX #$00	;loop index zero
 	
 .OAM_Loop:
@@ -452,8 +452,7 @@ Vert:
 	CPX #$02		;3 loops
 	BNE .OAM_Loop
 
-	PLX			;restore sprite index
-					
+	LDX $15E9|!addr
 	LDY #$FF		;16x16 tiles
 	LDA #$01		;2 tiles
 	%FinishOAMWrite()

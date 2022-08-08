@@ -2,7 +2,7 @@ arch spc700-raw
 
 org $000000
 incsrc "asm/main.asm"
-base $1E28
+base $1E35
 
 org $008000
 

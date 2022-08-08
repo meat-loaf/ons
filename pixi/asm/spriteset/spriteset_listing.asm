@@ -261,9 +261,9 @@ if !pixi_installed
 	dw spritesets_null_spriteset          ; custom sprite 35
 	dw spritesets_null_spriteset          ; custom sprite 36
 	dw spritesets_null_spriteset          ; custom sprite 37
-	dw spritesets_null_spriteset          ; custom sprite 38
-	dw spritesets_null_spriteset          ; custom sprite 39
-	dw spritesets_null_spriteset          ; custom sprite 3A
+	dw spritesets_beezo                   ; custom sprite 38 - beezo with eerie motion
+	dw spritesets_parabeetle              ; custom sprite 39 - parabeetle
+	dw spritesets_fly_guy                 ; custom sprite 3A - fly guy
 	dw spritesets_null_spriteset          ; custom sprite 3B
 	dw spritesets_null_spriteset          ; custom sprite 3C
 	dw spritesets_null_spriteset          ; custom sprite 3D
@@ -741,9 +741,11 @@ endif ; !remap_jumpin_pplant_vine
 if !goal_sphere_on_sp0_sp1 == 0
 .goalsphere:
 endif
+.beezo:
+.parabeetle:
 .rock_grass_plats:
 .wood_checkered_plats:
-	db $80,$00,$00,$00,$00,$00,$00,$00    ; spritesets 00-07
+	db $80,$00,$A0,$00,$00,$00,$00,$00    ; spritesets 00-07
 	db $40,$00,$00,$80,$A0,$00,$00,$00    ; spritesets 08-0F
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 10-17
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 18-1F
@@ -788,7 +790,8 @@ endif
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 30-37
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 38-3F
 .cloud_drop:
-	db $40,$00,$00,$00,$00,$00,$00,$00    ; spritesets 00-07
+.fly_guy:
+	db $40,$00,$60,$00,$00,$00,$00,$00    ; spritesets 00-07
 	db $00,$00,$60,$00,$00,$00,$00,$00    ; spritesets 08-0F
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 10-17
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 18-1F
@@ -851,9 +854,9 @@ else
 ; NOTE: the second row is the second-bottom-most 16-pixel row, and so on.
 ; NOTE: In other words, the rightmost entry is uploaded at the lowest VRAM address.
 spriteset_gfx_listing:
-	dw $007F,$007F,$010D,$0108,$010B,$010A,$0104,$0103		; spriteset 00: chargin, clappin chucks, cloud drop, platforms, piranha plants
+	dw $007F,$007F,$010D,$0108,$010B,$010A,$0104,$0103		; spriteset 00: chargin, clappin chucks, cloud drop, grass plat w beetles/beezos, piranha plants
 	dw $007F,$007F,$007F,$007F,$007F,$007F,$0115,$0102		; spriteset 01: fish, nipper, lakitu
-	dw $0110,$0102,$010E,$0103,$010D,$010C,$0108,$0107		; spriteset 02: rex, banzai bill, fish, timed + carrot platforms, piranhas
+	dw $007F,$007F,$0108,$010B,$010A,$0105,$0104,$0103		; spriteset 02: ss 00 alt: no piranhas, adds pitchin chucks
 	dw $007F,$007F,$0117,$0124,$0112,$0116,$0114,$0111		; spriteset 03: dolphins, porcupuffer
 	dw $0105,$0110,$0104,$011A,$010A,$0109,$0108,$0107		; spriteset 04: all chucks, spike top, buzzy, swooper, blargg
 	dw $007F,$007F,$007F,$010D,$0100,$0112,$0111,$0110		; spriteset 05: boos, big boo

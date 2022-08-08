@@ -1,32 +1,32 @@
 ;Global sprites: 
 autoclean $93B82F
 autoclean $93B91E
-autoclean $93C4CE
-autoclean $93C56D
-autoclean $93CA1D
-autoclean $93CA7C
-autoclean $93CCF3
-autoclean $93CCFB
-autoclean $93D152
-autoclean $93D1BB
-autoclean $93D504
-autoclean $93D528
+autoclean $93C4EE
+autoclean $93C58D
+autoclean $93CA3D
+autoclean $93CAC2
+autoclean $93CD3C
+autoclean $93CD44
+autoclean $93D19B
+autoclean $93D204
+autoclean $93D54D
+autoclean $93D571
 autoclean $92FE8F
 autoclean $92FE9E
-autoclean $93D7A8
-autoclean $93D7BA
-autoclean $93D9DD
-autoclean $93D9E8
-autoclean $93D504
-autoclean $93D528
-autoclean $93DF6A
-autoclean $93DF88
+autoclean $93D7F1
+autoclean $93D803
+autoclean $93DA26
+autoclean $93DA31
+autoclean $93D54D
+autoclean $93D571
+autoclean $93DFB3
+autoclean $93DFD1
 autoclean $94800D
 autoclean $948024
 autoclean $95800D
 autoclean $95801B
-autoclean $93E2C0
-autoclean $93E2B9
+autoclean $93E304
+autoclean $93E2FD
 autoclean $95A48F
 autoclean $95A4A4
 autoclean $95C66D
@@ -37,60 +37,66 @@ autoclean $95EB28
 autoclean $95EB74
 autoclean $96B238
 autoclean $96B23E
-autoclean $93F3EA
-autoclean $93F3E3
+autoclean $93F42E
+autoclean $93F427
 autoclean $98A015
 autoclean $98A06B
-autoclean $93F4E6
-autoclean $93F4E7
-autoclean $93F6AC
-autoclean $93F6AD
-autoclean $93F773
-autoclean $93F7A4
-autoclean $93FA71
-autoclean $93FA86
-autoclean $93FB7F
-autoclean $93FB77
+autoclean $93F52A
+autoclean $93F52B
+autoclean $93F6F0
+autoclean $93F6F1
+autoclean $93F7B7
+autoclean $93F7E8
+autoclean $93FAB5
+autoclean $93FACA
+autoclean $93FBC3
+autoclean $93FBBB
 autoclean $94F586
 autoclean $94F5AF
-autoclean $93FC2B
-autoclean $93FC3C
-autoclean $93FD81
-autoclean $93FD9C
+autoclean $93FC5F
+autoclean $93FC7F
+autoclean $93FCDD
+autoclean $93FD1F
+autoclean $94FA78
+autoclean $94FA81
+autoclean $93FE64
+autoclean $93FE75
+autoclean $94FD2C
+autoclean $94FD47
 autoclean $96F601
 autoclean $96F6B6
-autoclean $94FA76
-autoclean $94FAAE
-autoclean $94FC5C
-autoclean $94FC68
-autoclean $93FFD3
-autoclean $93FF9B
-autoclean $94FD12
-autoclean $94FD0B
-autoclean $95F7FF
 autoclean $95F80F
+autoclean $95F847
+autoclean $94FF46
+autoclean $94FF52
+autoclean $95FA2D
+autoclean $95F9F5
+autoclean $95FA52
+autoclean $95FA4B
 autoclean $98C19B
 autoclean $98C1AB
-autoclean $98C19B
-autoclean $98C1AB
-autoclean $94FDF0
-autoclean $94FDF0
-autoclean $94FEA4
-autoclean $94FEA4
+autoclean $98C7F8
+autoclean $98C808
+autoclean $98C7F8
+autoclean $98C808
+autoclean $95FB30
+autoclean $95FB30
+autoclean $95FBE4
+autoclean $95FBE4
 ;Global sprite custom pointers: 
 
 
 ;Routines:
-autoclean $93FF18
+autoclean $94FEC3
 	org $03E065
 	dl $FFFFFF
-autoclean $93E1E9
+autoclean $93E232
 	org $03E06B
 	dl $FFFFFF
-autoclean $94FE56
+autoclean $95FB96
 	org $03E06E
 	dl $FFFFFF
-autoclean $93D95A
+autoclean $93D9A3
 	org $03E071
 	dl $FFFFFF
 autoclean $92FFA8
@@ -99,54 +105,57 @@ autoclean $92FFA8
 autoclean $92FBC9
 	org $03E07A
 	dl $FFFFFF
-autoclean $94FFA4
+autoclean $95FFA3
 	org $03E07D
 	dl $FFFFFF
-autoclean $93F5AB
+autoclean $93F5EF
 	org $03E083
 	dl $FFFFFF
-autoclean $98CDC5
+autoclean $98D29E
 	org $03E092
 	dl $FFFFFF
-autoclean $93F4A3
+autoclean $93F4E7
 	org $03E095
 	dl $FFFFFF
-autoclean $92FD57
+autoclean $92FDDB
 	org $03E098
 	dl $FFFFFF
-autoclean $92FDEB
+autoclean $92FD57
 	org $03E09B
 	dl $FFFFFF
-autoclean $98C81E
+autoclean $98CE7B
 	org $03E0A4
 	dl $FFFFFF
 autoclean $92FCDD
 	org $03E0AD
 	dl $FFFFFF
-autoclean $98CB5A
-	org $03E0BF
+autoclean $93FDEE
+	org $03E0B6
 	dl $FFFFFF
-autoclean $95FF05
-	org $03E0C8
+autoclean $96FE22
+	org $03E0C2
+	dl $FFFFFF
+autoclean $96FD9F
+	org $03E0CB
 	dl $FFFFFF
 autoclean $92FE6F
-	org $03E0D1
+	org $03E0D4
 	dl $FFFFFF
-autoclean $95FE5C
-	org $03E0DD
-	dl $FFFFFF
-autoclean $92FE53
+autoclean $95FEFA
 	org $03E0E0
 	dl $FFFFFF
-autoclean $95FF88
-	org $03E0E9
+autoclean $92FDBF
+	org $03E0E3
+	dl $FFFFFF
+autoclean $96FFA6
+	org $03E0EC
 	dl $FFFFFF
 
 
 ;Cluster:
-autoclean $96FD9F
-autoclean $98CC59
+autoclean $95FCE4
+autoclean $96FF21
 
 
 ;Extended:
-autoclean $98CCDE
+autoclean $98D1B7

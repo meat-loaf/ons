@@ -743,9 +743,11 @@ PrepJump:
 	TYX
 	JSR ADDR_02C556
 	LDA !1540,x
-	BEQ ADDR_02C602
+	BNE .cont
+	JMP ADDR_02C602
+.cont:
 	CMP #$01
-	BNE NoSpawn
+	BNE .no_spawn
 	LDA !9E,x
 	CMP #$93
 	BNE ADDR_02C5A7
@@ -757,13 +759,17 @@ PrepJump:
 	LDA #$06
 	STA !C2,x
 	JMP ADDR_02C536
+.no_spawn:
+	LDA #$09
+	STA !1602,x
+	RTS
 
 ADDR_02C5A7:
 	STZ !C2,x
 	LDA #$50
 	STA !1540,x
 	LDA #$10                ; \ Play sound effect
-	STA $1DF9|!Base2               ; /
+	STA $1DF9|!Base2        ; /
 	STZ $185E|!Base2        ; scratch: index into spawned chuck x-speed table
 	JSR SplittinChuckSplit  ; interesting way to do this twice
 	INC $185E|!Base2
@@ -772,8 +778,10 @@ SplittinChuckSplit:
 	BMI NoSpawn
 	LDA #$08                ; \ Sprite status = Normal
 	STA !14C8,y             ; /
-	LDA #$91
+	;LDA #$91
+	LDA #$00
 	STA !9E,y
+	STA !spr_new_sprite_num,y
 	LDA !E4,x
 	STA !E4,y
 	LDA !14E0,x
@@ -782,17 +790,23 @@ SplittinChuckSplit:
 	STA !D8,y
 	LDA !14D4,x
 	STA !14D4,y
-	PHX
+	LDA !spr_extra_bits,x
+	STA !spr_extra_bits,y
+	PHA
 	TYX
 	JSL InitSpriteTables
+	STZ !spr_extra_byte_1,x
+	JSL $0187A7|!bank
 	LDX $185E|!Base2
 	LDA DATA_02C57E,x
 	STA !B6,y
-	PLX
+	LDX $15E9|!addr
 	LDA #$C8
 	STA !AA,y
 	LDA #$50
 	STA !1540,y
+	PLA
+	STA !spr_extra_bits,y
 NoSpawn:
 	LDA #$09
 	STA !1602,x
@@ -1133,7 +1147,7 @@ ChuckGraphics:
 	LDY #$FF
 ADDR_02C82B:
 	LDA #$04
-	%FinishOAMWrite()
+	JSL finish_oam_write|!bank
 Return02B7AB:
 	RTS
 

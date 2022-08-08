@@ -2564,7 +2564,7 @@ TallHorzObjTiles:
 	dw $06B6,$06B7,$06B8,$06B9,$06BA,$06BB  ; horizontal pipe, end on left/right. palette 6
 	dw $06C6,$06C7,$06C8,$06C9,$06CA,$06CB  ; horizontal pipe, end on left/right. palette 7
 	dw $0677,$0677,$0677,$067A,$067A,$067A  ; horizontal pipe, end on left/right. palette 2, slip, no ends
-	dw $FFFF,$FFFF,$FFFF,$FFFF,$FFFF,$FFFF  ; available slot
+	dw $069E,$02A7,$02A8,$069C,$02AA,$069D  ; blue ss-passable pipe with exit-enabled ends
 	dw $FFFF,$FFFF,$FFFF,$FFFF,$FFFF,$FFFF  ; available slot
 	dw $FFFF,$FFFF,$FFFF,$FFFF,$FFFF,$FFFF  ; available slot
 	dw $FFFF,$FFFF,$FFFF,$FFFF,$FFFF,$FFFF  ; available slot

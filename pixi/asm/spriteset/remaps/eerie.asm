@@ -1,4 +1,4 @@
 includefrom "remaps.asm"
 
 org $019C5A|!bank
-	db $00,$02
+	db $0C,$0E

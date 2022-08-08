@@ -266,7 +266,8 @@ wiggler_gfx:
 	LDA.b #$05
 	LDY.b #$FF
 	JSL.l $01B7B3|!bank
-; note: pc needs to be at exactly $02F202 here
+.fin:
+assert .fin == $02F202|!bank
 warnpc $02F202|!bank
 
 ; extended flower spawn
