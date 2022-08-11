@@ -29,8 +29,8 @@ else
 	!num_sprites = $0C
 endif
 
-!red_coin_sfx_id      = $36
-!last_red_coin_sfx_id = $37
+!red_coin_sfx_id      = $2D
+!last_red_coin_sfx_id = $2E
 
 !frames_before_waterfall_reset = $04
 !frames_for_on_off_cooldown    = $0A

@@ -195,7 +195,7 @@ spriteset_off_ptrs:
 	dw spritesets_mega_mole               ; sprite BF - mega_mole
 	dw spritesets_rock_grass_plats        ; sprite C0 - sinking grey rock
 	dw spritesets_null_spriteset          ; sprite C1 - flying grey turn blocks
-	dw spritesets_null_spriteset          ; sprite C2
+	dw spritesets_blurp                   ; sprite C2 - blurp
 	dw spritesets_porcupuffer             ; sprite C3
 	dw spritesets_null_spriteset          ; sprite C4
 	dw spritesets_bigboo_smashplayers     ; sprite C5 - big boo boss
@@ -568,7 +568,7 @@ if !remap_message_box
 endif
 if !remap_jumpin_pplant_vine
 .piranhas:
-	db $A0,$00,$E0,$00,$C0,$80,$00,$20    ; spritesets 00-07
+	db $A0,$80,$E0,$00,$C0,$80,$00,$20    ; spritesets 00-07
 	db $00,$A0,$00,$00,$00,$00,$00,$00    ; spritesets 08-0F
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 10-17
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 18-1F
@@ -596,7 +596,8 @@ endif ; !remap_jumpin_pplant_vine
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 30-37
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 38-3F
 .rip_van_fish:
-	db $00,$00,$00,$A0,$00,$00,$00,$00    ; spritesets 00-07
+.blurp:
+	db $00,$40,$00,$A0,$00,$00,$00,$00    ; spritesets 00-07
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 08-0F
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 10-17
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 18-1F
@@ -855,7 +856,7 @@ else
 ; NOTE: In other words, the rightmost entry is uploaded at the lowest VRAM address.
 spriteset_gfx_listing:
 	dw $007F,$007F,$010D,$0108,$010B,$010A,$0104,$0103		; spriteset 00: chargin, clappin chucks, cloud drop, grass plat w beetles/beezos, piranha plants
-	dw $007F,$007F,$007F,$007F,$007F,$007F,$0115,$0102		; spriteset 01: fish, nipper, lakitu
+	dw $007F,$007F,$007F,$010D,$007F,$011F,$0115,$0102		; spriteset 01: fish, nipper, lakitu, rip van fish, blurp
 	dw $007F,$007F,$0108,$010B,$010A,$0105,$0104,$0103		; spriteset 02: ss 00 alt: no piranhas, adds pitchin chucks
 	dw $007F,$007F,$0117,$0124,$0112,$0116,$0114,$0111		; spriteset 03: dolphins, porcupuffer
 	dw $0105,$0110,$0104,$011A,$010A,$0109,$0108,$0107		; spriteset 04: all chucks, spike top, buzzy, swooper, blargg

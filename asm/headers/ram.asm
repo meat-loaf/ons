@@ -199,6 +199,8 @@ includeonce
 !spc_io_3_music          = $1DFB|!addr
 !spc_io_4_sfx_3          = $1DFC|!addr
 
+!red_coin_sfx_port       = !spc_io_1_sfx_1
+
 ; 7168 bytes
 ; Item memory, divided in four blocks of 1792 bytes per block.
 !item_memory = $7F0000 ; last byte at 7F1BFF. free due to ow event restore

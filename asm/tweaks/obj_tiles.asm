@@ -72,7 +72,7 @@ db $E0,$E1,$E2
 
 org $0DB3BB             ; table of tiles on page 1 for object 17. Up to 16 entries
 obj_17_tiles:
-	db $05,$06,$2F,$10,$10,$53,$55,$FF
+	db $05,$06,$2F,$10,$10,$53,$55,$56
 	db $FF,$FF,$FF,$FF,$FF,$FF,$08,$09
 warnpc $0DB3CB
 
@@ -803,7 +803,7 @@ org $0DB49C
 net_obj_tiles:
 	db $0A,$0C
 	db $90,$91
-	db $9F
+	db $9F,$D0
 pullpc
 net_edge_obj:
 	LDY !object_load_pos

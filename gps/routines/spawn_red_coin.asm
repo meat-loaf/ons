@@ -11,7 +11,7 @@
 	BCC .not_final_coin
 	INX
 .not_final_coin:
-	STX $1DFC|!addr
+	STX !red_coin_sfx_port
 
 	LDX $1865|!addr
 	BPL .nofix

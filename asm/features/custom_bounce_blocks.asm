@@ -122,7 +122,7 @@ BOUNCE_OAM: 			; OAM addresses for bounce extended sprites
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
-!smb3_brick_bounce_tile = $C0
+!smb3_brick_bounce_tile = $C2
 Bounce8:	; SMB3 brick
 	; graphics
 

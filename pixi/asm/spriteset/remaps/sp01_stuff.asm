@@ -5,8 +5,8 @@ includefrom "remaps.asm"
 !springboard_fcomp_tile = $1E
 !springboard_empty_tile = $71
 
-!turn_block_tile  = $C2
-!qmark_block_tile = $C4
+!turn_block_tile  = $C4
+!qmark_block_tile = $C0
 !onoff_block_tile = $C6
 !note_block_tile  = $48
 !side_bounce_blk_tile = !turn_block_tile
@@ -45,7 +45,7 @@ spinning_coin_red_exbit:
 	BCC.b .not_final_coin
 	INY
 .not_final_coin:
-	STY.w $1DFC|!addr
+	STY.w !red_coin_sfx_port
 	
 	LDY.w $1865|!addr
 	BPL.b .nofix
