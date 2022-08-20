@@ -1,10 +1,6 @@
 incsrc "../../main.asm"
 incsrc "statusbar_defs.asm"
 
-!star_tile      = $EF
-!star_props     = $34
-
-!cpu_meter      = 1
 
 macro get_next_oam_tile(oam_tiles_tbl, abort_func)
 ?loop:
@@ -78,25 +74,6 @@ endmacro
 macro draw_digit_tile(x_pos,y_pos,source_addr,addr_width,tileflip,palette,page,size)
 	%draw_digit_tile_sk_prop(<x_pos>,<y_pos>,<source_addr>,<addr_width>,<tileflip>,<palette>,<page>,<size>,$00,$00,L,$00,$00,L)
 endmacro
-
-;macro draw_tile_cond(x_pos,y_pos,check_addr,addr_width,value_to_compare,branch_op,tile_cond_branch,tile_cond_nobranch,tileflip,palette,page,size)
-;	LDA.B #<x_pos>
-;	STA.W $0200|!addr,y
-;	LDA.B #<y_pos>
-;	STA.W $0201|!addr,y
-;	LDA.<addr_width> <check_addr>
-;	CMP.b #<value_to_compare>
-;	<branch_op> ?con_branches
-;	LDA #<tile_cond_nobranch>
-;	STA $0202|!addr,y
-;	BRA ?done
-;?con_branches:
-;	LDA #<tile_cond_branch>
-;	STA $0202|!addr,y
-;?done:
-;	LDA.B #pack_props(<tileflip>,!status_prio_props,<palette>,<page>)
-;	STA $0303|!addr,y
-;endmacro
 
 macro draw_item_box(return)
 	%get_next_oam_tile(status_bar_oam_tiles, no_oam_left)
@@ -347,10 +324,13 @@ endif
 .configurations:
 	dw .standard_config
 	dw .ibox_only
+
+if !use_midway_imem_sram_dma == !true
 .midway_stages_imem_from:
 	%gen_dma_stage_table(!item_memory,!item_memory_size,!item_memory_dma_frames)
 .midway_stages_imem_to:
 	%gen_dma_stage_table(!item_memory_mirror_s,!item_memory_size,!item_memory_dma_frames)
+endif
 .standard_config:
 	LDX.B #$3D        ; skip the first 3 OAM slots so yoshi's tongue isnt above some tiles and below others
 	JSR .item_box
@@ -361,7 +341,9 @@ endif
 	JSR .star_coins
 	JSR .score
 
+if !enable_debug_cpu_meter == !true
 	JSR .cpu_meter
+endif
 	PLB
 	RTL
 .ibox_only
@@ -385,6 +367,12 @@ endif
 .rcoins:
 	%draw_red_coins(RTS)
 
+
+if !enable_debug_cpu_meter == !true
+
+!star_tile      = $EF
+!star_props     = $34
+
 .cpu_meter:
 	%get_next_oam_tile(status_bar_oam_tiles, no_oam_left)
 	LDA $2137       ;   Prepare H/V-count data
@@ -402,6 +390,7 @@ endif
 
 	STZ $045B
 	RTS
+endif
 
 .number_tilenums:
 	db !zero_digit_tile,!one_digit_tile,!two_digit_tile,!three_digit_tile

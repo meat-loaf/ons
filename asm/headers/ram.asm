@@ -84,8 +84,8 @@ includeonce
 !block_to_generate       = $9C
 !sprites_locked          = $9D
 
-
 !gamemode                = $0100|!addr
+
 !level_number            = $010B|!addr
 
 !on_off_cooldown         = $0AF5|!addr
@@ -174,12 +174,10 @@ includeonce
 ; repurposed: low nybble used as bitfield for object generation parameters
 !sprite_memory_header    = $1692|!addr
 
-;!dyn_slot_dest = $1864|!addr
-!dyn_slot_dest = $0DC3|!addr
-; 2 bytes
-!dyn_slot_ptr  = $1869|!addr
-!dyn_slots     = $1879|!addr
-!dyn_slot_bank = $188A|!addr
+!dyn_slot_ptr  = $0660|!addr
+!dyn_slot_bank = $0662|!addr
+!dyn_slot_dest = $0663|!addr
+!dyn_slots     = $06FE|!addr
 
 ; 1 byte
 ; Toggles the use of item memory.

@@ -120,7 +120,7 @@ shooter_dir=${PIXI_DIR}/shooters
 
 
 asm_base_deps=${asm_dir}/main.asm \
-	$(wildcard ${asm_dir}/headers/*.asm)
+	${ASM_HEADERS}
 
 gfx_files= \
 	$(wildcard gfx/*.bin) \

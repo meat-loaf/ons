@@ -20,6 +20,17 @@ BodyInside:
 	BEQ exit			;/
 	BRA within_pipe			;>Other directions, allow player to pass through without exiting.
 enter:
+	; Check for map16 06xC/06xD
+	LDA $04
+	CMP #$06
+	BNE .c
+	LDA $03
+	AND #$0F
+	CMP #$0C
+	BEQ return
+	CMP #$0D
+	BEQ return
+.c:
 	if !Setting_SSP_CarryAllowed == 0
 		LDA $1470|!addr		;\no carrying item
 		ORA $148F|!addr		;|

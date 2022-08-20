@@ -1,4 +1,5 @@
 incsrc "headers/consts.asm"
+incsrc "headers/toggles.asm"
 incsrc "headers/macros.asm"
 incsrc "headers/routines.asm"
 incsrc "headers/ram.asm"

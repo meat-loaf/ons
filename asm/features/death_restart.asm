@@ -2,15 +2,24 @@ incsrc "../main.asm"
 
 org $00FFD8
 if !use_midway_imem_sram_dma == !true
-	db $03       ; 8kb sram
+	db $04       ; 16kb sram
 else
 	db $01       ; 2kb sram
 endif
 
+org $00A261|!bank
+if !dbg_start_select_end_level == !true
+	BRA exit_level : NOP
+org $00A269|!bank
+exit_level:
+else
+	LDY !main_level_num
+endif
+
 
 org $00D0E7|!bank
-;	db $18       ; gamemode to execute on death
-	db $0B       ; gamemode to execute on death
+	db $18       ; gamemode to execute on death
+;	db $0B       ; gamemode to execute on death
 warnpc $00D0E8|!bank
 
 ; gm18: gamemode transition -> temp fade
@@ -170,7 +179,9 @@ midway_tables:
 .level_106:
 	%midway_table_entry($0106, !true, !false)
 .level_107:
+	%midway_table_entry($0107, !true, !false)
 .level_108:
+	%midway_table_entry($0108, !true, !false)
 .level_109:
 .level_10A:
 .level_10B:

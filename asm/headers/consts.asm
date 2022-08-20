@@ -33,8 +33,6 @@ endif
 !true  = $01
 !false = $00
 
-!use_midway_imem_sram_dma = !false
-
 !red_coin_sfx_id      = $2D
 !last_red_coin_sfx_id = $2E
 
