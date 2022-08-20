@@ -30,8 +30,7 @@ print "INIT ",pc
 	INC !1632,x      ; make sprite go behind layer 1
 .notset
 	%sprite_init_do_pos_offset(!extra_byte_1,x)
-	%sprite_item_memory_invoc(read_item_memory|!bank)
-	LDA $0F
+	JSL sprite_read_item_memory|!bank
 	BEQ .nodelete
 	STZ !14C8,x
 .nodelete:
@@ -129,7 +128,8 @@ CollectIt:
 	ADC !yoshi_coins_collected
 	%spawn_score_sprite()
 
-	%sprite_item_memory_invoc(write_item_memory|!bank)
+	JSL sprite_write_item_memory|!bank
+	;%sprite_item_memory_invoc(write_item_memory|!bank)
 
 
 	; kill self

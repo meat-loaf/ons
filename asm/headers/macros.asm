@@ -46,7 +46,7 @@ macro sprite_init_do_pos_offset(spr_table,index)
 
 endmacro
 
-macro sprite_item_memory_invoc(routine)
+macro sprite_read_item_memory(routine)
 	LDA !D8,x
 	AND #$F0
 	STA $98
@@ -54,10 +54,36 @@ macro sprite_item_memory_invoc(routine)
 	AND #$F0
 	STA $9A
 	LDA !14D4,x
-	AND #$F0
 	STA $99
 	LDA !14E0,x
-	AND #$F0
 	STA $9B
 	JSL <routine>
 endmacro
+
+macro midway_table_entry(lvl_or_secondary_exit, is_midpoint_or_water, is_secondary)
+	!___lo #= <lvl_or_secondary_exit>&$FF
+	!___hi #= (((<lvl_or_secondary_exit>&$FF00)>>8)|!19D8_flag_lm_modified)
+
+	if <is_midpoint_or_water> == !true
+		!___hi #= (!___hi|!19D8_flag_water_lvl_mid)
+	endif
+	if <is_secondary> == !true
+		!___hi #= ((!___hi<<4)&19D8_flag_b8_12_seconary)|!19D8_flag_is_secondary
+	endif
+
+	!___val #= (!___lo|(!___hi<<8))
+	dw !___val
+endmacro
+
+; from uberasm
+macro move_block(src,dest,len)
+	PHB
+	REP #$30
+	LDA.w #<len>-1
+	LDX.w #<src>
+	LDY.w #<dest>
+	MVN <dest>>>16,<src>>>16
+	SEP #$30
+	PLB
+endmacro
+

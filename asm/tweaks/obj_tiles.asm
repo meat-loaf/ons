@@ -55,9 +55,13 @@ while !single_remap_counter < $30
 endif
 
 ; random junk to imem blocks
-%replace_pointer_long($0DA220,single_tile_objs|!bank)
-%replace_pointer_long($0DA223,single_tile_objs|!bank)
-%replace_pointer_long($0DA226,single_tile_objs|!bank)
+%replace_pointer_long($0DA220|!bank,single_tile_objs|!bank)
+%replace_pointer_long($0DA223|!bank,single_tile_objs|!bank)
+%replace_pointer_long($0DA226|!bank,single_tile_objs|!bank)
+
+; purple coin points to main 1x1 objs routine (in cave tileset)
+; through old frozen turn block routine
+%replace_pointer_long($0DD9D9|!bank,$0DBB63|!bank)
 
 org $0DEC66|!bank
 	db $FD,$FC
@@ -155,8 +159,7 @@ org $0DE9E9
 org $0DB2CA
 vert_key_lock_block:
 	LDY !object_load_pos
-	JSR do_read_item_memory
-	LDA $0F
+	JSL read_item_memory
 	BNE .no_draw
 	LDA #$03
 	STA [$6E],y
@@ -526,13 +529,14 @@ new_cloud_rope_obj_code:
 
 pushpc
 org $0DA8B4
+; final object (index 0E) used for red coins (object 16)
+; reuses 'frozen' turn block code, which is ultimately not used
 square_objs_low_bytes:
 	db $BE,$21,$CF,$2A,$2B,$CE,$E9
-	db $13,$1E,$24,$2E,$54,$30,$32,$65
+	db $13,$1E,$24,$2E,$54,$30,$32,$2C
 org $0DA8D8
 square_objs_routine:
-	JSR do_read_item_memory
-	LDA $0F
+	JSL read_item_memory
 	BEQ .no_item_mem
 	LDA.l .uses_item_mem,x
 	BEQ .no_item_mem
@@ -556,15 +560,15 @@ org $0DA928
 pullpc
 ; a negative value spawns a brown block, a positive one doesn't draw anything.
 ; zero doesn't use item memory
-; TODO throw block doesnt seem to set item memory
+; TODO throw block doesnt seem to set item memory, perhaps remedy this
 .uses_item_mem:
 	db $00,$80,$01,$00,$01,$00,$01,$00
-	db $01,$80,$01,$00,$01,$00
+	db $01,$80,$01,$00,$01,$01
 ; note: lunar magic will use 0 as the map16 page for indices 0-6
 ; and 1 for the others regardless of what is here
 .square_objs_high_bytes:
 	db $03,$00,$03,$00,$00,$03,$03,$01
-	db $01,$01,$01,$03,$01,$01,$01
+	db $01,$01,$01,$03,$01,$01,$00
 
 pushpc
 org $0DA548
@@ -602,8 +606,7 @@ single_tile_objs:
 	CMP #$0A : BEQ .do_item_mem
 	CMP #$0D : BNE .finish
 .do_item_mem
-	JSR do_read_item_memory
-	LDA.B $0F
+	JSL read_item_memory
 	BEQ .finish
 	CPX.B #$07
 	BEQ .finish
@@ -634,7 +637,7 @@ db $00,$00,$00,$00,$00,$00,$00,$00     ; extended obj 57-5E
 
 .use_item_memory:
 db $01,$01,$00,$00,$00,$01,$00,$00     ; extended objs 10-17 (object 17 actually uses index 32?)
-db $00,$01,$01,$01,$01,$01,$01,$01     ; extended objs 18-1F
+db $01,$01,$01,$01,$01,$01,$01,$01     ; extended objs 18-1F
 db $01,$01,$00,$01,$00,$01,$00,$00     ; extended objs 20-27
 db $01,$01,$01,$01,$01,$01,$01,$01     ; extended objs 28-2F
 db $01,$01,$01,$01,$01,$01,$01,$01     ; extended objs 30-37
@@ -743,42 +746,6 @@ pipe_square:
 	BNE .loop
 	RTS
 
-; ripped from ragey's patch
-; if $0F is nonzero, item memory is set at the current position
-do_read_item_memory:
-	PHX
-	PHY
-	LDA $1BA1|!addr
-	STA $9B ; ---xxxxx : horizontal screen number
-	TYA
-	AND #$0F
-	ASL #4
-	STA $9A ; xxxx---- : x-position, low
-	PEI ($00)
-	PEI ($02)
-	REP #$20
-	LDA $57
-	AND #$00F0
-	CLC
-	ADC $6B
-	SEC
-	SBC #$C800
-	STA $00
-	LDA !exlvl_screen_size
-	STA $02
-	JSL item_mem_divide
-	LDA $02
-	STA $98
-	PLA
-	STA $02
-	PLA
-	STA $00
-	SEP #$20
-	JSL read_item_memory
-	PLY
-	PLX
-	RTS
-
 pushpc
 org $0DB112
 	db #!edge_tile_slope_intersect_l
@@ -825,8 +792,7 @@ pullpc
 tile_get:
 	CPX #$04
 	BCC .no_imem
-	JSR do_read_item_memory
-	LDA $0F
+	JSL read_item_memory
 	BEQ .no_imem
 	LDA.L net_obj_tiles,x
 	CLC : ADC.l net_imem_set_off,x

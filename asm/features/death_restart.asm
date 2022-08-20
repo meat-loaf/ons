@@ -1,189 +1,294 @@
-;incsrc "../main.asm"
-if read1($00FFD5) == $23
-	if read1($00FFD7) == $0D ; full 6/8 mb sa-1 rom
-		fullsa1rom
-		!fullsa1 = 1
-	else
-		sa1rom
-	endif
-	sa1rom
-	!sa1 = 1
-	!dp = $3000
-	!addr = $6000
-	!bank = $000000
-	!ramlo = $400000
-	!ramhi = $410000
-
-	!num_sprites = $16
-else
-	lorom
-	!sa1 = 0
-	!fullsa1 = 0
-	!dp = $0000
-	!addr = $0000
-	!bank = $800000
-	!bank8 = $80
-	!ramlo = $7E0000
-	!ramhi = $7F0000
-	!num_sprites = $0C
-endif
-
-!level_general_purpose_1 = $1923|!addr
-!level_general_purpose_2 = !level_general_purpose_1+$01
-!sprites_locked          = $9D
-!game_paused = $13D4|!addr
-!layer_2_ypos_next = $1468|!addr
-!layer_2_ypos_curr = $20
-!spc_io_4_sfx_3          = $1DFC|!addr
-!on_off_state           = $14AF|!addr
-!mario_on_ground        = $13EF|!addr
-!sspipes_dir = $60
-
+incsrc "../main.asm"
 org $00D0E7|!bank
-;	db $18       ; gamemode to execute on death
-	db $0B       ; gamemode to execute on death
+	db $18       ; gamemode to execute on death
+;	db $0B       ; gamemode to execute on death
 warnpc $00D0E8|!bank
+
+; gm18: gamemode transition -> temp fade
+%replace_pointer($009359|!bank,$009F37|!bank)
 
 org $009468|!bank
 gamemode_19:
-	;LDA.b #$0B
+	; setup next game mode
 	LDA.b #$10
-	STA.w $0100|!addr
-	LDA.w $0DAF|!addr
-	EOR.b #$01
-	STA.w $0DAF|!addr
-	
-;	LDA.b #$02
-;	STA.w $0DB1
-;	JSR.w $9F29
-;	STZ.w $141A|!addr
-;	STZ.b $71
-	;STA.w $141D|!addr
+	STA.w !gamemode
+
+	; don't do 'from overworld' stuff
+	LDA.b #$01
+	STA.w !exit_counter
+
+	; restore timer
+	LDA #$28
+	STA $0F30|!addr
+	LDA !time_huns_bak
+	STA $0F31|!addr
+	STZ $0F32|!addr
+	STZ $0F33|!addr
+
+	; restore all item memory
+;	%move_block(!item_memory_mirror,!item_memory,$1C00)
+
+; setup load point
+;	JSL.l oam_reset
+if (read1($03BCDC|!bank)) != $FF
+	; note: clobbers Y if using a new horz level mode.
+	JSL.l $03BCDC|!bank
+else
+	LDX $95
+	LDA $5B
+	LSR
+	BCC .not_vert
+	LDX $97
+.not_vert:
+endif
+
+	LDA.w !midway_flag
+	BNE.b .midway
+	LDA.w !main_level_num
+	REP.b #$20
+	AND.w #$00FF
+	CMP.w #$0024+$01
+	BCC.b .low_lvl_num
+	CLC
+	ADC.w #$00DC
+.low_lvl_num:
+	SEP.b #$20
+	STA !exit_table,x
+	XBA
+	ORA #!19D8_flag_lm_modified
+	STA !exit_table_new_lm,x
+;	BRA .midway_done
 	RTS
-;l2_h:
-;autoclean \
-;	JML.l l2
-;warnpc $00968D|!bank
-;
-;
-;org $00A295|!addr
-;autoclean \
-;	JSL.l l2
-;
-;org $00A2F0|!bank
-;	JMP.w $008494|!bank
-;freecode
-;
-;!on_off_revert_timer = !level_general_purpose_1
-;!wave_state          = !level_general_purpose_2
-;l2:
-;	JSL.l $7F8000
-;	LDA $010B|!addr
-;	CMP #$37
-;	BNE .out
-;	LDA !sprites_locked
-;	ORA !game_paused
-;	BNE .out
-;
-;	LDY #$FF
-;	LDA $17BC|!addr
-;	STA $0E
-;	BMI +
-;	LDY #$00
-;+	
-;	STY $0F
-;	REP #$20
-;	LDA $0E
-;	CLC
-;	ADC !layer_2_ypos_next
-;	STA !layer_2_ypos_next
-;	SEP #$20
-;
-;	LDA !on_off_state                ; if on/off is off...
-;	BEQ .timer                       ; run timer code to auto-swap to on. otherwise...
-;	STZ !on_off_revert_timer
-;	JSR wave                         ; do the wave
-;	LDA !mario_on_ground             ; and do some other shit to fix moot's position
-;	CMP #$02                         ; on layer 2 only
-;	BEQ .fixpos
-;	LDA !sspipes_dir                 ; check if in a screen-scrolling pipe
-;	BEQ .out
-;	STZ $0E                          ; \ don't apply the layer delta to marios pos
-;	STZ $0F                          ; / when in a pipe, it looks like shit
-;.fixpos:
-;	; adjust mario's position if in pipe (means only pipes on layer 2)
-;	REP #$20
-;	LDA $96
-;	SEC
-;	SBC $00
-;	SBC $0E
-;	STA $96
-;	SEP #$20
-;.out
-;	;JML.l $008494|!bank
-;	;JML.l $008494|!bank
-;	RTL
-;
-;.timer
-;	LDA !on_off_revert_timer
-;	BMI .out
-;
-;	LDA !on_off_revert_timer
-;	BNE .dec
-;	LDA #85                     ; keep 7-bit. high bit used as 'entered-level flag (to keep off until on/off is first pressed.')
-;	STA !on_off_revert_timer
-;	BRA .out
-;.dec
-;	DEC
-;	STA !on_off_revert_timer
-;	BEQ .reset
-;	CMP #$1F
-;	BNE .out
-;.playsound
-;	LDA #$24	; play p-switch low sound
-;	STA !spc_io_4_sfx_3
-;	BRA .out
-;.reset
-;	LDA #$01
-;	STA !on_off_state
-;	BRA .out
-;
-;wave:
-;	LDA !wave_state
-;	CMP #80
-;	BNE +
-;	LDA #$00
-;	STA !wave_state
-;+
-;	TAX
-;	LDY #$FF
-;	LDA.l .wave_tbl,x
-;	BMI .high_byte_store_neg
-;	LDY #$00
-;.high_byte_store_neg:
-;	STY $01
-;	STA $00
-;
-;	REP #$20
-;	LDA $00
-;	CLC
-;	ADC !layer_2_ypos_next
-;	STA !layer_2_ypos_next
-;	SEP #$20
-;
-;	INC !wave_state
-;	RTS
-;
-;.wave_tbl
-;	db $00, $00, $00, $00, $00, $00, $00, $00
-;	db $01, $01, $01, $01, $01, $01, $01, $01, $01
-;	db $02, $02, $02, $02, $02, $02
-;	db $03, $03
-;	db $02, $02, $02, $02, $02, $02
-;	db $01, $01, $01, $01, $01, $01, $01, $01, $01
-;	db $00, $00, $00, $00, $00, $00, $00, $00
-;	db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-;	db $FE, $FE, $FE, $FE, $FE, $FE
-;	db $FD, $FD
-;	db $FE, $FE, $FE, $FE, $FE, $FE
-;	db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
+.midway:
+	PHX
+	LDA.b #midway_ptr_tables>>16
+	STA $8C
+
+	LDA.w !midway_flag
+	DEC
+	ASL
+	TAY
+	LDA.w !main_level_num
+	REP.b #$30
+	AND.w #$00FF
+	ASL
+	TAX
+	LDA.l midway_ptr_tables,x
+	STA $8A
+	LDA.b [$8A],y
+
+	SEP.b #$30
+
+	PLX
+	STA.w !exit_table,x
+	XBA
+	STA.w !exit_table_new_lm,x
+
+;.midway_done:
+	RTS
+autoclean dl midway_tables
+warnpc $00968E|!bank
+
+freedata
+midway_tables:
+.level_000:
+.level_001:
+.level_002:
+.level_003:
+.level_004:
+.level_005:
+.level_006:
+.level_007:
+.level_008:
+.level_009:
+.level_00A:
+.level_00B:
+.level_00C:
+.level_00D:
+.level_00E:
+.level_00F:
+.level_010:
+.level_011:
+.level_012:
+.level_013:
+.level_014:
+.level_015:
+.level_016:
+.level_017:
+.level_018:
+.level_019:
+.level_01A:
+.level_01B:
+.level_01C:
+.level_01D:
+.level_01E:
+.level_01F:
+.level_020:
+.level_021:
+.level_022:
+.level_023:
+.level_024:
+.level_101:
+	dw $0000,$0000,$0000,$0000,$0000
+.level_102:
+	%midway_table_entry($0102, !true, !false)
+.level_103:
+	%midway_table_entry($0103, !true, !false)
+.level_104:
+.level_105:
+	%midway_table_entry($0105, !true, !false)
+	%midway_table_entry($0142, !true, !false)
+.level_106:
+	%midway_table_entry($0106, !true, !false)
+.level_107:
+.level_108:
+.level_109:
+.level_10A:
+.level_10B:
+.level_10C:
+.level_10D:
+.level_10E:
+.level_10F:
+.level_110:
+.level_111:
+.level_112:
+.level_113:
+.level_114:
+.level_115:
+.level_116:
+.level_117:
+.level_118:
+.level_119:
+.level_11A:
+.level_11B:
+.level_11C:
+.level_11D:
+.level_11E:
+.level_11F:
+.level_120:
+.level_121:
+.level_122:
+.level_123:
+.level_124:
+.level_125:
+.level_126:
+.level_127:
+.level_128:
+.level_129:
+.level_12A:
+.level_12B:
+.level_12C:
+.level_12D:
+.level_12E:
+.level_12F:
+.level_130:
+.level_131:
+.level_132:
+.level_133:
+.level_134:
+.level_135:
+.level_136:
+.level_137:
+.level_138:
+.level_139:
+.level_13A:
+.level_13B:
+dw $0000,$0000,$0000,$0000,$0000
+
+midway_ptr_tables:
+dw midway_tables_level_000
+dw midway_tables_level_001
+dw midway_tables_level_002
+dw midway_tables_level_003
+dw midway_tables_level_004
+dw midway_tables_level_005
+dw midway_tables_level_006
+dw midway_tables_level_007
+dw midway_tables_level_008
+dw midway_tables_level_009
+dw midway_tables_level_00A
+dw midway_tables_level_00B
+dw midway_tables_level_00C
+dw midway_tables_level_00D
+dw midway_tables_level_00E
+dw midway_tables_level_00F
+dw midway_tables_level_010
+dw midway_tables_level_011
+dw midway_tables_level_012
+dw midway_tables_level_013
+dw midway_tables_level_014
+dw midway_tables_level_015
+dw midway_tables_level_016
+dw midway_tables_level_017
+dw midway_tables_level_018
+dw midway_tables_level_019
+dw midway_tables_level_01A
+dw midway_tables_level_01B
+dw midway_tables_level_01C
+dw midway_tables_level_01D
+dw midway_tables_level_01E
+dw midway_tables_level_01F
+dw midway_tables_level_020
+dw midway_tables_level_021
+dw midway_tables_level_022
+dw midway_tables_level_023
+dw midway_tables_level_024
+dw midway_tables_level_101
+dw midway_tables_level_102
+dw midway_tables_level_103
+dw midway_tables_level_104
+dw midway_tables_level_105
+dw midway_tables_level_106
+dw midway_tables_level_107
+dw midway_tables_level_108
+dw midway_tables_level_109
+dw midway_tables_level_10A
+dw midway_tables_level_10B
+dw midway_tables_level_10C
+dw midway_tables_level_10D
+dw midway_tables_level_10E
+dw midway_tables_level_10F
+dw midway_tables_level_110
+dw midway_tables_level_111
+dw midway_tables_level_112
+dw midway_tables_level_113
+dw midway_tables_level_114
+dw midway_tables_level_115
+dw midway_tables_level_116
+dw midway_tables_level_117
+dw midway_tables_level_118
+dw midway_tables_level_119
+dw midway_tables_level_11A
+dw midway_tables_level_11B
+dw midway_tables_level_11C
+dw midway_tables_level_11D
+dw midway_tables_level_11E
+dw midway_tables_level_11F
+dw midway_tables_level_120
+dw midway_tables_level_121
+dw midway_tables_level_122
+dw midway_tables_level_123
+dw midway_tables_level_124
+dw midway_tables_level_125
+dw midway_tables_level_126
+dw midway_tables_level_127
+dw midway_tables_level_128
+dw midway_tables_level_129
+dw midway_tables_level_12A
+dw midway_tables_level_12B
+dw midway_tables_level_12C
+dw midway_tables_level_12D
+dw midway_tables_level_12E
+dw midway_tables_level_12F
+dw midway_tables_level_130
+dw midway_tables_level_131
+dw midway_tables_level_132
+dw midway_tables_level_133
+dw midway_tables_level_134
+dw midway_tables_level_135
+dw midway_tables_level_136
+dw midway_tables_level_137
+dw midway_tables_level_138
+dw midway_tables_level_139
+dw midway_tables_level_13A
+dw midway_tables_level_13B

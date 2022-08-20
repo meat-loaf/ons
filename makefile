@@ -49,6 +49,8 @@ ASM_TWEAKS=optimize_2132_store.asm \
 	sspipe_fixes.asm \
 	qblocks_item_mem.asm \
 	level_constrain.asm \
+	growvine_imem.asm \
+	timer_backup.asm \
 
 ASM_TWEAK_TS=$(addprefix ${TS_DIR}/, $(patsubst %.asm,%_ts,$(ASM_TWEAKS)))
 ASM_TWEAKS_FULL=$(addprefix ${asm_tweaks_dir}/, ${ASM_TWEAKS})

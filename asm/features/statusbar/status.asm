@@ -282,6 +282,8 @@ exit:
 status_bar:
 	JSL $028AB1|!bank ; restore original code (do this first to make sure all oam alloc is done here)
 	LDA $0100
+	CMP #$0B
+	BEQ .continue
 	CMP #$0A+$01
 	BCC exit
 .continue:

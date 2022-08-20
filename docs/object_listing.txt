@@ -268,6 +268,8 @@
 | B0 *ex*   | Centered Pipe: 5x2                  | A pipe centered within standard dirt tiles.       |
 |           |  Faces up.                          | 5 tiles wide and 2 tiles tall.                    |
 +-----------+-------------------------------------+---------------------------------------------------+
+| F1-F5 *ex*| Midway points                       | F1, midway 1, F2, midway 2, etc...5 midways total.|
++-----------+-------------------------------------+---------------------------------------------------+
 | FD *ex*   | Specialized ss pipe turn: LtU/DtR   | Pipe turn: looks like ground (left/up, right/down)|
 +-----------+-------------------------------------+---------------------------------------------------+
 | FE *ex*   | Specialized ss pipe turn: LtU/DtR   | Pipe turn with ground tiles as bottom, for 102    |

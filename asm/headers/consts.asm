@@ -29,6 +29,9 @@ else
 	!num_sprites = $0C
 endif
 
+!true  = $01
+!false = $00
+
 !red_coin_sfx_id      = $2D
 !last_red_coin_sfx_id = $2E
 
@@ -50,6 +53,12 @@ endif
 
 !item_mem_write_disable = %00000001
 !item_mem_read_disable  = %00000010
+
+!19D8_flag_norm_exit_hi   = %00000001
+!19D8_flag_is_secondary   = %00000010
+!19D8_flag_lm_modified    = %00000100
+!19D8_flag_water_lvl_mid  = %00001000
+!19D8_flag_b8_12_seconary = %11110000
 
 !slip_block_slipperyness = $FF
 

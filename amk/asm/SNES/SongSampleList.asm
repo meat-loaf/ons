@@ -1,4 +1,4 @@
-org $1DCB02
+org $1D8AF2
 
 
 db $53, $54, $41, $52				; Needed to stop Asar from treating this like an xkas patch.

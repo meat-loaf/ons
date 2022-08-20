@@ -123,13 +123,46 @@ CustExObjED:
 CustExObjEE:
 CustExObjEF:
 CustExObjF0:
+	RTS
+; midways
 CustExObjF1:
 CustExObjF2:
 CustExObjF3:
 CustExObjF4:
 CustExObjF5:
+	LDY !object_position
+
+	LDA !ext_obj_type
+	SEC
+	SBC #$F0
+	TAX
+
+	; don't draw if this specific midway flag
+	; is currently active.
+	CMP !midway_flag
+	BNE .midway_not_active
+.midway_active:
+	LDA #$30
+	STA [$6B],y
+	LDA #$00
+	STA [$6E],y
+	RTS
+.midway_not_active:
+	LDA #$35
+	STA [$6B],y
+	LDA #$00
+	STA [$6E],y
+	JSR ShiftObjRight
+	LDA .tiles-1,x
+	STA [$6B],y
+	LDA #$00
+	STA [$6E],y
+	RTS
+.tiles:
+	db $A0,$A1,$A2,$A3,$A4
 CustExObjF6:
 CustExObjF7:
+	RTS
 ; 7 square ice blocks: draw if flag unset
 CustExObjF8:
 	LDA !level_state_flags_curr
@@ -885,8 +918,7 @@ Objects1x1Stretchable:
 .h_loop_start:
 	LDX !scratch_obj_width
 .h_loop
-	JSR do_read_item_memory
-	LDA.b $0F
+	JSL read_item_memory
 	BEQ .unset
 .set:
 	LDA !ObjScratch+2
@@ -3077,40 +3109,3 @@ ClusterObjsMain:
 	DEC $01
 	BPL .Loop
 	RTS
-
-; ripped from ragey's patch (copy of same routine in bank 0D)
-; if $0F is nonzero, item memory is set at the current position
-do_read_item_memory:
-	PHX
-	PHY
-	LDA $1BA1|!addr
-	STA $9B ; ---xxxxx : horizontal screen number
-	TYA
-	AND #$0F
-	ASL #4
-	STA $9A ; xxxx---- : x-position, low
-	PEI ($00)
-	PEI ($02)
-	REP #$20
-	LDA $57
-	AND #$00F0
-	CLC
-	ADC $6B
-	SEC
-	SBC #$C800
-	STA $00
-	LDA !exlvl_screen_size
-	STA $02
-	JSL item_mem_divide
-	LDA $02
-	STA $98
-	PLA
-	STA $02
-	PLA
-	STA $00
-	SEP #$20
-	JSL read_item_memory
-	PLY
-	PLX
-	RTS
-

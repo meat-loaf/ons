@@ -110,7 +110,7 @@ org shared_spr_routines_tile_addr($2F)|!bank
 
 ; throw block
 org shared_spr_routines_tile_addr($53)|!bank
-	db $C0
+	db $C2
 ; koopas
 ; koopa wings
 org $019E1C|!bank

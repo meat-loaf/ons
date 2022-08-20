@@ -1,5 +1,11 @@
 ; GPS block list
-002C:0025        red_coin.asm
+00A0:0025        midway.asm
+00A1:0025        midway.asm
+00A2:0025        midway.asm
+00A3:0025        midway.asm
+00A4:0025        midway.asm
+
+002C:002C        red_coin.asm
 00E0:0130        item_blocks/rcoin_blocks.asm
 00E1:0130        item_blocks/rcoin_blocks.asm
 00E2:0130        item_blocks/rcoin_blocks.asm
@@ -117,11 +123,11 @@
 02A4:0130        ssp/bottom_vertical_pipe_cap_L.asm
 02A5:0130        ssp/bottom_vertical_pipe_cap_R.asm
 
-;02A6:0130        ssp/pass_if_in_pipe.asm
-02A6:0130        ssp/left_horizontal_pipe_cap_B.asm
+02A6:0130        ssp/pass_if_in_pipe.asm
+;02A6:0130        ssp/left_horizontal_pipe_cap_B.asm
 02A7:0130        ssp/pass_if_in_pipe.asm
-; 02A8:0130        ssp/pass_if_in_pipe.asm
-02A8:0130        ssp/right_horizontal_pipe_cap_B.asm
+02A8:0130        ssp/pass_if_in_pipe.asm
+;02A8:0130        ssp/right_horizontal_pipe_cap_B.asm
 
 02A9:0130        ssp/left_horizontal_pipe_cap_B.asm
 02AA:0130        ssp/pass_if_in_pipe.asm

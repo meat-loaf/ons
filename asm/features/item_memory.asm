@@ -1,4 +1,4 @@
-@asar 1.71
+@asar 1.81
 
 incsrc "../main.asm"
 
@@ -20,201 +20,256 @@ incsrc "../main.asm"
 ;
 ; ----------------------------------------------------------------------------------------------------------------------------------
 
+macro spr_imem_entry()
+	LDA !D8,x
+	AND #$F0
+	STA $98
+	LDA !E4,x
+	AND #$F0
+	STA $9A
+	LDA !14D4,x
+	STA $99
+	LDA !14E0,x
+	STA $9B
+endmacro
+
 !ExLevelScreenSize = !exlvl_screen_size
 !ItemMemory = !item_memory
 !ItemMemoryMask = !item_memory_mask
 
-; Loading level code
-org $0096F4
-	autoclean jsl ClearItemMemory
-	
-freecode
-ClearItemMemory:
-	lda $141A|!addr
-	bne +
-	
-if !sa1
-{
-	; rather crude, could be optimized
-	rep #$30
-	ldx #$1C00
-	lda #$0000
--	dex
-	dex
-	sta !ItemMemory,x
-	bpl -
-	sep #$30
-}
+assert read1($00FFD5) != $23, "This patch does not support SA-1 images."
+
+if read1($00FFD5)&$10 == $10
+	!fast = 1
 else
-{
-	rep #$30
-	lda.w #!ItemMemory
-	sta.w $2181
-	sep #$20
-	lda.b #!ItemMemory>>16
-	sta.w $2183
-	ldx #$8008
-	stx $4300
-	ldx #GetMemory_indices ; address of a zero byte
-	stx $4302
-	lda #GetMemory_indices>>16 ; address of a zero byte
-	sta $4304
-	ldx #$1C00
-	stx $4305
-	lda #$01
-	sta $420B
-	sep #$10
-}
+	!fast = 0
 endif
 
-+	jml $05D796|!bank; restored code
+; Loading level code
+org $0096F4|!bank
+	jsl ClearItemMemory|!bank
 
-pushpc
-org $00C00D
-	jsl WriteItemMemory
-	rts
+; Item memory offsets, for settings 0,1,2,3 respectively.
+org $00BFFF|!bank
+ItemMemoryBlockOffsets:
+    dw $0000, $0700<<3, $0E00<<3, $1500<<3
+warnpc $00C00D|!bank
 
-org $00C020
-	dl WriteItemMemory
-	dl ReadItemMemory
-pullpc
+org $00C00D|!bank
+autoclean \
+	JSL WriteItemMemory
+	RTS
+ClearItemMemory:
+	; Check if we're entering from the overworld.
+	LDA $141A|!addr
+	BNE .no_clear
 
-print "item_mem_divide = $", pc
-Divide:
-	asl $00
-	ldy #$0F
-	lda #$0000
--	rol a
-	cmp $02
-	bcc +
-	sbc $02
-+	rol $00
-	dey
-	bpl -
-	sta $02
-	rtl
+	; clear item memory via rom->ram DMA
+	; read the 0000 entry over and over for the whole
+	; item memory table
+	REP #$30
+	LDA.w #!ItemMemory
+	STA.w $2181
+	SEP #$20
+	LDA.b #!ItemMemory>>16
+	STA.w $2183
+	LDX #$8008
+	STX $4300
+	LDX #ItemMemoryBlockOffsets
+	STX $4302
+	LDA #ItemMemoryBlockOffsets>>16
+	STA $4304
+;	LDX #$1C00
+	LDX #($1C00*2)
+	STX $4305
+	LDA #$01
+	STA $420B
+	SEP #$10
+.no_clear:
+	; Restore overwritten jump position.
+	JML $05D796|!bank
+warnpc $00C063|!bank
 
-; Specialized routine, do not reuse elsewhere
-Multiply:
-	rep #$20
-	ldy $45
-	sty $4202
-	ldy $47 
-	sty $4203
-	stz $4B
-	ldy $48
-	lda $4216
-	sty $4203
-	sta $49
-	lda $4A
-	rep #$11
-	adc $4216
-	ldy $46
-	sty $4202
-	sep #$10
-	clc
-	ldy $48
-	adc $4216
-	sty $4203
-	sta $4A
-	lda $4B
-	clc
-	adc $4216
-	sta $4B
-	sep #$20
-	rtl
+freecode
+print "sprite_write_item_memory = $", pc
+SpriteWriteItemMemory:
+	%spr_imem_entry()
+; WriteItemMemory. Marks a certain coordinate as collected.
+; This can be used as a shared routine.
+; On entry, $98 should be set to the X position and $9A as the Y position.
 print "write_item_memory = $", pc
 WriteItemMemory:
-	lda !ItemMemoryMask
-	bit #$01
-	bne +
-	phx
-	phy
-	rep #$20
-	jsr GetMemory
-	sep #$20
-	ora.l !ItemMemory,x
-	sta.l !ItemMemory,x
-	sep #$10
-	ply
-	plx
-+	rtl
+	LDA !ItemMemoryMask
+	BIT #$01
+	BNE .Return
+.cont:
+	STX $4F
+	; X = Item memory index
+	LDA $13BE|!addr
+	ASL
+	TAX
 
+	; $45 = $13D7 * X position
+	REP #$30
+	LDY $13D7|!addr
+	LDA $9A
+	LSR #4
+	PHA
+	LSR #4
+	CMP $13D7|!addr
+	BCS +
+	TAY
+	LDA $13D7|!addr
++	SEP #$30
+	STA $211B
+	XBA
+	STA $211B
+	STY $211C
+	REP #$20
+	LDA $2134
+	STA $45
+
+	; $47 = Y positon * 16
+	LDA $98
+	AND #$3FF0
+	STA $47
+
+	; A = Absolute offset
+	PLA
+	AND #$000F
+	CLC
+	ADC $45
+	CLC
+	ADC $47
+	CLC
+	ADC.l ItemMemoryBlockOffsets,x
+
+	; X = Address offset
+	; A = Bit to set in address
+	REP #$10
+	STA $45
+	LSR #3
+	TAX
+	PHX
+	LDA $45
+	AND #$0007
+	TAX
+	SEP #$20
+	LDA.l $00C0AA|!bank,x
+	PLX
+	ORA.l !ItemMemory,x
+	STA.l !ItemMemory,x
+	SEP #$10
+	LDX $4F
+.Return
+	RTL
+
+load_blk_ptrs = $00BEA8|!bank
+
+; TODO doesn't work properly
+print "sprite_read_item_memory = $", pc
+SpriteReadItemMemory:
+	LDA !ItemMemoryMask
+	BIT #$02
+	BEQ .set_up_data
+	LDA #$00
+	RTL
+.set_up_data:
+	%spr_imem_entry()
+	; save layer1 data ptrs
+	LDA  $65
+	PHA
+	LDA  $66
+	PHA
+	LDA  $67
+	PHA
+
+	REP  #$10
+	LDY  $98
+	LDX  #$0000
+	LDA.l load_blk_ptrs,x
+	STA  $65
+	LDA.l load_blk_ptrs+1,x
+	STA  $66
+	STZ  $67
+	LDA  $1925|!addr
+	ASL
+	TAY
+	LDA  [$65],y
+	STA  $04
+	INY
+	LDA  [$65],y
+	STA  $05
+	STZ  $06
+	LDA  $9B
+	STA  $07
+	ASL
+	CLC
+	ADC  $07
+	TAY
+	LDA  [$04],y
+	STA  $6B
+	INY
+	LDA  [$04],y
+	STA  $6C
+	LDA  #$7E
+	STA  $6D
+	SEP  #$10
+
+	; restore layer1 data ptrs
+	PLA
+	STA $67
+	PLA
+	STA $66
+	PLA
+	STA $65
+	LDX  $15E9|!addr
+	BRA ReadItemMemory_do_read
 print "read_item_memory = $", pc
+; ReadItemMemory. Checks if the current block coordinate is marked as collected.
+; This can be used as a shared (object generation) routine.
+; On entry, $6B+Y should be set to the current block linear index. For pretty
+; much all object generation routines, this is already set correctly. Returns
+; A=$00 if the flag is not set or any other value if it's set.
 ReadItemMemory:
-	lda !ItemMemoryMask
-	bit #$02
-	bne +
-	phx
-	phy
-	rep #$20
-	jsr GetMemory
-	sep #$20
-	lda.l !ItemMemory,x
-	and $49
-	sta $0F
-	sep #$10
-	ply
-	plx
-+	rtl
+	LDA !ItemMemoryMask
+	BIT #$02
+	BEQ .do_read
+	LDA #$00
+	RTL
+.do_read:
+	STX $4F
+	; A = $45 = Absolute offset
+	LDA $13BE
+	ASL
+	TAX
+	REP #$30
+	LDA $6B
+	SEC
+	SBC #$C800
+	CLC
+	ADC.l ItemMemoryBlockOffsets,x
+	STA $45
+	TYA
+	CLC
+	ADC $45
+	STA $45
 
-; Returns target address in X (16 bit) and bit to set in $49
-GetMemory:
-	lda $5D
-	and #$003F
-	asl #4
-	sta $45 ; stage width in increments of 16 pixels (e.g. blocks)
-
-	lda $98
-	and #$3FF0
-	lsr #4
-	sta $47 ; y position
-
-	rep #$10
-	tsx
-	cpx #$2000
-	sep #$30
-	bcs .sa1
-
-.snes
-	jsl Multiply ; result $49 = y position * stage width
-	bra +
-
-.sa1
-	lda.b #Multiply
-	sta $0183
-	lda.b #Multiply>>8
-	sta $0184
-	lda.b #Multiply>>16
-	sta $0185
-	lda #$D0
-	sta $2209
--	lda $018A
-	beq -
-	stz $018A
-+	rep #$30
-	lda $13BE|!addr
-	and #$0003
-	tax ; item memory offset
-	lda $9A : and #$3FF0 : lsr #4
-	clc
-	adc $49
-	sta $49 ; id assigned to current location
-	lsr #3
-	clc
-	adc.l .indices,x
-	pha ; target address (16 bit)
-	sep #$30
-	lda $49
-	and #$07
-	tax
-	lda.l .bits,x
-	sta $49 ; bit to set in target address
-	rep #$10
-	plx ; target address (16 bit)
-	rts
-
-.indices
-    dw $0000,$0700,$0E00,$1500
-.bits
-    db $01,$02,$04,$08,$10,$20,$40,$80
+	; X = Address offset
+	; A = Bit to read in address
+	LSR #3
+	TAX
+	PHX
+	LDA $45
+	AND #$0007
+	SEP #$20
+	TAX
+	LDA.l $00C0AA|!bank,x
+	PLX
+	AND.l !ItemMemory,x
+	SEP #$10
+	PHP
+	LDX $4F
+	PLP
+.Return
+	RTL

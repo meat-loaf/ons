@@ -15,6 +15,11 @@ includeonce
 !layer_2_ypos_curr = $20
 
 
+; this is actually part of ram used by the camera
+; scrolling code, but is fine to use as temporary
+; scratch
+!sprset_tbl_scr    = $52
+
 
 !object_load_pos   = $57      ; \ note: free outside object code. good scratch ram
 !object_dimensions = $59      ; | > High nybble is height, low is width. Sometimes one of these nybbles will be used as an arg instead
@@ -30,6 +35,7 @@ includeonce
 !num_screens       = $5D
 !screens_stop_horz = $5E
 !screens_stop_vert = $5F      ; free if not using vertical levels
+
 
 ; direction of screen scrolling pipe
 ; Bit format: PPPPDDDD
@@ -78,8 +84,12 @@ includeonce
 !block_to_generate       = $9C
 !sprites_locked          = $9D
 
-!on_off_cooldown     = $0AF5|!addr
-!next_oam_index      = $0D9C|!addr
+
+!gamemode                = $0100|!addr
+!level_number            = $010B|!addr
+
+!on_off_cooldown         = $0AF5|!addr
+!next_oam_index          = $0D9C|!addr
 
 !hdma_channel_enable_mirror = $0D9F|!addr
 
@@ -90,6 +100,10 @@ includeonce
 
 !asstd_state_flags_1    = $0DDB|!addr
 
+!main_level_num         = $13BF|!addr
+
+!midway_flag            = $13CE|!addr
+!ow_run_event_flag      = $13CE|!addr
 ; value to use when slippery blocks can be slippery
 !mario_slip             = $140A|!addr
 
@@ -102,6 +116,8 @@ includeonce
 
 !level_state_flags_curr = $1415|!addr      ; current live set
 !level_state_flags_midp = $1416|!addr      ; midpoint backup set
+
+!exit_counter           = $141A|!addr
 
 !yoshi_coins_collected  = $1420|!addr
 
@@ -172,6 +188,9 @@ includeonce
 !level_general_purpose_1 = $1923|!addr
 !level_general_purpose_2 = !level_general_purpose_1+$01
 
+!exit_table              = $19B8|!addr
+!exit_table_new_lm       = $19D8|!addr
+
 ; XXX: in SA1 add |!addr define to these, but you cant do them all!
 !spr_extra_bits         = $19F8                            ; 384 bytes free due to relocating item memory (up until $1B84)
 !spr_new_sprite_num     = !spr_extra_bits+!num_sprites     ; $1A04
@@ -192,7 +211,8 @@ includeonce
 !spr_shooter_extra_byte_2 = !spr_shoot_exbyte_2
 !spr_shooter_extra_byte_3 = !spr_shoot_exbyte_3
 
-!level_load_obj_tile   = $1BA1
+!level_load_obj_tile     = $1BA1
+!time_huns_bak           = $1DEF|!addr
 
 !spc_io_1_sfx_1          = $1DF9|!addr
 !spc_io_2_sfx_2          = $1DFA|!addr
@@ -204,6 +224,9 @@ includeonce
 ; 7168 bytes
 ; Item memory, divided in four blocks of 1792 bytes per block.
 !item_memory = $7F0000 ; last byte at 7F1BFF. free due to ow event restore
+; mirror of the above, for midway
+!item_memory_mirror = $7F1C00
+
 ; 7F2000-7F3FFF free
 ; todo put mfg's scrollable hdma gradient buffer here
 ; todo how big does it need to be?

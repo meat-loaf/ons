@@ -1,9 +1,16 @@
 incsrc "../main.asm"
 
-org $00F1F1
+; moons use item memory
+org $00F31B|!bank
+	JSL write_item_memory|!bank
+	BRA moon_done
+org $00F36B|!bank
+moon_done:
+
+org $00F1F1|!bank
 	JMP blocks
 
-org $00FF93
+org $00FF93|!bank
 blocks:
 	LDA $04 : STA $57
 	JSL $028752|!bank
@@ -13,5 +20,5 @@ blocks:
 	SEP #$10
 +
 	JMP $F1F5
-warnpc $00FFC0
-print "bank 0 ends at $", pc
+warnpc $00FFC0|!bank
+; print "bank 0 ends at $", pc
