@@ -79,12 +79,16 @@ ClearItemMemory:
 	STX $4302
 	LDA #ItemMemoryBlockOffsets>>16
 	STA $4304
-;	LDX #$1C00
-	LDX #($1C00*2)
+	; clear item memory and some other assorted ram...
+	LDX #(!item_memory_size+$3)
 	STX $4305
 	LDA #$01
 	STA $420B
 	SEP #$10
+if !use_midway_imem_sram_dma = !true
+	; copy cleaned item mem ram -> sram
+	%move_block(!item_memory,!item_memory_mirror_s,!item_memory_size)
+endif
 .no_clear:
 	; Restore overwritten jump position.
 	JML $05D796|!bank

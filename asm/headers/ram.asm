@@ -125,6 +125,8 @@ includeonce
 
 !red_coin_counter       = $1475|!addr
 
+!midway_imem_dma_stage  = $147D|!addr
+
 ; 4 bytes
 !wiggler_segment_slots  = $1487|!addr
 
@@ -221,11 +223,15 @@ includeonce
 
 !red_coin_sfx_port       = !spc_io_1_sfx_1
 
+; sram stuff
+!item_memory_mirror_s = $701000
+
 ; 7168 bytes
 ; Item memory, divided in four blocks of 1792 bytes per block.
-!item_memory = $7F0000 ; last byte at 7F1BFF. free due to ow event restore
-; mirror of the above, for midway
-!item_memory_mirror = $7F1C00
+!item_memory        = $7F0000
+!rcoin_count_bak    = !item_memory+$1C00
+!scoin_count_bak    = !rcoin_count_bak+$01
+!on_off_state_bak   = !scoin_count_bak+$01
 
 ; 7F2000-7F3FFF free
 ; todo put mfg's scrollable hdma gradient buffer here

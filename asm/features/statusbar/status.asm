@@ -79,6 +79,24 @@ macro draw_digit_tile(x_pos,y_pos,source_addr,addr_width,tileflip,palette,page,s
 	%draw_digit_tile_sk_prop(<x_pos>,<y_pos>,<source_addr>,<addr_width>,<tileflip>,<palette>,<page>,<size>,$00,$00,L,$00,$00,L)
 endmacro
 
+;macro draw_tile_cond(x_pos,y_pos,check_addr,addr_width,value_to_compare,branch_op,tile_cond_branch,tile_cond_nobranch,tileflip,palette,page,size)
+;	LDA.B #<x_pos>
+;	STA.W $0200|!addr,y
+;	LDA.B #<y_pos>
+;	STA.W $0201|!addr,y
+;	LDA.<addr_width> <check_addr>
+;	CMP.b #<value_to_compare>
+;	<branch_op> ?con_branches
+;	LDA #<tile_cond_nobranch>
+;	STA $0202|!addr,y
+;	BRA ?done
+;?con_branches:
+;	LDA #<tile_cond_branch>
+;	STA $0202|!addr,y
+;?done:
+;	LDA.B #pack_props(<tileflip>,!status_prio_props,<palette>,<page>)
+;	STA $0303|!addr,y
+;endmacro
 
 macro draw_item_box(return)
 	%get_next_oam_tile(status_bar_oam_tiles, no_oam_left)
@@ -291,6 +309,37 @@ status_bar:
 	PHK
 	PLB
 
+if !use_midway_imem_sram_dma == !true
+; ----   midway point dma stuff    ----
+	LDA.w !midway_imem_dma_stage
+	BEQ .midway_done
+	DEC
+	STA !midway_imem_dma_stage
+	ASL
+	TAY
+	REP.b #$10
+	LDA.b #!item_memory>>16
+	STA.w $2183
+	LDX.w .midway_stages_imem_from,y
+	STX.w $2181
+	LDA.b #(!item_memory_mirror_s>>16)
+	STA.w $4304
+	LDX.w .midway_stages_imem_to,y
+	STX.w $4302
+	LDX.w #(!item_memory_size/!item_memory_dma_frames)
+	STX.w $4305
+
+	LDA.b #$2180
+	STA.w $4301
+;
+	LDA.b #%10000000
+	STA.w $4300
+	LDA.b #$01
+	STA.w $420B
+	SEP.b #$10
+.midway_done:
+; ---- midway point dma stuff done ----
+endif
 	LDA !status_bar_config
 	ASL
 	TAX
@@ -298,6 +347,10 @@ status_bar:
 .configurations:
 	dw .standard_config
 	dw .ibox_only
+.midway_stages_imem_from:
+	%gen_dma_stage_table(!item_memory,!item_memory_size,!item_memory_dma_frames)
+.midway_stages_imem_to:
+	%gen_dma_stage_table(!item_memory_mirror_s,!item_memory_size,!item_memory_dma_frames)
 .standard_config:
 	LDX.B #$3D        ; skip the first 3 OAM slots so yoshi's tongue isnt above some tiles and below others
 	JSR .item_box

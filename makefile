@@ -52,7 +52,7 @@ ASM_TWEAKS=optimize_2132_store.asm \
 	growvine_imem.asm \
 	timer_backup.asm \
 
-ASM_TWEAK_TS=$(addprefix ${TS_DIR}/, $(patsubst %.asm,%_ts,$(ASM_TWEAKS)))
+ASM_TWEAK_TS=$(addprefix ${TS_DIR}/, $(patsubst %.asm, %_ts,$(ASM_TWEAKS)))
 ASM_TWEAKS_FULL=$(addprefix ${asm_tweaks_dir}/, ${ASM_TWEAKS})
 
 TS_DIR=.ts
@@ -253,13 +253,11 @@ ${OBJTOOL_TS}: ${OBJTOOL_DIR}/objectool.asm ${OBJTOOL_DIR}/custobjcode.asm ${FT_
 	${ASAR} $< ${ROM_NAME}
 	touch $@
 
-# this feels immensely cursed
-${ASM_PATCH_TS}: ${ASM_PATCHES_FULL} ${asm_base_deps}
+${ASM_PATCH_TS}: ${ASM_PATCHES_FULL} ${asm_base_deps} ${FT_IMEM_TS}
 	${ASAR} $(patsubst ${TS_DIR}%, ${asm_features_dir}%, $(patsubst %_ts, %.asm, $@) ${ROM_NAME})
 	touch $@
 
-# see above
-${ASM_TWEAK_TS}: ${ASM_TWEAKS_FULL} ${asm_base_deps}
+${TS_DIR}/%_ts: ${asm_tweaks_dir}/%.asm ${asm_base_deps} ${FT_IMEM_TS}
 	${ASAR} $(patsubst ${TS_DIR}%, ${asm_tweaks_dir}%, $(patsubst %_ts, %.asm, $@) ${ROM_NAME})
 	touch $@
 

@@ -29,11 +29,17 @@ else
 	!num_sprites = $0C
 endif
 
+
 !true  = $01
 !false = $00
 
+!use_midway_imem_sram_dma = !false
+
 !red_coin_sfx_id      = $2D
 !last_red_coin_sfx_id = $2E
+
+!item_memory_size       = $1C00
+!item_memory_dma_frames = $08
 
 !frames_before_waterfall_reset = $04
 !frames_for_on_off_cooldown    = $0A

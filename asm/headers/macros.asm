@@ -87,3 +87,10 @@ macro move_block(src,dest,len)
 	PLB
 endmacro
 
+macro gen_dma_stage_table(buffer_location,memsize,nstages)
+!___ix #= 0
+while !___ix != <nstages>
+	dw <buffer_location>+((<memsize>/<nstages>)*!___ix)
+	!___ix #= !___ix+1
+endif
+endmacro

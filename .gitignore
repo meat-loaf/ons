@@ -5,6 +5,7 @@ uberasm/asm/work/*
 *.bak*.*
 .ts
 *.smc
+*.sfc
 sysLMRestore
 *.dsc
 *.msc

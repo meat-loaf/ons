@@ -40,25 +40,16 @@ HeadInside:
 	LDA #$05
 	STA $1DF9|!addr
 
-	; TODO REPLACE WITH DMA TO SOME SRAM INSTEAD
-	; THIS TAKES NEARLY 70 SCANLINES
-	PHY
-	LDA !item_memory_setting
-	ASL
-	TAX
-	REP #$30
-	LDA .imem_off,x
-	CLC
-	ADC #!item_memory_mirror
-	TAY
-	LDA.l .imem_off,x
-	CLC
-	ADC #!item_memory
-	TAX
-	LDA #$0700-$01
-	MVN $7F,$7F
-	SEP #$30
-	PLY
+
+	LDA !red_coin_total
+	CLC : ADC !red_coin_counter
+	STA !rcoin_count_bak
+
+	LDA !yoshi_coins_collected
+	STA !scoin_count_bak
+
+	LDA !on_off_state
+	STA !on_off_state_bak
 
 	;LDA #$36
 	;STA $1DFC|!addr
@@ -70,9 +61,12 @@ HeadInside:
 	STA $0F31|!addr
 	STZ $0F32|!addr
 	STZ $0F33|!addr
-	RTL
-.imem_off
-    dw $0000, $0700, $0E00, $1500
+
+if !use_midway_imem_sram_dma = !true
+	; runs over several frames. see status bar code.
+	LDA.b #!item_memory_dma_frames+$01
+	STA.w !midway_imem_dma_stage
+endif
 
 MarioBelow:
 MarioAbove:

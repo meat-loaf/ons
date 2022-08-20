@@ -53,16 +53,16 @@ endmacro
 ; Generic macro for moving data blocks.
 ; Destroys A/X/Y.
 ; Parameters: src = source to read, dest = destination to write, len = total bytes to copy.
-macro move_block(src,dest,len)
-	PHB
-	REP #$30
-	LDA.w #<len>-1
-	LDX.w #<src>
-	LDY.w #<dest>
-	MVN <dest>>>16,<src>>>16
-	SEP #$30
-	PLB
-endmacro
+;macro move_block(src,dest,len)
+;	PHB
+;	REP #$30
+;	LDA.w #<len>-1
+;	LDX.w #<src>
+;	LDY.w #<dest>
+;	MVN <dest>>>16,<src>>>16
+;	SEP #$30
+;	PLB
+;endmacro
 
 ; Macro for calling SA-1 CPU. Label should point to a routine which ends in RTL.
 ; Data bank is not set, so use PHB/PHK/PLB ... PLB in your SA-1 code.

@@ -1,7 +1,16 @@
 incsrc "../main.asm"
+
+org $00FFD8
+if !use_midway_imem_sram_dma == !true
+	db $03       ; 8kb sram
+else
+	db $01       ; 2kb sram
+endif
+
+
 org $00D0E7|!bank
-	db $18       ; gamemode to execute on death
-;	db $0B       ; gamemode to execute on death
+;	db $18       ; gamemode to execute on death
+	db $0B       ; gamemode to execute on death
 warnpc $00D0E8|!bank
 
 ; gm18: gamemode transition -> temp fade
@@ -9,6 +18,12 @@ warnpc $00D0E8|!bank
 
 org $009468|!bank
 gamemode_19:
+autoclean \
+	JSL.l gm19
+	RTS
+
+freedata
+gm19:
 	; setup next game mode
 	LDA.b #$10
 	STA.w !gamemode
@@ -25,8 +40,19 @@ gamemode_19:
 	STZ $0F32|!addr
 	STZ $0F33|!addr
 
+if !use_midway_imem_sram_dma = !true
 	; restore all item memory
-;	%move_block(!item_memory_mirror,!item_memory,$1C00)
+	%move_block(!item_memory_mirror_s,!item_memory,!item_memory_size)
+endif
+
+	LDA !rcoin_count_bak
+	STA !red_coin_total
+
+	LDA !scoin_count_bak
+	STA !yoshi_coins_collected
+
+	LDA !on_off_state_bak
+	STA !on_off_state
 
 ; setup load point
 ;	JSL.l oam_reset
@@ -58,7 +84,8 @@ endif
 	ORA #!19D8_flag_lm_modified
 	STA !exit_table_new_lm,x
 ;	BRA .midway_done
-	RTS
+;	RTS
+	RTL
 .midway:
 	PHX
 	LDA.b #midway_ptr_tables>>16
@@ -85,11 +112,12 @@ endif
 	STA.w !exit_table_new_lm,x
 
 ;.midway_done:
-	RTS
-autoclean dl midway_tables
-warnpc $00968E|!bank
+;	RTS
+	RTL
+;autoclean dl midway_tables
+;print "death pc: $",pc
+;warnpc $00968E|!bank
 
-freedata
 midway_tables:
 .level_000:
 .level_001:
@@ -128,8 +156,9 @@ midway_tables:
 .level_022:
 .level_023:
 .level_024:
-.level_101:
 	dw $0000,$0000,$0000,$0000,$0000
+.level_101:
+	%midway_table_entry($0101, !true, !false)
 .level_102:
 	%midway_table_entry($0102, !true, !false)
 .level_103:
