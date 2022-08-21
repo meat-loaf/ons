@@ -1,6 +1,6 @@
 LUNAR_MAGIC=lunar_magic_331
-SYM_DIR=sym
-ASAR=asar --symbols=wla --symbols-path=${SYM_DIR}/$(patsubst %_ts, %, $(notdir $@).sym)
+SYM_DIR=.sym
+ASAR=asar --symbols=wla --symbols-path=${SYM_DIR}/$(notdir $@).sym
 TEST_EMU=snes9x-gtk
 DBG_EMU=bsnes
 FLIPS=flips
@@ -27,7 +27,6 @@ OVERWORLD_SRC_P  =rom_src/ow.bps
 	overworld_export \
 	test \
 	debug \
-
 
 asm_dir=asm
 asm_features_dir=${asm_dir}/features
@@ -100,14 +99,16 @@ AMK_MUSIC_DEPS= \
 	$(wildcard ./amk/music/*.txt) \
 
 PIXI_DIR=pixi
-PIXI_FLAGS+=-d255spl
+PIXI_FLAGS+=-d255spl -sym ${SYM_DIR}/pixi.sym
 PIXI_LIST=${PIXI_DIR}/list.txt
+PIXI=${PIXI_DIR}/pixi2
 
-GPS_FLAGS+=
+GPS_FLAGS+=-sym ../${SYM_DIR}/gps.sym
 
 GPS_DIR=gps
 GPS_BLK_DIR=${GPS_DIR}/blocks
 GPS_RT_DIR=${GPS_DIR}/routines
+GPS=gps2
 
 UBERASM_DIR=uberasm
 UBERASM_ASM_FILES= \
@@ -169,8 +170,9 @@ test: one_night_stand
 debug: one_night_stand
 	${DBG_EMU} ${ROM_NAME} &
 
-${SYM_NAME}: ${SYM_DIR}/*.sym
-	cat ${SYM_DIR}/*.sym > $@
+${SYM_NAME}: $(wildcard ${SYM_DIR}/*.sym) ${asm_base_deps}
+	cat ${SYM_DIR}/*.sym | uniq > $@
+	./scripts/define_to_wla_sym.py ./asm/headers/ram.asm ./asm/headers/consts.asm >> $@
 
 all_export: level_export m16_export globalani_export overworld_export
 
@@ -219,11 +221,11 @@ ${AMK_FAKE_TS}: ${AMK_MUSIC_DEPS} ./amk/Addmusic_list.txt ./amk/Addmusic_sample\
 	touch $@
 
 ${PIXI_FAKE_TS}: ${pixi_asm_sources} ${PIXI_LIST} ${INIT_LEVEL_TS} ${OBJTOOL_TS} ${ASM_HEADERS}
-	${PIXI_DIR}/pixi ${PIXI_FLAGS} -l ${PIXI_LIST} ${ROM_NAME}
+	${PIXI} ${PIXI_FLAGS} -l ${PIXI_LIST} ${ROM_NAME}
 	touch $@
 
 ${GPS_FAKE_TS}: ${gps_asm_sources} ${GPS_DIR}/list.txt ${ASM_HEADERS}
-	cd gps && ./gps ../${ROM_NAME} ${GPS_FLAGS}
+	cd gps && ./${GPS} ${GPS_FLAGS} ../${ROM_NAME}
 	touch $@
 
 # paths are relative to the uberasm directory, no matter where its run from...insanity
@@ -282,5 +284,5 @@ ${SYM_DIR}:
 	mkdir -p ${SYM_DIR}
 
 clean:
-	rm -rf ${TS_DIR} ${ROM_NAME_BASE}.* ${GLOBALANI_SRC_ROM} ${OVERWORLD_SRC_ROM} ${GEN_ROUTINE_FILES} ${SYMBOLS_DIR}
+	rm -rf ${TS_DIR} ${ROM_NAME_BASE}.* ${GLOBALANI_SRC_ROM} ${OVERWORLD_SRC_ROM} ${GEN_ROUTINE_FILES} ${SYM_DIR}
 

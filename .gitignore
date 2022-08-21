@@ -2,6 +2,7 @@
 *.png
 bak/*
 uberasm/asm/work/*
+pixi/asm/_cleanup.asm
 *.bak*.*
 .ts
 *.smc

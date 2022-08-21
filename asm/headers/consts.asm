@@ -33,6 +33,8 @@ endif
 !true  = $01
 !false = $00
 
+!sram_size = $03
+
 !red_coin_sfx_id      = $2D
 !last_red_coin_sfx_id = $2E
 
@@ -67,14 +69,6 @@ endif
 !slip_block_slipperyness = $FF
 
 ;;; screen scrolling pipe stuff ;;;
-; ram defs ;
-!Freeram_SSP_PipeDir    = !sspipes_dir
-!Freeram_SSP_PipeTmr    = !sspipes_timer
-!Freeram_SSP_EntrExtFlg = !sspipes_enter_exit_flag
-!Freeram_SSP_CarrySpr   = !sspipes_carry_spr
-!Freeram_BlockedStatBkp = !sspipes_blocked_backup
-; ram defs done ;
-
 ;This will make mario visible and in front of objects when enabled, set to 1 if you encounter issues like Mario ignoring turn corners.
 !Setting_SSP_PipeDebug = 0
 

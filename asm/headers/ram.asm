@@ -1,9 +1,15 @@
 includeonce
 
+!lag_flag          = $10
+!irq_kind          = $11
+!stripe_image_ix   = $12  ; should be divisible by 3
 !true_frame        = $13
 !effective_frame   = $14
 !byetudlr_hold     = $15
 !byetudlr_frame    = $16
+!axlr0000_hold     = $17
+!axlr0000_frame    = $18
+!powerup           = $19
 
 ; 2 bytes
 !layer_1_xpos_curr = $1A
@@ -13,7 +19,34 @@ includeonce
 !layer_2_xpos_curr = $1E
 ; 2 bytes
 !layer_2_ypos_curr = $20
+; 2 bytes
+!layer_3_xpos_curr = $22
+; 2 bytes
+!layer_3_ypos_curr = $24
+; 2 bytes
+!layer_2_3_xrel_pos = $26
+; 2 bytes
+!layer_2_3_yrel_pos = $28
+; 2 bytes
+!mode_7_center_x    = $2A
+; 2 bytes
+!mode_7_center_y    = $2C
+; 2 bytes
+!mode_7_matrix_param_a = $2E
+; 2 bytes
+!mode_7_matrix_param_b = $30
+; 2 bytes
+!mode_7_matrix_param_c = $32
+; 2 bytes
+!mode_7_matrix_param_d = $34
 
+!BGMODE_2105_mirror         = $3E
+!OAMADDL_2103_mirror        = $3F
+!CGADSUB_2131_mirror        = $40
+!W12SEL_2123_mirror         = $41
+!W34SEL_2124_mirror         = $42
+!WOBJSEL_2125_mirror        = $43
+!CGSWSEL_2130_mirror        = $44
 
 ; this is actually part of ram used by the camera
 ; scrolling code, but is fine to use as temporary
@@ -61,6 +94,10 @@ includeonce
 ; flag set if you carried a sprite through a pipe
 ; TODO move this to the asstd_lvl_flags_1 bitmask
 !sspipes_carry_spr        = $63
+
+
+
+
 !sprite_level_props       = $64
 ; 3 bytes
 !layer_1_bank_byte_ptr    = $65
@@ -84,9 +121,25 @@ includeonce
 !block_to_generate       = $9C
 !sprites_locked          = $9D
 
+!wiggler_segment_ptr     = $D5
+
 !gamemode                = $0100|!addr
 
+!savefile_num            = $010A|!addr
 !level_number            = $010B|!addr
+
+!oam_mirror_xpos_lo      = $0200|!addr
+!oam_mirror_ypos_lo      = $0201|!addr
+!oam_mirror_tile_lo      = $0202|!addr
+!oam_mirror_prop_lo      = $0203|!addr
+
+!oam_mirror_xpos_lo      = $0300|!addr
+!oam_mirror_ypos_lo      = $0301|!addr
+!oam_mirror_tile_lo      = $0302|!addr
+!oam_mirror_prop_lo      = $0303|!addr
+
+!oam_tilesize_lo         = $0420|!addr
+!oam_tilesize_lo         = $0460|!addr
 
 !on_off_cooldown         = $0AF5|!addr
 !next_oam_index          = $0D9C|!addr
@@ -219,10 +272,14 @@ includeonce
 !spc_io_3_music          = $1DFB|!addr
 !spc_io_4_sfx_3          = $1DFC|!addr
 
-!red_coin_sfx_port       = !spc_io_1_sfx_1
+!red_coin_sfx_port       ?= !spc_io_1_sfx_1
+
+!mario_gfx               = $7E2000
 
 ; sram stuff
-!item_memory_mirror_s = $701000
+; todo reorganize a bit. Original free sram starts at $70035A
+!item_memory_mirror_s    = $701000
+!wiggler_segment_buffer  = !item_memory_mirror_s+!item_memory_size
 
 ; 7168 bytes
 ; Item memory, divided in four blocks of 1792 bytes per block.
@@ -244,23 +301,28 @@ includeonce
 
 ; Dynamic sprite graphics upload buffer
 !dynamic_buffer = $7FA000         ; 0x800 bytes long
-!dynamic_bounce_buffer = $7FA800  ; 0x80 bytes long
-; 7FA880 - 7FABFF free
+; 7FA800 - 7FABFF free
 
-; 7FAC11 - 7FEFF free
-!spr_load_status          = $7FAF00
+; unused here, i'm using -d255spl
+;!spr_load_status          = $7FAF00
 ; 7FB000 - 7FB408 free
-!star_coins_ram           = $7FB408                           ; $7FB408: 0xC8 bytes long; ends at $7FB4CF
-!bounce_blocks_map16_low  = !star_coins_ram+$C8               ; $7FB4D0: 0x4 bytes
-!bounce_blocks_map16_hi   = !bounce_blocks_map16_low+$4       ; $7FB4D4: 0x4 bytes
-!midway_points_ram        = !bounce_blocks_map16_hi+$4        ; $7FB4D8: 0x60 byes
-!spr_extra_byte_5         = !midway_points_ram+$60            ; $7FB538: 0x12 bytes
-!spr_extra_byte_6         = !spr_extra_byte_5+!num_sprites    ; $7FB54A: 0x12 bytes
-!spr_extra_byte_7         = !spr_extra_byte_6+!num_sprites    ; $7FB55C: 0x12 bytes
-!spr_extra_byte_8         = !spr_extra_byte_7+!num_sprites    ; $7FB56E: 0x12 bytes
-!spr_extra_byte_9         = !spr_extra_byte_8+!num_sprites    ; $7FB580: 0x12 bytes
-!spr_extra_byte_10        = !spr_extra_byte_9+!num_sprites    ; $7FB592: 0x12 bytes
-!spr_extra_byte_11        = !spr_extra_byte_10+!num_sprites   ; $7FB5A4: 0x12 bytes
-!spr_extra_byte_12        = !spr_extra_byte_11+!num_sprites   ; $7FB5B6: 0x12 bytes
-!spr_extra_prop_1         = !spr_extra_byte_12+!num_sprites   ; $7FB5C8: 0x12 bytes
-!spr_extra_prop_2         = !spr_extra_prop_1+!num_sprites    ; $7FB5DA: 0x12 bytes
+!bounce_blocks_map16_low  = $7FB408
+!bounce_blocks_map16_hi   = !bounce_blocks_map16_low+$4
+!spr_extra_byte_5         = !bounce_blocks_map16_hi+$4
+!spr_extra_byte_6         = !spr_extra_byte_5+!num_sprites
+!spr_extra_byte_7         = !spr_extra_byte_6+!num_sprites
+!spr_extra_byte_8         = !spr_extra_byte_7+!num_sprites
+!spr_extra_byte_9         = !spr_extra_byte_8+!num_sprites
+!spr_extra_byte_10        = !spr_extra_byte_9+!num_sprites
+!spr_extra_byte_11        = !spr_extra_byte_10+!num_sprites
+!spr_extra_byte_12        = !spr_extra_byte_11+!num_sprites
+!spr_extra_prop_1         = !spr_extra_byte_12+!num_sprites
+!spr_extra_prop_2         = !spr_extra_prop_1+!num_sprites
+
+; ram defs ;
+!Freeram_SSP_PipeDir    ?= !sspipes_dir
+!Freeram_SSP_PipeTmr    ?= !sspipes_timer
+!Freeram_SSP_EntrExtFlg ?= !sspipes_enter_exit_flag
+!Freeram_SSP_CarrySpr   ?= !sspipes_carry_spr
+!Freeram_BlockedStatBkp ?= !sspipes_blocked_backup
+; ram defs done ;
