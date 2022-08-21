@@ -134,7 +134,8 @@ gfx_files= \
 sbar_dir=${asm_features_dir}/statusbar
 statusbar_main=${sbar_dir}/status.asm
 statusbar_deps=${sbar_dir}/statusbar_defs.asm \
-	${sbar_dir}/disable_irq.asm
+	${sbar_dir}/disable_irq.asm \
+	${sbar_dir}/sbar_tilemap_rewrite.asm
 
 pixi_asm_sources= \
 	$(wildcard ${PIXI_DIR}/asm/*.asm) \

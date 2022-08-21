@@ -38,7 +38,9 @@ includeonce
 !rcoin_tile          = $4A
 
 !do_skip             = $1
-!blank_digit_index   = 17
+!empty_coin_tile_ix  = 16
+!blank_digit_ix      = 17
+!coin_tile_ix        = 18
 
 !use_propram         = $1
 

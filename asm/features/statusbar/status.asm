@@ -103,13 +103,13 @@ macro draw_timer(return)
 	%draw_static_tile(!timer_clock_xpos,!timer_clock_ypos,!clock_tile,\
 			!tile_noflip,$00,$00,$00)
 	%get_next_oam_tile(status_bar_oam_tiles, no_oam_left)
-	%draw_digit_tile(!timer_100s_xpos,!timer_100s_ypos,$0F25|!ramlo|!addr,W,\
+	%draw_digit_tile(!timer_100s_xpos,!timer_100s_ypos,!timer_hundreds|!ramlo,W,\
 			!tile_noflip,$00,$00,$00)
 	%get_next_oam_tile(status_bar_oam_tiles, no_oam_left)
-	%draw_digit_tile(!timer_tens_xpos,!timer_tens_ypos,$0F26|!ramlo|!addr,W,\
+	%draw_digit_tile(!timer_tens_xpos,!timer_tens_ypos,!timer_tens|!ramlo,W,\
 			!tile_noflip,$00,$00,$00)
 	%get_next_oam_tile(status_bar_oam_tiles, no_oam_left)
-	%draw_digit_tile(!timer_ones_xpos,!timer_ones_ypos,$0F27|!ramlo|!addr,W,\
+	%draw_digit_tile(!timer_ones_xpos,!timer_ones_ypos,!timer_ones|!ramlo,W,\
 			!tile_noflip,$00,$00,$00)
 	<return>
 endmacro
@@ -136,13 +136,13 @@ macro draw_score(return)
 			!tile_noflip,$00,$00,$00)
 	%get_next_oam_tile(status_bar_oam_tiles, no_oam_left)
 	%draw_digit_tile_sk(!score_10thous_xpos,!score_10thous_ypos,$0F2B|!ramlo|!addr,W,\
-			!tile_noflip,$00,$00,$00,!do_skip,!blank_digit_index,.skip)
+			!tile_noflip,$00,$00,$00,!do_skip,!blank_digit_ix,.skip)
 	%get_next_oam_tile(status_bar_oam_tiles, no_oam_left)
 	%draw_digit_tile_sk(!score_hunthous_xpos,!score_hunthous_ypos,$0F2A|!ramlo|!addr,W,\
-			!tile_noflip,$00,$00,$00,!do_skip,!blank_digit_index,.skip)
+			!tile_noflip,$00,$00,$00,!do_skip,!blank_digit_ix,.skip)
 	%get_next_oam_tile(status_bar_oam_tiles, no_oam_left)
 	%draw_digit_tile_sk(!score_mils_xpos,!score_mils_ypos,$0F29|!ramlo|!addr,W,\
-			!tile_noflip,$00,$00,$00, !do_skip,!blank_digit_index,.skip)
+			!tile_noflip,$00,$00,$00, !do_skip,!blank_digit_ix,.skip)
 .skip:
 	<return>
 endmacro
@@ -218,59 +218,13 @@ org $00A2E6
 org $00A5A8
        BRA $01 : NOP
 
-org $008EE6
-	db $11 ; replace the index to the 'empty' character used for score (for mario)
-
-org $008F14
-	db $11 ; replace the index to the 'empty' character used for score (for luigi)
-
-org $008E8B
-	db $00 ; replace the index to the 'empty' character used for time (use leading zeros)
-
-org $008F54
-	db $11 ; replace the index to the 'empty' character used for lives
-
-org $008F7D
-	db $11 ; replace the index to the 'empty' character used for coins
-
-; draw all 5 coins
-org $008FD8
-	LDA.w $1420|!addr
-	BRA +
-	NOP #4
-+
-; blank yoshi coin tile
-org $008FE7
-	db $10
-; collected yoshi coin tile
-org $008FED
-	db $12
-org $008FF6
-	db $05
-
-; red coin counter, replace bonus stars bonus game check
-org $008F5B|!addr
-rcoin_counter:
-	LDA.w !red_coin_counter
-	BEQ .done
-	DEC.w !red_coin_counter
-	INC.w !red_coin_total
-.done:
-	LDA.w !red_coin_total
-	; hex to dec
-	JSR.w $009045|!bank
-	STA.w $0EFB
-	STX.w $0EFA
-	NOP
-warnpc $008F73|!addr
-
 freecode
 ; abort
 no_oam_left:
 	PLA            ; \ clean the stack
 	PLA            ; /
 	PLB            ; get stored bank byte
-exit:
+.exit:
 	RTL            ; return to main code (stop drawing)
 
 status_bar:
@@ -279,7 +233,7 @@ status_bar:
 	CMP #$0B
 	BEQ .continue
 	CMP #$0A+$01
-	BCC exit
+	BCC no_oam_left_exit
 .continue:
 	PHB
 	PHK
@@ -332,8 +286,8 @@ if !use_midway_imem_sram_dma == !true
 endif
 .standard_config:
 	LDX.b #!oam_tbl_start_index
-	JSR.w .item_box
 	JSR.w .timer
+	JSR.w .item_box
 	JSR.w .coins
 	JSR.w .rcoins
 	JSR.w .lives
@@ -433,4 +387,5 @@ endif
 	db $03,$02,$01,$00
 
 incsrc "disable_irq.asm"
+incsrc "sbar_tilemap_rewrite.asm"
 print "status bar patch uses ", freespaceuse, " bytes"

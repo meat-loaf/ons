@@ -38,6 +38,8 @@ endif
 !red_coin_sfx_id      = $2D
 !last_red_coin_sfx_id = $2E
 
+!timer_frames_to_dec  = $28
+
 !item_memory_size       = $1C00
 !item_memory_dma_frames = $08
 

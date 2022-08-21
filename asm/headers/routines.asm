@@ -1,4 +1,5 @@
 includeonce
+kill_mario                      = $00F606|!bank
 generate_tile                   = $00BEB0|!bank
 ; lunar magic provided routine
 extract_exgfx                   = $0FF900|!bank

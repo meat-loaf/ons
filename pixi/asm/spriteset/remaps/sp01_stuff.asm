@@ -36,11 +36,11 @@ spinning_coin_red_exbit:
 	BNE.b .red
 	JML.l $05B34A|!bank    ; coin + sfx
 .red:
-	INC.w !red_coin_counter
+	INC.w !red_coin_adder
 	LDY.b #!red_coin_sfx_id
 	LDA.w !red_coin_total
 	CLC
-	ADC.w !red_coin_counter
+	ADC.w !red_coin_adder
 	CMP.b #20
 	BCC.b .not_final_coin
 	INY

@@ -2,11 +2,11 @@
 ; xoff in $00
 ; yoff in $01
 
-	INC !red_coin_counter
+	INC !red_coin_adder
 	LDX #!red_coin_sfx_id
 	LDA !red_coin_total
 	CLC
-	ADC !red_coin_counter
+	ADC !red_coin_adder
 	CMP #20
 	BCC .not_final_coin
 	INX

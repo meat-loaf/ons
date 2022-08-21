@@ -42,7 +42,7 @@ HeadInside:
 
 
 	LDA !red_coin_total
-	CLC : ADC !red_coin_counter
+	CLC : ADC !red_coin_adder
 	STA !rcoin_count_bak
 
 	LDA !yoshi_coins_collected
@@ -54,13 +54,13 @@ HeadInside:
 	;LDA #$36
 	;STA $1DFC|!addr
 
-	LDA #$28
-	STA $0F30|!addr
+	LDA.b #!timer_frames_to_dec
+	STA.w !timer_frame
 
-	LDA !time_huns_bak
-	STA $0F31|!addr
-	STZ $0F32|!addr
-	STZ $0F33|!addr
+	LDA.w !time_huns_bak
+	STA.w !timer_hundreds
+	STZ.w !timer_tens
+	STZ.w !timer_ones
 
 if !use_midway_imem_sram_dma = !true
 	; runs over several frames. see status bar code.

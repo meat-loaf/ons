@@ -106,7 +106,8 @@ CollectIt:
 	LDA #$1A
 	STA $1DFC|!addr
 
-	INC !yoshi_coins_collected
+	SEC
+	ROL !yoshi_coins_collected
 	
 	LDA !D8,x
 	CLC
@@ -123,9 +124,15 @@ CollectIt:
 	ADC #$00
 	STA $9B
 
+.popcount:
+	STZ.b $00
+	LDA.w !yoshi_coins_collected
+.loop:
+	INC $00
+	LSR
+	BNE .loop
 	LDA.b #$08
-	CLC
-	ADC !yoshi_coins_collected
+	CLC : ADC $00
 	%spawn_score_sprite()
 
 	JSL sprite_write_item_memory|!bank

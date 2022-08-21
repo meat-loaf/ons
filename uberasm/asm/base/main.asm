@@ -5,5 +5,3 @@ incsrc overworld.asm
 incsrc gamemode.asm
 incsrc global.asm
 incsrc sprites.asm
-incsrc statusbar.asm
-

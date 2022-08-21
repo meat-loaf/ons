@@ -146,20 +146,33 @@ includeonce
 
 !hdma_channel_enable_mirror = $0D9F|!addr
 
-!curr_player_lives = $0DBE
+!curr_player_lives          = $0DBE|!addr
+!curr_player_coins          = $0DBF|!addr
+
 ; flags set at level load, then not changed (generally)
 ; check consts.asm defs
 !level_status_flags_1   = $0DD9|!addr
 
 !asstd_state_flags_1    = $0DDB|!addr
 
+!status_bar_tilemap     = $0EF9|!addr
+
+!timer_frame            = $0F30|!addr
+!timer_hundreds         = $0F31|!addr
+!timer_tens             = $0F32|!addr
+!timer_ones             = $0F33|!addr
+
+!player_score           = $0F34+$00|!addr
+!player_score_mid       = $0F34+$01|!addr
+!player_score_hi        = $0F34+$01|!addr
+
 !main_level_num         = $13BF|!addr
 
+!coin_adder             = $13CC|!addr
 !midway_flag            = $13CE|!addr
 !ow_run_event_flag      = $13CE|!addr
 ; value to use when slippery blocks can be slippery
 !mario_slip             = $140A|!addr
-
 !mario_on_ground        = $13EF|!addr
 
 !flight_phase           = $1407|!addr
@@ -176,13 +189,14 @@ includeonce
 
 !red_coin_total         = $1473|!addr
 
-!red_coin_counter       = $1475|!addr
+!red_coin_adder         = $1475|!addr
 
 !midway_imem_dma_stage  = $147D|!addr
 
 ; 4 bytes
 !wiggler_segment_slots  = $1487|!addr
 
+!end_level_timer        = $1493|!addr
 !player_ani_timer       = $1496|!addr
 !on_off_state           = $14AF|!addr
 
@@ -238,6 +252,8 @@ includeonce
 ; -------w : Disable writing.
 !item_memory_mask = $18BB|!addr
 
+!give_player_lives = $18E4|!addr
+
 !level_general_purpose_1 = $1923|!addr
 !level_general_purpose_2 = !level_general_purpose_1+$01
 
@@ -267,12 +283,12 @@ includeonce
 !level_load_obj_tile     = $1BA1
 !time_huns_bak           = $1DEF|!addr
 
-!spc_io_1_sfx_1          = $1DF9|!addr
-!spc_io_2_sfx_2          = $1DFA|!addr
-!spc_io_3_music          = $1DFB|!addr
-!spc_io_4_sfx_3          = $1DFC|!addr
+!spc_io_1_sfx_1DF9       = $1DF9|!addr
+!spc_io_2_sfx_1DFA       = $1DFA|!addr
+!spc_io_3_music_1DFB     = $1DFB|!addr
+!spc_io_4_sfx_1DFC       = $1DFC|!addr
 
-!red_coin_sfx_port       ?= !spc_io_1_sfx_1
+!red_coin_sfx_port       ?= !spc_io_1_sfx_1DF9
 
 !mario_gfx               = $7E2000
 
