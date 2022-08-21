@@ -1,6 +1,8 @@
 incsrc "../../main.asm"
 incsrc "statusbar_defs.asm"
 
+; skip the first 3 OAM slots so yoshi's tongue isnt above some tiles and below others
+!oam_tbl_start_index  = $3D
 
 macro get_next_oam_tile(oam_tiles_tbl, abort_func)
 ?loop:
@@ -15,20 +17,20 @@ macro get_next_oam_tile(oam_tiles_tbl, abort_func)
 endmacro
 
 macro draw_static_tile_propram(x_pos,y_pos,tile,tileflip,palette,page,size,use_propram,propram,propram_w)
-	LDA.B #<x_pos>
-	STA.W $0200|!addr,y
-	LDA.B #<y_pos>
-	STA.W $0201|!addr,y
-	LDA.B #<tile>
-	STA $0202|!addr,y
-	LDA.B #pack_props(<tileflip>,!status_prio_props,<palette>,<page>)
+	LDA.b #<x_pos>
+	STA.w $0200|!addr,y
+	LDA.b #<y_pos>
+	STA.w $0201|!addr,y
+	LDA.b #<tile>
+	STA.w $0202|!addr,y
+	LDA.b #pack_props(<tileflip>,!status_prio_props,<palette>,<page>)
 	if <use_propram> != 0
 	  ORA.<propram_w> <propram>
 	endif
 	STA $0203|!addr,y
-	LDY.W .oam_tiles_small,x
-	LDA.B #<size>
-	STA.W $0420|!addr,y
+	LDY.w .oam_tiles_small,x
+	LDA.b #<size>
+	STA.w $0420|!addr,y
 endmacro
 
 macro draw_static_tile(x_pos,y_pos,tile,tileflip,palette,page,size)
@@ -36,30 +38,31 @@ macro draw_static_tile(x_pos,y_pos,tile,tileflip,palette,page,size)
 endmacro
 
 macro draw_digit_tile_sk_prop(x_pos,y_pos,source_addr,addr_width,tileflip,palette,page,size,do_skip,ix_skip,branch_skip,use_propram,propram,propram_w)
-	LDA.B #<x_pos>
-	STA.W $0200|!addr,y
-	LDA.B #<y_pos>
-	STA.W $0201|!addr,y
 	LDY.<addr_width> <source_addr>
 	if <do_skip> != 0
 	  if <ix_skip> != 0
 	    CPY #<ix_skip>
 	  endif
-	  BNE ?cont
-	  LDY.W .oam_tiles,x
-	  BRA <branch_skip>
+	  BNE.b ?cont
+	  LDY.w .oam_tiles,x
+	  ; BRA is often out of range. This isn't empirically slower.
+	  JMP.w <branch_skip>
 	endif
 ?cont
-	LDA.W .number_tilenums,y
-	LDY.W .oam_tiles,x
-	STA.W $0202|!addr,y
-	LDA.B #pack_props(<tileflip>,!status_prio_props,<palette>,<page>)
+	LDA.w .number_tilenums,y
+	LDY.w .oam_tiles,x
+	STA.w $0202|!addr,y
+	LDA.b #<x_pos>
+	STA.w $0200|!addr,y
+	LDA.b #<y_pos>
+	STA.w $0201|!addr,y
+	LDA.b #pack_props(<tileflip>,!status_prio_props,<palette>,<page>)
 	if <use_propram> != 0
 	  ORA.<propram_w> <propram>
 	endif
 	STA $0203|!addr,y
-	LDY.W .oam_tiles_small,x
-	LDA.B #<size>
+	LDY.w .oam_tiles_small,x
+	LDA.b #<size>
 	STA.w $0420|!addr,y
 endmacro
 
@@ -114,37 +117,33 @@ endmacro
 macro draw_score(return)
 ?sc:
 	%get_next_oam_tile(status_bar_oam_tiles, no_oam_left)
-	%draw_digit_tile_sk(!score_mils_xpos,!score_mils_ypos,$0F29|!ramlo|!addr,W,\
-			!tile_noflip,$00,$00,$00, !do_skip,!blank_digit_index,.sc_skip_1)
-	%get_next_oam_tile(status_bar_oam_tiles, no_oam_left)
-.sc_skip_1:
-	%draw_digit_tile_sk(!score_hunthous_xpos,!score_hunthous_ypos,$0F2A|!ramlo|!addr,W,\
-			!tile_noflip,$00,$00,$00,!do_skip,!blank_digit_index,.sc_skip_2)
-	%get_next_oam_tile(status_bar_oam_tiles, no_oam_left)
-.sc_skip_2:
-	%draw_digit_tile_sk(!score_10thous_xpos,!score_10thous_ypos,$0F2B|!ramlo|!addr,W,\
-			!tile_noflip,$00,$00,$00,!do_skip,!blank_digit_index,.sc_skip_3)
-	%get_next_oam_tile(status_bar_oam_tiles, no_oam_left)
-.sc_skip_3:
-	%draw_digit_tile_sk(!score_thous_xpos,!score_thous_ypos,$0F2C|!ramlo|!addr,W,\
-			!tile_noflip,$00,$00,$00,!do_skip,!blank_digit_index,.sc_skip_4)
-	%get_next_oam_tile(status_bar_oam_tiles, no_oam_left)
-.sc_skip_4:
-	%draw_digit_tile_sk(!score_100s_xpos,!score_100s_ypos,$0F2D|!ramlo|!addr,W,\
-			!tile_noflip,$00,$00,$00,!do_skip,!blank_digit_index,.sc_skip_5)
-	%get_next_oam_tile(status_bar_oam_tiles, no_oam_left)
-.sc_skip_5:
-	%draw_digit_tile(!score_tens_xpos,!score_tens_ypos,$0F2E|!ramlo|!addr,W,\
-			!tile_noflip,$00,$00,$00)
-	%get_next_oam_tile(status_bar_oam_tiles, no_oam_left)
-	%draw_static_tile(!score_ones_xpos,!score_ones_ypos,!zero_digit_tile,\
-		!tile_noflip,$00,$00,$00)
-	%get_next_oam_tile(status_bar_oam_tiles, no_oam_left)
 	%draw_static_tile(!score_pts_t1_xpos,!score_pts_t1_ypos,!pts_t1_tile,\
 		!tile_noflip,$00,$00,$00)
 	%get_next_oam_tile(status_bar_oam_tiles, no_oam_left)
 	%draw_static_tile(!score_pts_t2_xpos,!score_pts_t2_ypos,!pts_t2_tile,\
 		!tile_noflip,$00,$00,$00)
+	%get_next_oam_tile(status_bar_oam_tiles, no_oam_left)
+	%draw_static_tile(!score_ones_xpos,!score_ones_ypos,!zero_digit_tile,\
+		!tile_noflip,$00,$00,$00)
+	%get_next_oam_tile(status_bar_oam_tiles, no_oam_left)
+	%draw_digit_tile(!score_tens_xpos,!score_tens_ypos,$0F2E|!ramlo|!addr,W,\
+			!tile_noflip,$00,$00,$00)
+	%get_next_oam_tile(status_bar_oam_tiles, no_oam_left)
+	%draw_digit_tile(!score_100s_xpos,!score_100s_ypos,$0F2D|!ramlo|!addr,W,\
+			!tile_noflip,$00,$00,$00)
+	%get_next_oam_tile(status_bar_oam_tiles, no_oam_left)
+	%draw_digit_tile(!score_thous_xpos,!score_thous_ypos,$0F2C|!ramlo|!addr,W,\
+			!tile_noflip,$00,$00,$00)
+	%get_next_oam_tile(status_bar_oam_tiles, no_oam_left)
+	%draw_digit_tile_sk(!score_10thous_xpos,!score_10thous_ypos,$0F2B|!ramlo|!addr,W,\
+			!tile_noflip,$00,$00,$00,!do_skip,!blank_digit_index,.skip)
+	%get_next_oam_tile(status_bar_oam_tiles, no_oam_left)
+	%draw_digit_tile_sk(!score_hunthous_xpos,!score_hunthous_ypos,$0F2A|!ramlo|!addr,W,\
+			!tile_noflip,$00,$00,$00,!do_skip,!blank_digit_index,.skip)
+	%get_next_oam_tile(status_bar_oam_tiles, no_oam_left)
+	%draw_digit_tile_sk(!score_mils_xpos,!score_mils_ypos,$0F29|!ramlo|!addr,W,\
+			!tile_noflip,$00,$00,$00, !do_skip,!blank_digit_index,.skip)
+.skip:
 	<return>
 endmacro
 
@@ -289,9 +288,9 @@ status_bar:
 if !use_midway_imem_sram_dma == !true
 ; ----   midway point dma stuff    ----
 	LDA.w !midway_imem_dma_stage
-	BEQ .midway_done
+	BEQ.b .midway_done
 	DEC
-	STA !midway_imem_dma_stage
+	STA   !midway_imem_dma_stage
 	ASL
 	TAY
 	REP.b #$10
@@ -308,7 +307,7 @@ if !use_midway_imem_sram_dma == !true
 
 	LDA.b #$2180
 	STA.w $4301
-;
+
 	LDA.b #%10000000
 	STA.w $4300
 	LDA.b #$01
@@ -332,23 +331,23 @@ if !use_midway_imem_sram_dma == !true
 	%gen_dma_stage_table(!item_memory_mirror_s,!item_memory_size,!item_memory_dma_frames)
 endif
 .standard_config:
-	LDX.B #$3D        ; skip the first 3 OAM slots so yoshi's tongue isnt above some tiles and below others
-	JSR .item_box
-	JSR .timer
-	JSR .coins
-	JSR .rcoins
-	JSR .lives
-	JSR .star_coins
-	JSR .score
+	LDX.b #!oam_tbl_start_index
+	JSR.w .item_box
+	JSR.w .timer
+	JSR.w .coins
+	JSR.w .rcoins
+	JSR.w .lives
+	JSR.w .star_coins
+	JSR.w .score
 
 if !enable_debug_cpu_meter == !true
-	JSR .cpu_meter
+	JSR.w .cpu_meter
 endif
 	PLB
 	RTL
 .ibox_only
-	LDX.B #$3D        ; skip the first 3 OAM slots so yoshi's tongue isnt above some tiles and below others
-	JSR .item_box
+	LDX.b #!oam_tbl_start_index
+	JSR.w .item_box
 	PLB
 	RTL
 

@@ -15,5 +15,8 @@ sysLMRestore
 *.srm
 *.ssc
 *.extmod
+*.sym
 amk/SPCs
 amk/asm/SNES/bin/*
+amk/asm/SNES/SongSampleList.asm
+amk/asm/SNES/AMUndo.asm

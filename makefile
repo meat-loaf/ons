@@ -1,5 +1,6 @@
 LUNAR_MAGIC=lunar_magic_331
-ASAR=asar
+SYM_DIR=sym
+ASAR=asar --symbols=wla --symbols-path=${SYM_DIR}/$(patsubst %_ts, %, $(notdir $@).sym)
 TEST_EMU=snes9x-gtk
 DBG_EMU=bsnes
 FLIPS=flips
@@ -10,6 +11,7 @@ CLEAN_ROM_FULL=${ROM_BASE_PATH}/${CLEAN_ROM_NAME}
 
 ROM_NAME_BASE=ons
 ROM_NAME=${ROM_NAME_BASE}.smc
+SYM_NAME=${ROM_NAME_BASE}.sym
 
 GLOBALANI_SRC_ROM=rom_src/ani.smc
 GLOBALANI_SRC_P  =rom_src/ani.bps
@@ -25,6 +27,7 @@ OVERWORLD_SRC_P  =rom_src/ow.bps
 	overworld_export \
 	test \
 	debug \
+
 
 asm_dir=asm
 asm_features_dir=${asm_dir}/features
@@ -158,13 +161,16 @@ MWL_FNAME_BASE=level
 
 OBJTOOL_DIR=${asm_features_dir}/objectool
 
-one_night_stand: ${CLEAN_ROM_FULL} ${TS_DIR} ${ROM_NAME} ${CORE_BUILD_RULES}
+one_night_stand: ${CLEAN_ROM_FULL} ${TS_DIR} ${SYM_DIR} ${ROM_NAME} ${CORE_BUILD_RULES} ${SYM_NAME}
 
 test: one_night_stand
 	${TEST_EMU} ${ROM_NAME} >/dev/null 2>&1 &
 
 debug: one_night_stand
 	${DBG_EMU} ${ROM_NAME} &
+
+${SYM_NAME}: ${SYM_DIR}/*.sym
+	cat ${SYM_DIR}/*.sym > $@
 
 all_export: level_export m16_export globalani_export overworld_export
 
@@ -272,5 +278,9 @@ ${8x8_DMA_TS}: ${asm_features_dir}/mario_8x8_dma/mario_8x8_dma.asm ${asm_feature
 ${TS_DIR}:
 	mkdir -p ${TS_DIR}
 
+${SYM_DIR}:
+	mkdir -p ${SYM_DIR}
+
 clean:
-	rm -rf ${TS_DIR} ${ROM_NAME_BASE}.* ${GLOBALANI_SRC_ROM} ${OVERWORLD_SRC_ROM} ${GEN_ROUTINE_FILES}
+	rm -rf ${TS_DIR} ${ROM_NAME_BASE}.* ${GLOBALANI_SRC_ROM} ${OVERWORLD_SRC_ROM} ${GEN_ROUTINE_FILES} ${SYMBOLS_DIR}
+
