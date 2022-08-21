@@ -40,33 +40,13 @@ HeadInside:
 	LDA #$05
 	STA $1DF9|!addr
 
+	%midway_backup_restore(!false)
 
-	LDA !red_coin_total
-	CLC : ADC !red_coin_adder
-	STA !rcoin_count_bak
-
-	LDA !yoshi_coins_collected
-	STA !scoin_count_bak
-
-	LDA !on_off_state
-	STA !on_off_state_bak
-
-	;LDA #$36
-	;STA $1DFC|!addr
-
-	LDA.b #!timer_frames_to_dec
-	STA.w !timer_frame
-
-	LDA.w !time_huns_bak
-	STA.w !timer_hundreds
-	STZ.w !timer_tens
-	STZ.w !timer_ones
-
-if !use_midway_imem_sram_dma = !true
-	; runs over several frames. see status bar code.
-	LDA.b #!item_memory_dma_frames+$01
-	STA.w !midway_imem_dma_stage
-endif
+;if !use_midway_imem_sram_dma = !true
+;	; runs over several frames. see status bar code.
+;	LDA.b #!item_memory_dma_frames+$01
+;	STA.w !midway_imem_dma_stage
+;endif
 
 MarioBelow:
 MarioAbove:

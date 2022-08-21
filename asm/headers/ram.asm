@@ -164,7 +164,7 @@ includeonce
 
 !player_score           = $0F34+$00|!addr
 !player_score_mid       = $0F34+$01|!addr
-!player_score_hi        = $0F34+$01|!addr
+!player_score_hi        = $0F34+$02|!addr
 
 !main_level_num         = $13BF|!addr
 
@@ -198,6 +198,11 @@ includeonce
 
 !end_level_timer        = $1493|!addr
 !player_ani_timer       = $1496|!addr
+!player_invuln_timer    = $1497|!addr
+
+!player_face_screen_timer   = $1499|!addr
+!player_palette_cycle_timer = $149B|!addr
+
 !on_off_state           = $14AF|!addr
 
 !item_memory_setting    = $13BE|!addr
@@ -303,6 +308,10 @@ includeonce
 !rcoin_count_bak    = !item_memory+$1C00
 !scoin_count_bak    = !rcoin_count_bak+$01
 !on_off_state_bak   = !scoin_count_bak+$01
+!coin_count_bak     = !on_off_state_bak+$01
+; 3 bytes
+!score_bak          = !coin_count_bak+$01
+!player_power_bak   = !score_bak+$03
 
 ; 7F2000-7F3FFF free
 ; todo put mfg's scrollable hdma gradient buffer here

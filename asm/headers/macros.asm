@@ -94,3 +94,78 @@ while !___ix != <nstages>
 	!___ix #= !___ix+1
 endif
 endmacro
+
+macro load_restore(main_ram, bak_ram, bak_to_main)
+if <bak_to_main> == !false
+	LDA <main_ram>
+	STA <bak_ram>
+else
+	LDA <bak_ram>
+	STA <main_ram>
+endif
+endmacro
+
+macro midway_backup_restore(bak_to_main)
+if <bak_to_main> == !false
+	LDA !red_coin_total
+	CLC : ADC !red_coin_adder
+	STA !rcoin_count_bak
+else
+	%load_restore(!red_coin_total, !rcoin_count_bak, <bak_to_main>)
+endif
+	%load_restore(!yoshi_coins_collected, !scoin_count_bak, <bak_to_main>)
+	%load_restore(!on_off_state, !on_off_state_bak, <bak_to_main>)
+	%load_restore(!curr_player_coins, !coin_count_bak, <bak_to_main>)
+	%load_restore(!player_score, !score_bak+0, <bak_to_main>)
+	%load_restore(!player_score+1, !score_bak+1, <bak_to_main>)
+	%load_restore(!player_score+2, !score_bak+2, <bak_to_main>)
+	%load_restore(!powerup, !player_power_bak, <bak_to_main>)
+
+	; always the same
+	LDA !time_huns_bak
+	STA !timer_hundreds
+	STZ !timer_tens
+	STZ !timer_ones
+
+	LDA #$28
+	STA !timer_frame
+
+
+; reset a bunch of timers when reloading
+; TODO double-check if anything else needs doing here
+if <bak_to_main> == !true
+; unroll/dma? cycles probably dont matter too much here
+	LDX.b #$7F
+?load_loop
+	STZ.w $1938,x
+	DEX
+	BMI ?load_loop
+
+	REP.b #$20
+	; player-related timers
+	STZ.w $1497|!addr
+	STZ.w $1499|!addr
+	STZ.w $149B|!addr
+	STZ.w $149D|!addr
+	STZ.w $149F|!addr
+	STZ.w $14A1|!addr
+	STZ.w $14A3|!addr
+	STZ.w $14A5|!addr
+	STZ.w $14A7|!addr
+	STZ.w $14A9|!addr
+	SEP.b #$20
+	STZ.w $14AB|!addr
+endif
+
+if !use_midway_imem_sram_dma == !true
+  if <bak_to_main> == !false
+	; runs over several frames. see status bar code.
+	LDA.b #!item_memory_dma_frames+$01
+	STA.w !midway_imem_dma_stage
+  else
+	; TODO dma?
+	%move_block(!item_memory_mirror_s,!item_memory,!item_memory_size)
+  endif
+endif
+
+endmacro

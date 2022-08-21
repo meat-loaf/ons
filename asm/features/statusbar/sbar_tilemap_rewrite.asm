@@ -113,7 +113,7 @@ status_bar_update_counters:
 	STA.w !curr_player_coins
 	INC.w !give_player_lives
 	LDA.w !curr_player_lives
-	CMP.b #99
+	CMP.b #98
 	BCC.b .update_lives_no_load
 	DEC.w !curr_player_lives
 	%two_digit_counter(lives,!curr_player_lives,!status_bar_tilemap+$1D,!true,!false,$0000)

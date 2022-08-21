@@ -41,28 +41,12 @@ gm19:
 	LDA.b #$01
 	STA.w !exit_counter
 
-	; restore timer
-	LDA #$28
-	STA $0F30|!addr
-	LDA !time_huns_bak
-	STA $0F31|!addr
-	STZ $0F32|!addr
-	STZ $0F33|!addr
+;if !use_midway_imem_sram_dma = !true
+;	; restore all item memory
+;	%move_block(!item_memory_mirror_s,!item_memory,!item_memory_size)
+;endif
 
-if !use_midway_imem_sram_dma = !true
-	; restore all item memory
-	%move_block(!item_memory_mirror_s,!item_memory,!item_memory_size)
-endif
-
-	LDA !rcoin_count_bak
-	STA !red_coin_total
-
-	LDA !scoin_count_bak
-	STA !yoshi_coins_collected
-
-	LDA !on_off_state_bak
-	STA !on_off_state
-
+	%midway_backup_restore(!true)
 ; setup load point
 ;	JSL.l oam_reset
 if (read1($03BCDC|!bank)) != $FF

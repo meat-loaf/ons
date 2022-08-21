@@ -79,8 +79,8 @@ ClearItemMemory:
 	STX $4302
 	LDA #ItemMemoryBlockOffsets>>16
 	STA $4304
-	; clear item memory and some other assorted ram...
-	LDX #(!item_memory_size+$3)
+	; clear item memory and some other assorted backup ram...
+	LDX #(!item_memory_size+$8)
 	STX $4305
 	LDA #$01
 	STA $420B

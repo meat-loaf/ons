@@ -10,8 +10,9 @@ MarioSide:
 TopCorner:
 BodyInside:
 HeadInside:
+	LDX #$25
+	STA $1693|!addr
 	REP #$10
-	LDX #$0025
 	%change_map16()
 	SEP #$10
 
