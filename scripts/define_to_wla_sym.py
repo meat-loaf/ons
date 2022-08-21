@@ -73,16 +73,18 @@ def main(argv) -> int:
 
 	print("\n[labels]")
 	for k,v in ram.items():
-		if (v < 0x0100):
-			#print("7e:00{} {}".format(hex(v).lstrip("0x").zfill(2), k.replace("!", "")))
+		if v < 0x0100:
 			print("00:00{} {}".format(hex(v).lstrip("0x").zfill(2), k.replace("!", "")))
-		elif (v < 0x2000):
-			#print("7e:{} {}".format(hex(v).lstrip("0x").zfill(4), k.replace("!", "")))
+		elif v < 0x2000:
 			print("00:{} {}".format(hex(v).lstrip("0x").zfill(4), k.replace("!", "")))
 		else:
 			hv = hex(v).lstrip("0x").zfill(6)
 			print("{}:{} {}".format(hv[0:2], hv[2:6], k.replace("!", "")))
 
 if __name__ == '__main__':
-	rval = main(sys.argv)
+	rval = 1
+	try:
+		rval = main(sys.argv)
+	except Exception as e:
+		print("Error: ", e, file=sys.stderr)
 	sys.exit(rval)
