@@ -119,6 +119,13 @@ status_bar_update_counters:
 	%two_digit_counter(lives,!curr_player_lives,!status_bar_tilemap+$1D,!true,!false,$0000)
 	%two_digit_counter(coins,!curr_player_coins,!status_bar_tilemap+$1A,!true,!true,!coin_adder)
 	%two_digit_counter(red_coins,!red_coin_total,!status_bar_tilemap+$01,!true,!true,!red_coin_adder)
+.moon:
+	LDX.b #!moon_e_tile_ix
+	LDA.w !moon_counter
+	BEQ.b .no_moon
+	LDX.b #!moon_tile_ix
+.no_moon:
+	STX.w !status_bar_tilemap+$03
 .s_coins:
 	LDX.b #$00
 	LDA.w !yoshi_coins_collected

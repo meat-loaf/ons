@@ -64,7 +64,7 @@ main:
 	BNE .out
 .playsound
 	LDA #$24	; play p-switch low sound
-	STA !spc_io_4_sfx_3
+	STA !spc_io_4_sfx_1DFC
 	BRA .out
 .reset
 	LDA #$01

@@ -163,6 +163,12 @@ macro draw_starcoins(return)
 	%get_next_oam_tile(status_bar_oam_tiles, no_oam_left)
 	%draw_digit_tile(!ccoin_5_x,!ccoin_ypos_base,$0F03|!ramlo|!addr,W,\
 			!tile_noflip,$00,$00,$00)
+
+	; also draw the moon tile because fuck it
+	%get_next_oam_tile(status_bar_oam_tiles, no_oam_left)
+	%draw_digit_tile(!moon_xpos,!moon_ypos,!status_bar_tilemap+$03|!ramlo,W,\
+			!tile_noflip,$00,$00,$00)
+
 	<return>
 endmacro
 
@@ -350,7 +356,8 @@ endif
 	db !four_digit_tile,!five_digit_tile,!six_digit_tile,!seven_digit_tile
 	db !eight_digit_tile,!nine_digit_tile,!a_digit_tile,!b_digit_tile
 	db !c_digit_tile,!d_digit_tile,!e_digit_tile,!f_digit_tile
-	db !empty_coin_tile,!blank_digit_tile,!coin_tile
+	db !empty_coin_tile,!blank_digit_tile,!coin_tile,!moon_tile_empty
+	db !moon_tile_full
 .oam_tiles:
 	db $FC,$F8,$F4,$F0
 	db $EC,$E8,$E4,$E0

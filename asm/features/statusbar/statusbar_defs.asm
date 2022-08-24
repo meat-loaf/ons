@@ -41,8 +41,13 @@ includeonce
 !empty_coin_tile_ix  = 16
 !blank_digit_ix      = 17
 !coin_tile_ix        = 18
+!moon_e_tile_ix      = 19
+!moon_tile_ix        = 20
 
 !use_propram         = $1
+
+!moon_tile_empty     = $5D
+!moon_tile_full      = $7F
 
 !item_box_tl_xpos    = $70
 !item_box_tl_ypos    = $07
@@ -52,6 +57,9 @@ includeonce
 !item_box_bl_ypos    = !item_box_tl_ypos+$10
 !item_box_br_xpos    = !item_box_tl_xpos+$10
 !item_box_br_ypos    = !item_box_tl_ypos+$10
+
+!moon_xpos           = !item_box_tr_xpos+$20
+!moon_ypos           = !item_box_tl_ypos+$08
 
 !timer_ypos          = !item_box_tl_ypos+$08
 !timer_clock_xpos    = $B8

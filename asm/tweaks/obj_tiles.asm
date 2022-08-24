@@ -587,7 +587,6 @@ single_tile_objs:
 	SEC : SBC #$10
 .green_star_entry:
 	STA $00
-; TODO handle moon.
 	LDY !object_load_pos
 	LDX $00
 	LDA.l .tiles_high_byte,x

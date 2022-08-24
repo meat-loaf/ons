@@ -5,6 +5,6 @@ incsrc "headers/routines.asm"
 incsrc "headers/ram.asm"
 incsrc "headers/ssp.asm"
 
-if !sa1def_incl = 0
+if not(defined("sa1def_incl"))
 	incsrc "pixi/asm/sa1def.asm"
 endif

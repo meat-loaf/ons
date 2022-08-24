@@ -1001,8 +1001,6 @@ SquareObjTiles:
 	dw $0270,$0271,$0272,$0273,$0274,$0275,$0276,$0277,$0278 : dw $0279,$027A,$027B : dw $027C,$027D,$027E : dw $027F ; smb3 square: pal 6
 	dw $0280,$0281,$0282,$0283,$0284,$0285,$0286,$0287,$0288 : dw $0289,$028A,$028B : dw $028C,$028D,$028E : dw $028F ; smb3 square: pal 7
 
-
-
 BigSquareObjects:
 	JSR SquareObjectsInit
 	JSR StoreNybbles

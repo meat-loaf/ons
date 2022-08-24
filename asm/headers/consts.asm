@@ -1,5 +1,3 @@
-!sa1def_incl ?= 0
-
 if read1($00FFD5) == $23
 	if read1($00FFD7) == $0D ; full 6/8 mb sa-1 rom
 		fullsa1rom

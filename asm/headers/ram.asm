@@ -168,6 +168,7 @@ includeonce
 
 !main_level_num         = $13BF|!addr
 
+!moon_counter           = $13C5|!addr
 !coin_adder             = $13CC|!addr
 !midway_flag            = $13CE|!addr
 !ow_run_event_flag      = $13CE|!addr
@@ -308,9 +309,9 @@ includeonce
 !rcoin_count_bak    = !item_memory+$1C00
 !scoin_count_bak    = !rcoin_count_bak+$01
 !on_off_state_bak   = !scoin_count_bak+$01
-!coin_count_bak     = !on_off_state_bak+$01
+!got_moon_bak       = !on_off_state_bak+$01
 ; 3 bytes
-!score_bak          = !coin_count_bak+$01
+!score_bak          = !got_moon_bak+$01
 !player_power_bak   = !score_bak+$03
 
 ; 7F2000-7F3FFF free

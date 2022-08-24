@@ -2,6 +2,7 @@ incsrc "../main.asm"
 
 ; moons use item memory
 org $00F31B|!bank
+	INC.w !moon_counter
 	JSL write_item_memory|!bank
 	BRA moon_done
 org $00F36B|!bank

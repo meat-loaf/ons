@@ -115,7 +115,7 @@ else
 endif
 	%load_restore(!yoshi_coins_collected, !scoin_count_bak, <bak_to_main>)
 	%load_restore(!on_off_state, !on_off_state_bak, <bak_to_main>)
-	%load_restore(!curr_player_coins, !coin_count_bak, <bak_to_main>)
+	%load_restore(!moon_counter, !got_moon_bak, <bak_to_main>)
 	%load_restore(!player_score, !score_bak+0, <bak_to_main>)
 	%load_restore(!player_score+1, !score_bak+1, <bak_to_main>)
 	%load_restore(!player_score+2, !score_bak+2, <bak_to_main>)
