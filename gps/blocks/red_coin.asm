@@ -10,8 +10,9 @@ MarioSide:
 TopCorner:
 BodyInside:
 HeadInside:
+	JSL write_item_memory|!bank
+
 	LDX #$25
-	STA $1693|!addr
 	REP #$10
 	%change_map16()
 	SEP #$10

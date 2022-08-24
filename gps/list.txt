@@ -5,7 +5,7 @@
 00A3:0025        midway.asm
 00A4:0025        midway.asm
 
-002C:002C        red_coin.asm
+002C:0025        red_coin.asm
 00E0:0130        item_blocks/rcoin_blocks.asm
 00E1:0130        item_blocks/rcoin_blocks.asm
 00E2:0130        item_blocks/rcoin_blocks.asm

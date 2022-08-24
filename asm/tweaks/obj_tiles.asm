@@ -532,8 +532,8 @@ org $0DA8B4
 ; final object (index 0E) used for red coins (object 16)
 ; reuses 'frozen' turn block code, which is ultimately not used
 square_objs_low_bytes:
-	db $BE,$21,$CF,$2A,$2B,$CE,$E9
-	db $13,$1E,$24,$2E,$54,$30,$32,$2C
+	db $BE,$21,$CF,$2A,$2B,$CE,$E9,$13
+	db $1E,$24,$2E,$54,$30,$32,$2C
 org $0DA8D8
 square_objs_routine:
 	JSL read_item_memory
@@ -563,7 +563,7 @@ pullpc
 ; TODO throw block doesnt seem to set item memory, perhaps remedy this
 .uses_item_mem:
 	db $00,$80,$01,$00,$01,$00,$01,$00
-	db $01,$80,$01,$00,$01,$01
+	db $01,$80,$01,$00,$01,$01,$01
 ; note: lunar magic will use 0 as the map16 page for indices 0-6
 ; and 1 for the others regardless of what is here
 .square_objs_high_bytes:
