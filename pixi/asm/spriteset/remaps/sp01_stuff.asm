@@ -183,3 +183,7 @@ org $0291F1|!bank
 ; coin sparkle minor extended sprite
 org $028ECC|!bank
 	db $E6
+
+; score sprites - 2, 3, 5up
+org $02AD5A|!bank
+	db $4B, $5B, $5A

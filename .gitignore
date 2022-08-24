@@ -22,3 +22,4 @@ amk/SPCs
 amk/asm/SNES/bin/*
 amk/asm/SNES/SongSampleList.asm
 amk/asm/SNES/AMUndo.asm
+asm/headers/routines/item_memory_rts.asm
