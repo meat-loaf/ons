@@ -95,9 +95,6 @@ includeonce
 ; TODO move this to the asstd_lvl_flags_1 bitmask
 !sspipes_carry_spr        = $63
 
-
-
-
 !sprite_level_props       = $64
 ; 3 bytes
 !layer_1_bank_byte_ptr    = $65
@@ -108,7 +105,8 @@ includeonce
 ; 3 bytes - free in levels after gm11
 !map16_data_hi            = $6E
 !player_ani_trigger_state = $71
-
+!player_dir               = $76
+!player_x_spd             = $7B
 ; backup of $77
 !sspipes_blocked_backup  = $79
 !status_bar_config       = $7C

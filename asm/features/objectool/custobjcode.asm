@@ -130,36 +130,46 @@ CustExObjF2:
 CustExObjF3:
 CustExObjF4:
 CustExObjF5:
-	LDY !object_position
-
+midway_bar_ext_objs:
 	LDA !ext_obj_type
 	SEC
 	SBC #$F0
 	TAX
-
-	; don't draw if this specific midway flag
-	; is currently active.
 	CMP !midway_flag
-	BNE .midway_not_active
-.midway_active:
-	LDA #$30
-	STA [$6B],y
-	LDA #$00
-	STA [$6E],y
+	BNE .cont
+	; don't draw anything if this midway is active
 	RTS
+.cont:
+	LDY !object_position
+
+	LDA !sprite_memory_header
+	BIT #!level_status_flag_goal_move_left
+	BNE .backwards
 .midway_not_active:
 	LDA #$35
 	STA [$6B],y
 	LDA #$00
 	STA [$6E],y
 	JSR ShiftObjRight
-	LDA .tiles-1,x
+	LDA .tiles_bar-1,x
 	STA [$6B],y
 	LDA #$00
 	STA [$6E],y
 	RTS
-.tiles:
+.tiles_bar:
 	db $A0,$A1,$A2,$A3,$A4
+.backwards:
+	JSR ShiftObjRight
+	LDA .tiles_bar-1,x
+	STA [$6B],y
+	LDA #$00
+	STA [$6E],y
+	JSR ShiftObjRight
+	LDA #$35
+	STA [$6B],y
+	LDA #$03
+	STA [$6E],y
+	RTS
 CustExObjF6:
 CustExObjF7:
 	RTS

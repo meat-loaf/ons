@@ -45,12 +45,12 @@ endif
 !frames_for_on_off_cooldown    = $0A
 
 !level_status_flag_always_slip       = %00000001
-!level_status_flag_goal_walk_left    = %00000010
 !level_status_flag_sprite_water      = %10000000
 
 ; set in old sprite memory ram byte
 !level_status_flag_lava_slope_toggle = %00000001
 !level_status_flag_slope_no_dirt     = %00000010
+!level_status_flag_goal_move_left    = %00000100
 
 !level_constrain_top   = %00001000
 !level_constrain_bot   = %00000100

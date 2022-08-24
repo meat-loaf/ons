@@ -53,6 +53,7 @@ ASM_TWEAKS=optimize_2132_store.asm \
 	level_constrain.asm \
 	growvine_imem.asm \
 	timer_backup.asm \
+	left_at_goal.asm \
 	minor_tweaks.asm \
 
 ASM_TWEAK_TS=$(addprefix ${TS_DIR}/, $(patsubst %.asm, %_ts,$(ASM_TWEAKS)))

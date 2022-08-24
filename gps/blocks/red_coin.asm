@@ -11,6 +11,8 @@ TopCorner:
 BodyInside:
 HeadInside:
 	JSL write_item_memory|!bank
+	; restore Y
+	LDY #$00
 
 	LDX #$25
 	REP #$10

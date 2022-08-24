@@ -815,4 +815,24 @@ slope_dirt_store:
 +
 	JMP ShiftObjRightOrig
 
+pushpc
+; midway/goal stuff
+org $0DB24B|!bank
+	JSR.w midway_goal_obj_flip_on_header|!bank
+org $0DB275|!bank
+	JSR.w midway_goal_obj_flip_on_header|!bank
+org $0DB29F|!bank
+	JSR.w midway_goal_obj_flip_on_header|!bank
+pullpc
+midway_goal_obj_flip_on_header:
+	LDA !sprite_memory_header
+	AND #!level_status_flag_goal_move_left
+	BNE .backwards
+	STA [$6E],y
+	RTS
+.backwards:
+	LDA.b #$03
+	STA [$6E],y
+	RTS
+
 print "bank 0D end location: $",pc
