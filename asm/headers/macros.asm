@@ -1,5 +1,7 @@
 includeonce
 
+;function on_wram_mirror(ram) = and(less(<ram>&$FFFF,$2000),not(eq(bank(<ram>),!ramhi)))
+
 function pack_props(flip, priority, palette, page) = ((flip&03)<<$06)|((priority&03)<<$04)|((palette&$07)<<1)|(page&$01)
 
 function shared_spr_routines_tile_offset(spr_num) = ($019C7F+spr_num)
@@ -68,7 +70,7 @@ macro midway_table_entry(lvl_or_secondary_exit, is_midpoint_or_water, is_seconda
 		!___hi #= (!___hi|!19D8_flag_water_lvl_mid)
 	endif
 	if <is_secondary> == !true
-		!___hi #= ((!___hi<<4)&19D8_flag_b8_12_seconary)|!19D8_flag_is_secondary
+		!___hi #= ((!___hi<<4)&!19D8_flag_b8_12_seconary)|!19D8_flag_is_secondary
 	endif
 
 	!___val #= (!___lo|(!___hi<<8))

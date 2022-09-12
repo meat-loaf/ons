@@ -19,6 +19,7 @@ sysLMRestore
 *.sym
 *.bp
 amk/SPCs
+amk/temp.*
 amk/asm/SNES/bin/*
 amk/asm/SNES/SongSampleList.asm
 amk/asm/SNES/AMUndo.asm

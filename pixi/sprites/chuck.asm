@@ -1,10 +1,3 @@
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;;
-!Stomps = $03
-;;
-;; Change this to the amount of hits you want Chargin' Chuck to take
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; USES EXTRA BIT: YES
@@ -12,9 +5,10 @@
 ;; If Extra bit is set, the chuck will not change into a chargin' chuck when hit
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Extra bytes used: 1
+;; Extra bytes used: 2
 ;;
 ;; Extra byte 1 determines the Chuck's initial starting state (00-0C). See the Init notes.
+;; Extra byte 2 modifies behavior based on the kind of chuck it is.
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Subroutines
@@ -33,7 +27,17 @@
 	GivePoints = $02ACE5|!bank
 	DisplayContactGfx = $01AB99|!bank
 	HurtMario = $00F5B7|!bank
-	
+
+; consts
+!Stomps = $03
+!chuck_alt_behavior_no_jump = %00000001
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; RAM
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+!chuck_behavior      = !C2
+!chuck_alt_behaviors = !160E
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Init
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -52,12 +56,17 @@
 ; 0C: whistlin'
 ; anything higher will crash, so don't do that
 print "INIT ",pc
+C_CHUCK_INIT:
 	PHB
 	PHK
 	PLB
 
+
 	LDA !extra_byte_1,x
-	STA !C2,x
+	STA !chuck_behavior,x
+	LDA !extra_byte_2,x
+	STA !chuck_alt_behaviors,x
+
 	CMP #$04
 	BNE +
 	LDA.B #$30
@@ -252,7 +261,7 @@ ADDR_02C23D:
 	BNE ADDR_02C253           ; /
 	LDA !AA,x
 	BPL ADDR_02C253
-	LDA !C2,x
+	LDA !chuck_behavior,x
 	CMP #$05
 	BCS ADDR_02C253
 	LDA #$06
@@ -371,14 +380,14 @@ ADDR_02C31A:
 ADDR_02C328:
 	TAY
 	BMI ADDR_02C334
-	LDY !C2,x
+	LDY !chuck_behavior,x
 	CPY #$07
 	BNE ADDR_02C334
 	CLC
 	ADC #$03
 ADDR_02C334:
 	STA !AA,x
-	LDA !C2,x
+	LDA !chuck_behavior,x
 	TXY
 	ASL
 	TAX
@@ -412,7 +421,7 @@ PrepWhistle:
 	CMP #$60
 	BCS ADDR_02C370
 	LDA #$0C
-	STA !C2,x
+	STA !chuck_behavior,x
 ADDR_02C370:
 	JMP ADDR_02C556
 
@@ -702,7 +711,7 @@ Jumpin:
 	JSR ADDR_02C556
 	LDA #$08
 	STA !1540,x
-	INC !C2,x
+	INC !chuck_behavior,x
 Return02C555:
 	RTS                       ; Return
 
@@ -725,7 +734,7 @@ Landin:
 	AND #$04                ;  |
 	BEQ Return02C57D          ; /
 	LDA #$05
-	STA !C2,x
+	STA !chuck_behavior,x
 ADDR_02C579:
 	STZ !B6,x                 ; Sprite X Speed = 0
 	STZ !AA,x                 ; Sprite Y Speed = 0
@@ -757,7 +766,7 @@ PrepJump:
 	LDA #$B0
 	STA !AA,x
 	LDA #$06
-	STA !C2,x
+	STA !chuck_behavior,x
 	JMP ADDR_02C536
 .no_spawn:
 	LDA #$09
@@ -765,7 +774,7 @@ PrepJump:
 	RTS
 
 ADDR_02C5A7:
-	STZ !C2,x
+	STZ !chuck_behavior,x
 	LDA #$50
 	STA !1540,x
 	LDA #$10                ; \ Play sound effect
@@ -870,7 +879,7 @@ LookSideToSide:
 	INC !187B,x
 ADDR_02C65C:
 	LDA #$02
-	STA !C2,x
+	STA !chuck_behavior,x
 	LDA #$18
 	STA !1540,x
 Return02C665:
@@ -924,7 +933,7 @@ Chargin:
 	TYX
 	LDA !1588,x             ; \ Branch if not on ground
 	AND #$04                ;  |
-	BEQ ADDR_02C6BA           ; /
+	BEQ ADDR_02C6BA         ; /
 	LDA !163E,x
 	CMP #$01
 	BRA ADDR_02C6BA
@@ -948,7 +957,7 @@ ADDR_02C6BA:
 ADDR_02C6D7:
 	LDA !1540,x
 	BNE ADDR_02C6EC
-	STZ !C2,x
+	STZ !chuck_behavior,x
 	JSR ADDR_02C628
 	JSL GetRand
 	AND #$3F
@@ -996,7 +1005,7 @@ PrepCharge:
 	BNE Return02C73C
 	JSR ADDR_02C628
 	LDA #$01
-	STA !C2,x
+	STA !chuck_behavior,x
 	LDA #$40
 	STA !1540,x
 Return02C73C:
@@ -1043,7 +1052,7 @@ HurtUpdatePhase:
 	LDA #$30
 	STA !1540,x
 	LDA #$02
-	STA !C2,x
+	STA !chuck_behavior,x
 	INC !187B,x
 	JMP ADDR_02C556
 ChuckHitOrigPhase:
@@ -1055,7 +1064,7 @@ ChuckHitOrigPhase:
 	BNE +
 	INC A                     ; change to 'whistling' phase
 +
-	STA !C2,x
+	STA !chuck_behavior,x
 Return02C798:
 	RTS                       ; Return
 
@@ -1098,7 +1107,7 @@ ADDR_02C7C4:
 	JSL DisplayContactGfx
 	JSL BoostMarioSpeed
 	STZ !163E,x
-	LDA !C2,x
+	LDA !chuck_behavior,x
 	CMP #$03
 	BEQ Return02C80F
 	INC !1528,x             ; Increase Chuck stomp count
@@ -1113,7 +1122,7 @@ ADDR_02C7F6:
 	LDA #$28                ; \ Play sound effect
 	STA $1DFC|!Base2               ; /
 	LDA #$03
-	STA !C2,x
+	STA !chuck_behavior,x
 	LDA #$03
 	STA !1540,x
 	STZ !1570,x
@@ -1564,7 +1573,7 @@ DigChuckTileSize:
 	db $00,$02,$02
 
 ADDR_02CBA1:
-	LDA !C2,x         ; \ if diggin'
+	LDA !chuck_behavior,x         ; \ if diggin'
 	CMP #$04          ; /
 	BNE Return02CBFB
 	LDA !1602,x

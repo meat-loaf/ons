@@ -278,7 +278,7 @@ if !pixi_installed
 	dw spritesets_null_spriteset          ; custom sprite 46
 	dw spritesets_null_spriteset          ; custom sprite 47
 	dw spritesets_null_spriteset          ; custom sprite 48
-	dw spritesets_null_spriteset          ; custom sprite 49
+	dw spritesets_pipe                    ; custom sprite 49 - custom expanding pipe
 	dw spritesets_null_spriteset          ; custom sprite 4A
 	dw spritesets_lakitu_spiny            ; custom sprite 4B - customizable pipe lakitu
 	dw spritesets_null_spriteset          ; custom sprite 4C
@@ -517,7 +517,7 @@ endif ; remap_koopa
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 38-3F
 .chucks:
 	db $00,$20,$00,$00,$00,$00,$00,$80    ; spritesets 00-07
-	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 08-0F
+	db $00,$00,$00,$00,$00,$00,$20,$00    ; spritesets 08-0F
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 10-17
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 18-1F
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 20-27
@@ -673,8 +673,11 @@ endif ; !remap_jumpin_pplant_vine
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 30-37
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 38-3F
 .dry_bones_beetle_pencil:
+.dry_bones:
+.bony_beetle:
+.pencil:
 	db $00,$00,$00,$00,$00,$00,$00,$20    ; spritesets 00-07
-	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 08-0F
+	db $00,$00,$00,$00,$00,$00,$00,$20    ; spritesets 08-0F
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 10-17
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 18-1F
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 20-27
@@ -703,7 +706,7 @@ endif ; !remap_jumpin_pplant_vine
 .ball_n_chain:
 .castle_blk_bnc_gndr:
 	db $00,$00,$00,$00,$00,$00,$00,$A0    ; spritesets 00-07
-	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 08-0F
+	db $00,$00,$00,$00,$00,$00,$00,$60    ; spritesets 08-0F
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 10-17
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 18-1F
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 20-27
@@ -839,9 +842,10 @@ endif
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 30-37
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 38-3F
 .switch:
+.pipe:
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 00-07
 	db $00,$00,$00,$00,$20,$00,$00,$00    ; spritesets 08-0F
-	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 10-17
+	db $20,$00,$00,$00,$00,$00,$00,$00    ; spritesets 10-17
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 18-1F
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 20-27
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 28-2F
@@ -868,10 +872,10 @@ spriteset_gfx_listing:
 	dw $007F,$007F,$007F,$007F,$012B,$012A,$0129,$007F		; spriteset 0A: mechakoopa
 	dw $007F,$007F,$010F,$0108,$010C,$010E,$0107,$010D		; spriteset 0B: wiggler, volcano lotus, piranha plants, platforms, mega mole
 	dw $007F,$007F,$0108,$011D,$011C,$0105,$011E,$0103		; spriteset 0C: snow 2: chucks (pitchin), bumpty, ninji, plats
-	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 0D: none
-	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 0E: none
-	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 0F: none
-	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 10: none
+	dw $007F,$007F,$007F,$00E0,$007F,$007F,$007F,$0013		; spriteset 0D: testing (replace later)
+	dw $007F,$007F,$007F,$007F,$0105,$0104,$0103,$0107		; spriteset 0E: chucks + kickin chuck, volc lotus
+	dw $007F,$007F,$007F,$007F,$0122,$0121,$0120,$0123		; spriteset 0F: dry bones/bony/beetle/pencil/grinder/castle block/reflec ball
+	dw $007F,$007F,$007F,$007F,$007F,$007F,$0124,$010D		; spriteset 10: piranhas, expanding pipes
 	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 11: none
 	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 12: none
 	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 13: none

@@ -371,56 +371,48 @@ warnpc $03D700|!bank
 
 ;; bank 07 hijacks ;;
 
-if !pixi_installed == 1
-org $07F77F|!bank
-sprset_sprload_hijack:
-autoclean \
-	JML.l sprset_init
-	NOP #2
-.done:
-; sadly, pixi hijacks here. so we insert our hijack before it...
-warnpc $07F785|!bank
-else
-org $07F785|!bank
-autoclean \
-	JML.l sprset_init
-endif
+;if !pixi_installed == 1
+;org $07F77F|!bank
+;sprset_sprload_hijack:
+;autoclean \
+;	JML.l sprset_init
+;	NOP #2
+;.done:
+;; sadly, pixi hijacks here. so we insert our hijack before it...
+;warnpc $07F785|!bank
+;else
+;org $07F785|!bank
+;autoclean \
+;	JML.l sprset_init
+;endif
 
 
-;org $07F78B|!bank
+org $07F78B|!bank
 ;; originally, this routine preserved Y, but doesnt use it itself.
 ;; we get the JSL we want 'for free' by removing pushing Y as we then
 ;; have a 'tidied' stack, so we just go right into loading the tweaker bytes
 ;; instead of JSLing to the routine like the game originally did.
-;load_sprite_tables:
-;	PHX
-;;	LDA   !9E,x
-;	%sprite_num(LDA,x)
-;	TAX
-;	LDA.l $07F3FE,x
-;	AND.b #$0F
-;	PLX
-;	STA.w !15F6,x
-;autoclean \
-;	JSL.l sprset_init
-;	BRA load_tweaker_bytes : NOP
-;warnpc $07F7A0|!bank
-;org $07F7A0|!bank
-;load_tweaker_bytes:
+load_sprite_tables:
+	PHX
+;	LDA   !9E,x
+	%sprite_num(LDA,x)
+	TAX
+	LDA.l $07F3FE,x
+	AND.b #$0F
+	PLX
+	STA.w !15F6,x
+autoclean \
+	JSL.l sprset_init
+	BRA load_tweaker_bytes : NOP
+warnpc $07F7A0|!bank
+org $07F7A0|!bank
+load_tweaker_bytes:
 
 freecode
 sprset_init:
-if !pixi_installed == 1
-	STZ.w !1504,x
-	STZ.w !1FD6,x
-	PHP
-else
-	LDA.b #$01
-	STA.w !15A0,x
-endif
-
 	PHY
 	PHX
+	PHP
 
 	LDA.b #spritesets>>16
 	STA.b !sprset_tbl_scr+$02
@@ -449,17 +441,13 @@ endif
 	SEP.b #$30
 	LDY   !current_spriteset
 	LDA.b [!sprset_tbl_scr],y
+
+	PLP
 	PLX
 	STA   !spriteset_offset,x
+
 	PLY
-if !pixi_installed == 1
-	PLP
-	JML.l sprset_sprload_hijack_done
-else
 	RTL
-endif
-
-
 
 if !cluster_sprites_inherit_parent
 sprset_cluster_init_inherit:

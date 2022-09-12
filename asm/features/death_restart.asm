@@ -41,11 +41,6 @@ gm19:
 	LDA.b #$01
 	STA.w !exit_counter
 
-;if !use_midway_imem_sram_dma = !true
-;	; restore all item memory
-;	%move_block(!item_memory_mirror_s,!item_memory,!item_memory_size)
-;endif
-
 	%midway_backup_restore(!true)
 ; setup load point
 ;	JSL.l oam_reset
@@ -76,12 +71,10 @@ endif
 	XBA
 	ORA #!19D8_flag_lm_modified
 	STA !exit_table_new_lm,x
-;	BRA .midway_done
-;	RTS
 	RTL
 .midway:
 	PHX
-	LDA.b #midway_ptr_tables>>16
+	LDA.b #(midway_ptr_tables|!bank)>>16
 	STA $8C
 
 	LDA.w !midway_flag
@@ -104,12 +97,7 @@ endif
 	XBA
 	STA.w !exit_table_new_lm,x
 
-;.midway_done:
-;	RTS
 	RTL
-;autoclean dl midway_tables
-;print "death pc: $",pc
-;warnpc $00968E|!bank
 
 midway_tables:
 .level_000:
@@ -162,6 +150,8 @@ midway_tables:
 	%midway_table_entry($0142, !true, !false)
 .level_106:
 	%midway_table_entry($0106, !true, !false)
+	%midway_table_entry($0106, !true, !false)
+	%midway_table_entry($0144, !true, !false)
 .level_107:
 	%midway_table_entry($0107, !true, !false)
 .level_108:
@@ -217,7 +207,7 @@ midway_tables:
 .level_139:
 .level_13A:
 .level_13B:
-dw $0000,$0000,$0000,$0000,$0000
+	dw $0000,$0000,$0000,$0000,$0000
 
 midway_ptr_tables:
 dw midway_tables_level_000

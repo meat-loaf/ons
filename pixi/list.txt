@@ -44,6 +44,8 @@
 70 sandstormspawn.json
 
 80 poison_mushroom.cfg
+81 enemy_stack.cfg
+
 9E ball-n-chain-pendulum.cfg
 A0 rotating-gray-platform-pendulum-slip.cfg
 A3 rotating-gray-platform-pendulum.cfg

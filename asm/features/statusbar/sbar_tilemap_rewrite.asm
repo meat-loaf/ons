@@ -2,7 +2,7 @@ includefrom "status.asm"
 status_bar_tilemap_score_convert = $009012|!bank
 hex_to_dec               = $009045|!bank
 
-macro two_digit_counter(name,total_ram,tilemap_base,use_blank_tens,has_adder,adder_ram)
+macro two_digit_counter(name,total_ram,tilemap_base,use_blank_tens,has_adder,adder_ram,off_by_one)
 .update_<name>_load<name>:
 if <has_adder>
 	LDA.w <adder_ram>
@@ -12,6 +12,9 @@ if <has_adder>
 .<name>_adder_done:
 endif
 	LDA.w <total_ram>
+if <off_by_one>
+	INC
+endif
 .update_<name>_no_load:
 	JSR.w hex_to_dec
 if <use_blank_tens>
@@ -116,9 +119,9 @@ status_bar_update_counters:
 	CMP.b #98
 	BCC.b .update_lives_no_load
 	DEC.w !curr_player_lives
-	%two_digit_counter(lives,!curr_player_lives,!status_bar_tilemap+$1D,!true,!false,$0000)
-	%two_digit_counter(coins,!curr_player_coins,!status_bar_tilemap+$1A,!true,!true,!coin_adder)
-	%two_digit_counter(red_coins,!red_coin_total,!status_bar_tilemap+$01,!true,!true,!red_coin_adder)
+	%two_digit_counter(lives,!curr_player_lives,!status_bar_tilemap+$1D,!true,!false,$0000,1)
+	%two_digit_counter(coins,!curr_player_coins,!status_bar_tilemap+$1A,!true,!true,!coin_adder,0)
+	%two_digit_counter(red_coins,!red_coin_total,!status_bar_tilemap+$01,!true,!true,!red_coin_adder,0)
 .moon:
 	LDX.b #!moon_e_tile_ix
 	LDA.w !moon_counter
@@ -143,5 +146,6 @@ status_bar_update_counters:
 	BNE.b ..loop
 ..done
 	RTS
+print "Status bar code ends at $",pc
 warnpc $008FFA|!bank
 pullpc

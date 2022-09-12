@@ -45,6 +45,7 @@ endif
 !frames_for_on_off_cooldown    = $0A
 
 !level_status_flag_always_slip       = %00000001
+!state_flag_player_l2_lastf          = %00000010
 !level_status_flag_sprite_water      = %10000000
 
 ; set in old sprite memory ram byte

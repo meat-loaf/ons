@@ -18,6 +18,19 @@ includefrom "remaps.asm"
 !wing_out_tile = $EC
 !wing_in_tile  = $FE
 
+; key tile
+org $01A1FA|!bank
+	db $42
+; top of keyhole
+org $01E251|!bank
+	db $41
+; bottom of keyhole
+org $01E256|!bank
+	db $51
+; turn block bridge
+org $01B77E|!bank
+	db !turn_block_tile
+
 ; moving coin normal sprite: 16x16
 org $01C653|!bank
 	db !spinning_coin_tile_full

@@ -1,1 +1,6 @@
-$DA $06 $0C $38 $0E $DD $A4 $00 $0C $B7 $18 $1C $1C $EB $00 $18 $B0 $34 $0E $38 $EB $00 $30 $A4
+#jsr reset_tempo $DA $06 $0C $38 $0E $DD $A4 $00 $0C $B7 $18 $1C $1C $EB $00 $18 $B0 $34 $0E $38 $EB $00 $30 $A4
+
+#asm reset_tempo
+{
+    jmp SubC_7
+}

@@ -1110,50 +1110,8 @@ SetSpriteTables:
 	PLP
 	PLB
 	PLY
-	RTL
-	
-   if !PerLevel = 1
-	.perlevel
-		JSR GetPerLevelAddr
-		BNE +
-		PHK
-		PLB
-		LDA $00
-		BRA -
-	+	PEA.w PerLevelTable>>8
-		PLB
-		PLB
-		SEP #$20
-		LDA.w PerLevelTable+$01,y
-		STA !9E,x
-		LDA.w PerLevelTable+$02,y
-		STA !1656,x
-		LDA.w PerLevelTable+$03,y
-		STA !1662,x
-		LDA.w PerLevelTable+$04,y
-		STA !166E,x
-		AND #$0F
-		STA !15F6,x
-		LDA.w PerLevelTable+$05,y
-		STA !167A,x
-		LDA.w PerLevelTable+$06,y
-		STA !1686,x
-		LDA.w PerLevelTable+$07,y
-		STA !190F,x
-		LDA.w PerLevelTable+$00,y
-		STA !new_code_flag
-		BEQ .notCustom
-		LDA.w PerLevelTable+$0E,y
-		STA !extra_prop_1,x
-		LDA.w PerLevelTable+$0F,y
-		STA !extra_prop_2,x
-		LDA.w PerLevelTable+$0A,y
-		STA $02
-		REP #$20
-		LDA.w PerLevelTable+$08,y
-		STA $00					; INIT pointer to [$00]
-		BRA .ret
-   endif
+;	RTL
+	JML sprset_init
 	
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Call Main after handling status > 9

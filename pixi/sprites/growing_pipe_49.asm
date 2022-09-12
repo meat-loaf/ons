@@ -29,8 +29,8 @@ db $00,$14,$00,$02
 TilesToGen2:
 db $00,$15,$00,$02
 
-!PipeTile1 = $02
-!PipeTile2 = $04
+!PipeTile1 = $00
+!PipeTile2 = $02
 
 !ExtraBit = $04
 
@@ -244,31 +244,28 @@ GrowingPipeGFX:
 
 %GetDrawInfo()
 
-LDA $00		;
-STA $0300|!Base2,y	;
-CLC		;
-ADC #$10	;
-STA $0304|!Base2,y	;
-
-LDA $01		;
-DEC		;
-STA $0301|!Base2,y	;
-STA $0305|!Base2,y	;
-
-LDA #!PipeTile1	;
+LDA $00
+STA $0300|!Base2,y
 CLC
-ADC !tile_off_scratch
-STA $0302|!Base2,y	;
-LDA #!PipeTile2	;
-ADC !tile_off_scratch
-STA $0306|!Base2,y	;
+ADC #$10
+STA $0304|!Base2,y
 
-LDA !15F6,x	;
-ORA $64		;
-STA $0303|!Base2,y	;
-STA $0307|!Base2,y	;
+LDA $01
+DEC
+STA $0301|!Base2,y
+STA $0305|!Base2,y
 
-LDA #$01		;
-LDY #$02		;
-JSL $01B7B3|!bank	;
+LDA #!PipeTile1
+STA $0302|!Base2,y
+LDA #!PipeTile2
+STA $0306|!Base2,y
+
+LDA !15F6,x
+ORA $64
+STA $0303|!Base2,y
+STA $0307|!Base2,y
+
+LDA #$01
+LDY #$02
+JSL finish_oam_write|!bank
 RTS

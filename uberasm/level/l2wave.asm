@@ -4,6 +4,7 @@
 load:
 	LDA #$80
 	STA !on_off_revert_timer
+	STZ !wave_state
 	RTL
 main:
 	LDA !sprites_locked
@@ -31,6 +32,7 @@ main:
 	LDA !mario_on_ground             ; and do some other shit to fix moot's position
 	CMP #$02                         ; on layer 2 only
 	BEQ .fixpos
+;	BRA .out
 	LDA !sspipes_dir                 ; check if in a screen-scrolling pipe
 	BEQ .out
 	STZ $0E                          ; \ don't apply the layer delta to marios pos
