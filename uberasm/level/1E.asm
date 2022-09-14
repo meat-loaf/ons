@@ -1,4 +1,7 @@
 init:
+	LDA $010B|!bank
+	CMP #$25
+	BEQ main
 	REP #$20
 	LDA #$3200
 	STA $4330
@@ -26,6 +29,16 @@ main:
 	LDA.w $1462|!addr
 	LSR #3
 	STA.w $1466|!addr
+	SEP.b #$20
+	RTL
+
+load:
+	REP.b #$20
+	LDA $1A
+;	LDA.w $1462|!addr
+	LSR #3
+	STA $1E
+;	STA.w $1466|!addr
 	SEP.b #$20
 	RTL
 

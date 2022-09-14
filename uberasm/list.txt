@@ -6,6 +6,8 @@ verbose: off
 ; Level list. Valid values: 000-1FF.
 level:
 01E 1E.asm
+025 1E.asm
+
 0C5 c5.asm
 103 103.asm
 108 108.asm

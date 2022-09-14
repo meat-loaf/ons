@@ -17,6 +17,8 @@
 ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+!warning_cls_num = $02
+
 
 ShellPositionLow:
 db $0C,$F4
@@ -30,18 +32,51 @@ db $30,$D0
 print "INIT ",pc
 print "MAIN ",pc
 PHB : PHK : PLB
-	JSR Shooter
+JSR ShellShooter_Main
 PLB
 RTL
 
+
+ret_alt:
+	CMP #$20
+	BNE Return
+	LDA !shooter_extra_byte_2,x
+	BPL Return
+
+	LDY #20-1
+.loop:
+	LDA $1892|!addr,y
+	BEQ .cls_found
+	DEY
+	BPL .loop
+	BRA Return
+.cls_found:
+	LDA #!warning_cls_num+!ClusterOffset
+	STA $1892|!addr,y
+	LDA #$20
+	STA $0F4A|!addr,x
+	STA $18B8|!addr
+
+	LDA !shoot_x_low,x
+	STA !cluster_x_low,y
+	LDA !shoot_x_high,x
+	STA !cluster_x_high,y
+	LDA !shoot_y_low,x
+	STA !cluster_y_low,y
+	LDA !shoot_y_high,x
+	STA !cluster_y_high,y
 Return:
 RTS
 
-Shooter:
+
+ShellShooter_Main:
 	LDA $17AB|!Base2,x
-	BNE Return
+	BNE ret_alt
 	LDA !shooter_extra_byte_3,x
 	STA $17AB,x
+
+	LDA !shooter_extra_byte_2,x
+	BMI .no_prox_checks
 
 	LDA $94
 	SEC : SBC $179B|!Base2,x
@@ -49,6 +84,7 @@ Shooter:
 	CMP #$22
 	BCC Return
 
+.no_prox_checks:
 	LDA $178B|!Base2,x
 	CMP $1C
 	LDA $1793|!Base2,x
@@ -64,7 +100,6 @@ Shooter:
 	SEP #$20
 	BCS Return
 
-.no_prox_checks
 	JSR SubHorzPos
 	STY $57
 	LDA !shooter_extra_byte_2,x

@@ -122,8 +122,39 @@ CustExObjEC:
 CustExObjED:
 CustExObjEE:
 CustExObjEF:
-CustExObjF0:
 	RTS
+CustExObjF0:
+	JSR BackUpPtrs
+	LDY !object_load_pos
+	LDX #$00
+.loop
+	STZ !ObjScratch
+	LDA #$03
+	STA [$6E],y
+
+	LDA [$6B],y
+	CMP #$25
+	BNE .not_empty
+	LDA #$F0
+	STA !ObjScratch
+.not_empty:
+	LDA .pipe_square_tiles,x
+	CLC
+	ADC !ObjScratch
+	STA [$6B],y
+	JSR ShiftObjRight
+	INX
+	TXA
+	AND #$01
+	BNE .loop
+	JSR RestorePtrs
+	JSR ShiftObjDown
+	CPX #$04
+	BNE .loop
+	RTS
+
+.pipe_square_tiles:
+	db $6C,$6D,$6E,$6F
 ; midways
 CustExObjF1:
 CustExObjF2:

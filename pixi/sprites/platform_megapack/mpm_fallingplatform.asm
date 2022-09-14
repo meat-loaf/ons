@@ -44,7 +44,7 @@ DoYouFall:
 			LSR
 			LSR
 			AND #$03
-			JSL $0086DF				; Pointer subroutine
+			JSL $0086DF
 		FallingPlatform_Directions:
 			dw Falldown
 			dw Fallup

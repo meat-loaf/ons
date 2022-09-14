@@ -32,6 +32,8 @@
 39 para_beetle.cfg
 3A fly_guy.cfg
 
+41 dry_dolphin.cfg
+
 49 growing_pipe_49.cfg
 4B PipeLakitu.json
 
@@ -60,3 +62,4 @@ EXTENDED:
 CLUSTER:
 00 LotusProjectile.asm
 01 sandstorm.asm
+02 warning.asm

@@ -38,27 +38,45 @@ SideDone:
 ;This checks what sprite number and deletes key.
 ;-------------------------------------------------
 Unlock:
-	LDA $1470		;\Return if carrying nothing.
-	ORA $148F		;|
-	BEQ Return		;/
+	; if riding yoshi, not turning, and yoshi has a key in his mouth...
+	LDA $187A|!addr
+	AND $191C|!addr
+	BNE .yoshi
+
+	; return if not carrying anything
+	LDA $1470
+	ORA $148F
+	BEQ Return
 	PHX
 	LDX.b #$0B
 -
 	LDA $14C8,x		;\If sprite status = not carried then next slot
 	CMP #$0B                ;|
-	BNE NextSlot            ;/
+	BNE .NextSlot           ;/
 
 	LDA $9E,x               ;\If sprite number doesn't match, then next slot
 	CMP #$80
-	BNE NextSlot
-	JMP match_sprite	;>if match, then proceed.
-NextSlot:
+	BNE .NextSlot
+	BRA .match_sprite	;>if match, then proceed.
+.NextSlot:
 	DEX
 	BPL -
-ReturnPull:
+.ReturnPull:
 	PLX
 	RTL			;>if all slots checked and still didn't find, return.
-match_sprite:
+.yoshi:
+	PHX
+	LDA $18DF|!addr
+	BEQ .ReturnPull
+	DEC
+	PHY
+	TAY
+	LDX !160E,y
+	LDA #$FF
+	STA !160E,y
+	STZ $18AC|!addr
+	PLY
+.match_sprite:
 	STZ $14C8,x		;>erase key.
 	PLX			;>done with slots.
 	LDA #$40		;\Fix a bug that if you unlock the block and kick it

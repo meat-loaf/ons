@@ -11,6 +11,7 @@ sub_spr_gfx_2_long_no_push_bank = $0190B3|!bank
 
 oam_reset                       = $7F8000
 
+init_sprite_tables              = $07F7D2|!bank
 nuke_sprite_tables              = $07F722|!bank
 
 if getfilestatus("routines/item_memory_rts.asm") == 0

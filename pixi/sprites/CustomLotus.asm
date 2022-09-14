@@ -34,7 +34,8 @@ BehaviorsTable:
 	db $0C,$0C,$08 : db $00,$0A : db $00 : db $02 : db $0A,$0A,$07 : db $FF  : db $00 : dw RandomPattern2	; x06 - Continuously fires 1 at a time which home in on Mario.
 	db $08,$10,$18 : db $01,$03 : db $00 : db $01 : db $06,$00,$FF : db $0A  : db $00 : dw SpreadPattern	; x07 - Fires several projectiles in a spread, alternating direction each time.
 	db $00,$12,$60 : db $01,$03 : db $00 : db $01 : db $06,$00,$FF : db $0A  : db $07 : dw SpreadPattern	; x08 - Sleepy Lotus; will wait until Mario comes into range and, if he is not going under a certain speed, fires several in a spread.
-	db $40,$20,$80 : db $10,$07 : db $01 : db $02 : db $0A,$09,$FF : db $FF  : db $00 : dw DefaultPattern	; x00 - 4 homing projectiles, two at a time with short delay
+	db $40,$20,$80 : db $10,$07 : db $01 : db $02 : db $0A,$09,$FF : db $FF  : db $00 : dw DefaultPattern	; x09 - 4 homing projectiles, two at a time with short delay
+	db $40,$20,$80 : db $00,$18 : db $01 : db $02 : db $0A,$09,$FF : db $FF  : db $00 : dw DefaultPattern	; x0A - 2 homing projectiles
 
 ;; Format:
 ;;      Byte 0  - Preparing-to-fire timer.
@@ -154,12 +155,13 @@ print "MAIN ",pc
 	LDA !behavior_ptr_hi,x
 	STA $49
 
-	JSR Main
+	JSR CLotus_Main
 	JSR SubGFX
 	PLB
 	RTL
 
-Main:	LDA !14C8,x
+CLotus_Main:
+	LDA !14C8,x
 	EOR #$08
 	ORA $9D
 	BNE .Return
@@ -216,6 +218,8 @@ Main:	LDA !14C8,x
 .Return	RTS
 
 ResolveObj:
+;	LDA !1686,x
+;	BPL .abort
 ; this basically just checks if sprite is touching a certain surface based on direction
 	PHY
 	LDA !B6,x
@@ -242,8 +246,10 @@ ResolveObj:
 	AND .InitDir,y
 	BEQ +
 	PLY
+.abort:
 	SEC
 	RTS
+
 +	PLY
 	CLC
 	RTS

@@ -727,7 +727,7 @@ endif ; !remap_jumpin_pplant_vine
 .vlotus:
 	db $00,$A0,$00,$00,$00,$00,$00,$00    ; spritesets 00-07
 	db $00,$00,$00,$20,$00,$00,$00,$00    ; spritesets 08-0F
-	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 10-17
+	db $40,$00,$00,$00,$00,$00,$00,$00    ; spritesets 10-17
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 18-1F
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 20-27
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 28-2F
@@ -875,7 +875,7 @@ spriteset_gfx_listing:
 	dw $007F,$007F,$007F,$00E0,$007F,$007F,$007F,$0013		; spriteset 0D: testing (replace later)
 	dw $007F,$007F,$007F,$007F,$0105,$0104,$0103,$0107		; spriteset 0E: chucks + kickin chuck, volc lotus
 	dw $007F,$007F,$007F,$007F,$0122,$0121,$0120,$0123		; spriteset 0F: dry bones/bony/beetle/pencil/grinder/castle block/reflec ball
-	dw $007F,$007F,$007F,$007F,$007F,$007F,$0124,$010D		; spriteset 10: piranhas, expanding pipes
+	dw $007F,$007F,$007F,$007F,$007F,$0107,$0124,$010D		; spriteset 10: piranhas, expanding pipes
 	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 11: none
 	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 12: none
 	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 13: none

@@ -279,6 +279,7 @@ includeonce
 !spr_spriteset_off      = !pixi_new_code_flag+$1           ; $1A65 (12 bytes)
 !cls_spriteset_off      = !spr_spriteset_off+$0C           ; $1A71 (20 bytes)
 !ext_spriteset_off      = !cls_spriteset_off+$14           ; $1A85 (x bytes)
+!167A_doodad            = !ext_spriteset_off+10            ;
 
 ; alt name of above
 !spr_shooter_extra_byte_1 = !spr_shoot_exbyte_1

@@ -14,6 +14,7 @@ MarioAbove:
 	LDA $15
 	AND.b #%00000100
 	BNE Unlock
+Return2:
 	RTL
 ;-------------------------------------------------
 ;check if player unlocks it facing correctly.
@@ -29,16 +30,21 @@ HeadInside:
 
 ;right_side:
 	LDA $76			;\Player should face towards block when touching side.
-	BNE Return		;|
+	BNE Return2		;|
 	JMP SideDone		;|
 left_side:			;|
 	LDA $76			;|
-	BEQ Return		;/
+	BEQ Return2		;/
 SideDone:
 ;-------------------------------------------------
 ;This checks what sprite number and deletes key.
 ;-------------------------------------------------
 Unlock:
+	; if riding yoshi, not turning, and yoshi has a key in his mouth...
+	LDA $187A|!addr
+	AND $191C|!addr
+	BNE .yoshi
+
 	LDA $1470		;\Return if carrying nothing.
 	ORA $148F		;|
 	BEQ Return		;/
@@ -47,20 +53,33 @@ Unlock:
 -
 	LDA $14C8,x		;\If sprite status = not carried then next slot
 	CMP #$0B		;|
-	BNE NextSlot		;/
+	BNE .NextSlot		;/
 
 	LDA $7FAB10,x		;\Check if its a custom sprite
 	AND #$08		;|
 	LDA $9E,x	;\If sprite number doesn't match, then next slot
 	CMP #$80
-	BNE NextSlot		;/
+	BNE .NextSlot		;/
 	JMP match_sprite	;>if match, then proceed.
-NextSlot:
+.NextSlot:
 	DEX
 	BPL -
-ReturnPull:
+.ReturnPull:
 	PLX
 	RTL			;>if all slots checked and still didn't find, return.
+.yoshi:
+	PHX
+	LDA $18DF|!addr
+	BEQ .ReturnPull
+	DEC
+	PHY
+	TAY
+	LDX !160E,y
+	LDA #$FF
+	STA !160E,y
+	STZ $18AC|!addr
+	PLY
+
 match_sprite:
 	STZ $14C8,x		;>erase key.
 	PLX			;>done with slots.

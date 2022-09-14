@@ -105,14 +105,15 @@ AMK_MUSIC_DEPS= \
 PIXI_DIR=pixi
 PIXI_FLAGS+=-d255spl -sym ${SYM_DIR}/pixi.sym
 PIXI_LIST=${PIXI_DIR}/list.txt
-PIXI=${PIXI_DIR}/pixi2
+PIXI=LD_LIBRARY_PATH=/usr/local/lib ${PIXI_DIR}/pixi2
 
 GPS_FLAGS+=-sym ../${SYM_DIR}/gps.sym
 
 GPS_DIR=gps
 GPS_BLK_DIR=${GPS_DIR}/blocks
 GPS_RT_DIR=${GPS_DIR}/routines
-GPS=gps2
+#$GPS=WINEPREFIX=${HOME}/.wineprefix/smw_gps wine ./gps.exe
+GPS=./gps3
 
 UBERASM_DIR=uberasm
 UBERASM_ASM_FILES= \
@@ -230,7 +231,7 @@ ${PIXI_FAKE_TS}: ${pixi_asm_sources} ${PIXI_LIST} ${INIT_LEVEL_TS} ${OBJTOOL_TS}
 	touch $@
 
 ${GPS_FAKE_TS}: ${gps_asm_sources} ${GPS_DIR}/list.txt ${ASM_HEADERS}
-	cd gps && ./${GPS} ${GPS_FLAGS} ../${ROM_NAME}
+	cd gps && ${GPS} ${GPS_FLAGS} ../${ROM_NAME}
 	touch $@
 
 # paths are relative to the uberasm directory, no matter where its run from...insanity

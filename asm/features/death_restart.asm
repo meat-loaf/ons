@@ -130,7 +130,9 @@ midway_tables:
 .level_01B:
 .level_01C:
 .level_01D:
+	dw $0000,$0000,$0000,$0000,$0000
 .level_01E:
+	%midway_table_entry($001E, !true, !false)
 .level_01F:
 .level_020:
 .level_021:

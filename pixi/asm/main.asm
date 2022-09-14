@@ -251,43 +251,43 @@ if !SA1 == 0
 			db $7F	;be able to load 128 sprites without issue
 	endif
 
-	if !Disable255SpritesPerLevel == 0
-		; sa1 already fixes these
-		macro remap1938(addr, nop_count)
-			l_<addr>:
-				pushpc
-				
-				org $<addr>
-					JML .remap
-					rep <nop_count> : NOP
-					.back
-				pullpc
-				
-				.remap
-					PHX
-					TYX
-					LDA #$00
-					STA.l !7FAF00,x
-					PLX
-					JML .back
-		endmacro
-			
-		org $02A856|!BankB
-			autoclean JML CODE_02A856
-			NOP #6
-		
-		org $02A936|!BankB
-			autoclean JML NSprite_FixY2 : NOP
-		
-		org $02A8BB|!BankB
-			autoclean JML CODE_02A8BB : NOP
-			
-		org $02FAE9|!BankB
-			autoclean JML CODE_02FAE9
-			
-		org $02ABF2|!BankB
-			autoclean JML ClearIt
-	endif
+;	if !Disable255SpritesPerLevel == 0
+;		; sa1 already fixes these
+;		macro remap1938(addr, nop_count)
+;			l_<addr>:
+;				pushpc
+;				
+;				org $<addr>
+;					JML .remap
+;					rep <nop_count> : NOP
+;					.back
+;				pullpc
+;				
+;				.remap
+;					PHX
+;					TYX
+;					LDA #$00
+;					STA.l !7FAF00,x
+;					PLX
+;					JML .back
+;		endmacro
+;			
+;		org $02A856|!BankB
+;			autoclean JML CODE_02A856
+;			NOP #6
+;		
+;		org $02A936|!BankB
+;			autoclean JML NSprite_FixY2 : NOP
+;		
+;		org $02A8BB|!BankB
+;			autoclean JML CODE_02A8BB : NOP
+;			
+;		org $02FAE9|!BankB
+;			autoclean JML CODE_02FAE9
+;			
+;		org $02ABF2|!BankB
+;			autoclean JML ClearIt
+;	endif
 else
 	; I could fit this inside the sa1 hijack, but I don't think that's a good idea
 	; So I got a few bytes more to fix this in and left that untouched
@@ -536,6 +536,8 @@ endif
 .R		
 	RTL
 .IsCustom
+;	LDA !spr_dont_run_pixi_init,x
+;	BNE .R
 	JSL SetSpriteTables
 	LDA !new_code_flag
 	BEQ .R
@@ -665,6 +667,7 @@ endif
 EraserHack:
 	%debugmsg("EraserHack")
 	STZ !15AC,x
+	STZ !167A_doodad,x
 	LDA #$01
 	STA !15A0,x
 	DEC A
@@ -1076,6 +1079,7 @@ SetSpriteTables:
 	AND #$0F
 	STA !15F6,x
 	LDA TableStart+$05,y
+	ORA !167A_doodad,x
 	STA !167A,x
 	LDA TableStart+$06,y
 	STA !1686,x

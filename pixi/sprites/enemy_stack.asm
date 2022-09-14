@@ -268,7 +268,6 @@ endmacro
 	; entry 00 00: chargin chuck, grey platform that falls
 	%spawn_table_entry_start()
 	%spawn_table_spr_entry_2_exbyte($00, $08, $01, $01, $00, $00)
-	%spawn_table_spr_entry_0_exbyte($C4, $01, $00, $00)
 	%spawn_table_spr_entry_2_exbyte($01, $01, $01, $00, $01, $08)
 	%spawn_table_entry_finish()
 
@@ -280,8 +279,8 @@ endmacro
 
 	; entry 02 00
 	%spawn_table_entry_start()
-	%spawn_table_spr_entry_0_exbyte($1B, $01, $00, $00)
-	%spawn_table_spr_entry_0_exbyte($5A, $08, $00, $00)
+	%spawn_table_spr_entry_0_exbyte($80, $01, $00, $00)
+	%spawn_table_spr_entry_2_exbyte($01, $01, $01, $00, $0A, $08)
 	%spawn_table_entry_finish()
 
 	; entry 03 00
@@ -348,6 +347,9 @@ if !move_with_plats
 ; used to respawn self in lowest possible sprite slot
 ; note: extra bits not preserved as they aren't used
 respawn_self:
+	LDA !extra_bits,x
+	STA !scr_load_val
+
 	LDA !E4,x
 	STA !E4,y
 	LDA !14E0,x
@@ -384,7 +386,7 @@ respawn_self:
 	LDA $03
 	STA !extra_byte_3,x
 
-	LDA #$08
+	LDA !scr_load_val
 	STA !extra_bits,x
 	STA !self_spawned_flag,x
 	
@@ -417,6 +419,10 @@ endif
 	; first sprite will inherit our load val
 	LDA !161A,x
 	STA !scr_load_val
+
+	LDA !extra_bits,x
+	AND #$04
+	STA $08
 
 	LDA #spawn_table_ptrs>>16
 	STA !wiggler_segment_ptr+$02
@@ -466,7 +472,25 @@ endif
 	BNE .no_load_inherit
 	LDA !scr_load_val
 	STA !161A,x
+
+	LDA !167A,x
+	AND #%00000100
+	STA !scr_is_carrying
+	BRA .keep_obj_interaction
 .no_load_inherit:
+	LDA $08
+	BEQ .setup_carry
+	LDA !1686,x
+	ORA #%10000000
+	STA !1686,x
+
+.setup_carry:
+	LDA !167A,x
+	ORA !scr_is_carrying
+	STA !167A_doodad,x
+	STA !167A,x
+.keep_obj_interaction:
+
 	; setup position
 	LDA !spr_xpos_scratch
 	STA !E4,x
@@ -642,6 +666,13 @@ estack_short_circuit_one:
 	RTS
 
 die_maybe_no_respawn:
+	LDA #$04
+	STA !scr_load_val
+	LDA !extra_bits,x
+	AND #$04
+	BNE .always_die
+	STZ !scr_load_val
+
 	LDA !161A,y
 	CMP #$FF
 	BEQ .not_despawned
@@ -657,11 +688,10 @@ else
 	PLA
 	BNE .not_despawned
 endif
-
 ; We don't need to touch the sprite load index here,
 ; since the bottom sprite inherited it, it cleans it up
 ; for us.
-
+.always_die:
 ; TODO clean this up too
 	LDA !nsprites,x
 	DEC
@@ -684,7 +714,8 @@ endif
 
 	LDA (!scr_ix_tbl_lo)
 	TAX
-	STZ !14C8,x
+	LDA !scr_load_val
+	STA !14C8,x
 	DEY
 	BPL .kill_loop
 	LDX $15E9|!addr

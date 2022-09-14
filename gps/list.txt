@@ -20,6 +20,9 @@
 0354:0130        solids/sprite_solid.asm
 ; 0356:0130        donutblk.asm
 
+035C-035F:0130   slip.asm
+036C-036F:0130   slip.asm
+
 0374:0025        frame/hurt_frames_0_7.asm
 0375:0025        frame/hurt_frames_8_F.asm
 03A8:0000        waterfall2.asm
