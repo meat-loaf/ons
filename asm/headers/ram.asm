@@ -302,6 +302,8 @@ includeonce
 ; todo reorganize a bit. Original free sram starts at $70035A
 !item_memory_mirror_s    = $701000
 !wiggler_segment_buffer  = !item_memory_mirror_s+!item_memory_size
+!big_hdma_decomp_buff_rg = !wiggler_segment_buffer+$200
+!big_hdma_decomp_buff_b   = !big_hdma_decomp_buff_rg+$1000
 
 ; 7168 bytes
 ; Item memory, divided in four blocks of 1792 bytes per block.

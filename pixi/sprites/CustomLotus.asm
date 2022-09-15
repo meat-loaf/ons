@@ -218,8 +218,8 @@ CLotus_Main:
 .Return	RTS
 
 ResolveObj:
-;	LDA !1686,x
-;	BPL .abort
+	LDA !1686,x
+	BMI .abort
 ; this basically just checks if sprite is touching a certain surface based on direction
 	PHY
 	LDA !B6,x

@@ -57,6 +57,7 @@ ASM_TWEAKS=optimize_2132_store.asm \
 	minor_tweaks.asm \
 	layer2_ledge_fix.asm \
 	grey_parakoopa.asm \
+	mosaic.asm \
 
 ASM_TWEAK_TS=$(addprefix ${TS_DIR}/, $(patsubst %.asm, %_ts,$(ASM_TWEAKS)))
 ASM_TWEAKS_FULL=$(addprefix ${asm_tweaks_dir}/, ${ASM_TWEAKS})

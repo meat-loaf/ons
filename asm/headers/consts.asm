@@ -40,6 +40,8 @@ endif
 
 !item_memory_size       = $1C00
 !item_memory_dma_frames = $08
+!wiggler_buffer_index_len = $80
+!num_wigglers             = $04
 
 !frames_before_waterfall_reset = $04
 !frames_for_on_off_cooldown    = $0A

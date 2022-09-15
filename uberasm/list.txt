@@ -10,11 +10,13 @@ level:
 
 0C5 c5.asm
 103 103.asm
+105 sky_hdma.asm
 108 108.asm
 137 l2wave.asm
 13C mega_mole_bonus_13c.asm
 13F 13f_bg_scroll.asm
 140 13f_bg_scroll.asm
+142 sky_hdma_2.asm
 14B slippy.asm
 1f6 m7boss.asm
 
