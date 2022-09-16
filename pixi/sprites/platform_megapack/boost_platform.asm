@@ -52,7 +52,7 @@ ss0_main:
 		%SubOffScreen()
 		
 		LDA !behavior,x
-		JSL $0086DF	
+		JSL $0086DF|!bank
 	ss0_behaviors:
 			dw ss0_idle_waiting
 			dw ss0_stepped_on
@@ -69,7 +69,7 @@ ss0_mainA:
 		%SubOffScreen()
 		
 		LDA !behavior,x
-		JSL $0086DF	
+		JSL $0086DF|!bank
 	ss0_behaviorsA:
 			dw ss0_idle_waiting
 			dw ss0_stepped_on
@@ -77,7 +77,7 @@ ss0_mainA:
 			dw ss0_infinite_jump
 			
 	ss0_idle_waiting:
-		JSL $01B44F		; solid platform
+		JSL $01B44F|!bank
 		BCC ss0_return2
 			INC !behavior,x
 			LDA !D8,x
@@ -90,7 +90,7 @@ ss0_mainA:
 			RTS
 	
 	ss0_stepped_on:
-		JSL $01B44F		; solid platform
+		JSL $01B44F|!bank
 		BCS ss0_return2
 			INC !behavior,x
 			
@@ -127,7 +127,7 @@ ss0_mainA:
 			
 		+
 		
-		JSL $01801A		; Update Y position
+		JSL $01801A|!bank
 	
 	
 		LDA !D8,x
@@ -152,7 +152,7 @@ ss0_mainA:
 			STZ !behavior,x
 	
 	ss0_jump_return:
-		JSL $01B44F		; solid platform
+		JSL $01B44F|!bank
 	
 		RTS
 	

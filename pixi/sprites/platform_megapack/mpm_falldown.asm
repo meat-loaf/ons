@@ -30,7 +30,7 @@ Falldown:
 	Movedown:
 		STA !AA,x
 
-		JSL $01801A		; Update Y position
+		JSL $01801A|!bank
 		RTS
 		
 Fallright:
@@ -52,7 +52,7 @@ Fallright:
 	Moveright:
 		STA !B6,x
 
-		JSL $018022		; Update X position		
+		JSL $018022|!bank
 		LDA $1491|!Base2
 		STA !platform_move,x
 		
@@ -79,7 +79,7 @@ Fallleft:
 	Moveleft:
 		STA !B6,x
 		
-		JSL $018022		; Update X position		
+		JSL $018022|!bank
 		LDA $1491|!Base2
 		STA !platform_move,x
 		
@@ -100,5 +100,5 @@ Fallup:
 	Moveup:
 		STA !AA,x
 
-		JSL $01801A		; Update Y position
+		JSL $01801A|!bank
 		RTS	

@@ -15,7 +15,7 @@
 FallingPlatform:
 		JSR DoYouFall
 
-		JSL $01B44F				; Solid platform routine thing
+		JSL $01B44F|!bank
 		BCC .nofall
 			LDA !spr_extra_bits,x
 			AND #$04
@@ -44,7 +44,7 @@ DoYouFall:
 			LSR
 			LSR
 			AND #$03
-			JSL $0086DF
+			JSL $0086DF|!bank
 		FallingPlatform_Directions:
 			dw Falldown
 			dw Fallup

@@ -57,7 +57,7 @@ ss2_main:
 		
 		LDA !behavior,x
 		BNE +
-		JSL $018022		; Update X position	
+		JSL $018022|!bank
 +
 
 		

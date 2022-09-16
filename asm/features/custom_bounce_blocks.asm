@@ -58,7 +58,7 @@ ORG $029052					; Hijack bounce block sprite routines
 org $02924E
 if !EnableBounceUnrestrictor
 
-		JML BlkBounceTileHack
+		JML BlkBounceTileHack|!bank
 
 else
 
@@ -367,7 +367,7 @@ CODE_RESTORE:			;
 
 	CMP #$08		; if bounce sprite number 8 or above...
 	BCS CUST_BOUNCE_SPRITES	; do custom bounce block sprite code
-	JML $02905E		; otherwise return to normal code
+	JML $02905E|!bank       ; otherwise return to normal code
 
 CUST_BOUNCE_SPRITES:
 	PHB		;\

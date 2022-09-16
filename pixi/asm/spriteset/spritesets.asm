@@ -527,15 +527,25 @@ ss_set_spriteset:
 	LDA.w $010B
 	ASL   #5
 	CLC
-	ADC.w #$0012                  ; SP3 graphics file index
+	ADC.w #$0010                 ; SP4 graphics file index
 	TAY
+	SEP.b #$20
 	LDA.b [$8A],y
-	CMP.w #$007F
+	STA !level_header_sgfx1_lo+0
+	INY #2                       ; SP3 graphics file index
+	LDA.b [$8A],y
+	CMP.b #$7F
 	BNE.b .spriteset_ok
-	LDA.w #$0000
+	LDA.b #$00
 .spriteset_ok
-	SEP.b #$30
 	STA   !current_spriteset
+	INY #2                       ; SP2 graphics file index (now hardcoded to GFX 01)
+	LDA.b [$8A],y
+	STA !level_header_sgfx1_lo+1
+	INY #2                       ; SP1 graphics file index (now hardcoded to GFX 00)
+	LDA.b [$8A],y
+	STA !level_header_sgfx1_lo+2
+	SEP.b #$10
 	JML.l ss_hijack_done|!bank
 ; AXY are 16 bit here. $8A contains a pointer to the level's ExGFX list, and Y
 ; is the index to the current file to be uploaded. We will use the lower 8 bits
@@ -561,6 +571,15 @@ spriteset_setup_lm:
 	BEQ.b .ss_continue
 	CPY.w #$0010          ; SP4 index
 	BEQ.b .ss_continue
+	CPY.w #$0014          ; SP2 index
+	BEQ .cont_hardcode
+	CPY.w #$0016          ; SP1 index
+	BNE .skip
+.cont_hardcode:
+	PLP : PLA : PLX
+	LDA.l .hardcoded_files-$14,x
+	TXY : PLX
+	JML.l $0FF900|!bank
 .skip:
 	PLP : PLA : PLY : PLX
 	JML.l $0FF900|!bank
@@ -600,7 +619,8 @@ spriteset_setup_lm:
 	RTL
 .indexes:
 	dw $0006,$000E
-
+.hardcoded_files:
+	dw $0001,$0000
 
 endif
 

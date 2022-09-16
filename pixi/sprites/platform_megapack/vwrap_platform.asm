@@ -58,9 +58,9 @@ ss3_main:
 		LDA #$00
 		%SubOffScreen()
 		
-		JSL $01801A		; Update Y position	
+		JSL $01801A|!bank
 	
-		JSL $01B44F		; solid sprite
+		JSL $01B44F|!bank
 	
 		LDA !AA,x
 		BMI ss3_WrapUp

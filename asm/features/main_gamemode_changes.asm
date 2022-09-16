@@ -7,6 +7,13 @@ else
 	db $01       ; 2kb sram
 endif
 
+
+; these are just missed by LM's fastrom patch i guess?
+;org $00A299|!bank
+;	JSL $00F6DB|!bank
+;	JSL $05BC00|!bank
+;	JSL $0586F1|!bank
+
 org $00A261|!bank
 if !dbg_start_select_end_level == !true
 	BRA exit_level : NOP

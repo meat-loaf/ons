@@ -330,7 +330,7 @@ Sprite_HorizLvl_blk_interXPos:		;>JML from $0194EE, 8-bit A from here.
 	LDA $0B			;\Restore
 	BMI .CODE_0194B4		;|>Check if sprite is beyond the left edge of level.
 	CMP $5D			;|\Check if sprite is beyond the right edge of level.
-	JML $0194F2		;|/
+	JML $0194F2|!bank		;|/
 	
 	.CODE_0194B4
 	JML $0194B4|!bank		;/>Code that executes to ignore "blocks" outside the level.

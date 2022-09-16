@@ -28,7 +28,7 @@ print "MAIN ",pc
 
 INIT_POINTERS:
 		LDA !7FAB40,x
-		JSL $0086DF				; Pointer subroutine
+		JSL $0086DF|!bank				; Pointer subroutine
 	mpm_init_pointers:
 	ss0:
 		dw !ss0_init	; Boost platform
@@ -61,7 +61,7 @@ INIT_POINTERS:
 		
 MAINCODE_POINTERS:
 		LDA !7FAB40,x
-		JSL $0086DF				; Pointer subroutine
+		JSL $0086DF|!bank				; Pointer subroutine
 	mpm_main_pointers:
 		dw !ss0_main	; Boost platform
 		dw !ss0_mainA	; Boost platform, infinite

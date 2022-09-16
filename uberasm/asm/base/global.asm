@@ -4,9 +4,9 @@ ORG $00804E
 ORG $00806B
 	autoclean JML _global_main
 	
-ORG $008176
-	autoclean JML nmi_hijack
-	NOP #2
+;ORG $008176
+;	autoclean JML nmi_hijack
+;	NOP #2
 	
 ORG $05808C
 	JML load

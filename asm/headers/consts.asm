@@ -28,10 +28,14 @@ else
 endif
 
 
+
 !true  = $01
 !false = $00
 
 !sram_size = $03
+
+!JML_OPCODE = $5C
+!JSL_OPCODE = $22
 
 !red_coin_sfx_id      = $2D
 !last_red_coin_sfx_id = $2E

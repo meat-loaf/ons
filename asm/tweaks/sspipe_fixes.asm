@@ -68,9 +68,9 @@ org $01E666
 
 ;; TODO LOOKS LIKE THIS ONE BREAKS
 ;; TODO CHECK 'BETTER PLATFORMS' HIJACK
-;org $01E6F0
-;	autoclean JSL Sprite_Springboard_ImageFix	;>If you enter a pipe while on a springboard when pressed down, will revert its image to unpressed.
-;	nop #2
+org $01E6F0
+	autoclean JSL Sprite_Springboard_ImageFix	;>If you enter a pipe while on a springboard when pressed down, will revert its image to unpressed.
+	nop #2
 ;
 org $01AAD8
 	autoclean JML Sprite_Key_pos			;>Prevent Key from setting mario position (also p-switch).
@@ -141,10 +141,10 @@ GetOnYoshiExcept:
 	LDA !Freeram_SSP_PipeDir	;\if in pipe mode, don't get on yoshi while entering.
 	AND.b #%00001111		;/
 	BNE .NoYoshi
-	JML $01ED48		;>Get on yoshi
+	JML $01ED48|!bank		;>Get on yoshi
 
 	.NoYoshi
-	JML $01ED70		;>Don't get on yoshi.
+	JML $01ED70|!bank		;>Don't get on yoshi.
 
 ;---------------------------------------------------------------------------------
 BlockedFix:
@@ -173,16 +173,16 @@ Sprite_Springboard_CancelLaunch:         ;>$01E650
 
 	.InPipe
 	STZ !1540,x
-	JML $01E6B0
+	JML $01E6B0|!bank
 
 	.NotInPipe
 	LDA !1540,x
 	BEQ .Addr_01E6B0
 
-	JML $01E655
+	JML $01E655|!bank
 
 	.Addr_01E6B0
-	JML $01E6B0
+	JML $01E6B0|!bank
 ;---------------------------------------------------------------------------------
 Sprite_springboard_Pos:         ;>$01E666
 
@@ -194,10 +194,10 @@ Sprite_springboard_Pos:         ;>$01E666
 	BNE .DontSetPos			;/
 
 	.SetPos
-	JML $01E66C
+	JML $01E66C|!bank
 
 	.DontSetPos
-	JML $01E683
+	JML $01E683|!bank
 ;---------------------------------------------------------------------------------
 Sprite_Springboard_ImageFix:     ;>$01E6F0
 	LDA !Freeram_SSP_PipeDir
@@ -217,25 +217,25 @@ Sprite_Key_pos:                 ;>$01AAD8
 	AND.b #%00001111
 	BEQ .Restore
 
-	JML $01AAF1
+	JML $01AAF1|!bank
 
 	.Restore
 	LDA #$1F
 	LDY $187A|!addr
-	JML $01AADD
+	JML $01AADD|!bank
 ;---------------------------------------------------------------------------------
 Sprite_TurnBlockHV_pos:         ;>$01B882
 	LDA !Freeram_SSP_PipeDir
 	AND.b #%00001111
 	BEQ .Restore
 
-	JML $01B8B1
+	JML $01B8B1|!bank
 
 	.Restore
 	LDA $0D
 	CLC
 	ADC #$1F
-	JML $01B887
+	JML $01B887|!bank
 ;---------------------------------------------------------------------------------
 Sprite_Peabounceer_FirstFrameBounce:           ;>$02CDD5
 	LDA !Freeram_SSP_PipeDir
@@ -245,88 +245,88 @@ Sprite_Peabounceer_FirstFrameBounce:           ;>$02CDD5
 	;STZ !151C,x		;\State that indicates should mario launch upwards
 	STZ !1534,x		;|
 	;STZ !1528,x		;|
-	JML $02CDF1		;/
+	JML $02CDF1|!bank		;/
 
 	.Restore
 	LDA !1534,x
 	BEQ ..CODE_02CDF1
-	JML $02CDDA
+	JML $02CDDA|!bank
 
 	..CODE_02CDF1
-	JML $02CDF1
+	JML $02CDF1|!bank
 ;---------------------------------------------------------------------------------
 Sprite_Peabouncer_pos:          ;>$02CFA5
 	LDA !Freeram_SSP_PipeDir
 	AND.b #%00001111
 	BEQ .Restore
 
-	JML $02CFFD
+	JML $02CFFD|!bank
 
 	.Restore
 	LDA #$1F
 	PHX
 	LDX $187A|!addr
-	JML $02CFAB
+	JML $02CFAB|!bank
 ;---------------------------------------------------------------------------------
 Sprite_InvisibleBlock_pos:         ;>$01B47F
 	LDA !Freeram_SSP_PipeDir
 	AND.b #%00001111
 	BEQ .Restore
 
-	JML $01B4B1
+	JML $01B4B1|!bank
 
 	.Restore
 	LDA #$1F
 	LDY $187A|!addr
-	JML $01B484
+	JML $01B484|!bank
 ;---------------------------------------------------------------------------------
 Sprite_ChainedPlatform_pos:        ;>$01CA3C
 	LDA !Freeram_SSP_PipeDir
 	AND.b #%00001111
 	BEQ .Restore
 
-	JML $01CA6E
+	JML $01CA6E|!bank
 
 	.Restore
 	LDA #$28
 	LDY $187A|!addr
-	JML $01CA41
+	JML $01CA41|!bank
 ;---------------------------------------------------------------------------------
 Sprite_SkullRaft_pos:              ;>$02EE77
 	LDA !Freeram_SSP_PipeDir
 	AND.b #%00001111
 	BEQ .Restore
 
-	JML $02EEA8
+	JML $02EEA8|!bank
 
 	.Restore
 	LDA #$1C
 	LDY $187A|!addr
-	JML $02EE7C
+	JML $02EE7C|!bank
 ;---------------------------------------------------------------------------------
 Sprite_Megamole_pos:               ;>$0387F6
 	LDA !Freeram_SSP_PipeDir
 	AND.b #%00001111
 	BEQ .Restore
 
-	JML $03881D
+	JML $03881D|!bank
 
 	.Restore
 	LDA #$D6
 	LDY $187A|!addr
-	JML $0387FB
+	JML $0387FB|!bank
 ;---------------------------------------------------------------------------------
 Sprite_CarrotLft_Pos:              ;>$038CA7
 	LDA !Freeram_SSP_PipeDir
 	AND.b #%00001111
 	BEQ .Restore
 
-	JML $038CE3
+	JML $038CE3|!bank
 
 	.Restore
 	LDA $187A|!addr
 	CMP #$01
-	JML $038CAC
+	JML $038CAC|!bank
 ;---------------------------------------------------------------------------------
 Layer3TideDisablePush:             ;>$00DA6C
 	LDA !Freeram_SSP_PipeDir
@@ -337,6 +337,6 @@ Layer3TideDisablePush:             ;>$00DA6C
 	.Restore
 	LDA $1403|!addr
 	BEQ +
-	JML $00DA71
+	JML $00DA71|!bank
 	+
-	JML $00DA79
+	JML $00DA79|!bank

@@ -13,10 +13,12 @@ ROM_NAME_BASE=ons
 ROM_NAME=${ROM_NAME_BASE}.smc
 SYM_NAME=${ROM_NAME_BASE}.sym
 
+ROM_RAW_BASE_SRC=rom_src/smw_1m_lmfastrom.smc
+ROM_RAW_BASE_SRC_P=rom_src/smw_1m_lmfastrom.bps
 GLOBALANI_SRC_ROM=rom_src/ani.smc
-GLOBALANI_SRC_P  =rom_src/ani.bps
+GLOBALANI_SRC_P=rom_src/ani.bps
 OVERWORLD_SRC_ROM=rom_src/ow.smc
-OVERWORLD_SRC_P  =rom_src/ow.bps
+OVERWORLD_SRC_P=rom_src/ow.bps
 
 
 .PHONY: one_night_stand \
@@ -38,7 +40,7 @@ ASM_HEADERS=$(wildcard ${asm_dir}/headers/*.asm) $(wildcard ${asm_dir}/headers/*
 
 M16_FILE=AllMap16.map16
 
-ASM_PATCHES=custom_bounce_blocks.asm dsx.asm oam_alloc.asm death_restart.asm
+ASM_PATCHES=custom_bounce_blocks.asm dsx.asm oam_alloc.asm main_gamemode_changes.asm
 ASM_PATCH_TS=$(addprefix ${TS_DIR}/, $(patsubst %.asm,%_ts,$(ASM_PATCHES)))
 ASM_PATCHES_FULL=$(addprefix ${asm_features_dir}/, ${ASM_PATCHES})
 
@@ -122,7 +124,8 @@ UBERASM_ASM_FILES= \
 	$(wildcard ${UBERASM_DIR}/gamemode/*.asm) \
 	$(wildcard ${UBERASM_DIR}/level/*.asm) \
 	$(wildcard ${UBERASM_DIR}/library/*.asm) \
-	$(wildcard ${UBERASM_DIR}/overworld/*.asm)
+	$(wildcard ${UBERASM_DIR}/overworld/*.asm) \
+	$(wildcard ${UBERASM_DIR}/asm/base/*.asm) \
 
 sprites_dir=${PIXI_DIR}/sprites
 clusspr_dir=${PIXI_DIR}/cluster
@@ -208,8 +211,8 @@ ${CLEAN_ROM_FULL}:
 	$(info Base SMW ROM Image not found at ${CLEAN_ROM_FULL}. Aborting.)
 	exit 1
 
-${ROM_NAME}: ${CLEAN_ROM_FULL}
-	cp ${CLEAN_ROM_FULL} ${ROM_NAME}
+${ROM_NAME}: ${ROM_RAW_BASE_SRC}
+	cp ${ROM_RAW_BASE_SRC} ${ROM_NAME}
 
 ${GLOBALANI_SRC_ROM}: ${GLOBALANI_SRC_P}
 	flips --apply ${GLOBALANI_SRC_P} ${CLEAN_ROM_FULL} ${GLOBALANI_SRC_ROM}
@@ -219,8 +222,11 @@ ${OVERWORLD_SRC_ROM}: ${OVERWORLD_SRC_P}
 
 # really, all these rules should have ${ROM_NAME} as a dependency...
 
-${INIT_LEVEL_TS}: rom_src/smw_orig_1ff_2.mwl ${GFX_FAKE_TS}
-	${LUNAR_MAGIC} -ImportLevel ${ROM_NAME} $< 1FF
+${ROM_RAW_BASE_SRC}: ${ROM_RAW_BASE_SRC_P}
+	flips --apply ${ROM_RAW_BASE_SRC_P} ${CLEAN_ROM_FULL} ${ROM_RAW_BASE_SRC}
+
+${INIT_LEVEL_TS}: rom_src/smw_orig_105.mwl ${GFX_FAKE_TS}
+	${LUNAR_MAGIC} -ImportLevel ${ROM_NAME} $< 105
 	touch $@
 
 ${AMK_FAKE_TS}: ${AMK_MUSIC_DEPS} ./amk/Addmusic_list.txt ./amk/Addmusic_sample\ groups.txt ./amk/Addmusic_sound\ effects.txt ./amk/asm/InstrumentData.asm

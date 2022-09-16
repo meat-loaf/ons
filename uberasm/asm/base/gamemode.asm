@@ -59,6 +59,11 @@ freecode
 		STA $00			
 		LDA $932A,x		
 		STA $01			
-		STZ $02						
+if !sa1
+		STZ $02
+else
+		LDA #$80
+		STA $02
+endif
 		JML [!dp]
 		

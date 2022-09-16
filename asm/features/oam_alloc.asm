@@ -49,7 +49,7 @@ incsrc "../main.asm"
 ; ------------------------------------------------------------------------------
 
 ; Refresh the allocator at the beginning of each frame.
-org $00A1DA
+org $00A1DA|!bank
 	autoclean jml Refresh
 	nop
 
@@ -67,7 +67,7 @@ Refresh:
 	jml $00A1E4|!long
 
 ; Oam assignment algorithm. Uses a lookup table.
-org $0180D1
+org $0180D1|!bank
 Allocator:
 .Return
 	rts
@@ -79,7 +79,7 @@ Allocator:
 	autoclean jml Allocate
 	nop #9
 .Continue
-	warnpc $0180EA
+	warnpc $0180EA|!bank
 
 freecode
 Allocate:
@@ -105,7 +105,7 @@ Allocate:
 	ldy #$1C
 +	tya
 	sta !Sprite15EA,x
-	jml Allocator_Continue
+	jml Allocator_Continue|!bank
 
 .DetermineSpriteType
 	LDA !spr_extra_bits,x
@@ -118,7 +118,7 @@ Allocate:
 	CLC : ADC.l .CustomSpriteTileCount,x
 	STA !OamIndex
 	LDX $15E9|!addr
-	JML Allocator_Continue
+	JML Allocator_Continue|!bank
 .standard:
 ;	LDA !spr_sprite_num,x
 	LDA !9E,x
@@ -128,7 +128,7 @@ Allocate:
 	CLC : ADC.l .StandardSpriteTileCount,x
 	STA !OamIndex
 	LDX $15E9|!addr
-	JML Allocator_Continue
+	JML Allocator_Continue|!bank
 
 
 ; Table contains the amount of oam tiles, times 4, used by each standard sprite.
@@ -211,7 +211,7 @@ endif
 ; Implements a dynamic oam tile assignment scheme for cluster sprites.
 if !cClusterSpritesUseAllocator
 {
-org $02FF50
+org $02FF50|!bank
 AllocateClusterSprite:
 	ldy !OamIndex
 	tya
@@ -229,15 +229,15 @@ AllocateSumoFire:
 	adc #$08
 	sta !OamIndex
 	rts
-	warnpc $02FF6C
+	warnpc $02FF6C|!bank
 
 ; Remap sumo brothers' fire pillar cluster sprite.
-org $02F940
+org $02F940|!bank
 SumoFire:
 	jsr AllocateSumoFire
 	sty !Sprite15EA
 	nop #3
-	warnpc $02F949
+	warnpc $02F949|!bank
 
 ; Remap other cluster sprites. Note that the candle flames are intentionally not
 ; remapped to ensure that they will always use the bottom five slots, just as in
@@ -260,21 +260,21 @@ endif
 
 ; Prevent Lakitu's cloud from using hardcoded slots. This allows us to free 8
 ; oam slots while Mario is behind the scenery (e.g. climbing nets).
-org $01E8DE
+org $01E8DE|!bank
 	lda !Sprite15EA,x
 	sta $18B6|!addr
 	sta $0E
 	clc
 	adc #$04
 	sta $0F
-	warnpc $01E8EB
+	warnpc $01E8EB|!bank
 
 ; Prevent Lakitu's fishing rod from using hardcoded slots, which messes up the
 ; allocator.
-org $02E6EC
+org $02E6EC|!bank
 	nop #2
 	autoclean jsl AllocateFishingLine
-	warnpc $02E6F2
+	warnpc $02E6F2|!bank
 
 freecode
 AllocateFishingLine:
@@ -290,8 +290,8 @@ AllocateFishingLine:
 
 ; Prevent the swiveling net door from using hardcoded slots, which messes up the
 ; allocator.
-org $01BB33
+org $01BB33|!bank
 	lda !Sprite15EA,x
 	sta $0F
-	warnpc $01BB38
+	warnpc $01BB38|!bank
 

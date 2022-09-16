@@ -1,0 +1,14 @@
+~~~ Repurposed headers ~~~
+Sprite Memory:
+0th bit set: Lava slope objects create lava, not alternate grass slopes
+1st bit set: slope tiles dont draw dirt (staircases)
+2nd bit set: Right-to-Left level: Goal walk is left, flips midway/goalpoint objects
+3rd bit set: not currently used
+
+Super GFX Bypass: Sprite Graphics Files
+SP1 - Low byte: N/A (Hardcoded to GFX 00)
+SP2 - Low byte: N/A (Hardcoded to GFX 01)
+SP3 - Low byte: Current Spriteset
+SP4 - Low byte: N/A (Graphics populated by spriteset setting)
+
+Sprite 

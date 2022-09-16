@@ -143,6 +143,7 @@ includeonce
 !next_oam_index          = $0D9C|!addr
 
 !hdma_channel_enable_mirror = $0D9F|!addr
+!asstd_state_flags_1        = $0DA1|!addr
 
 !curr_player_lives          = $0DBE|!addr
 !curr_player_coins          = $0DBF|!addr
@@ -151,7 +152,14 @@ includeonce
 ; check consts.asm defs
 !level_status_flags_1   = $0DD9|!addr
 
-!asstd_state_flags_1    = $0DDB|!addr
+; from sp4
+!level_header_sgfx1_lo  = $0DC3|!addr
+; from sp2
+!level_header_sgfx2_lo  = $0DC4|!addr
+; from sp1
+!level_header_sgfx3_lo  = $0DC5|!addr
+; $ODC6 gets written with the high byte of sp1 graphics
+; file due to 16 bit write. it is free after this, however
 
 !status_bar_tilemap     = $0EF9|!addr
 

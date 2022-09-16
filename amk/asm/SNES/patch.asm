@@ -156,7 +156,11 @@ End:
 	PLP
 
 
-	JML $00806B		; Return.  TODO: Detect if the ROM is using the Wait Replace patch.
+	if !UsingSA1
+	JML $00806B ; Return.  TODO: Detect if the ROM is using the Wait Replace patch.
+	else
+	JML $00806B|$800000 ; Return.  TODO: Detect if the ROM is using the Wait Replace patch.
+	endif
 
 NoMusic:
 	LDA #$00
