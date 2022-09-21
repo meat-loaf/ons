@@ -1,0 +1,48 @@
+[{
+	"id":"02",
+	"name":"Cloud Drop (up, 5 tiles)",
+	"desc":"A Cloud Drop from Yoshi's Island. It flies up, then down over a range of 5 tiles.",
+	"category": "athletic",
+	"display_xoff": 0,
+	"display_yoff": 0,
+	"custom": true,
+	"extra_bit": true,
+	"n_exbytes": 2,
+	"which_exbyte": 0,
+	"which_exbyte_val": "2D",
+	"reqfiles": [{ "sp3" : "100" }, {"sp3": "102"}],
+	"smap16":[{
+			"xoff":0,
+			"yoff":0,
+			"tile":"50A"
+		},{
+			"xoff":0,
+			"yoff":"10",
+			"tile":"51A"
+		}
+	]
+},{
+	"id":"02",
+	"name":"Cloud Drop (down, 5 tiles)",
+	"desc":"A Cloud Drop from Yoshi's Island. It flies down, then up over a range of 5 tiles.",
+	"category": "athletic",
+	"display_xoff": 0,
+	"display_yoff": 0,
+	"custom": true,
+	"extra_bit": true,
+	"n_exbytes": 2,
+	"which_exbyte": 0,
+	"which_exbyte_val": "AD",
+	"reqfiles": [{ "sp3" : "100" }, {"sp3": "102"}],
+	"smap16":[{
+			"xoff":0,
+			"yoff":0,
+			"tile":"51B"
+		},{
+			"xoff":0,
+			"yoff":"-10",
+			"tile":"50B"
+		}
+	]
+}
+]

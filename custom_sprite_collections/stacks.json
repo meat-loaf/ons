@@ -1,0 +1,30 @@
+[{
+	"id": "81",
+	"name":"Enemy Stack: key and homing lotus",
+	"desc":"An enemy stack, containing a key and a Volcano Lotus shooting homing projectiles. The stacked sprite will die in a puff of smoke if the key is eaten or otherwise dies.",
+	"category": "misc",
+	"display_xoff": 0,
+	"display_yoff": 0,
+	"custom": true,
+	"extra_bit": true,
+	"n_exbytes": 3,
+	"which_exbyte": 0,
+	"which_exbyte_val": "02",
+	"smap16":[{
+			"xoff":-8,
+			"yoff":"-10",
+			"tile":"522"
+		},{
+			"xoff":8,
+			"yoff":"-10",
+			"tile":"523"
+		},{
+			"xoff":0,
+			"yoff":"-18",
+			"tile":"532"
+		},{
+			"xoff":0,
+			"yoff":0,
+			"tile":"56F"
+		}]
+}]

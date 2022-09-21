@@ -1,0 +1,71 @@
+[{
+	"id":"56",
+	"name": "Floating grass/rock platform, right then left",
+	"desc": "A platform that moves 5.5 tiles to the right, and then back.",
+	"category":"athletic",
+	"display_xoff":0,
+	"display_yoff":0,
+	"custom": false,
+	"extra_bit": false,
+	"n_exbytes": 0,
+	"smap16":[{
+		"xoff":0,
+		"yoff":0,
+		"tile":"547"
+	},{
+		"xoff":"10",
+		"yoff":0,
+		"tile":"548"
+	},{
+		"xoff":"20",
+		"yoff":0,
+		"tile":"549"
+	},{
+		"xoff":"0",
+		"yoff":"10",
+		"tile":"54A"
+	},{
+		"xoff":"10",
+		"yoff":"10",
+		"tile":"54B"
+	},{
+		"xoff":"20",
+		"yoff":"10",
+		"tile":"54C"
+	}]
+},{
+	"id":"56",
+	"name": "Floating grass/rock platform, left then right",
+	"desc": "A platform that moves 5.5 tiles to the left, and then back.",
+	"category":"athletic",
+	"display_xoff":0,
+	"display_yoff":0,
+	"custom": false,
+	"extra_bit": true,
+	"n_exbytes": 0,
+	"smap16":[{
+		"xoff":0,
+		"yoff":0,
+		"tile":"547"
+	},{
+		"xoff":"10",
+		"yoff":0,
+		"tile":"548"
+	},{
+		"xoff":"20",
+		"yoff":0,
+		"tile":"549"
+	},{
+		"xoff":"0",
+		"yoff":"10",
+		"tile":"54A"
+	},{
+		"xoff":"10",
+		"yoff":"10",
+		"tile":"54B"
+	},{
+		"xoff":"20",
+		"yoff":"10",
+		"tile":"54C"
+	}]
+}]

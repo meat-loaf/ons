@@ -278,7 +278,7 @@ ADDR_02C25B:
 	%SubOffScreen()
 	JSR ADDR_02C79D
 	JSL SprSprInteract
-	JSL $019138
+	JSL $019138|!bank
 	LDA !1588,x
 	AND #$08
 	BEQ ADDR_02C274
@@ -642,7 +642,7 @@ Puntin:
 ;	LDA #$19
 ;	CLC
 ;	%SpawnSprite()
-	JSL $03CBB3         ; chuck sprite generation routine (just for football...?)
+	JSL $03CBB3|!bank         ; chuck sprite generation routine (just for football...?)
 	PLA
 ADDR_02C4D5:
 	CMP #$20
@@ -1418,7 +1418,7 @@ ADDR_02CA9D:
 	LDA $04
 	CMP #$14
 	BCC ADDR_02CAA6
-	JMP ADDR_02CB53
+	JMP chuck_draw_baseball
 
 ADDR_02CAA6:
 	CMP #$12
@@ -1511,12 +1511,12 @@ Return02CB40:
 	RTS                       ; Return
 
 
-DATA_02CB41:
+chuck_baseball_offs:
 	db $FA,$0A,$06,$00,$00,$01,$0E,$FE
 	db $02,$00,$00,$09,$08,$F4,$F4,$00
 	db $00,$F4
 
-ADDR_02CB53:
+chuck_draw_baseball:
 	PHX
 	STA $02
 	LDY !157C,x
@@ -1531,10 +1531,10 @@ ADDR_02CB5E:
 	TAY
 	LDA $00
 	CLC
-	ADC ADDR_02CB2D,x
+	ADC chuck_baseball_offs-$14,x
 	STA $0300|!Base2,y
 	LDX $02
-	LDA ADDR_02CB39,x
+	LDA chuck_baseball_offs-$08,x
 	BEQ ADDR_02CB8E
 	CLC
 	ADC $01

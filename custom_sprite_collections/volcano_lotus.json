@@ -1,0 +1,487 @@
+[{
+	"id":"01",
+	"name":"Volcano Lotus (SMW-style)",
+	"desc":"A Volcano Lotus with many different behaviors. This one is upright, and acts like SMW's original. The first extra byte controls the orientation and behavior, while the second offsets its position by a number of pixels. The extra bit inverts the orientation.",
+	"category": "cave",
+	"display_xoff": 0,
+	"display_yoff": 0,
+	"custom": true,
+	"extra_bit": false,
+	"n_exbytes": 2,
+	"which_exbyte": 0,
+	"which_exbyte_val": 0,
+	"reqfiles": [{ "sp3" : "10B"}, { "sp3": "10E" }],
+	"smap16":[{
+			"xoff":-8,
+			"yoff":0,
+			"tile":"522"
+		},{
+			"xoff":8,
+			"yoff":0,
+			"tile":"523"
+		},{
+			"xoff":0,
+			"yoff":-8,
+			"tile":"524"
+		}]
+},{
+	"id":"01",
+	"name":"Volcano Lotus (SMW-style, upside-down)",
+	"desc":"A Volcano Lotus with many different behaviors. This one is upside-down, and otherwise acts like SMW's original. The first extra byte controls the orientation and behavior, while the second offsets its position by a number of pixels. The extra bit inverts the orientation.",
+	"category": "cave",
+	"display_xoff": 0,
+	"display_yoff": 0,
+	"custom": true,
+	"extra_bit": true,
+	"n_exbytes": 2,
+	"which_exbyte": 0,
+	"which_exbyte_val": "00",
+	"reqfiles": [{ "sp3" : "10B"}, { "sp3": "10E" }],
+	"smap16":[{
+			"xoff":-8,
+			"yoff":0,
+			"tile":"512"
+		},{
+			"xoff":8,
+			"yoff":0,
+			"tile":"513"
+		},{
+			"xoff":0,
+			"yoff":8,
+			"tile":"517"
+		}
+	]
+},{
+	"id":"01",
+	"name":"Volcano Lotus (SMW-style, left wall)",
+	"desc":"A Volcano Lotus with many different behaviors. This one faces right and sticks to the wall, but otherwise acts like SMW's original. The first extra byte controls the orientation and behavior, while the second offsets its position by a number of pixels. The extra bit inverts the orientation.",
+	"category": "cave",
+	"display_xoff": 0,
+	"display_yoff": 0,
+	"custom": true,
+	"extra_bit": true,
+	"n_exbytes": 2,
+	"which_exbyte": 0,
+	"which_exbyte_val": "80",
+	"reqfiles": [{ "sp3" : "10B"}, { "sp3": "10E" }],
+	"smap16":[{
+			"xoff":0,
+			"yoff":-8,
+			"tile":"503"
+		},{
+			"xoff":0,
+			"yoff":8,
+			"tile":"502"
+		},{
+			"xoff":8,
+			"yoff":0,
+			"tile":"518"
+		}
+	]
+},{
+	"id":"01",
+	"name":"Volcano Lotus (SMW-style, right wall)",
+	"desc":"A Volcano Lotus with many different behaviors. This one faces left and sticks to the wall, but otherwise acts like SMW's original. The first extra byte controls the orientation and behavior, while the second offsets its position by a number of pixels. The extra bit inverts the orientation.",
+	"category": "cave",
+	"display_xoff": 0,
+	"display_yoff": 0,
+	"custom": true,
+	"extra_bit": false,
+	"n_exbytes": 2,
+	"which_exbyte": 0,
+	"which_exbyte_val": "80",
+	"reqfiles": [{ "sp3" : "10B"}, { "sp3": "10E" }],
+	"smap16":[{
+			"xoff":0,
+			"yoff":-8,
+			"tile":"515"
+		},{
+			"xoff":0,
+			"yoff":8,
+			"tile":"525"
+		},{
+			"xoff":-8,
+			"yoff":0,
+			"tile":"516"
+		}
+	]
+},{
+	"id":"01",
+	"name":"Volcano Lotus (SMW-style, upside-down + proj orient)",
+	"desc":"A Volcano Lotus with many different behaviors. This one is upside-down, and otherwise acts like SMW's original except that its projectiles will maintain their orientation after being fired. The first extra byte controls the orientation and behavior, while the second offsets its position by a number of pixels. The extra bit inverts the orientation.",
+	"category": "cave",
+	"display_xoff": 0,
+	"display_yoff": 0,
+	"custom": true,
+	"extra_bit": true,
+	"n_exbytes": 2,
+	"which_exbyte": 0,
+	"which_exbyte_val": "40",
+	"reqfiles": [{ "sp3" : "10B"}, { "sp3": "10E" }],
+	"smap16":[{
+			"xoff":-8,
+			"yoff":0,
+			"tile":"512"
+		},{
+			"xoff":8,
+			"yoff":0,
+			"tile":"513"
+		},{
+			"xoff":0,
+			"yoff":8,
+			"tile":"517"
+		}
+	]
+},{
+	"id":"01",
+	"name":"Volcano Lotus (SMW-style, left wall + proj orient)",
+	"desc":"A Volcano Lotus with many different behaviors. This one faces right and sticks to the wall, but otherwise acts like SMW's original except that its projectiles will maintain their orientation after being fired. The first extra byte controls the orientation and behavior, while the second offsets its position by a number of pixels. The extra bit inverts the orientation.",
+	"category": "cave",
+	"display_xoff": 0,
+	"display_yoff": 0,
+	"custom": true,
+	"extra_bit": true,
+	"n_exbytes": 2,
+	"which_exbyte": 0,
+	"which_exbyte_val": "C0",
+	"reqfiles": [{ "sp3" : "10B"}, { "sp3": "10E" }],
+	"smap16":[{
+			"xoff":0,
+			"yoff":-8,
+			"tile":"503"
+		},{
+			"xoff":0,
+			"yoff":8,
+			"tile":"502"
+		},{
+			"xoff":8,
+			"yoff":0,
+			"tile":"518"
+		}
+	]
+},{
+	"id":"01",
+	"name":"Volcano Lotus (SMW-style, right wall + proj orient)",
+	"desc":"A Volcano Lotus with many different behaviors. This one faces left and sticks to the wall, but otherwise acts like SMW's original except that its projectiles will maintain their orientation after being fired. The first extra byte controls the orientation and behavior, while the second offsets its position by a number of pixels. The extra bit inverts the orientation.",
+	"category": "cave",
+	"display_xoff": 0,
+	"display_yoff": 0,
+	"custom": true,
+	"extra_bit": false,
+	"n_exbytes": 2,
+	"which_exbyte": 0,
+	"which_exbyte_val": "C0",
+	"reqfiles": [{ "sp3" : "10B"}, { "sp3": "10E" }],
+	"smap16":[{
+			"xoff":0,
+			"yoff":-8,
+			"tile":"515"
+		},{
+			"xoff":0,
+			"yoff":8,
+			"tile":"525"
+		},{
+			"xoff":-8,
+			"yoff":0,
+			"tile":"516"
+		}
+	]
+},{
+	"id":"01",
+	"name":"Volcano Lotus (7 projectiles)",
+	"desc":"A Volcano Lotus with many different behaviors. This one is upright, and acts like similar SMW's original except that it fires 7 projectiles. The first extra byte controls the orientation and behavior, while the second offsets its position by a number of pixels. The extra bit inverts the orientation.",
+	"category": "cave",
+	"display_xoff": 0,
+	"display_yoff": 0,
+	"custom": true,
+	"extra_bit": false,
+	"n_exbytes": 2,
+	"which_exbyte": 0,
+	"which_exbyte_val": 1,
+	"reqfiles": [{ "sp3" : "10B"}, { "sp3": "10E" }],
+	"smap16":[{
+			"xoff":-8,
+			"yoff":0,
+			"tile":"522"
+		},{
+			"xoff":8,
+			"yoff":0,
+			"tile":"523"
+		},{
+			"xoff":0,
+			"yoff":-8,
+			"tile":"533"
+		}]
+},{
+	"id":"01",
+	"name":"Volcano Lotus (7 projectiles, upside-down)",
+	"desc":"A Volcano Lotus with many different behaviors. This one is upside-down, and acts similar SMW's original except that it fires 7 projectiles. The first extra byte controls the orientation and behavior, while the second offsets its position by a number of pixels. The extra bit inverts the orientation.",
+	"category": "cave",
+	"display_xoff": 0,
+	"display_yoff": 0,
+	"custom": true,
+	"extra_bit": true,
+	"n_exbytes": 2,
+	"which_exbyte": 0,
+	"which_exbyte_val": "01",
+	"reqfiles": [{ "sp3" : "10B"}, { "sp3": "10E" }],
+	"smap16":[{
+			"xoff":-8,
+			"yoff":0,
+			"tile":"512"
+		},{
+			"xoff":8,
+			"yoff":0,
+			"tile":"513"
+		},{
+			"xoff":0,
+			"yoff":8,
+			"tile":"534"
+		}
+	]
+},{
+	"id":"01",
+	"name":"Volcano Lotus (7 projectiles, left wall)",
+	"desc":"A Volcano Lotus with many different behaviors. This one faces right and sticks to the wall, and acts like SMW's original except that it fires 7 projectiles. The first extra byte controls the orientation and behavior, while the second offsets its position by a number of pixels. The extra bit inverts the orientation.",
+	"category": "cave",
+	"display_xoff": 0,
+	"display_yoff": 0,
+	"custom": true,
+	"extra_bit": true,
+	"n_exbytes": 2,
+	"which_exbyte": 0,
+	"which_exbyte_val": "81",
+	"reqfiles": [{ "sp3" : "10B"}, { "sp3": "10E" }],
+	"smap16":[{
+			"xoff":0,
+			"yoff":-8,
+			"tile":"503"
+		},{
+			"xoff":0,
+			"yoff":8,
+			"tile":"502"
+		},{
+			"xoff":8,
+			"yoff":0,
+			"tile":"519"
+		}
+	]
+},{
+	"id":"01",
+	"name":"Volcano Lotus (7 projectiles, right wall)",
+	"desc":"A Volcano Lotus with many different behaviors. This one faces left and sticks to the wall, and acts like SMW's original except that it fires 7 projectiles. The first extra byte controls the orientation and behavior, while the second offsets its position by a number of pixels. The extra bit inverts the orientation.",
+	"category": "cave",
+	"display_xoff": 0,
+	"display_yoff": 0,
+	"custom": true,
+	"extra_bit": false,
+	"n_exbytes": 2,
+	"which_exbyte": 0,
+	"which_exbyte_val": "81",
+	"reqfiles": [{ "sp3" : "10B"}, { "sp3": "10E" }],
+	"smap16":[{
+			"xoff":0,
+			"yoff":-8,
+			"tile":"515"
+		},{
+			"xoff":0,
+			"yoff":8,
+			"tile":"525"
+		},{
+			"xoff":-8,
+			"yoff":0,
+			"tile":"535"
+		}
+	]
+},
+
+{
+	"id":"01",
+	"name":"Volcano Lotus (7 projectiles, upside-down + proj orient)",
+	"desc":"A Volcano Lotus with many different behaviors. This one is upside-down, and acts similar SMW's original except that it fires 7 projectiles that maintain their orientation. The first extra byte controls the orientation and behavior, while the second offsets its position by a number of pixels. The extra bit inverts the orientation.",
+	"category": "cave",
+	"display_xoff": 0,
+	"display_yoff": 0,
+	"custom": true,
+	"extra_bit": true,
+	"n_exbytes": 2,
+	"which_exbyte": 0,
+	"which_exbyte_val": "01",
+	"reqfiles": [{ "sp3" : "10B"}, { "sp3": "10E" }],
+	"smap16":[{
+			"xoff":-8,
+			"yoff":0,
+			"tile":"512"
+		},{
+			"xoff":8,
+			"yoff":0,
+			"tile":"513"
+		},{
+			"xoff":0,
+			"yoff":8,
+			"tile":"534"
+		}
+	]
+},{
+	"id":"01",
+	"name":"Volcano Lotus (7 projectiles, left wall + proj orient)",
+	"desc":"A Volcano Lotus with many different behaviors. This one faces right and sticks to the wall, and acts like SMW's original except that it fires 7 projectiles that maintain their orientation. The first extra byte controls the orientation and behavior, while the second offsets its position by a number of pixels. The extra bit inverts the orientation.",
+	"category": "cave",
+	"display_xoff": 0,
+	"display_yoff": 0,
+	"custom": true,
+	"extra_bit": true,
+	"n_exbytes": 2,
+	"which_exbyte": 0,
+	"which_exbyte_val": "C1",
+	"reqfiles": [{ "sp3" : "10B"}, { "sp3": "10E" }],
+	"smap16":[{
+			"xoff":0,
+			"yoff":-8,
+			"tile":"503"
+		},{
+			"xoff":0,
+			"yoff":8,
+			"tile":"502"
+		},{
+			"xoff":8,
+			"yoff":0,
+			"tile":"519"
+		}
+	]
+},{
+	"id":"01",
+	"name":"Volcano Lotus (SMW-style, right wall + proj orient)",
+	"desc":"A Volcano Lotus with many different behaviors. This one faces left and sticks to the wall, and acts like SMW's original except that it fires 7 projectiles that maintain their orientation. The first extra byte controls the orientation and behavior, while the second offsets its position by a number of pixels. The extra bit inverts the orientation.",
+	"category": "cave",
+	"display_xoff": 0,
+	"display_yoff": 0,
+	"custom": true,
+	"extra_bit": false,
+	"n_exbytes": 2,
+	"which_exbyte": 0,
+	"which_exbyte_val": "C1",
+	"reqfiles": [{ "sp3" : "10B"}, { "sp3": "10E" }],
+	"smap16":[{
+			"xoff":0,
+			"yoff":-8,
+			"tile":"515"
+		},{
+			"xoff":0,
+			"yoff":8,
+			"tile":"525"
+		},{
+			"xoff":-8,
+			"yoff":0,
+			"tile":"535"
+		}
+	]
+},{
+	"id":"01",
+	"name":"Volcano Lotus (4 homing projectiles)",
+	"desc":"A Volcano Lotus with many different behaviors. This one is upright, and fires 4 projectiles that home in on Mario, 2 at at a time. The first extra byte controls the orientation and behavior, while the second offsets its position by a number of pixels. The extra bit inverts the orientation.",
+	"category": "cave",
+	"display_xoff": 0,
+	"display_yoff": 0,
+	"custom": true,
+	"extra_bit": false,
+	"n_exbytes": 2,
+	"which_exbyte": 0,
+	"which_exbyte_val": "09",
+	"reqfiles": [{ "sp3" : "10B"}, { "sp3": "10E" }],
+	"smap16":[{
+			"xoff":-8,
+			"yoff":0,
+			"tile":"522"
+		},{
+			"xoff":8,
+			"yoff":0,
+			"tile":"523"
+		},{
+			"xoff":0,
+			"yoff":-8,
+			"tile":"532"
+		}]
+},{
+	"id":"01",
+	"name":"Volcano Lotus (4 homing projectiles, upside-down)",
+	"desc":"A Volcano Lotus with many different behaviors. This one is upside-down, and fires 4 projectiles that home in on Mario, 2 at at a time. The first extra byte controls the orientation and behavior, while the second offsets its position by a number of pixels. The extra bit inverts the orientation.",
+	"category": "cave",
+	"display_xoff": 0,
+	"display_yoff": 0,
+	"custom": true,
+	"extra_bit": true,
+	"n_exbytes": 2,
+	"which_exbyte": 0,
+	"which_exbyte_val": "09",
+	"reqfiles": [{ "sp3" : "10B"}, { "sp3": "10E" }],
+	"smap16":[{
+			"xoff":-8,
+			"yoff":0,
+			"tile":"512"
+		},{
+			"xoff":8,
+			"yoff":0,
+			"tile":"513"
+		},{
+			"xoff":0,
+			"yoff":8,
+			"tile":"544"
+		}
+	]
+},{
+	"id":"01",
+	"name":"Volcano Lotus (4 homing projectiles, left wall)",
+	"desc":"A Volcano Lotus with many different behaviors. This one faces right and sticks to the wall, and fires 4 projectiles that home in on Mario, 2 at at a time. The first extra byte controls the orientation and behavior, while the second offsets its position by a number of pixels. The extra bit inverts the orientation.",
+	"category": "cave",
+	"display_xoff": 0,
+	"display_yoff": 0,
+	"custom": true,
+	"extra_bit": true,
+	"n_exbytes": 2,
+	"which_exbyte": 0,
+	"which_exbyte_val": "89",
+	"reqfiles": [{ "sp3" : "10B"}, { "sp3": "10E" }],
+	"smap16":[{
+			"xoff":0,
+			"yoff":-8,
+			"tile":"503"
+		},{
+			"xoff":0,
+			"yoff":8,
+			"tile":"502"
+		},{
+			"xoff":8,
+			"yoff":0,
+			"tile":"545"
+		}
+	]
+},{
+	"id":"01",
+	"name":"Volcano Lotus (4 homing projectiles, right wall)",
+	"desc":"A Volcano Lotus with many different behaviors. This one faces left and sticks to the wall, and fires 4 projectiles that home in on Mario, 2 at at a time. The first extra byte controls the orientation and behavior, while the second offsets its position by a number of pixels. The extra bit inverts the orientation.",
+	"category": "cave",
+	"display_xoff": 0,
+	"display_yoff": 0,
+	"custom": true,
+	"extra_bit": false,
+	"n_exbytes": 2,
+	"which_exbyte": 0,
+	"which_exbyte_val": "89",
+	"reqfiles": [{ "sp3" : "10B"}, { "sp3": "10E" }],
+	"smap16":[{
+			"xoff":0,
+			"yoff":-8,
+			"tile":"515"
+		},{
+			"xoff":0,
+			"yoff":8,
+			"tile":"525"
+		},{
+			"xoff":-8,
+			"yoff":0,
+			"tile":"546"
+		}
+	]
+}
+]

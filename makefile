@@ -36,6 +36,11 @@ asm_tweaks_dir=${asm_dir}/tweaks
 
 GEN_ROUTINE_FILES=$(wildcard ${asm_dir}/headers/routines/*.asm)
 
+CUSTOM_SPR_COLLECTION_FILES=${ROMNAME}.ssc, ${ROMNAME}.mwt, ${ROMNAME}.mw2
+CUSTOM_SPR_COLLECTION_JSON_DEFS_DIR=custom_sprite_collections
+CUSTOM_SPR_COLLECTION_DEF_FILES=$(wildcard ${CUSTOM_SPR_COLLECTION_JSON_DEFS_DIR}/*.json)
+CUSTOM_SPR_COLLECTION_SSC_BASE=${ROM_BASE_PATH}/base.ssc
+
 ASM_HEADERS=$(wildcard ${asm_dir}/headers/*.asm) $(wildcard ${asm_dir}/headers/**/*.asm)
 
 M16_FILE=AllMap16.map16
@@ -80,6 +85,7 @@ OBJTOOL_TS=${TS_DIR}/objtool
 INIT_LEVEL_TS=${TS_DIR}/initial_level
 FT_IMEM_TS=${TS_DIR}/item_mem
 8x8_DMA_TS=${TS_DIR}/8x8dyn
+SPR_COLLECTION_TS=${TS_DIR}/sprcoll
 
 CORE_BUILD_RULES= \
 	${GFX_FAKE_TS} \
@@ -98,6 +104,7 @@ CORE_BUILD_RULES= \
 	${ASM_TWEAK_TS} \
 	${FT_IMEM_TS} \
 	${8x8_DMA_TS} \
+	${SPR_COLLECTION_TS} \
 
 # should list _all_ the deps here but too many files have spaces.
 # it's a ton of stuff to change and not currently worth the effort
@@ -108,7 +115,7 @@ AMK_MUSIC_DEPS= \
 PIXI_DIR=pixi
 PIXI_FLAGS+=-d255spl -sym ${SYM_DIR}/pixi.sym
 PIXI_LIST=${PIXI_DIR}/list.txt
-PIXI=LD_LIBRARY_PATH=/usr/local/lib ${PIXI_DIR}/pixi2
+PIXI=LD_LIBRARY_PATH=/usr/local/lib ${PIXI_DIR}/pixi3
 
 GPS_FLAGS+=-sym ../${SYM_DIR}/gps.sym
 
@@ -290,6 +297,10 @@ ${8x8_DMA_TS}: ${asm_features_dir}/mario_8x8_dma/mario_8x8_dma.asm ${asm_feature
 	${ASAR} $< ${ROM_NAME}
 	touch $@
 
+${SPR_COLLECTION_TS}: ${PIXI_FAKE_TS} ${CUSTOM_SPR_COLLECTION_DEF_FILES}
+	./scripts/generate_sprite_collection.py --name-prefix ${ROM_NAME_BASE} --base-ssc ${CUSTOM_SPR_COLLECTION_SSC_BASE} -x 7 -y 7 ${CUSTOM_SPR_COLLECTION_DEF_FILES}
+	touch $@
+
 ${TS_DIR}:
 	mkdir -p ${TS_DIR}
 
@@ -297,5 +308,6 @@ ${SYM_DIR}:
 	mkdir -p ${SYM_DIR}
 
 clean:
-	rm -rf ${TS_DIR} ${ROM_NAME_BASE}.* ${GLOBALANI_SRC_ROM} ${OVERWORLD_SRC_ROM} ${GEN_ROUTINE_FILES} ${SYM_DIR}
+	shopt -s extglob
+	rm -rf ${TS_DIR} ${ROM_NAME_BASE}.!(s16) ${GLOBALANI_SRC_ROM} ${OVERWORLD_SRC_ROM} ${GEN_ROUTINE_FILES} ${SYM_DIR}
 

@@ -5,7 +5,7 @@
 ;; This sprite encompasses all 48 Classic Piranha Plants and Venus Fire Traps,
 ;; using the extra property bytes to determine which sprite to act like.
 ;;
-;; Uses 2 extra byte.
+;; Uses 1 extra byte.
 ;;
 ;; Extra Byte 1 uses its 8 bits as the following:
 ;;
@@ -17,7 +17,6 @@
 ;; Bit 5: Number of fireballs.  0 = spit 1, 1 = spit 2.  This is used only if bit 4 is set. (n)
 ;; 
 ;; Therefore the bit arrangment is (- indicates unused bits): --ns csod
-;; Extra byte 2 controls which graphics page the sprite uses
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;incsrc subroutinedefsx.asm

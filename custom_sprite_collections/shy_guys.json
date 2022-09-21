@@ -1,0 +1,39 @@
+{
+	"id":"15",
+	"name":"Woozy Guy (dynamic)",
+	"desc":"A Woozy Guy from Yoshi's Island. He does somersaults towards Mario. Its color is based on its starting x position.",
+	"category": "dynamic",
+	"custom": true,
+	"extra_bit": false,
+	"n_exbytes": 0,
+	"xpos_mask": 2,
+	"smap16":[{
+		"xmask":0,
+		"dat":{
+			"xoff":0,
+			"yoff":0,
+			"tile":"573"
+		}
+	},{
+		"xmask": 1,
+		"dat":{
+			"xoff":0,
+			"yoff":0,
+			"tile":"572"
+		}
+	},{
+		"xmask": 2,
+		"dat":{
+			"xoff":0,
+			"yoff":0,
+			"tile":"570"
+		}
+	},{
+		"xmask": 3,
+		"dat":{
+			"xoff":0,
+			"yoff":0,
+			"tile":"571"
+		}
+	}]
+}
