@@ -34,7 +34,7 @@
     "Stay in Yoshi's mouth": false,
     "Weird ground behaviour": false,
     "Don't interact with other sprites": false,
-    "Don't change direction if touched": false,
+    "Don't change direction if touched": true,
     "Don't turn into coin when goal passed": false,
     "Spawn a new sprite": false,
     "Don't interact with objects": false

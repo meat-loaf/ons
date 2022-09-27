@@ -9,7 +9,7 @@ import sys;
 debug = 1
 
 mwl_string_encoding = "windows-1252"
-mwl_header_generic_text = "  ©2021 FuSoYa  Defender of Relm"
+mwl_header_generic_text = "  ©2022 FuSoYa  Defender of Relm"
 mwl_header_generic_text_pos = 0x20
 mwl_source_data_pointer_loc_off = 0x04
 mwl_data_pointer_size = 0x04
@@ -38,7 +38,7 @@ for mwl_file_name in sys.argv[1:]:
 	with open(mwl_file_name, "rb+") as mwl_file:
 		mwl_file.seek(mwl_header_generic_text_pos)
 		if (mwl_file.read(len(mwl_header_generic_text)).decode(mwl_string_encoding) != mwl_header_generic_text):
-			print("Header check failed: this doesn't appear to be a MWL file.")
+			print("[{}] Header check failed: this doesn't appear to be a MWL file.".format(mwl_file_name))
 			sys.exit(1)
 		print ("Process {}...".format(mwl_file_name))
 		mwl_file.seek(header_pointer_loc);

@@ -1,4 +1,5 @@
 ; GPS block list
+009E:0025        teleport_accurate.asm
 00A0:0025        midway.asm
 00A1:0025        midway.asm
 00A2:0025        midway.asm
@@ -227,6 +228,7 @@
 @dsc
 
 001	8	Water, used in the display of custom object 2D.
+09E	2	154
 09F	2	006
 09F	0	A vine, which appears only if item memory is set. Non-functional, use object 1E with size value x4.
 02D	0	The bottom of a 16x32 key block (not functional). Only used for Lunar Magic's display; use extended object 41 instead.
@@ -239,40 +241,45 @@
 0BE	0	A block that is solid when the ON/OFF state is ON (not functional). Only used for Lunar Magic's display; use object 01 instead.
 0CE	0	A block that is solid when the ON/OFF state is OFF (not functional). Only used for Lunar Magic's display; use object 06 instead.
 0CF	0	A block that is solid to Mario and Yoshi but not to other sprites (not functional). Only used for Lunar Magic's display; use object 03 instead.
-3C8	10	0C8
+3C8	10	539
 0C8	0	A question block that spawns a vine (not functional). Only used for Lunar Magic's display; use extended object 1E instead.
-0C8	10	0C8
+0C8	10	539
 3C8	0	A question block that spawns a vine. Use extended object 1E instead.
 
 0D8	10	106
 3D8	10	106
 0D8	0	A breakable brick from SMB3 with a Feather inside (not functional). Only used for Lunar Magic's display; use extended object 15 instead.
-0D9	10	00B
-3D9	10	00B
+0D9	10	56F
+3D9	10	56F
 0D9	0	A brick from SMB3 with a key inside (not functional). Only used for Lunar Magic's display; use extended object 19 instead.
-0DA	10	01E
-3DA	10	01E
+0DA	10	56D
+3DA	10	56D
 0DA	0	A brick from SMB3 with a springboard inside (not functional). Only used for Lunar Magic's display; use extended object 1A instead.
-0DB	10	01E
-3DB	10	01E
+0DB	10	56D
+3DB	10	56D
 0DB	0	A question block with a springboard inside (not functional). Only used for Lunar Magic's display; use extended object 1A instead.
-0DC	10      10B
+0DC	10      56C
 0DC	0       A question block with a poison mushroom inside (not functional). Only used for Lunar Magic's display; use extended object 1D instead.
-0EB	10	10B
+0EB	10	56C
 0DC	0       A brick block with a poison mushroom inside (not functional). Only used for Lunar Magic's display; use extended object 1C instead.
-3DD	10	0C8
+3DD	10	539
 0DD	0	A brick block that spawns a vine (not functional). Only used for Lunar Magic's display; use extended object 21 instead.
-0DD	10	0C8
+0DD	10	539
 3DD	0	A brick block that spawns a vine. Use extended object 21 instead.
-0DE	10	070
+0DE	10	5A5
 0DE	0	A special item block that spawns a green yoshi (not functional). Only used for Lunar Magic's display; use extended object 20 instead.
-3DE	10	070
+3DE	10	5A5
 3DE	0	A special item block that spawns a green yoshi. Use extended object 20 instead.
+
+0E0	10	599
+0E1	10	599
+0E2	10	599
+
 0DF	10	073
 3DF	10	073
-0FE	10	071
+0FE	10	5A4
 0FE	0	A special item block that spawns a Red yoshi. Use extended object 1F instead.
-3FE	10	071
+3FE	10	5A4
 3FE	0	A special item block that spawns a Red yoshi. Use extended object 1F instead.
 0FF	10	072
 3FF	10	072

@@ -12,18 +12,18 @@
 	"smap16":[{
 		"xoff":0,
 		"yoff":-16,
-		"tile":"520"
+		"tile":"5E0"
 		},{
 		"xoff": 16,
 		"yoff":-16,
-		"tile":"521"
+		"tile":"5E1"
 		},{
 		"xoff":0,
 		"yoff":0,
-		"tile":"530"
+		"tile":"5F0"
 		},{
 		"xoff":16,
 		"yoff":0,
-		"tile":"531"
+		"tile":"5F1"
 	}]
 }

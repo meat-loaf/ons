@@ -4,7 +4,9 @@ from lm_sprite_collections.req_gfx_file_entry import req_gfx_file_entry
 
 class sprite_collection_entry():
 	def __handle_smap16_entry(vals):
-		return smap16_entry(vals["xoff"], vals["yoff"], vals["tile"])
+		if "tile" not in vals:
+			raise ValueError("Sprite Map16 entries each require a tile.")
+		return smap16_entry(vals["xoff"] if "xoff" in vals else 0, vals["yoff"] if "yoff" in vals else 0, vals["tile"])
 	def __format_exbits(custom, exbit):
 		val = 0
 		if custom:
@@ -13,14 +15,22 @@ class sprite_collection_entry():
 			val |= 1
 		return val
 	def __lt__(self, other):
-		return self.id < other.id
+		if self.id == other.id:
+			if self.custom == other.custom:
+				return False
+			elif not self.custom and other.custom:
+				return True
+			elif self.custom and not other.custom:
+				return False
+		else:
+			return self.id < other.id
 
 	def __init__(self, vals: dict):
+		self.xorymask = False
 		for key in vals:
 			if key == "reqfiles":
 				reqfiles_r = vals[key]
 				if type(reqfiles_r) is list:
-					#raise NotImplementedError("List of required graphics files is not yet implemented.")
 					self.reqfiles = [req_gfx_file_entry(r) for r in reqfiles_r]
 				else:
 					self.reqfiles = [req_gfx_file_entry(vals[key])]
@@ -28,9 +38,12 @@ class sprite_collection_entry():
 				smap16_e = vals[key]
 				if type(smap16_e) is not list:
 					self.smap16 = [sprite_collection_entry.__handle_smap16_entry(smap16_e)]
+				# x/y off images
 				elif "dat" in smap16_e[0]:
-					self.smap16 = None
-					pass
+					self.smap16 = [(e.get("xmask", 0), e.get("ymask", 0),
+					               [sprite_collection_entry.__handle_smap16_entry(e.get("dat"))] if type(e.get("dat")) is not list else
+					               [sprite_collection_entry.__handle_smap16_entry(x) for x in e.get("dat")]) for e in smap16_e]
+					self.xorymask = True
 				else:
 					self.smap16 = [sprite_collection_entry.__handle_smap16_entry(e) for e in smap16_e]
 			elif key == "which_exbyte" or key == "which_exbyte_val" or key == "id":
@@ -41,22 +54,30 @@ class sprite_collection_entry():
 			else:
 				setattr(self, key, vals[key])
 	def to_ssc_entry(self, kind):
-		if kind == ssc_entry.ssc_kind.SSC_KIND_DESC:
+		if kind == ssc_entry.ssc_kind_base.SSC_KIND_DESC:
+			if not hasattr(self, "desc"):
+				return ""
 			return str(ssc_entry(self.id,
 			                     sprite_collection_entry.__format_exbits(self.custom, self.extra_bit),
 			                     self.desc, kind,
-			                     getattr(self, "which_exbyte", None), getattr(self, "which_exbyte_val", None)))
-		elif kind == ssc_entry.ssc_kind.SSC_KIND_SMAP16:
+			                     getattr(self, "which_exbyte", None), getattr(self, "which_exbyte_val", None),
+			                     back_color=getattr(self, "back_color", None), text_color=getattr(self, "text_color", None)))
+		elif kind == ssc_entry.ssc_kind_base.SSC_KIND_SMAP16:
 			if not hasattr(self, "smap16"):
 				return ""
-			elif hasattr(self, "xpos_mask") or hasattr(self, "ypos_mask"):
-				return ""
+			elif self.xorymask:
+				ret = []
+				for t in self.smap16:
+					ret.append(str(ssc_entry(self.id,
+				             sprite_collection_entry.__format_exbits(self.custom, self.extra_bit),
+					     " ".join([str(x) for x in t[2]]), kind, xmask=t[0], ymask=t[1])))
+				return "\n".join(ret)
 			else:
 				return str(ssc_entry(self.id,
 				             sprite_collection_entry.__format_exbits(self.custom, self.extra_bit),
 				             str(" ".join([str(x) for x in self.smap16])), kind,
 				             getattr(self, "which_exbyte", None), getattr(self, "which_exbyte_val", None)))
-		elif kind == ssc_entry.ssc_kind.SSC_KIND_REQFILES:
+		elif kind == ssc_entry.ssc_kind_base.SSC_KIND_REQFILES:
 			if not hasattr(self, "reqfiles"):
 				return ""
 			return str(ssc_entry(self.id,
@@ -67,7 +88,7 @@ class sprite_collection_entry():
 			return ""
 	def to_ssc_entries(self):
 		ret = []
-		for k in ssc_entry.ssc_kind.KINDS:
+		for k in ssc_entry.ssc_kind_base.KINDS:
 			ret.append(self.to_ssc_entry(k))
 		return "\n".join(ret)
 	def to_mwt_entry(self, omit_id=False):

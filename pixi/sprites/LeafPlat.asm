@@ -31,8 +31,11 @@ AND #$01		;preserve bit 0
 BRA ++			;branch ahead
 
 +
-LDA !7FAB40,x		;load extra byte 1
-AND #$01		;preserve bit 0
+;LDA !7FAB40,x		;load extra byte 1
+;AND #$01		;preserve bit 0
+LDA !extra_bits,x
+AND #$04
+LSR #2
 ++
 STA !157C,x		;store bit to sprite direction.
 
@@ -185,5 +188,5 @@ BPL GFXLoop		;keep looping while X is positive.
 LDX $15E9|!addr         ; only retards push/pull the sprite index
 LDY #$02		;load value into Y (means all tiles are 16x16)
 LDA #$01		;load value into A (amount of tiles drawn, minus one)
-JSL finish_oam_write
+JSL finish_oam_write|!bank
 RTS			;return.

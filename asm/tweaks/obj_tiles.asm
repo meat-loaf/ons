@@ -23,28 +23,38 @@ RestoreMap16Lo       = $0DA6BA
 
 YoshiHouseLedgeObjRt = $0DF02B
 
-%replace_pointer_long($0DA28C,pipe_square|!bank)
+%replace_pointer_long($0DA28C|!bank,pipe_square|!bank)
 
-%replace_pointer_long($0DA497,new_cloud_rope_obj_code|!bank)
+%replace_pointer_long($0DA497|!bank,new_cloud_rope_obj_code|!bank)
 
-%replace_pointer_long($0DC1DC,new_cloud_rope_obj_code|!bank)
+%replace_pointer_long($0DC1DC|!bank,new_cloud_rope_obj_code|!bank)
 
-%replace_pointer_long($0DCDDC,new_cloud_rope_obj_code|!bank)
+%replace_pointer_long($0DCDDC|!bank,new_cloud_rope_obj_code|!bank)
 
-%replace_pointer_long($0DD9DC,new_cloud_rope_obj_code|!bank)
+%replace_pointer_long($0DD9DC|!bank,new_cloud_rope_obj_code|!bank)
 
-%replace_pointer_long($0DE8DC,new_cloud_rope_obj_code|!bank)
+%replace_pointer_long($0DE8DC|!bank,new_cloud_rope_obj_code|!bank)
 
-%replace_pointer_long($0DDA30,$0DCF53|!bank)                ; line guide slopes
+; object 1C: replace donut bridge with grassland bush objs
+%replace_pointer_long($0DD9EB|!bank,$0DB5B7|!bank)
 
+; object 2E:
+%replace_pointer_long($0DDA21|!bank,$0DF066|!bank)
+; object 2F: Steep line guide slopes
+%replace_pointer_long($0DDA24|!bank,$0DD070|!bank)
+; object 30: extra grassy ledge
 %replace_pointer_long($0DDA27,YoshiHouseLedgeObjRt|!bank)
+; object 32: jellyfish (xy stretch)
+%replace_pointer_long($0DDA2D|!bank,$0DBB63|!bank)
+; object 33: line guide slopes
+%replace_pointer_long($0DDA30|!bank,$0DCF53|!bank)
 
 %replace_pointer_long($0DD9F1,net_edge_obj|!bank)
 
 ;replaces yoshi coins
 %replace_pointer_long($0DA1D2,vert_key_lock_block|!bank)
 
-!single_remap_counter = $00
+!single_remap_counter #= $00
 while !single_remap_counter < $30
   ; green star block
   if !single_remap_counter != $07
@@ -54,14 +64,42 @@ while !single_remap_counter < $30
   !single_remap_counter #= !single_remap_counter+1
 endif
 
+!single_remap_counter #= $00
+while !single_remap_counter < $0E
+  !val #= !single_remap_counter*3
+  %replace_pointer_long($0DD99A+!val|!bank,square_objs_routine|!bank)
+  !single_remap_counter #= !single_remap_counter+1
+endif
+
+
 ; random junk to imem blocks
 %replace_pointer_long($0DA220|!bank,single_tile_objs|!bank)
 %replace_pointer_long($0DA223|!bank,single_tile_objs|!bank)
 %replace_pointer_long($0DA226|!bank,single_tile_objs|!bank)
 
-; purple coin points to main 1x1 objs routine (in cave tileset)
-; through old frozen turn block routine
-%replace_pointer_long($0DD9D9|!bank,$0DBB63|!bank)
+; ghost house square objects
+; index 02 is used as jellyfish on page 1, via object 32
+org $0DECC6|!bank
+	db $92,$5E,$BF
+
+; bushes, now object 1C
+org $0DB5A8|!bank
+bush_left:
+	db $4B,$4E,$56,$55,$C3
+bush_center:
+	db $4C,$4F,$56,$55,$C3
+bush_right:
+	db $4D,$50,$56,$55,$C3
+warnpc $0DB5B7|!bank
+
+; use index 0F of 1x1 objects for red coins (new, this was added: originally went up to 0E)
+; instead of the actual purple coin obj code.
+org $0DB336|!bank
+	LDX.b #$0F
+	JMP.w square_objs_routine_no_loadx
+
+org $0DBB65|!bank
+	JMP.w square_objs_routine_no_loadx
 
 org $0DEC66|!bank
 	db $FD,$FC
@@ -527,48 +565,70 @@ new_cloud_rope_obj_code:
 .line_guide_real_tiles
 	db $92, $93
 
+obj_setup_sizes:
+	LDA $59
+	AND #$0F
+	STA $00
+	LDA $59
+	LSR #4
+	STA $01
+	RTS
 pushpc
 org $0DA8B4
-; final object (index 0E) used for red coins (object 16)
-; reuses 'frozen' turn block code, which is ultimately not used
 square_objs_low_bytes:
 	db $BE,$21,$CF,$2A,$2B,$CE,$E9,$13
-	db $1E,$24,$2E,$54,$30,$32,$2C
-org $0DA8D8
+	db $1E,$24,$2E,$54,$30,$32,$2C,$2C
 square_objs_routine:
-	JSL read_item_memory
-	BEQ .no_item_mem
+	LDX $5A
+	DEX
+.no_loadx
+	LDY $57
+	JSR obj_setup_sizes
+	LDA $00
+	STA $02
+	JSR BackupMap16Lo
+.loop:
 	LDA.l .uses_item_mem,x
 	BEQ .no_item_mem
-	BPL .dont_draw_this
+	JSL read_item_memory|!bank
+	BEQ .no_item_mem
+	LDA.l .uses_item_mem,x
+	BPL .dont_draw
 	LDA #$01
 	STA.B [$6E],y
 	LDA #$32
-	BRA .finish_draw_this
-warnpc $0DA928
-org $0DA928
-.dont_draw_this:
-	JSR.w $0DA95D|!bank
-	JMP.w $0DA943|!bank
-	NOP #8
+	BRA .draw_low_finish
 .no_item_mem:
-	LDA.L .square_objs_high_bytes,x
-	STA.B [$6E],y
-	LDA.L square_objs_low_bytes,x
-.finish_draw_this
-	warnpc $0DA940
+	LDA.l .square_objs_high_bytes,x
+	STA   [$6E],y
+	LDA.l square_objs_low_bytes,x
+.draw_low_finish:
+	STA  [$6B],y
+.dont_draw:
+	JSR ShiftObjRightOrig
+	DEC $02
+	BPL .loop
+	JSR RestoreMap16Lo
+	JSR ShiftObjDownOrig
+	LDA $00
+	STA $02
+	DEC $01
+	BPL .loop
+	RTS
+
+warnpc $0DA95B|!bank
 pullpc
 ; a negative value spawns a brown block, a positive one doesn't draw anything.
 ; zero doesn't use item memory
 ; TODO throw block doesnt seem to set item memory, perhaps remedy this
 .uses_item_mem:
 	db $00,$80,$01,$00,$01,$00,$01,$00
-	db $01,$80,$01,$00,$01,$01,$01
+	db $01,$80,$01,$00,$01,$01,$00,$01
 ; note: lunar magic will use 0 as the map16 page for indices 0-6
 ; and 1 for the others regardless of what is here
 .square_objs_high_bytes:
 	db $03,$00,$03,$00,$00,$03,$03,$01
-	db $01,$01,$01,$03,$01,$01,$00
+	db $01,$01,$01,$03,$01,$01,$01,$00
 
 pushpc
 org $0DA548
@@ -716,7 +776,7 @@ check_18_to_1b_add:
 pushpc
 org $0DDA9E
 pipe_square_tiles:
-	db $0C,$0D,$0E,$0F
+	db $0C,$0D,$0E,$58
 warnpc $0DDAC4
 pullpc
 pipe_square:

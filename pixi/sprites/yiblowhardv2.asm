@@ -1290,8 +1290,6 @@ BASENOFLIPX:    PLX                     ;  |
 		LDA $01                 ; \ Y
 		STA $0301|!Base2,y      ; /
 		LDA BASE_TILES,x        ; \
-		CLC
-		ADC !tile_off_scratch
 		STA $0302|!Base2,y      ;  | sprite
 		PHX                     ;  | props
 		LDX $15E9|!Base2        ;  |

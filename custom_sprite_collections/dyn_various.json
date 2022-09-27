@@ -1,0 +1,267 @@
+[{
+	"id":"10",
+	"name":"Spinning Arrow Lift (clockwise)",
+	"desc":"A spinning Arrow Lift from Yoshi's Island. It stops spinning and moves in the direction the arrow points when Mario jumps on it. If it hits a wall, the direction inverts. It spins clockwise.",
+	"category": "dynamic",
+	"back_color": "0",
+	"text_color": "FFFFFF",
+	"custom": true,
+	"extra_bit": false,
+	"n_exbytes": 1,
+	"which_exbyte": 0,
+	"which_exbyte_val": "00",
+	"smap16":[{
+			"xoff":"-8",
+			"yoff":"-8",
+			"tile":"5AC"
+		},{
+			"xoff":"8",
+			"yoff":"-8",
+			"tile":"5AD"
+		},{
+			"xoff":"-8",
+			"yoff":"8",
+			"tile":"5BC"
+		},{
+
+			"xoff":"8",
+			"yoff":"8",
+			"tile":"5BD"
+		}]
+},{
+	"id":"10",
+	"name":"Spinning Arrow Lift (counter-clockwise)",
+	"desc":"A spinning Arrow Lift from Yoshi's Island. It stops spinning and moves in the direction the arrow points when Mario jumps on it. If it hits a wall, the direction inverts. It spins counter-clockwise.",
+	"category": "dynamic",
+	"back_color": "0",
+	"text_color": "FFFFFF",
+	"custom": true,
+	"extra_bit": false,
+	"n_exbytes": 1,
+	"which_exbyte": 0,
+	"which_exbyte_val": "04",
+	"smap16":[{
+			"xoff":"-8",
+			"yoff":"-8",
+			"tile":"5CC"
+		},{
+			"xoff":"8",
+			"yoff":"-8",
+			"tile":"5CD"
+		},{
+			"xoff":"-8",
+			"yoff":"8",
+			"tile":"5DC"
+		},{
+
+			"xoff":"8",
+			"yoff":"8",
+			"tile":"5DD"
+		}]
+},{
+	"id":"10",
+	"name":"Blue Spinning Arrow Lift (clockwise)",
+	"desc":"A spinning Arrow Lift from Yoshi's Island. It stops spinning and moves in the direction the arrow points when Mario jumps on it. If it hits a wall, the direction inverts. It spins clockwise, and disappears after some time once stood on.",
+	"category": "dynamic",
+	"back_color": "0",
+	"text_color": "FFFFFF",
+	"custom": true,
+	"extra_bit": true,
+	"n_exbytes": 1,
+	"which_exbyte": 0,
+	"which_exbyte_val": "80",
+	"smap16":[{
+			"xoff":"-8",
+			"yoff":"-8",
+			"tile":"5AE"
+		},{
+			"xoff":"8",
+			"yoff":"-8",
+			"tile":"5AF"
+		},{
+			"xoff":"-8",
+			"yoff":"8",
+			"tile":"5BE"
+		},{
+
+			"xoff":"8",
+			"yoff":"8",
+			"tile":"5BF"
+		}]
+},{
+	"id":"10",
+	"name":"Blue Spinning Arrow Lift (counter-clockwise)",
+	"desc":"A spinning Arrow Lift from Yoshi's Island. It stops spinning and moves in the direction the arrow points when Mario jumps on it. If it hits a wall, the direction inverts. It spins counter-clockwise, and disappears after some time once stood on.",
+	"category": "dynamic",
+	"back_color": "0",
+	"text_color": "FFFFFF",
+	"custom": true,
+	"extra_bit": true,
+	"n_exbytes": 1,
+	"which_exbyte": 0,
+	"which_exbyte_val": "84",
+	"smap16":[{
+			"xoff":"-8",
+			"yoff":"-8",
+			"tile":"5CE"
+		},{
+			"xoff":"8",
+			"yoff":"-8",
+			"tile":"5CF"
+		},{
+			"xoff":"-8",
+			"yoff":"8",
+			"tile":"5DE"
+		},{
+
+			"xoff":"8",
+			"yoff":"8",
+			"tile":"5DF"
+		}]
+},{
+	"id":"13",
+	"name":"Red `!' Switch (dynamic)",
+	"desc":"A red switch from Yoshi's Island that cannot be moved. It activates the blue POW timer.",
+	"category": "dynamic",
+	"back_color": "0",
+	"display_xoff":0,
+	"display_yoff":-1,
+	"text_color": "FFFFFF",
+	"custom": true,
+	"extra_bit": false,
+	"n_exbytes": 0,
+	"smap16":[{
+			"tile":"5AA"
+		},{
+			"xoff":"10",
+			"tile":"5AB"
+		},{
+			"yoff":"10",
+			"tile":"5BA"
+		},{
+			"xoff":"10",
+			"yoff":"10",
+			"tile":"5BB"
+		}]
+},{
+	"id":"14",
+	"name":"Chomp Rock (dynamic)",
+	"desc":"A rollable Chomp Rock that uses dynamic GFX. It can destroy brick blocks (normal object 07).",
+	"category": "dynamic",
+	"display_xoff": 0,
+	"display_yoff": 0,
+	"back_color": "0",
+	"text_color": "FFFFFF",
+	"custom": true,
+	"extra_bit": false,
+	"n_exbytes": 0,
+	"smap16":[{
+			"xoff":"-8",
+			"yoff":"-10",
+			"tile":"500"
+		},{
+			"xoff":"8",
+			"yoff":"-10",
+			"tile":"501"
+		},{
+			"xoff":"-8",
+			"yoff":"0",
+			"tile":"510"
+		},{
+			"xoff":"8",
+			"yoff":"0",
+			"tile":"511"
+		}]
+},{
+	"id":"14",
+	"name":"...alternate palette",
+	"desc":"A rollable Chomp Rock that uses dynamic GFX. It can destroy brick blocks (normal object 07).",
+	"category": "dynamic",
+	"display_xoff": 0,
+	"display_yoff": 0,
+	"back_color": "0",
+	"text_color": "FFFFFF",
+	"custom": true,
+	"extra_bit": true,
+	"n_exbytes": 0,
+	"smap16":[{
+			"xoff":"-8",
+			"yoff":"-10",
+			"tile":"520"
+		},{
+			"xoff":"8",
+			"yoff":"-10",
+			"tile":"521"
+		},{
+			"xoff":"-8",
+			"yoff":"0",
+			"tile":"530"
+		},{
+			"xoff":"8",
+			"yoff":"0",
+			"tile":"531"
+		}]
+},{
+	"id":"16",
+	"name":"Blowhard (dynamic)",
+	"desc":"A Blowhard from Yoshi's Island. It aims at and shoots happy Needlenose projectiles at Mario.",
+	"category":"dynamic",
+	"display_yoff":0,
+	"reqfiles": { "sp3": "101" },
+	"back_color": "0",
+	"text_color": "FFFFFF",
+	"custom": true,
+	"extra_bit": false,
+	"n_exbytes": 0,
+	"smap16":[{
+		"xoff":-8,
+		"tile":"59E"
+	},{
+		"xoff":8,
+		"tile":"59F"
+	},{
+		"xoff":"-10",
+		"yoff":"-14",
+		"tile":"57E"
+	},{
+		"xoff":"0",
+		"yoff":"-14",
+		"tile":"57F"
+	},{
+		"xoff":"-10",
+		"yoff":"-4",
+		"tile":"58E"
+	},{
+		"xoff":"0",
+		"yoff":"-4",
+		"tile":"58F"
+	}]
+},{
+	"id":"17",
+	"name":"Floating Rock (dynamic)",
+	"desc":"A Floating Rock from Yoshi's Island that uses dynamic GFX. It tilts to the side when Mario stands on it.",
+	"category": "dynamic",
+	"back_color": "0",
+	"text_color": "FFFFFF",
+	"custom": true,
+	"extra_bit": false,
+	"n_exbytes": 0,
+	"smap16":[{
+			"xoff":"-8",
+			"yoff":"-10",
+			"tile":"5A8"
+		},{
+			"xoff":"8",
+			"yoff":"-10",
+			"tile":"5A9"
+		},{
+			"xoff":"-8",
+			"yoff":"0",
+			"tile":"5B8"
+		},{
+			"xoff":"8",
+			"yoff":"0",
+			"tile":"5B9"
+		}]
+
+}]

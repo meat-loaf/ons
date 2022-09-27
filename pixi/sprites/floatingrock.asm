@@ -294,7 +294,7 @@ ENDFLATROT:
 		SBC #$00		;  |
 		STA $97			; /
 NOYOSHI2:
-		JSL $019138		; interact with objects
+		JSL $019138|!bank		; interact with objects
 
 		LDA $164A,x		; \ in water
 		BNE INWATER		; / or not?
@@ -318,7 +318,7 @@ WATERCHKSPD:	LDA $AA,x		; \ skip speed reducer
 		STA $AA,x		; / at 06
 ENDFLOAT:
 
-        	JSL $01801A             ; Update Y position without gravity
+        	JSL $01801A|!bank             ; Update Y position without gravity
 RETURN:		RTS
 
 
@@ -379,7 +379,7 @@ SETTILES:	LDA !TILESDRAWN		; \ don't call sub
 		BEQ NODRAW		; / if no tiles
 		LDY #$02		; #$02 means 16x16
 		DEC A			; A = # tiles - 1
-		JSL $01B7B3		; don't draw if offscreen
+		JSL finish_oam_write
 NODRAW:		RTS
 
 !OFF2FRM_TEMP = $04

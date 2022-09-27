@@ -87,8 +87,6 @@ SUB_GFX:        %GetDrawInfo()
 		LDA $01                 ; \ set y position
 		STA $0301|!Base2,y      ; / of the tile
 		LDA #!NEEDLENOSETILE    ; \ set tile, and
-		CLC                     ; | apply spriteset
-		ADC !tile_off_scratch   ; | offset to tile
 		STA $0302|!Base2,y      ; / number
 		LDA !15F6,x             ; get sprite palette info
 		ORA $64                 ; add in the priority bits from the level settings

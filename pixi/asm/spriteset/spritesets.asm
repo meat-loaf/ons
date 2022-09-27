@@ -38,6 +38,8 @@ endif
 %replace_wide_pointer($01868A|!bank,brown_plat_main|!bank)
 ; replace horz floating rock init, set extra bit to start moving right
 %replace_wide_pointer($018229|!bank,horz_rock_init|!bank)
+; replace vert floating rock init, set extra bit to start moving down
+%replace_wide_pointer($01822D|!bank,horz_rock_init|!bank)
 ; replace wiggler init, extra bit to 1504
 %replace_wide_pointer($018289|!bank,wiggler_init)
 

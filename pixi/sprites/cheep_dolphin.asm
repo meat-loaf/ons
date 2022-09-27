@@ -9,38 +9,26 @@
 ; Else, it will act like an horizontal one.
 ;=======================================================
 
-Tilemap:
-	db $04,$06
-XSpeeds:
-	db $E8,$18
+print "INIT ", hex(cheep_dolphin_init)
+print "MAIN ", hex(cheep_dolphin_main)
 
-;=================================
-; INIT and MAIN Wrappers
-;=================================
+cheep_dolphin_main:
+	; update animation frame
+	LDA $14
+	LSR #3
+	AND #$01
+	STA !1602,x
+	; graphics
+	JSL sub_spr_gfx_2_long|!bank
 
-print "MAIN ",pc
-	PHB
-	PHK
-	PLB
-	JSR CheepCheep
-	PLB
-print "INIT ",pc
-	RTL
-
-;========================
-; Main routine
-;========================
-
-CheepCheep:
-	JSR Graphics
 	LDA !14C8,x
 	EOR #$08
 	ORA $9D
-	BNE .return
+	BNE cheep_dolphin_init
 	LDY #$02
 	%SubOffScreen()
-	JSL $01801A
-	JSL $018022
+	JSL $01801A|!bank
+	JSL $018022|!bank
 	LDA !AA,x
 	BMI +
 	CMP #$3F
@@ -52,7 +40,7 @@ CheepCheep:
 	EOR $13
 	LSR
 	BCC +
-	JSL $019138
+	JSL $019138|!bank
 +
 	LDA !AA,x
 	BMI .dontSetSpeed
@@ -66,15 +54,16 @@ CheepCheep:
 	BPL .dontZeroSpeed
 	STZ !AA,x
 .dontZeroSpeed
-	LDA !7FAB10,x
+	LDA !extra_bits,x
 	AND #$04
 	BEQ .dontSetX
 	LDA !AA,x
 	BNE .dontSetSpeed
 	LDA !C2,x
 	AND #$01
-	TAY
-	LDA XSpeeds,y
+	TAX
+	LDA.l .XSpeeds,x
+	LDX $15E9|!addr
 	STA !B6,x
 .dontSetX
 	INC !C2,x
@@ -85,40 +74,8 @@ CheepCheep:
 	AND #$01
 	STA !157C,x
 .interRet
-	JSL $01A7DC
-.return
-	RTS
-
-;========================
-; Graphics routine
-;========================
-
-Graphics:
-	%GetDrawInfo()
-	LDA !157C,x
-	STA $02
-	REP #$20
-	LDA $00
-	STA $0300|!Base2,y
-	SEP #$20
-	LDA $14
-	LSR #3
-	AND #$01
-	TAX
-	LDA Tilemap,x
-	STA $0302|!Base2,y
-	LDX $02
-	LDA Props,x
-	LDX $15E9|!Base2
-	ORA !15F6,x
-	ORA $64
-	STA $0303|!Base2,y
-	LDY #$02
-	; effectively loads 0 into A (on sane configurations).
-	; saves 1 cycle over LDA.b #$00
-	TDC
-	JSL finish_oam_write
-	RTS
-
-Props:
-	db $40,$00
+	JML $01A7DC|!bank
+.XSpeeds:
+	db $E8,$18
+cheep_dolphin_init:
+	RTL

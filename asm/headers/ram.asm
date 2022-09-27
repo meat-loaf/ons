@@ -210,6 +210,8 @@ includeonce
 !player_face_screen_timer   = $1499|!addr
 !player_palette_cycle_timer = $149B|!addr
 
+!blue_pswitch_timer     = $14AD|!addr
+!silver_pswitch_timer   = $14AE|!addr
 !on_off_state           = $14AF|!addr
 
 !item_memory_setting    = $13BE|!addr

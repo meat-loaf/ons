@@ -8,8 +8,17 @@
 ;; Extra bytes used: 2
 ;;
 ;; Extra byte 1 determines the Chuck's initial starting state (00-0C). See the Init notes.
-;; Extra byte 2 modifies behavior based on the kind of chuck it is.
-;;
+;; Extra byte 2 modifies behavior based on the kind of chuck it is:
+;; * initial state 00,01,02 (chargin' look to the sides): n/a
+;; * initial state 03: phase to change into when hurt animation completes
+;;   (if extra bit is set, otherwise it just becomes a chargin' chuck)
+;; * initial state: 04: n/a (todo: dig speed?)
+;; * initial state 05,06,07,08: jumping (?)
+;; * initial state 09: puntin (n/a)
+;; * initial state 0A: pitchin (todo: num baseballs to throw)
+;; * initial state 0B,0C: whistlin (?)
+
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Subroutines
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -37,6 +46,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 !chuck_behavior      = !C2
 !chuck_alt_behaviors = !160E
+!pitchin_chuck_balls = !187B
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Init
@@ -44,7 +54,7 @@
 
 ; starting states:
 ; 00-02: chargin' (state 2 will start walking immediately)
-; 03: hurt
+; 03: hurt (don't use this, jumping directly into this state doesn't initialize the chuck properly.)
 ; 04: diggin'
 ; 05: preparin' to split
 ; 06: jumpin' (but won't give speed by default)
@@ -61,12 +71,21 @@ C_CHUCK_INIT:
 	PHK
 	PLB
 
-
-	LDA !extra_byte_1,x
-	STA !chuck_behavior,x
 	LDA !extra_byte_2,x
 	STA !chuck_alt_behaviors,x
+	LDA !extra_byte_1,x
+	AND #$0F
+	CMP #$0D
+	BCC .ok
+	LDA #$00
+.ok:
+	STA !chuck_behavior,x
 
+	CMP #$03
+	BNE .not_hurt
+	STA !1540,x
+.not_hurt:
+	LDA !chuck_behavior,x
 	CMP #$04
 	BNE +
 	LDA.B #$30
@@ -467,7 +486,7 @@ Return02C3B2:
 	RTS                       ; Return
 
 
-DATA_02C3B3:
+pitchin_chuck_pitch_timer:
 	db $7F,$BF,$FF,$DF
 
 DATA_02C3B7:
@@ -507,7 +526,7 @@ ADDR_02C3FE:
 	LDA !1540,x
 	BNE ADDR_02C40C
 	LDY !187B,x
-	LDA DATA_02C3B3,y
+	LDA pitchin_chuck_pitch_timer,y
 	STA !1540,x
 ADDR_02C40C:
 	LDA !1540,x
@@ -532,7 +551,7 @@ ADDR_02C419:
 	AND #$1F
 	CMP #$06
 	BNE Return02C439
-	JSR ADDR_02C466
+	JSR spawn_ext_baseball
 	LDA #$08
 	STA !1558,x
 Return02C439:
@@ -556,7 +575,7 @@ ADDR_02C44A:
 	PLA
 	CMP #$26
 	BNE Return02C45B
-	JSR ADDR_02C466
+	JSR spawn_ext_baseball
 Return02C45B:
 	RTS                       ; Return
 
@@ -575,7 +594,7 @@ DATA_02C462:
 BaseballSpeed:
 	db $18,$E8
 
-ADDR_02C466:
+spawn_ext_baseball:
 	LDA !1558,x
 	ORA !186C,x
 	BNE Return02C439
@@ -1060,6 +1079,20 @@ ChuckHitOrigPhase:
         LDA.W ChuckInitialHeadPos,Y
 	STA.W !151C,X
 	LDA !extra_byte_1,x
+	AND #$0F
+	CMP #$03
+	BNE +
+	; use the second extra byte to determine what to turn into if
+	; we originally spawned in the 'hurt' state
+	LDA !extra_byte_2,x
+	AND #$0F
+	CMP #$0D
+	BCC .next_phase_ok
+	LDA #$00
+.next_phase_ok:
+	STA !chuck_behavior,x
+	STZ !extra_byte_2,x
++
 	CMP #$0B
 	BNE +
 	INC A                     ; change to 'whistling' phase
@@ -1123,7 +1156,7 @@ ADDR_02C7F6:
 	STA $1DFC|!Base2               ; /
 	LDA #$03
 	STA !chuck_behavior,x
-	LDA #$03
+;	LDA #$03
 	STA !1540,x
 	STZ !1570,x
 	JSR ADDR_02D4FA

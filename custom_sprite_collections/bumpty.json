@@ -1,0 +1,181 @@
+[{
+	"id":"25",
+	"name":"Bumpty, walking left",
+	"desc":"A Bumpty from Yoshi's Island. This one walks around and stops periodically, sometimes turning around. It stays on ledges, and always begins facing left.",
+	"category":"snow",
+	"custom":true,
+	"extra_bit":false,
+	"n_exbytes":1,
+	"which_exbyte":0,
+	"which_exbyte_val":0,
+	"reqfiles":{"sp3":"107"},
+	"smap16":[{
+		"tile":"5D2"
+	},{
+		"xoff":"-2",
+		"tile":"5D3"
+	},{
+		"tile":"5D4"
+	}]
+},{
+	"id":"25",
+	"name":"...walking right",
+	"desc":"A Bumpty from Yoshi's Island. This one walks around and stops periodically, sometimes turning around. It stays on ledges, and always begins facing right.",
+	"category":"snow",
+	"custom":true,
+	"extra_bit":false,
+	"n_exbytes":1,
+	"which_exbyte":0,
+	"which_exbyte_val":2,
+	"smap16":[{
+		"tile":"5E3"
+	},{
+		"xoff":"2",
+		"tile":"5E7"
+	},{
+		"tile":"5E6"
+	}]
+},{
+
+	"id":"25",
+	"name":"Bumpty, charges the player",
+	"desc":"A Bumpty from Yoshi's Island. This one charges towards Mario, then slides around. It initially faces left, but will charge towards Mario regardless.",
+	"category":"snow",
+	"custom":true,
+	"extra_bit":false,
+	"n_exbytes":1,
+	"which_exbyte":0,
+	"which_exbyte_val":1,
+	"smap16":[{
+		"xoff":-3,
+		"tile":"5D9"
+	},{
+		"tile":"5F3"
+	}]
+},{
+	"id":"25",
+	"name":"...facing right",
+	"desc":"A Bumpty from Yoshi's Island. This one charges towards Mario, then slides around. It initially faces right, but will charge towards Mario regardless.",
+	"category":"snow",
+	"custom":true,
+	"extra_bit":false,
+	"n_exbytes":1,
+	"which_exbyte":0,
+	"which_exbyte_val":3,
+	"smap16":[{
+		"xoff":3,
+		"tile":"5DA"
+	},{
+		"tile":"5F2"
+	}]
+},{
+	"id":"25",
+	"name":"Bumpty, wave flying left to right",
+	"desc":"A Bumpty from Yoshi's Island. This one flies 4 tiles to the left in a wave pattern, and then back.",
+	"category":"snow",
+	"custom":true,
+	"extra_bit":true,
+	"n_exbytes":1,
+	"which_exbyte":0,
+	"which_exbyte_val":0,
+	"reqfiles":{"sp3":"107"},
+	"smap16":[{
+		"yoff":5,
+		"xoff":3,
+		"tile":"5D9"
+	},{
+		"yoff":5,
+		"xoff":8,
+		"tile":"5D9"
+	},{
+		"tile":"5D1"
+	},{
+		"xoff":"8",
+		"yoff":"-4",
+		"tile":"5D5"
+	},{
+		"xoff":"4",
+		"yoff":"-4",
+		"tile":"5D6"
+	}
+	]
+},{
+	"id":"25",
+	"name":"...right to left",
+	"desc":"A Bumpty from Yoshi's Island. This one flies 4 tiles to the right in a wave pattern, and then back.",
+	"category":"snow",
+	"custom":true,
+	"extra_bit":true,
+	"n_exbytes":1,
+	"which_exbyte":0,
+	"which_exbyte_val":2,
+	"smap16":[{
+		"yoff":5,
+		"xoff":-3,
+		"tile":"5DA"
+	},{
+		"yoff":5,
+		"xoff":-8,
+		"tile":"5DA"
+	},{
+		"tile":"5E2"
+	},{
+		"xoff":"-8",
+		"yoff":"-4",
+		"tile":"5D7"
+	},{
+		"xoff":"-4",
+		"yoff":"-4",
+		"tile":"5D8"
+	}]
+},{
+	"id":"25",
+	"name":"Bumpty, wave flying left",
+	"desc":"A Bumpty from Yoshi's Island. This one flies left in a wave pattern, unceasingly.",
+	"category":"snow",
+	"custom":true,
+	"extra_bit":true,
+	"n_exbytes":1,
+	"which_exbyte":0,
+	"which_exbyte_val":1,
+	"smap16":[{
+		"yoff":5,
+		"xoff":3,
+		"tile":"5D9"
+	},{
+		"yoff":5,
+		"xoff":8,
+		"tile":"5D9"
+	},{
+		"tile":"5D1"
+	},{
+		"xoff":"8",
+		"yoff":"-4",
+		"tile":"5E4"
+	}]
+},{
+	"id":"25",
+	"name":"...flying right",
+	"desc":"A Bumpty from Yoshi's Island. This one flies right in a wave pattern, unceasingly.",
+	"category":"snow",
+	"custom":true,
+	"extra_bit":true,
+	"n_exbytes":1,
+	"which_exbyte":0,
+	"which_exbyte_val":3,
+	"smap16":[{
+		"yoff":5,
+		"xoff":-3,
+		"tile":"5DA"
+	},{
+		"yoff":5,
+		"xoff":-8,
+		"tile":"5DA"
+	},{
+		"tile":"5E2"
+	},{
+		"xoff":"-8",
+		"yoff":"-4",
+		"tile":"5E5"
+	}]
+}]

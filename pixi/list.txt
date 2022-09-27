@@ -19,6 +19,7 @@
 16 yiblowhardv2.cfg
 17 floatingrock.cfg
 18 cheep_dolphin.cfg
+19 piranha_fish.cfg
 
 1F star_coin_2.cfg
 20 donutblk.cfg
@@ -36,8 +37,6 @@
 
 49 growing_pipe_49.cfg
 4B PipeLakitu.json
-
-4F piranha_plant_v2.json
 
 54 sideways_ninji.cfg
 

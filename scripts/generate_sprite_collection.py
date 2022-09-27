@@ -71,7 +71,7 @@ def main(argv) -> int:
 	mw2 = None
 	if r.gen_ssc:
 		if r.base_ssc is not None:
-			shutil.copyfile(r.base_ssc, r.name + ".ssc")
+			shutil.copy(r.base_ssc, r.name + ".ssc")
 			ssc = open(r.name + ".ssc", "at")
 		else:
 			ssc = open(r.name + ".ssc", "wt")
@@ -83,15 +83,17 @@ def main(argv) -> int:
 		mw2.write(b'\x00')
 
 	last_id = None
+	last_custom = None
 	for c in collections:
 		if ssc is not None:
 			ssc.write(c.to_ssc_entries())
 		if mwt is not None:
-			mwt.write(c.to_mwt_entry(last_id == c.id))
+			mwt.write(c.to_mwt_entry(last_id == c.id and last_custom == c.custom))
 			mwt.write('\n')
 		if mw2 is not None:
 			mw2.write(c.to_mw2_entry(r.xpos_origin, r.ypos_origin))
 		last_id = c.id
+		last_custom = c.custom
 	if ssc is not None:
 		ssc.close()
 	if mwt is not None:

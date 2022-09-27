@@ -1,4 +1,4 @@
-LUNAR_MAGIC=lunar_magic_331
+LUNAR_MAGIC=lunar_magic_332
 SYM_DIR=.sym
 ASAR=asar --symbols=wla --symbols-path=${SYM_DIR}/$(notdir $@).sym
 TEST_EMU=snes9x-gtk
@@ -154,6 +154,7 @@ statusbar_deps=${sbar_dir}/statusbar_defs.asm \
 	${sbar_dir}/sbar_tilemap_rewrite.asm
 
 pixi_asm_sources= \
+	${PIXI_DIR}/asm/DefaultSize.bin \
 	$(wildcard ${PIXI_DIR}/asm/*.asm) \
 	$(wildcard ${PIXI_DIR}/asm/spriteset/*.asm) \
 	$(wildcard ${PIXI_DIR}/asm/spriteset/remaps/*.asm) \
@@ -232,7 +233,7 @@ ${OVERWORLD_SRC_ROM}: ${OVERWORLD_SRC_P}
 ${ROM_RAW_BASE_SRC}: ${ROM_RAW_BASE_SRC_P}
 	flips --apply ${ROM_RAW_BASE_SRC_P} ${CLEAN_ROM_FULL} ${ROM_RAW_BASE_SRC}
 
-${INIT_LEVEL_TS}: rom_src/smw_orig_105.mwl ${GFX_FAKE_TS}
+${INIT_LEVEL_TS}: rom_src/smw_orig_105.mwl
 	${LUNAR_MAGIC} -ImportLevel ${ROM_NAME} $< 105
 	touch $@
 
@@ -308,6 +309,5 @@ ${SYM_DIR}:
 	mkdir -p ${SYM_DIR}
 
 clean:
-	shopt -s extglob
-	rm -rf ${TS_DIR} ${ROM_NAME_BASE}.!(s16) ${GLOBALANI_SRC_ROM} ${OVERWORLD_SRC_ROM} ${GEN_ROUTINE_FILES} ${SYM_DIR}
+	rm -rf ${TS_DIR} ${GLOBALANI_SRC_ROM} ${OVERWORLD_SRC_ROM} ${GEN_ROUTINE_FILES} ${SYM_DIR} `find -name '${ROM_NAME_BASE}.*' -and -not -name '*.s16'`
 

@@ -21,8 +21,7 @@ Shooter:
 	%ShooterMain_HorzOffscreen()
 	BCS Return
 
-	LDA #$00
-	STA $0F
+	STZ $0F
 	LDA $1783|!Base2,x
 	AND #$40
 	BEQ +
@@ -37,7 +36,9 @@ if !IsCustom
 	JSL $0187A7|!BankB
 	LDA #$88
 	ORA $0F
-	STA !7FAB10,x
+	;ORA !extra_bits,x
+	STA !extra_bits,x
+	;STA !7FAB10,x
 	STZ !C2,x
 else
 	LDA #!Sprite

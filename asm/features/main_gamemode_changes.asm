@@ -1,18 +1,26 @@
 incsrc "../main.asm"
 
 org $00FFD8
-if !use_midway_imem_sram_dma == !true
+;if !use_midway_imem_sram_dma == !true
 	db $04       ; 16kb sram
-else
-	db $01       ; 2kb sram
-endif
+;else
+;	db $01       ; 2kb sram
+;endif
 
+; yoshi wings ani stuff
+org $00A6DE|!bank        ; prevent entrance type 5 from making levels slippery
+BRA $00
 
-; these are just missed by LM's fastrom patch i guess?
-;org $00A299|!bank
-;	JSL $00F6DB|!bank
-;	JSL $05BC00|!bank
-;	JSL $0586F1|!bank
+org $00A704|!bank         ; overwrite Yoshi wings flag check in "Do Nothing" entrance types
+autoclean JML EntranceType5Check
+
+org $00C82A|!bank
+autoclean JML YwingAniType
+
+org $00C836|!bank
+;	db $80
+;	NOP : NOP
+
 
 org $00A261|!bank
 if !dbg_start_select_end_level == !true
@@ -22,7 +30,6 @@ exit_level:
 else
 	LDY !main_level_num
 endif
-
 
 org $00D0E7|!bank
 	db $18       ; gamemode to execute on death
@@ -38,7 +45,33 @@ autoclean \
 	JSL.l gm19
 	RTS
 
-freedata
+freecode
+EntranceType5Check:
+	LDA $192A|!addr       ; Entrance type-- sw___aaa
+	AND #$07
+	BEQ .Return     ; Entrance type should be 0 or 5 here, so do nothing if it's 0
+	JML $00A709|!bank     ; return and set shoot-vertically-upward animation
+.Return
+	JML $00A715|!bank
+
+YwingAniType:   ; check whether animation occurred from Yoshi wings or entrance type 5
+	LDA $192A|!addr
+	AND #$07
+	CMP #$05
+	REP #$20
+	BNE YwingReturn ; if entrance type is not 5, then run Yoshi wings code normally
+	LDA $80         ;\ Mario's on-screen Y-position
+	CMP #$00A0      ;/ if entrance type is 5, then always stop at #$00A0 (can be adjusted)
+	SEP #$20
+	BPL +
+	STZ $71         ; reset Mario's animation
+	+
+	JML $00CD8F|!bank     ; return, bypassing code to set Yoshi wings flag
+
+YwingReturn:
+	LDY $1B95|!addr       ; restore overwritten code
+	JML $00C82F|!bank
+
 gm19:
 	; setup next game mode
 	LDA.b #$10

@@ -13,7 +13,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
         !DONUT_MAP16_NUM = $0153             ; map16 value of the donut block in hex        
-        !DONUT_SPRITE_TILE = $0E             ; graphic tile to use for donut sprite
+        !DONUT_SPRITE_TILE = $4E             ; graphic tile to use for donut sprite
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; init JSL
@@ -132,7 +132,6 @@ DONUT_GRAPHICS:
 		STA $0301|!Base2,y      ; /
 
 		LDA #!DONUT_SPRITE_TILE ; \ store tile
-		CLC : ADC !tile_off_scratch
 		STA $0302|!Base2,y      ; /
 
 		LDA !15F6,x             ; tile properties xyppccct, format

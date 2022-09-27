@@ -227,7 +227,7 @@ if !pixi_installed
 	dw spritesets_null_spriteset          ; custom sprite 13 - yi pswitch (dyn)
 	dw spritesets_null_spriteset          ; custom sprite 14 - yi chomp rock (dyn)
 	dw spritesets_null_spriteset          ; custom sprite 15 - yi woozy guy (dyn)
-	dw spritesets_null_spriteset          ; custom sprite 16 - yi blowhard (partial dyn)
+	dw spritesets_blowhard                ; custom sprite 16 - yi blowhard (partial dyn)
 	dw spritesets_null_spriteset          ; custom sprite 17 - yi floating rock (dyn)
 	dw spritesets_fish                    ; custom sprite 18 - fish that jumps like dolphin
 	dw spritesets_null_spriteset          ; custom sprite 19
@@ -240,8 +240,8 @@ if !pixi_installed
 	dw spritesets_null_spriteset          ; custom sprite 20
 	dw spritesets_null_spriteset          ; custom sprite 21
 	dw spritesets_boo_booblock            ; custom sprite 22 - boo ring
-	dw spritesets_null_spriteset          ; custom sprite 23 - a fucking leaf
-	dw spritesets_null_spriteset          ; custom sprite 24
+	dw spritesets_falling_leaf            ; custom sprite 23 - a fucking leaf
+	dw spritesets_needlenose              ; custom sprite 24 - needlenose
 	dw spritesets_bumpty                  ; custom sprite 25 - bumpty
 	dw spritesets_null_spriteset          ; custom sprite 26
 	dw spritesets_null_spriteset          ; custom sprite 27
@@ -749,7 +749,7 @@ endif
 .parabeetle:
 .rock_grass_plats:
 .wood_checkered_plats:
-	db $80,$00,$A0,$00,$00,$00,$00,$00    ; spritesets 00-07
+	db $80,$A0,$A0,$00,$00,$00,$00,$00    ; spritesets 00-07
 	db $40,$00,$00,$80,$A0,$00,$00,$00    ; spritesets 08-0F
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 10-17
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 18-1F
@@ -851,6 +851,18 @@ endif
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 28-2F
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 30-37
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 38-3F
+.blowhard:
+.needlenose:
+.falling_leaf:
+	db $00,$60,$00,$00,$00,$00,$00,$00    ; spritesets 00-07
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 08-0F
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 10-17
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 18-1F
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 20-27
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 28-2F
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 30-37
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 38-3F
+
 
 if !hijack_lm_code == 0
 ;
@@ -860,7 +872,7 @@ else
 ; NOTE: In other words, the rightmost entry is uploaded at the lowest VRAM address.
 spriteset_gfx_listing:
 	dw $007F,$007F,$010D,$0108,$010B,$010A,$0104,$0103		; spriteset 00: chargin, clappin chucks, cloud drop, grass plat w beetles/beezos, piranha plants
-	dw $007F,$007F,$007F,$010D,$007F,$011F,$0115,$0102		; spriteset 01: fish, nipper, lakitu, rip van fish, blurp
+	dw $007F,$007F,$0108,$010D,$0116,$011F,$0115,$0102		; spriteset 01: fish, nipper, lakitu, rip van fish, blurp, needlenose, gras plat w/beezo, buzzy beetle
 	dw $007F,$007F,$0108,$010B,$010A,$0105,$0104,$0103		; spriteset 02: ss 00 alt: no piranhas, adds pitchin chucks
 	dw $007F,$007F,$0117,$0124,$0112,$0116,$0114,$0111		; spriteset 03: dolphins, porcupuffer
 	dw $0105,$0110,$0104,$011A,$010A,$0109,$0108,$0107		; spriteset 04: all chucks, spike top, buzzy, swooper, blargg
@@ -875,7 +887,7 @@ spriteset_gfx_listing:
 	dw $007F,$007F,$007F,$00E0,$007F,$007F,$007F,$0013		; spriteset 0D: testing (replace later)
 	dw $007F,$007F,$007F,$007F,$0105,$0104,$0103,$0107		; spriteset 0E: chucks + kickin chuck, volc lotus
 	dw $007F,$007F,$007F,$007F,$0122,$0121,$0120,$0123		; spriteset 0F: dry bones/bony/beetle/pencil/grinder/castle block/reflec ball
-	dw $007F,$007F,$007F,$007F,$007F,$0107,$0124,$010D		; spriteset 10: piranhas, expanding pipes
+	dw $007F,$007F,$007F,$007F,$007F,$0107,$0124,$010D		; spriteset 10: piranhas, expanding pipes, lotus
 	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 11: none
 	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 12: none
 	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 13: none

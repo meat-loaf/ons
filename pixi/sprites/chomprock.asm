@@ -36,6 +36,13 @@ prot SPRITEGFX
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 		PRINT "INIT ",pc
+init:
+		LDA !extra_bits,x
+		AND #$04
+		BEQ .no_alt_pal
+		LDA #$0D
+		STA !sprite_oam_properties,x
+.no_alt_pal:
 		LDA $E4,x
 		STA !STARTOFFSET,x
 		JSR STORE_POS
@@ -47,7 +54,7 @@ prot SPRITEGFX
 		PLB				
 		JSR SPRITE_ROUTINE	
 		PLB
-		RTL     
+		RTL
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -468,8 +475,8 @@ NOYOSHI2:
 		JSR STORE_POS		; store sprite's current position for reference in next frame
 		JSR POSOFFSETEND	; reverse interaction improvement offset
 
-		JSL $01802A		; update position based on speed values
-		JSL $018032		; interact with other sprites      
+		JSL $01802A|!bank	; update position based on speed values
+		JSL $018032|!bank	; interact with other sprites      
 RETURN:		RTS
 
 ;; This temporarily offsets mario's and the sprite's
@@ -528,12 +535,12 @@ KILL_LOOP:	CPY #$00		; \ zero? if so,
 		LDA $167A,y		; \  if sprite doesn't
 		AND #%00000010		;  | interact with stars/cape/fire/bricks
 		BNE KILL_LOOP		; /  don't continue
-		JSL $03B69F		; \
+		JSL $03B69F|!bank		; \
 		PHX			;  | if sprite is
 		TYX			;  | not touching
-		JSL $03B6E5		;  | this sprite
+		JSL $03B6E5|!bank		;  | this sprite
 		PLX			;  | don't continue
-		JSL $03B72B		;  |
+		JSL $03B72B|!bank		;  |
 		BCC KILL_LOOP		; /
 		LDA #!SPRITEKILLSND	; \ play kill
 		STA $1DFC		; / sound
@@ -664,7 +671,7 @@ SETTILES:	LDA !TILESDRAWN		; \ don't do it
 		BEQ NODRAW		; / if no tiles
 		LDY #$02		; #$02 means 16x16
 		DEC A			; A = # tiles - 1
-		JSL $01B7B3		; don't draw if offscreen
+		JSL finish_oam_write|!bank
 NODRAW:		RTS
 
 SPRITEGFX:

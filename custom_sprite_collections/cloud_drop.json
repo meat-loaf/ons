@@ -1,7 +1,122 @@
 [{
 	"id":"02",
-	"name":"Cloud Drop (up, 5 tiles)",
-	"desc":"A Cloud Drop from Yoshi's Island. It flies up, then down over a range of 5 tiles.",
+	"name":"Cloud Drop (left, 3 tiles)",
+	"desc":"A Cloud Drop from Yoshi's Island. It flies left, then right over a range of 3 tiles. Its position can be offset with the second extra byte (YX).",
+	"category": "athletic",
+	"display_xoff": 0,
+	"display_yoff": 0,
+	"custom": true,
+	"extra_bit": false,
+	"n_exbytes": 2,
+	"which_exbyte": 0,
+	"which_exbyte_val": "20",
+	"reqfiles": [{ "sp3" : "100" }, {"sp3": "102"}],
+	"smap16":[{
+			"tile":"50C"
+		},{
+			"xoff":"10",
+			"tile":"50D"
+		}]
+},{
+	"id":"02",
+	"name":"Cloud Drop (right, 3 tiles)",
+	"desc":"A Cloud Drop from Yoshi's Island. It flies right, then left over a range of 3 tiles. Its position can be offset with the second extra byte (YX).",
+	"category": "athletic",
+	"display_xoff": 0,
+	"display_yoff": 0,
+	"custom": true,
+	"extra_bit": false,
+	"n_exbytes": 2,
+	"which_exbyte": 0,
+	"which_exbyte_val": "9F",
+	"reqfiles": [{ "sp3" : "100" }, {"sp3": "102"}],
+	"smap16":[{
+			"tile":"51D"
+		},{
+			"xoff":"-10",
+			"tile":"51C"
+		}]
+},{
+	"id":"02",
+	"name":"Cloud Drop (left, 4 tiles)",
+	"desc":"A Cloud Drop from Yoshi's Island. It flies left, then right over a range of 4 tiles. Its position can be offset with the second extra byte (YX).",
+	"category": "athletic",
+	"display_xoff": 0,
+	"display_yoff": 0,
+	"custom": true,
+	"extra_bit": false,
+	"n_exbytes": 2,
+	"which_exbyte": 0,
+	"which_exbyte_val": "27",
+	"reqfiles": [{ "sp3" : "100" }, {"sp3": "102"}],
+	"smap16":[{
+			"tile":"50C"
+		},{
+			"xoff":"10",
+			"tile":"50D"
+		}]
+},{
+	"id":"02",
+	"name":"Cloud Drop (right, 4 tiles)",
+	"desc":"A Cloud Drop from Yoshi's Island. It flies right, then left over a range of 4 tiles. Its position can be offset with the second extra byte (YX).",
+	"category": "athletic",
+	"display_xoff": 0,
+	"display_yoff": 0,
+	"custom": true,
+	"extra_bit": false,
+	"n_exbytes": 2,
+	"which_exbyte": 0,
+	"which_exbyte_val": "A7",
+	"reqfiles": [{ "sp3" : "100" }, {"sp3": "102"}],
+	"smap16":[{
+			"tile":"51D"
+		},{
+			"xoff":"-10",
+			"tile":"51C"
+		}]
+},{
+	"id":"02",
+	"name":"Cloud Drop (left, 6 tiles)",
+	"desc":"A Cloud Drop from Yoshi's Island. It flies left, then right over a range of 6 tiles. Its position can be offset with the second extra byte (YX).",
+	"category": "athletic",
+	"display_xoff": 0,
+	"display_yoff": 0,
+	"custom": true,
+	"extra_bit": false,
+	"n_exbytes": 2,
+	"which_exbyte": 0,
+	"which_exbyte_val": "35",
+	"reqfiles": [{ "sp3" : "100" }, {"sp3": "102"}],
+	"smap16":[{
+			"tile":"50C"
+		},{
+			"xoff":"10",
+			"tile":"50D"
+		}]
+},{
+
+	"id":"02",
+	"name":"Cloud Drop (right, 6 tiles)",
+	"desc":"A Cloud Drop from Yoshi's Island. It flies right, then left over a range of 6 tiles. Its position can be offset with the second extra byte (YX).",
+	"category": "athletic",
+	"display_xoff": 0,
+	"display_yoff": 0,
+	"custom": true,
+	"extra_bit": false,
+	"n_exbytes": 2,
+	"which_exbyte": 0,
+	"which_exbyte_val": "B5",
+	"reqfiles": [{ "sp3" : "100" }, {"sp3": "102"}],
+	"smap16":[{
+			"tile":"51D"
+		},{
+			"xoff":"-10",
+			"tile":"51C"
+		}]
+},{
+	"id":"02",
+	"name":"Cloud Drop (down, 3 tiles)",
+	"desc":"A Cloud Drop from Yoshi's Island. It flies down, then up over a range of 3 tiles. Its position can be offset with the second extra byte (YX).",
 	"category": "athletic",
 	"display_xoff": 0,
 	"display_yoff": 0,
@@ -9,14 +124,69 @@
 	"extra_bit": true,
 	"n_exbytes": 2,
 	"which_exbyte": 0,
-	"which_exbyte_val": "2D",
+	"which_exbyte_val": "A0",
 	"reqfiles": [{ "sp3" : "100" }, {"sp3": "102"}],
 	"smap16":[{
-			"xoff":0,
-			"yoff":0,
+			"tile":"51B"
+		},{
+			"yoff":"-10",
+			"tile":"50B"
+		}]
+},{
+	"id":"02",
+	"name":"Cloud Drop (up, 3 tiles)",
+	"desc":"A Cloud Drop from Yoshi's Island. It flies up, then down over a range of 3 tiles. Its position can be offset with the second extra byte (YX).",
+	"category": "athletic",
+	"display_xoff": 0,
+	"display_yoff": 0,
+	"custom": true,
+	"extra_bit": true,
+	"n_exbytes": 2,
+	"which_exbyte": 0,
+	"which_exbyte_val": "20",
+	"reqfiles": [{ "sp3" : "100" }, {"sp3": "102"}],
+	"smap16":[{
 			"tile":"50A"
 		},{
-			"xoff":0,
+			"yoff":"10",
+			"tile":"51A"
+		}
+	]
+},{
+	"id":"02",
+	"name":"Cloud Drop (down, 4 tiles)",
+	"desc":"A Cloud Drop from Yoshi's Island. It flies down, then up over a range of 4 tiles. Its position can be offset with the second extra byte (YX).",
+	"category": "athletic",
+	"display_xoff": 0,
+	"display_yoff": 0,
+	"custom": true,
+	"extra_bit": true,
+	"n_exbytes": 2,
+	"which_exbyte": 0,
+	"which_exbyte_val": "A7",
+	"reqfiles": [{ "sp3" : "100" }, {"sp3": "102"}],
+	"smap16":[{
+			"tile":"51B"
+		},{
+			"yoff":"-10",
+			"tile":"50B"
+		}]
+},{
+	"id":"02",
+	"name":"Cloud Drop (up, 4 tiles)",
+	"desc":"A Cloud Drop from Yoshi's Island. It flies up, then down over a range of 4 tiles. Its position can be offset with the second extra byte (YX).",
+	"category": "athletic",
+	"display_xoff": 0,
+	"display_yoff": 0,
+	"custom": true,
+	"extra_bit": true,
+	"n_exbytes": 2,
+	"which_exbyte": 0,
+	"which_exbyte_val": "27",
+	"reqfiles": [{ "sp3" : "100" }, {"sp3": "102"}],
+	"smap16":[{
+			"tile":"50A"
+		},{
 			"yoff":"10",
 			"tile":"51A"
 		}
@@ -24,7 +194,7 @@
 },{
 	"id":"02",
 	"name":"Cloud Drop (down, 5 tiles)",
-	"desc":"A Cloud Drop from Yoshi's Island. It flies down, then up over a range of 5 tiles.",
+	"desc":"A Cloud Drop from Yoshi's Island. It flies down, then up over a range of 5 tiles. Its position can be offset with the second extra byte (YX).",
 	"category": "athletic",
 	"display_xoff": 0,
 	"display_yoff": 0,
@@ -42,6 +212,29 @@
 			"xoff":0,
 			"yoff":"-10",
 			"tile":"50B"
+		}
+	]
+},{
+	"id":"02",
+	"name":"Cloud Drop (up, 5 tiles)",
+	"desc":"A Cloud Drop from Yoshi's Island. It flies up, then down over a range of 5 tiles. Its position can be offset with the second extra byte (YX).",
+	"category": "athletic",
+	"display_xoff": 0,
+	"display_yoff": 0,
+	"custom": true,
+	"extra_bit": true,
+	"n_exbytes": 2,
+	"which_exbyte": 0,
+	"which_exbyte_val": "2D",
+	"reqfiles": [{ "sp3" : "100" }, {"sp3": "102"}],
+	"smap16":[{
+			"xoff":0,
+			"yoff":0,
+			"tile":"50A"
+		},{
+			"xoff":0,
+			"yoff":"10",
+			"tile":"51A"
 		}
 	]
 }

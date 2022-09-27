@@ -1,0 +1,93 @@
+[{
+	"id":"23",
+	"name":"Falling Leaf (starts moving right)",
+	"desc":"A leaf that falls, which can be used as a platform. It starts out moving right.",
+	"category": "generic",
+	"display_xoff": 0,
+	"display_yoff": 0,
+	"custom": true,
+	"extra_bit": false,
+	"n_exbytes": 0,
+	"reqfiles": { "sp3":"101" },
+	"smap16":[{
+			"xoff":0,
+			"yoff":"0",
+			"tile":"57C"
+		},{
+			"xoff":"10",
+			"yoff":"0",
+			"tile":"57D"
+		}
+	]
+},{
+	"id":"23",
+	"name":"Falling Leaf (starts moving left)",
+	"desc":"A leaf that falls, which can be used as a platform. It starts out moving left.",
+	"category": "generic",
+	"display_xoff": 0,
+	"display_yoff": 0,
+	"custom": true,
+	"extra_bit": true,
+	"reqfiles": { "sp3":"101" },
+	"n_exbytes": 0,
+	"smap16":[{
+			"xoff":0,
+			"yoff":"0",
+			"tile":"59C"
+		},{
+			"xoff":"10",
+			"yoff":"0",
+			"tile":"59D"
+		}
+	]
+},{
+	"id":"C0",
+	"name":"Falling Leaf shooter (starts moving right)",
+	"desc":"A shooter that spawns one falling leaf periodically. The leaf starts out moving right.",
+	"category": "generic",
+	"display_xoff": 0,
+	"display_yoff": 0,
+	"custom": true,
+	"extra_bit": false,
+	"reqfiles": { "sp3":"101" },
+	"n_exbytes": 0,
+	"smap16":[{
+			"xoff":0,
+			"yoff":"0",
+			"tile":"57C"
+		},{
+			"xoff":"10",
+			"yoff":"0",
+			"tile":"57D"
+		},{
+			"xoff":"-8",
+			"yoff":"-10",
+			"tile":"58C"
+		}
+	]
+},{
+	"id":"C0",
+	"name":"Falling Leaf shooter (starts moving left)",
+	"desc":"A shooter that spawns one falling leaf periodically. The leaf starts out moving left.",
+	"category": "generic",
+	"display_xoff": 0,
+	"display_yoff": 0,
+	"custom": true,
+	"extra_bit": true,
+	"reqfiles": { "sp3":"101" },
+	"n_exbytes": 0,
+	"smap16":[{
+			"xoff":0,
+			"yoff":"0",
+			"tile":"59C"
+		},{
+			"xoff":"10",
+			"yoff":"0",
+			"tile":"59D"
+		},{
+			"xoff":"-8",
+			"yoff":"-10",
+			"tile":"58C"
+		}
+	]
+}]

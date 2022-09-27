@@ -9,6 +9,19 @@ MarioSide:
 	LDA $16
 	AND #%01000000
 	BEQ ret
+	LDX !num_sprites-1
+.loop
+	LDA !14C8,x
+	BEQ .next
+	CMP #$08
+	BCC .next
+	LDA !9E,x
+	CMP #$53
+	BEQ ret
+.next:
+	DEX
+	BPL .loop
+
 	LDA #$53
 	%spawn_sprite()
 	BCS ret
