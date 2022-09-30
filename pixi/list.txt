@@ -34,6 +34,7 @@
 3A fly_guy.cfg
 
 41 dry_dolphin.cfg
+42 roto_disc_custom.cfg
 
 49 growing_pipe_49.cfg
 4B PipeLakitu.json

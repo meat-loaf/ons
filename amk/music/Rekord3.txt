@@ -1,0 +1,198 @@
+#amk 2
+
+; SPC Generator Info
+#SPC
+{
+    #author  "Mr. Fantastic of Mangoo"
+    #title   "Rekord 3"
+    #comment "Ported by Ahrion"
+}
+
+#path "Rekord3"
+
+#samples
+{
+	#default
+	"Sample01.brr"
+	"Sample02.brr"
+	"Sample03.brr"
+	"Sample04.brr"
+	"Sample05.brr"
+	"Sample06.brr"
+	"Sample07.brr"
+	"Sample08.brr"
+	"Sample09.brr"
+	"Sample10.brr"
+}
+
+#instruments
+{
+	"Sample01.brr"	$FF $E0 $7F $04 $00 ; @30
+	"Sample02.brr"	$FF $E0 $7F $04 $00 ; @31
+	"Sample03.brr"	$FF $E0 $7F $04 $00 ; @32
+	"Sample04.brr"	$FF $E0 $7F $04 $00 ; @33
+	"Sample05.brr"	$FF $E0 $7F $04 $00 ; @34
+	"Sample06.brr"	$FF $E0 $7F $04 $00 ; @35
+	"Sample07.brr"	$FF $F6 $7F $04 $00 ; @36
+	"Sample08.brr"	$FF $E8 $7F $04 $00 ; @37
+	"Sample09.brr"	$FF $E0 $7F $04 $00 ; @38
+	"Sample10.brr"	$FF $E0 $7F $04 $00 ; @39
+}
+
+
+w220
+t52
+
+
+"Guitar1 = v170"
+"Guitar2 = v115"
+"Guitar3 = v90"
+"Guitar4 = v65"
+"Guitar5 = v150"
+"Guitar6 = v85"
+"Fade1 = $E8 $0C $60"
+"Fade2 = $E8 $0C $3D"
+"Bass1 = v220"
+"Bass2 = v195"
+"Sine1 = v105"
+"Sine2 = v60"
+
+"Kick = v190"
+"Snare = v190"
+"Cymbal = v180"
+
+"Shaker1 = v165"
+"Shaker2 = v115"
+
+
+"VIB1 = $DE $00 $0D $18"
+
+
+$F4 $02
+
+; +---------------------+
+; |     Channel #0	|
+; +---------------------+
+
+#0
+o3
+(11)[
+@34 Guitar1 g8 Guitar2 g16 @33 Guitar1 g8 Guitar2 g16 @32 Guitar1 g8 @34 Fade1 g16 Guitar1 g8 Fade1 g16 @32 Guitar1 g64^192 r32^96 @35 Guitar5 g8.
+@32 Guitar1 g8 @34 Fade1 g16 Guitar1 g96 r32^64^192 @33 $F4 $01 g16 a8 $F4 $01 @34 Fade1 g16 @35 Guitar5 g8 @32 Guitar1 g8 @33 g16 @34 Fade1 f16 Guitar1 f+8]4
+
+/
+
+(11)3
+[[@37 Sine1 e8 VIB1 ^16. r32 $DF e32^96 r8^16^64^192 f+16 VIB1 ^16. r32 $DF a32^96 r8^64^192 b8 VIB1 ^16. r32 $DF b32^96 r8^16^64^192 g32^96 r8^64^192 g32^96 r8^64^192 a16 VIB1 ^16. $DF r16.]]4
+(11)4
+
+<
+[[@37 Sine1 $ED $7F $E4 b1 > c+1 < a1^1]]4
+>
+
+(11)
+
+
+; +---------------------+
+; |     Channel #1	|
+; +---------------------+
+
+#1
+o3
+
+[[r2]]16
+
+/
+
+
+(21)[@37 Sine1 g16 Fade2 ^16 Sine1 Fade2 g16 Sine2 g8 Sine1 g16 Fade2 ^16 Sine2 g16 Sine1 g16 Fade2 ^16 Sine1 g16 g16 Sine2 g8 g8 g8 Sine1 g16 Sine2 g8 g8 Sine1 g16 Sine2 g8 Sine1 g16 g16 Sine2 a8 a8]3
+
+[[>
+
+Sine1 g8 VIB1 ^16. r32 $DF g32^96 r8^16^64^192 f+16 VIB1 ^16. r32 $DF f+32^96 r8^64^192 e8 VIB1 ^16. r32 $DF e32^96 r8^16^64^192 e32^96 r8^64^192 e32^96 r8^64^192 f+16 VIB1 ^16. $DF r16. <]]4
+
+(21)4
+
+[[Sine1 $ED $7F $E4 d1 e1 c+1^1]]4
+
+(21)
+
+
+
+; +---------------------+
+; |     Channel #2	|
+; +---------------------+
+
+#2
+
+o4
+
+[[r2]]8
+[
+[[@38 Shaker1 f8 Shaker2 f8]]3
+Shaker1 f8
+@39 Cymbal f8 @38 Shaker1 f8 Shaker2 f8 Shaker1 f8 Shaker2 f8 Shaker1 f8 @39 Cymbal f8 @38 Shaker1 f8 @39 Cymbal f8]2
+
+/
+
+(31)[@30 Kick c+16 @38 Shaker1 f16 f16 @30 Kick c+16 @31 c+16 @38 Shaker1 f16 f16 @30 Kick c+16 @38 Shaker1 f16 f16 @30 Kick c+16 @38 Shaker1 f16 @31 Snare c+16 @39 Cymbal f16 @38 Shaker1 f16 Shaker2 f32 f32]6
+
+[[@30 Kick c+16 @32 Guitar1 < a16 > @38 Shaker1 f16 @35 Guitar5 < a16 > @31 Snare c+16 @33 Guitar1 < g16 > @38 Shaker1 f16 @32 Guitar1 e16 @30 Kick c+8 @38 Shaker1 f16 @34 Guitar1 c16 @31 Snare c+16 @35 Guitar5 < g16 > @38 Shaker1 f16 @34 Guitar1 < a16 > @30 Kick c+8 @38 Shaker1 f16 @35 Guitar5 < a16 > @31 Snare c+8 @38 Shaker1 f16 @34 Guitar1 c16 @30 Kick c+16 @38 Shaker1 f16 f16 @39 Cymbal f16 @31 Snare c+8 @30 c+8]]4
+
+(31)8
+
+[[
+(32)[@30 Kick c+8 @38 Shaker1 f16 @31 Snare c+16 @38 Shaker1 f16 f16 @30 Kick c+8 c+8 @39 Cymbal f8 @31 Snare] c+8 @39 Cymbal f8
+(32) c+16 @38 Shaker1 f16 f16 Shaker1 f32 f32
+(33)[@30 Kick c+16 @38 Shaker1 f16 f16 @30 Kick c+16 @31 c+16 @39 Cymbal f16 @38 Shaker1 f16 @30 Kick c+16 @38 Shaker1 f16 f16 @30 Kick c+16 @38 Shaker1 f16 @31 Snare c+16 @39 Cymbal f16 @38 Shaker1 f16] Shaker2 f32 f32
+(33) @31 Snare c+16
+]]4
+
+(31)2
+
+
+
+; +---------------------+
+; |     Channel #3	|
+; +---------------------+
+
+#3
+o3
+
+r8
+(41)[
+@34 Guitar3 g8 Guitar4 g16 @33 Guitar3 g8 Guitar4 g16 @32 Guitar3 g8 @34 g16 g8 g16 @32 g64^192 r32^96 @35 Guitar6 g8.
+@32 Guitar3 g8 @34 g16 g96 r32^64^192 @33 $F4 $01 g16 a8 $F4 $01 @34 g16 @35 Guitar6 g8 @32 Guitar3 g8 @33 g16
+]
+@34 f8.
+
+[[
+(41)
+@34 f16 f+8
+]]2
+
+(41)
+@34 f16
+
+/
+
+
+(42)[@36 Bass1 f+8 f+16 > e8 < f+16 e16 f16 f+16 f+8 f+8 > f+16 < e8 e16 f16 f+16 f+16 > e16 f+16 e16 < f+16 > a16 < c+16 e8 > e16 < e16 f8]3
+
+[[f+8 f+16 > f+16 < @33 a16 @36 Bass1 e16 f+8 g+8 > g+16 < b16 < b8 > c+8 > @34 Guitar1 d16 < @36 Bass1 c+16 > c+8 < c+8 g+16 a16 @33 Guitar1 g16 @36 Bass1 a16 > @34 Guitar1 d16 < @36 Bass1 e16 g+4]]4
+
+(42)4
+
+[[Bass2 $ED $7F $ED
+c+8. > c+8 < b16 g+8 f+8 > f+8 < e8 > e8 < d+8. > d+8 < c+16 d8 d+8 > d+8 < f+8 > f+8 <
+(43)[@36 Bass2 $ED $7F $ED g+8 g+8 g+16 f+8 f+16 g+8 f+16 g+8 g+16 f+16 d+16 g+8 g+8 g+16 f+8 f+16 g+8 f+16 g+8 g+16 f+16 d+16]
+]]2
+
+(44)[@36 $ED $7F $ED Bass2 c+8 @32 Guitar1 a8 @34 a8 @32 Guitar2 a16 @34 a16 @35 Guitar5 a8 @34 Guitar1 Fade1 a16 @35 Guitar3 a16 @33 Guitar1 a8 b16 Guitar3 a16 @36 Bass2 $ED $7F $ED d+8 @32 Guitar1 a8 @34 a8 @32 Guitar2 a16 @34 a16 Guitar1 b16 $DD $00 $04 >c < Guitar3 a16 Guitar1 Fade1 > c16 < Guitar1 Fade1 a16 @33 Guitar1 Fade1 a16 Guitar1 b8 Fade1 b16]
+(43)
+(44)
+
+@36 $ED $7F $ED Bass2 g+8 @32 Guitar1 a8 @34 a16 @33 Fade1 b16 @34 Guitar1 Fade1 a16 Guitar2 g16 @35 Guitar5 a8 @34 Guitar1 Fade1 a16 @32 Guitar1 Fade1 b16 @33 Guitar1 a16 b16 @36 Fade1 f+16 @33 Guitar3 b16
+@36 $ED $7F $ED Bass2 g+8 @32 Guitar1 a8 @34 a16 @33 Fade1 b16 @34 Guitar2 a16 Guitar1 Fade1 > c16 < Guitar1 b16 $DD $00 $04 >c < Guitar3 a16 Guitar1 > c16 < Fade1 a16 @33 Guitar1 Fade1 a16 Guitar1 b8 Guitar3 b16
+
+(42)

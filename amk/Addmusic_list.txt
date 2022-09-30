@@ -26,3 +26,4 @@ Locals:
 19  snow_road.txt
 
 1E  sfii_insert_coin.txt
+1F  Rekord3.txt

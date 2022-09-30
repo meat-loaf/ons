@@ -56,12 +56,12 @@ CustExObjAD:
 CustExObjAE:
 CustExObjAF:
 CustExObjB0:
-	LDA !ext_obj_type
-	SEC : SBC #!cluster_exobjs_start
-	JMP ClusterExObjects
 CustExObjB1:
 CustExObjB2:
 CustExObjB3:
+	LDA !ext_obj_type
+	SEC : SBC #!cluster_exobjs_start
+	JMP ClusterExObjects
 CustExObjB4:
 CustExObjB5:
 CustExObjB6:
@@ -3007,7 +3007,7 @@ DoubleTallHorzObjAlternateRows:
 ; dimensions of extended objects consisting of a large group of tiles: low nybble is width (minus 1), high nybble is height (minus 1)
 ClusterExObjSize:
 	db $33,$33,$33,$34,$33,$14,$22
-	db $22,$01,$01,$14
+	db $22,$01,$01,$14,$22,$22,$11
 
 ; pointers to the tilemaps of extended objects consisting of a large group of tiles (index 00 will use a table starting at the specified scratch RAM address plus 1)
 ClusterExObjPtrs:
@@ -3022,6 +3022,9 @@ ClusterExObjPtrs:
 	dw .PipeTurnWater1
 	dw .PipeTurnWater2
 	dw .CenterPipeU
+	dw .UpsSteepNormSlopeDecorativeL
+	dw .UpsSteepNormSlopeDecorativeR
+	dw .SmallFloatingPlat
 
 .WindowEqualDiamondP2
 	dw $FFFF,$01ED,$01EC,$FFFF
@@ -3066,6 +3069,17 @@ ClusterExObjPtrs:
 .CenterPipeU
 	dw $04CB,$04CC,$04CD,$04CE,$04CF
 	dw $04DB,$04DC,$04DD,$04DE,$04DF
+.UpsSteepNormSlopeDecorativeL:
+	dw $0496,$00EA,$00EA
+	dw $04A6,$0498,$0499
+	dw $FFFF,$04A8,$04A9
+.UpsSteepNormSlopeDecorativeR:
+	dw $00EA,$00EA,$0497
+	dw $049A,$049B,$04A7
+	dw $04AA,$04AB,$FFFF
+.SmallFloatingPlat
+	dw $0101,$0103
+	dw $04A6,$04A7
 
 
 ;------------------------------------------------
