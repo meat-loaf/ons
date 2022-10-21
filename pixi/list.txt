@@ -10,6 +10,8 @@
 09 cobrat.cfg
 0A nipper_smb3.cfg
 
+0B sakasa.json
+
 10 arrowlift.cfg
 11 yispike.cfg
 12 spikemace.cfg
@@ -35,6 +37,7 @@
 
 41 dry_dolphin.cfg
 42 roto_disc_custom.cfg
+43 roto_disc_custom.cfg
 
 49 growing_pipe_49.cfg
 4B PipeLakitu.json
@@ -42,6 +45,7 @@
 54 sideways_ninji.cfg
 
 60 flat_switch_60.cfg
+61 SMWSDIS_61_floatingskulls.json
 
 70 sandstormspawn.json
 

@@ -10,7 +10,7 @@ prot SPRITEGFX
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 	!mace_sprite_num = $12           ; sprite number of mace
-	!throw_time = $60                ; time (if uninterrupted) between throws
+	!throw_time = $40                ; time (if uninterrupted) between throws
 	!spit_y_range = $50              ; how close (Y) mario must be to spit
 
 	!jump_y_speed = $E8              ; Y speed of jump
@@ -449,8 +449,6 @@ DRAW_PENGUIN:
 	LDY !tile_num,x          ; | tile
 	LDA TILES,y              ; | number
 	PLY                      ; |
-	CLC
-	ADC !tile_off_scratch
 	STA $0302|!addr,y        ; /
 	LDA !15F6,x              ; get props
 	PHX                      ; \

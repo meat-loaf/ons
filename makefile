@@ -160,6 +160,7 @@ pixi_asm_sources= \
 	$(wildcard ${PIXI_DIR}/asm/spriteset/remaps/*.asm) \
 	$(wildcard ${PIXI_DIR}/routines/*.asm) \
 	$(wildcard ${sprites_dir}/*.asm) \
+	$(wildcard ${sprites_dir}/*.bin) \
 	$(wildcard ${sprites_dir}/**/*.asm) \
 	$(wildcard ${sprites_dir}/**/*.cfg) \
 	$(wildcard ${sprites_dir}/*.cfg) \
@@ -238,7 +239,7 @@ ${INIT_LEVEL_TS}: rom_src/smw_orig_105.mwl
 	touch $@
 
 ${AMK_FAKE_TS}: ${AMK_MUSIC_DEPS} ./amk/Addmusic_list.txt ./amk/Addmusic_sample\ groups.txt ./amk/Addmusic_sound\ effects.txt ./amk/asm/InstrumentData.asm
-	cd ./amk && WINEPREFIX=~/.wineprefix/smw_amk wine AddmusicK.exe ../${ROM_NAME}
+	cd ./amk && ./amk ../${ROM_NAME}
 	touch $@
 
 ${PIXI_FAKE_TS}: ${pixi_asm_sources} ${PIXI_LIST} ${INIT_LEVEL_TS} ${OBJTOOL_TS} ${ASM_HEADERS}

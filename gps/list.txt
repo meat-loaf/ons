@@ -1,10 +1,10 @@
 ; GPS block list
 009E:0025        teleport_accurate.asm
-00A0:0025        midway.asm
-00A1:0025        midway.asm
-00A2:0025        midway.asm
-00A3:0025        midway.asm
-00A4:0025        midway.asm
+00D0:0025        midway.asm
+00D1:0025        midway.asm
+00D2:0025        midway.asm
+00D3:0025        midway.asm
+00D4:0025        midway.asm
 
 002C:0025        red_coin.asm
 00E0:0130        item_blocks/rcoin_blocks.asm
@@ -26,12 +26,12 @@
 
 0374:0025        frame/hurt_frames_0_7.asm
 0375:0025        frame/hurt_frames_8_F.asm
-03A8:0000        waterfall2.asm
-03A9:0130        waterfall.asm
-03AA:0000        waterfall2.asm
-03AB:0130        waterfall.asm
-03B9:0130        solids/mario_actslike_sprite_water.asm
-03BB:0130        solids/mario_actslike_sprite_water.asm
+00B4:0000        waterfall2.asm
+00B5:0130        waterfall.asm
+00B6:0000        waterfall2.asm
+00B7:0130        waterfall.asm
+00B9:0130        solids/mario_actslike_sprite_water.asm
+00BB:0130        solids/mario_actslike_sprite_water.asm
 03BE:0130        solids/onoff_switch_act_reversed.asm
 03CE:0130        solids/onoff_switch_act.asm
 03CF:0130        solids/mario_solid.asm
@@ -234,10 +234,6 @@
 02D	0	The bottom of a 16x32 key block (not functional). Only used for Lunar Magic's display; use extended object 41 instead.
 02E	0	The top of a 16x32 key block (not functional). Only used for Lunar Magic's display; use extended object 41 instead.
 04A	0	A bush tile. Used in the display of custom object 2D.
-0A8	0	Part of a waterfall (not functional). Only used for Lunar Magic's dispay; use object 19 instead.
-0A9	0	Part of a waterfall that is solid to Mario unless he stands on it for too long (not functional). Only used for Lunar Magic's dispay; use object 19 with something behind it instead.
-0AA	0	The top of a waterfall (not functional). Only used for Lunar Magic's dispay; use object 19 instead.
-0AB	0	The top of a waterfall that is solid to Mario unless he stands on it for too long (not functional). Only used for Lunar Magic's dispay; use object 19 with something behind it instead.
 0BE	0	A block that is solid when the ON/OFF state is ON (not functional). Only used for Lunar Magic's display; use object 01 instead.
 0CE	0	A block that is solid when the ON/OFF state is OFF (not functional). Only used for Lunar Magic's display; use object 06 instead.
 0CF	0	A block that is solid to Mario and Yoshi but not to other sprites (not functional). Only used for Lunar Magic's display; use object 03 instead.

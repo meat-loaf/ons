@@ -38,6 +38,11 @@ YoshiHouseLedgeObjRt = $0DF02B
 ; object 1C: replace donut bridge with grassland bush objs
 %replace_pointer_long($0DD9EB|!bank,$0DB5B7|!bank)
 
+; vertpipe -> left diag ledge
+%replace_pointer_long($0DD9F4|!bank,$0DB7AA|!bank)
+; horiz pipe -> right diag ledge
+%replace_pointer_long($0DD9F7|!bank,$0DB863|!bank)
+
 ; object 2E:
 %replace_pointer_long($0DDA21|!bank,$0DF066|!bank)
 ; object 2F: Steep line guide slopes
@@ -732,25 +737,25 @@ db $32,$32,$32,$32,$32,$32,$32,$32     ; extended obj 57-5E
 pushpc
 org $0DB3DB
 top_18_to_1b_top_tile:
-	db $BA,$AA,$04,$08
+	db $BA,$B6,$04,$08
 top_18_to_1b_fill_tile:
-	db $B8,$A8,$05,$0B
-org $0DB3FD
-	JSR set_18_to_1b_high_byte
+	db $B8,$B4,$05,$0B
+;org $0DB3FD
+;	JSR set_18_to_1b_high_byte
 org $0DB404
 	JSR check_18_to_1b_add
-org $0DB40E
-	JSR set_18_to_1b_high_byte
+;org $0DB40E
+;	JSR set_18_to_1b_high_byte
 org $0DB415
 	JSR check_18_to_1b_add
 pullpc
 
-set_18_to_1b_high_byte:
-	LDA.l .hi_tiles,x
-	STA [$6E],y
-	RTS
-.hi_tiles
-	db $03,$03,$00,$00
+;set_18_to_1b_high_byte:
+;	LDA.l .hi_tiles,x
+;	STA [$6E],y
+;	RTS
+;.hi_tiles
+;	db $03,$03,$00,$00
 check_18_to_1b_add:
 	STA $0F
 	CLC : ADC #$02

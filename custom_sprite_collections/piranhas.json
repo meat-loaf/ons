@@ -8,7 +8,7 @@
 	"custom": true,
 	"extra_bit": false,
 	"n_exbytes": 1,
-	"reqfiles": [{ "sp3":"100" },{ "sp3":"101" },{ "sp3":"105" },{ "sp3":"107" },{ "sp3":"10B" },{ "sp3":"110" }],
+	"reqfiles": [{ "sp3":"100" },{ "sp3":"101" },{ "sp3":"105" },{ "sp3":"107" },{ "sp3":"10B" },{ "sp3":"110" },{ "sp3":"111" }],
 	"which_exbyte": 0,
 	"which_exbyte_val": "00",
 	"smap16":[{

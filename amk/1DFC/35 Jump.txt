@@ -1,6 +1,8 @@
-$DA $08 
-$04 $00 $B2
-$06 $38
-$DD $B2 $00 $05 $B5 
-$28 $EB $00 $12 $B9 
-$02 $C6 $00
+;Uncomment to use vanilla priority
+;(NOTE: this is not the original location that this SFX was used in!)
+;$E0 $20
+$DA $08
+$05 $38
+$DD $B2 $00 $05 $B5
+$2A
+$EB $01 $12 $B9

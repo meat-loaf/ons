@@ -633,8 +633,10 @@ FireXSpeeds:
 db $0C,$F4,$0C,$F4
 FireYSpeeds:
 db $06,$06,$FA,$FA
+db $0C,$0C,$F4,$F4
 
 SpitFireball:
+
 
 LDY #$07
 ExSpriteLoop:
@@ -645,8 +647,25 @@ BPL ExSpriteLoop
 RTS
 
 FoundExSlot:
-
 STY $00
+
+%SubHorzPos()
+STZ $03
+TYA
+BEQ +
+LDA $0E
+EOR #$FF
+INC
+STA $0E
++
+LDA $0E
+CMP #$40
+BCS +
+LDA #$04
+STA $03
++
+
+LDY $00
 
 LDA #$02
 STA !extended_num,y
@@ -690,7 +709,9 @@ LDY $02
 LDA FireXSpeeds,y
 LDY $00
 STA !extended_x_speed,y
-LDY $02
+LDA $02
+ORA $03
+TAY
 LDA FireYSpeeds,y
 LDY $00
 STA !extended_y_speed,y

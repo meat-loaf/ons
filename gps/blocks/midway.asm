@@ -1,4 +1,4 @@
-!map16_start = $A0
+!map16_start = $D0
 
 db $42
 JMP MarioBelow : JMP MarioAbove : JMP MarioSide

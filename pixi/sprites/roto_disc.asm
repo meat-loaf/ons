@@ -1,3 +1,5 @@
+prot zing
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Roto Disc, by mikeyk
 ;; JackTheSpades - Asar, Sa-1 compatible and cleaned 
@@ -48,7 +50,7 @@
 ;; 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-!AllowSpinjump = 0						; > Can you bounce on the sprite with a spinjump? Yes = 1 No = 0
+!AllowSpinjump = 1						; > Can you bounce on the sprite with a spinjump? Yes = 1 No = 0
 
 !PaletteRotate = 1 						; > Should the palette rotate, 1 = Yes, 0 = No
 
@@ -58,6 +60,8 @@
 !Props = $21							; \ If not using palette roatate, add your tile properties
 !Palette = $06							; / and your palette Values = $02,$04,$06,$08,$0A,$0C & $0E
 
+!spr_num_inserted_as = $42
+
 Tilemap:
 db $A4,$A6,$A4,$A6 						; > Graphics Tiles
 
@@ -66,17 +70,26 @@ db $A4,$A6,$A4,$A6 						; > Graphics Tiles
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 print "INIT ",pc
+		LDA !spr_new_sprite_num,x
+		CMP #!spr_num_inserted_as
+		BEQ .NotVanilla
+		; 32x32 clipping with position in center
+		LDA !1662,x
+		AND #$C0
+		ORA #$27
+		STA !1662,x
+	
 
-		LDA !extra_prop_1,x				; \ Find out which cfg is used
-		AND #$02						; | By finding out if Bit Set
-		BEQ .NotVanilla					; |	If not go check extra bytes
-		LDA #$38						; | Else add default values.
-		STA !187B,x						; |	
-		STA !160E,x						; |
-		LDA #$80						; |
-		STA !1626,x						; | Speed is set later
-		STZ !151C,x						; /
-		RTL	
+;		LDA !extra_prop_1,x				; \ Find out which cfg is used
+;		AND #$02						; | By finding out if Bit Set
+;		BEQ .NotVanilla					; |	If not go check extra bytes
+;		LDA #$38						; | Else add default values.
+;		STA !187B,x						; |	
+;		STA !160E,x						; |
+;		LDA #$80						; |
+;		STA !1626,x						; | Speed is set later
+;		STZ !151C,x						; /
+;		RTL	
 
 		.NotVanilla:				
 		LDA !extra_byte_1,x				; \ X Radius
@@ -215,7 +228,11 @@ Interaction:
 No_star:
 		LDA $1497|!Base2        		; \ if Mario is invincible...
 		BNE RETURN_EXTRA           		; |   ... return
-		If !AllowSpinjump
+		LDA !spr_new_sprite_num,x
+		CMP #!spr_num_inserted_as
+		BEQ Hurt
+.spinjump:
+;		If !AllowSpinjump
 			LDA $140D|!Base2 			; \ If not spinning
 			ORA $187A|!Base2        	; | Or on Yoshi?
 			BEQ Hurt					; /
@@ -246,7 +263,7 @@ No_star:
 			LDA #$02 					; | Contact SFX	
 			STA $1DF9|!Base2			; |
 			JMP NoHurt					; /
-		endif
+;		endif
 
 		Hurt:
 			LDA $187A|!Base2        	; \ On Yoshi?
@@ -287,28 +304,25 @@ RETURN_EXTRA:
 
 SUB_GFX:
 
+	%GetDrawInfo()          ; \ Y = index to sprite tile map ($300)
+
 	LDA !1602,x 			; \ Get Current frame for index
 	STA $05 				; / Stash it for later
 
-	%GetDrawInfo()          ; \ Y = index to sprite tile map ($300)
-							; | $00 = sprite x position relative to screen boarder 
-							; / $01 = sprite y position relative to screen boarder  
-			
+	LDA !spr_new_sprite_num,x
+	CMP #!spr_num_inserted_as
+	BEQ .roto
+	JMP zinger_gfx
+.roto:
+
 	LDA $00                 ; \ Tile X position
 	STA $0300|!Base2,y      ; /
 
 	LDA $01                 ; \ Tile Y position
 	STA $0301|!Base2,y      ; /
 
-	LDA !extra_prop_1,x		; \ Find out which cfg is used
-	AND #$02				; | By finding out if Bit Set
-	BEQ .NotVanilla			; |	If not go check extra bytes
-	LDA #!RotoDiscTile		; |
-	JMP .Vanilla			; |
-	.NotVanilla:			; |
-	LDX $05					; | Load frame index
-	LDA Tilemap,x			; |
-	.Vanilla:
+	LDX $05			; | Load frame index
+	LDA Tilemap,x		; |
 	STA $0302|!Base2,y      ; |
 	LDX $15E9|!Base2        ; / Restore sprite index
 		
@@ -322,15 +336,62 @@ SUB_GFX:
 		ORA #!Palette		; |
 	endif					; /
 
-	ORA $64                 ; \   
-	STA $0303|!Base2,y      ; / Store tile properties                 
+	ORA $64
+	STA $0303|!Base2,y
 
-	LDY #$02                ; \ 16x16 tile
-	LDA #$00                ; | A = number of tiles drawn - 1
-	JSL $01B7B3|!BankB      ; / Don't draw if offscreen
+	LDY #$02
+	LDA #$00
+	JSL finish_oam_write|!bank
 
-	RTS                     ; > Return
+	RTS
 
+zinger_gfx:
+	; TODO animation frame
+	LDA #$00
+	REP #$10
+	LDX #zing
+	%GetDynSlot()
+	BCC .no_dyn_slot
+	; slot
+	STA $0F
+	
+	LDX #$03
+.loop:
+	LDA $00
+	CLC : ADC .x_offset,x
+	STA $0300|!addr,y
+	
+	LDA $01
+	CLC : ADC .y_offset,x
+	STA $0301|!addr,y
+
+	LDA $0F
+	CLC : ADC .dyn_tile_off,x
+	STA $0302|!addr,y
+
+	LDA #$01
+	ORA #($07<<1)
+	ORA $64
+	STA $0303|!addr,y
+
+	INY #4
+
+	DEX
+	BPL .loop
+	LDX $15E9|!addr
+
+	LDY #$02
+	LDA #$03
+	JSL finish_oam_write|!bank
+.no_dyn_slot:
+	RTS
+
+.x_offset:
+	db $F8,$08,$F8,$08
+.y_offset:
+	db $F8,$F8,$08,$08
+.dyn_tile_off:
+	db $00,$02,$20,$22
 
 LoseYoshi:
 	LDX $18E2|!Base2		; Dissassembled routine
@@ -361,3 +422,6 @@ LoseYoshi:
 	RTS
 RunAwaySpeed:
 db $10,$F0
+
+zing:
+	incbin zing1.bin

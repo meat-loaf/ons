@@ -277,16 +277,16 @@ endmacro
 	%spawn_table_spr_entry_0_exbyte($C4, $01, $00, $00)
 	%spawn_table_entry_finish()
 
-	; entry 02 00
+	; entry 02 00 - key, homing lotus
 	%spawn_table_entry_start()
 	%spawn_table_spr_entry_0_exbyte($80, $01, $00, $00)
 	%spawn_table_spr_entry_2_exbyte($01, $01, $01, $00, $0A, $08)
 	%spawn_table_entry_finish()
 
-	; entry 03 00
+	; entry 03 00 - line-guided platform, volcano lotus
 	%spawn_table_entry_start()
-	%spawn_table_spr_entry_0_exbyte($B6, $01, $00, $00)
-	%spawn_table_spr_entry_0_exbyte($B4, $01, $00, $00)
+	%spawn_table_spr_entry_0_exbyte($62, $01, $00, $00)
+	%spawn_table_spr_entry_2_exbyte($01, $01, $01, $00, $00, $00)
 	%spawn_table_entry_finish()
 
 	; entry 04 00

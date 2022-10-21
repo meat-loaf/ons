@@ -18,7 +18,7 @@ spriteset_off_ptrs:
 	dw spritesets_null_spriteset          ; sprite 0E - keyhole
 	dw spritesets_goomba                  ; sprite 0F - goomba     (galoomba)
 	dw spritesets_goomba                  ; sprite 10 - paragoomba (paragaloomba)
-	dw spritesets_buzzy_swooper           ; sprite 11 - buzzy beetle
+	dw spritesets_sakasatachi             ; sprite 11 - buzzy beetle
 	dw spritesets_null_spriteset          ; sprite 12 - unused sprite
 	dw spritesets_lakitu_spiny            ; sprite 13 - spiny
 	dw spritesets_lakitu_spiny            ; sprite 14 - falling spiny
@@ -191,7 +191,7 @@ spriteset_off_ptrs:
 	dw spritesets_castle_blk_bnc_gndr     ; sprite BB - grey moving castle block
 	dw spritesets_bowser_statue           ; sprite BC - bowser statue
 	dw spritesets_null_spriteset          ; sprite BD - sliding blue koopa
-	dw spritesets_buzzy_swooper           ; sprite BE - swooper
+	dw spritesets_null_spriteset          ; sprite BE - swooper
 	dw spritesets_mega_mole               ; sprite BF - mega_mole
 	dw spritesets_rock_grass_plats        ; sprite C0 - sinking grey rock
 	dw spritesets_null_spriteset          ; sprite C1 - flying grey turn blocks
@@ -216,7 +216,7 @@ if !pixi_installed
 	dw spritesets_null_spriteset          ; custom sprite 08
 	dw spritesets_null_spriteset          ; custom sprite 09 - cobrat
 	dw spritesets_nipper                  ; custom sprite 0A - nipper
-	dw spritesets_null_spriteset          ; custom sprite 0B
+	dw spritesets_sakasatachi             ; custom sprite 0B - sakasatachi
 	dw spritesets_null_spriteset          ; custom sprite 0C
 	dw spritesets_null_spriteset          ; custom sprite 0D
 	dw spritesets_null_spriteset          ; custom sprite 0E
@@ -487,10 +487,10 @@ if !remap_koopa
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 30-37
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 38-3F
 endif ; remap_koopa
-.buzzy_swooper                                ; buzzy beetle, swooper
-	db $00,$00,$00,$00,$A0,$00,$00,$00    ; spritesets 00-07
+.sakasatachi                                  ; buzzy beetle, upsd. buzzy/spiny
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 00-07
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 08-0F
-	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 10-17
+	db $00,$20,$00,$00,$00,$00,$00,$00    ; spritesets 10-17
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 18-1F
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 20-27
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 28-2F
@@ -499,7 +499,7 @@ endif ; remap_koopa
 .lakitu_spiny:                                ; lakitu variants, spiny
 	db $00,$20,$00,$00,$00,$00,$20,$00    ; spritesets 00-07
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 08-0F
-	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 10-17
+	db $00,$20,$00,$00,$00,$00,$00,$00    ; spritesets 10-17
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 18-1F
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 20-27
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 28-2F
@@ -835,7 +835,7 @@ endif
 .yi_spike:
 	db $00,$00,$00,$00,$00,$00,$00,$80    ; spritesets 00-07
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 08-0F
-	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 10-17
+	db $00,$60,$00,$00,$00,$00,$00,$00    ; spritesets 10-17
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 18-1F
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 20-27
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 28-2F
@@ -888,7 +888,7 @@ spriteset_gfx_listing:
 	dw $007F,$007F,$007F,$007F,$0105,$0104,$0103,$0107		; spriteset 0E: chucks + kickin chuck, volc lotus
 	dw $007F,$007F,$007F,$007F,$0122,$0121,$0120,$0123		; spriteset 0F: dry bones/bony/beetle/pencil/grinder/castle block/reflec ball
 	dw $007F,$007F,$007F,$007F,$007F,$0107,$0124,$010D		; spriteset 10: piranhas, expanding pipes, lotus
-	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 11: none
+	dw $007F,$007F,$007F,$007F,$010C,$0125,$0115,$010D		; spriteset 11: cave: piranhas, lakitu/spiny, buzzy/spiny upside-down, yi spike
 	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 12: none
 	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 13: none
 	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 14: none

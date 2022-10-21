@@ -20,7 +20,7 @@
 	"default/11 SMW @17.brr"
 	"default/12 SMW @15.brr"!
 	"YI/yi-22.brr"!
-	"YI/yi-1E.brr"!
+	"YI/yi-1e.brr"!
 }
 
 #optimized
@@ -45,7 +45,7 @@
 	"optimized/11 SMW @17.brr"
 	"optimized/12 SMW @15.brr"!
 	"YI/yi-22.brr"!
-	"YI/yi-1E.brr"!
+	"YI/yi-1e.brr"!
 }
 
 #AMM
@@ -87,7 +87,7 @@
 	"EMPTY.brr"!
 	"optimized/12 SMW @15.brr"!
 	"YI/yi-22.brr"!
-	"YI/yi-1E.brr"!
+	"YI/yi-1e.brr"!
 }
 
 #deepest
@@ -112,7 +112,7 @@
 	"EMPTY.brr"!
 	"EMPTY.brr"!
 	"YI/yi-22.brr"!
-	"YI/yi-1E.brr"!
+	"YI/yi-1e.brr"!
 }
 
 #snow-road
@@ -137,5 +137,5 @@
 	"optimized/11 SMW @17.brr"
 	"optimized/12 SMW @15.brr"!
 	"YI/yi-22.brr"!
-	"YI/yi-1E.brr"!
+	"YI/yi-1e.brr"!
 }

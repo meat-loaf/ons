@@ -37,8 +37,8 @@ endif
 !JML_OPCODE = $5C
 !JSL_OPCODE = $22
 
-!red_coin_sfx_id      = $2D
-!last_red_coin_sfx_id = $2E
+!red_coin_sfx_id      = $2E
+!last_red_coin_sfx_id = $2F
 
 !timer_frames_to_dec  = $28
 

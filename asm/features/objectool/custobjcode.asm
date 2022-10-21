@@ -188,7 +188,7 @@ midway_bar_ext_objs:
 	STA [$6E],y
 	RTS
 .tiles_bar:
-	db $A0,$A1,$A2,$A3,$A4
+	db $D0,$D1,$D2,$D3,$D4
 .backwards:
 	JSR ShiftObjRight
 	LDA .tiles_bar-1,x
@@ -458,6 +458,7 @@ CustObj09:
 ; note: there are no size checks. if the object is too big, it will generate garbage
 CustObj0A:
 	LDA !object_argument
+	SEC : SBC #!cluster_exobjs_start
 	JMP ClusterNormObjects
 
 CustObj0B:
