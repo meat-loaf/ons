@@ -3064,9 +3064,9 @@ ClusterExObjPtrs:
 	dw $04AE,$04BE,$FFFF
 	dw $04BE,$04BC,$04BD
 .PipeTurnWater1
-	dw $031E,$03B9
+	dw $031E,$00B9
 .PipeTurnWater2
-	dw $03B9,$031F
+	dw $00B9,$031F
 .CenterPipeU
 	dw $04CB,$04CC,$04CD,$04CE,$04CF
 	dw $04DB,$04DC,$04DD,$04DE,$04DF

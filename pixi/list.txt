@@ -45,7 +45,6 @@
 54 sideways_ninji.cfg
 
 60 flat_switch_60.cfg
-61 SMWSDIS_61_floatingskulls.json
 
 70 sandstormspawn.json
 
