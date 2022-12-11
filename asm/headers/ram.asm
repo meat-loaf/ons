@@ -311,8 +311,8 @@ includeonce
 ; sram stuff
 ; todo reorganize a bit. Original free sram starts at $70035A
 !item_memory_mirror_s    = $701000
-!wiggler_segment_buffer  = !item_memory_mirror_s+!item_memory_size
-!big_hdma_decomp_buff_rg = !wiggler_segment_buffer+$200
+!wiggler_segment_buffer_srm = !item_memory_mirror_s+!item_memory_size
+!big_hdma_decomp_buff_rg = !wiggler_segment_buffer_srm+$200
 !big_hdma_decomp_buff_b   = !big_hdma_decomp_buff_rg+$1000
 
 ; 7168 bytes
@@ -337,9 +337,11 @@ includeonce
 ; !pause_menu_l3_ypos_orig      = !pause_menu_l3_xpos_orig+$02 ; 0x02 bytes
 ; !pause_menu_tilemap_orig      = !pause_menu_l3_ypos_orig+$02 ; 0x02 bytes
 
+
 ; Dynamic sprite graphics upload buffer
-!dynamic_buffer = $7FA000         ; 0x800 bytes long
-; 7FA800 - 7FABFF free
+!wiggler_segment_buffer = $7FA000
+!dynamic_buffer = $7FA200         ; 0x800 bytes long
+; 7FAA00 - 7FABFF free
 
 ; unused here, i'm using -d255spl
 ;!spr_load_status          = $7FAF00

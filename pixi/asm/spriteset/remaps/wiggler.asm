@@ -1,10 +1,17 @@
 includefrom "remaps.asm"
 
+; note: segment buffer moved to 7FA000, see ram
 
-!wiggler_segment_buffer = $7F9A7B
+!wiggler_buffer_index = !160E
+!wiggler_segbuff_position = !1528
 
+org $02EFEA|!bank
+wiggler_seg_off_lo:
+	db $00,$80,$00,$80
+wiggler_seg_off_hi:
+	db $00,$00,$01,$01
 ; wiggler init
-org $02EFF2|!bank
+;org $02EFF2|!bank
 wigini:
 	PHB
 	PHK
@@ -17,29 +24,30 @@ wigini:
 .seg_buff_init_loop:
 	; todo sa1?
 	LDA.b !D8,x
-	STA.b [$D5],y
+	STA.b [!wiggler_segment_ptr],y
 	DEY
 	LDA.b !E4,x
-	STA.b [$D5],y
+	STA.b [!wiggler_segment_ptr],y
 	DEY
 	BPL.b .seg_buff_init_loop
 .seg_init_done:
 	PLB
 	RTL
 wiggler_segment_ptr_init:
-	LDY !160E,x
+	LDY !wiggler_buffer_index,x
 	LDA.b #!wiggler_segment_buffer
 	CLC
-	ADC.w $02EFEA|!bank,y
-	STA.b $D5+$0
+	ADC.w wiggler_seg_off_lo|!bank,y
+	STA.b !wiggler_segment_ptr+$0
 	LDA.b #!wiggler_segment_buffer>>8
 	CLC
-	ADC.w $02EFEE|!bank,y
-	STA.b $D5+$1
+	ADC.w wiggler_seg_off_hi|!bank,y
+	STA.b !wiggler_segment_ptr+$1
 	LDA.b #!wiggler_segment_buffer>>16
-	STA.b $D5+$2
+	STA.b !wiggler_segment_ptr+$2
 	RTS
 warnpc $02F029|!bank
+assert wigini == $02EFF2|!bank, "wiggler init moved"
 
 ; very beginning of wiggler main (after the wrapper)
 org $02F035|!bank
@@ -106,9 +114,29 @@ wiggler_init_find_segslot:
 	; a gets wiggler segment buffer index
 	TYA
 	; track the buffer index in a previously unused sprite table
-	STA.w !160E,x
+	STA.w !wiggler_buffer_index,x
 	JML.l wigini_segptr_init|!bank
 pushpc
+
+org $02F0DB|!bank
+;!wigbuff = !wiggler_segment_buffer&$FF
+;assert or(equal(!wigbuff,$00), equal(!wigbuff,$80)), "Wiggler segment buffer must be on '$80' boundary"
+;undef "wigbuff"
+assert !wiggler_segment_buffer&$7F == $00, "Wiggler segment buffer address must be 7-bit aligned."
+wiggler_update_segment_buffer:
+	LDA   !wiggler_segbuff_position,x
+	DEC
+	DEC
+	AND.b #$7E
+	STA   !wiggler_segbuff_position,x
+	TAY
+	LDA   !sprite_x_low,x
+	STA.b [!wiggler_segment_ptr],y
+	INY
+	LDA   !sprite_y_low,x
+	STA.b [!wiggler_segment_ptr],y
+	RTS
+warnpc $02F104|!bank
 
 ; actual remap next
 
@@ -142,7 +170,7 @@ wiggler_no_angery_eb:
 	ORA.w !151C,x
 	JMP.w $02F277|!bank
 	; pads the graphics routine
-	NOP #7
+;	NOP #6
 wiggler_segment_buff_offs:
 	db $00,$1E,$3E,$5E,$7E
 wiggler_segment_yoffs:
@@ -167,6 +195,8 @@ wiggler_gfx:
 	STA.b $08         ; /
 	LDA   !C2,x       ; \ bitfield: segment direction flag
 	STA.b $02         ; /
+	LDA   !wiggler_segbuff_position,x
+	STA.b $0C
 	LDX.b #$00
 .draw_loop:
 	INY   #4          ; angry face/flower tile drawn later
@@ -184,16 +214,19 @@ wiggler_gfx:
 	LSR
 	AND.b #$FE
 .no_angry:
+	CLC
+	ADC.b $0C
+	AND.b #$7E
 	TAY
 	STY.b $09         ; index to segment buffer
-	LDA.b [$D5],y
+	LDA.b [!wiggler_segment_ptr],y
 	SEC
 	SBC.b $1A
 	LDY.b $0A
 	STA.w $0300|!addr,y
 	LDY.b $09
 	INY
-	LDA.b [$D5],y
+	LDA.b [!wiggler_segment_ptr],y
 	SEC
 	SBC.b $1C
 	LDX.b $06
@@ -253,15 +286,17 @@ wiggler_gfx:
 	TYA
 	LSR   #2
 	TAY
-	LDA.b #$00
+; store tilesizes
+; this is shorter and less cycles than
+; staying in 8-bit mode
+	REP.b #$20
+	LDA.w #$0200
 	STA.w $0460|!addr,y
-	LDA.b #$02
-	STA.w $0461|!addr,y
+; is one byte larger but one cycle faster than two INCs
+	LDA.w #$0202
 	STA.w $0462|!addr,y
-	STA.w $0463|!addr,y
 	STA.w $0464|!addr,y
-	STA.w $0465|!addr,y
-	
+	SEP.b #$20
 	LDX.w $15E9|!addr
 	LDA.b #$05
 	LDY.b #$FF
