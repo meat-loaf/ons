@@ -1,0 +1,21 @@
+-- fix/implement before any sort of proper release --
+
+* Finish death->level transition
+  * Restart at midway without ow transition and item memory
+    already implemented. Implement post-death menu to abort
+    level (a la yi)
+  * Fix midway flag being set/used when exiting the level
+    after midpoint has been set.
+* Add post-goal-walk gamemode where points are tallied
+  * Save these per-level somewhere
+* Implement expanded sram saving properly, for the above
+  * Save lives, coins, yoshi status, powerup status, score
+    * lives/coins/powerup requires ow loading tweaks
+* Score per-level, save this as well
+* OW display of level percentage, score (sma2 menu like maybe?)
+
+-- not important, but would be nice --
+* Pendulum platforms have some oam positioning issues,
+  they seem off-by-one in some cases when near the edge
+  of the screen. Fix this.
+
