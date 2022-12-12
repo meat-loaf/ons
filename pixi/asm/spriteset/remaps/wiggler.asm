@@ -1,9 +1,9 @@
 includefrom "remaps.asm"
 
-; note: segment buffer moved to 7FA000, see ram
 
-!wiggler_buffer_index = !160E
+!wiggler_buffer_index     = !160E
 !wiggler_segbuff_position = !1528
+!wiggler_bloomer          = !1504
 
 org $02EFEA|!bank
 wiggler_seg_off_lo:
@@ -49,9 +49,14 @@ wiggler_segment_ptr_init:
 warnpc $02F029|!bank
 assert wigini == $02EFF2|!bank, "wiggler init moved"
 
+
 ; very beginning of wiggler main (after the wrapper)
 org $02F035|!bank
 	JSR.w wiggler_segment_ptr_init|!bank
+org $02F067|!bank
+wiggler_offscreen_invoc:
+	JMP.w wiggler_offscreen_call|!bank
+.done
 
 pullpc
 wiggler_init_find_segslot:
@@ -60,15 +65,17 @@ wiggler_init_find_segslot:
 	LDY #$03
 .findslot_loop
 	LDX.w !wiggler_segment_slots,y
+	; if negative, a wiggler despawned and cleared the slot
+	BMI .found
 	; check that we've spawned in a slot
 	; that a wiggler sat in previously
 	CPX.w $15E9|!addr
-	BEQ .cont
+	BEQ .found
 	%sprite_num(LDA,x)
 	CMP.b #$86
-	BNE.b .cont
-	LDA.w !14C8,x
-	BEQ.b .cont
+	BNE.b .found
+	LDA.w !sprite_status,x
+	BEQ.b .found
 	DEY
 	BPL.b .findslot_loop
 .spawn_fail:
@@ -77,34 +84,14 @@ wiggler_init_find_segslot:
 	LDA.b #$00
 	LDY.w !161A,x
 	STA.w !14C8,x
-	STA.w !1938,x
+	STA.w !1938,y
 ;	LDA.w !161A,x
 ;	TAX
 ;	LDA.b #$00
 ;	STA.l !7FAF00,x
-	LDX.w $15E9|!addr
+;	LDX.w $15E9|!addr
 	JML.l wigini_seg_init_done|!bank
-.cont:
-	CPY.b #$00
-	BEQ.b .done
-	STY.b $00
-; patch up the lower indexes: its possible for a wiggler to spawn in a slot
-; and be assigned an index into the segment slots array, then a wiggler can
-; spawn again later in that same slot with a different (higher) index into the
-; segment slot array, effectively causing that wiggler to take up multiple chunks
-; of the segment buffer, and causing less wigglers to be able to be spawned.
-.fix_slots:
-	DEY
-	LDX.w !wiggler_segment_slots,y
-	CPX.w $15E9|!addr
-	BNE .next
-	LDA.b #$FF
-	STA.w !wiggler_segment_slots,y
-.next
-	DEY
-	BPL.b .fix_slots
-	LDY.b $00
-.done:
+.found:
 	LDA.w $15E9|!addr
 	; store this wigglers sprite slot number to
 	; track what slot has what index
@@ -119,10 +106,6 @@ wiggler_init_find_segslot:
 pushpc
 
 org $02F0DB|!bank
-;!wigbuff = !wiggler_segment_buffer&$FF
-;assert or(equal(!wigbuff,$00), equal(!wigbuff,$80)), "Wiggler segment buffer must be on '$80' boundary"
-;undef "wigbuff"
-assert !wiggler_segment_buffer&$7F == $00, "Wiggler segment buffer address must be 7-bit aligned."
 wiggler_update_segment_buffer:
 	LDA   !wiggler_segbuff_position,x
 	DEC
@@ -136,6 +119,18 @@ wiggler_update_segment_buffer:
 	LDA   !sprite_y_low,x
 	STA.b [!wiggler_segment_ptr],y
 	RTS
+wiggler_offscreen_call:
+	JSR.w $02D025|!bank
+	LDA.w !sprite_status,x
+	BNE.b .nodespawn
+;	CMP.b #$08
+;	BCS.b .nodie
+	LDA.b #$80
+	LDY.w !wiggler_buffer_index,x
+	STA.w !wiggler_segment_slots,y
+.nodespawn:
+;	RTS
+	JMP.w wiggler_offscreen_invoc_done
 warnpc $02F104|!bank
 
 ; actual remap next
@@ -166,7 +161,7 @@ wiggler_small_tile_xoffs:
 
 org $02F103|!bank
 wiggler_no_angery_eb:
-	LDA.w !1504,x
+	LDA.w !wiggler_bloomer,x
 	ORA.w !151C,x
 	JMP.w $02F277|!bank
 	; pads the graphics routine
@@ -185,7 +180,7 @@ wiggler_small_tile_yoffs:
 	db $00,$00
 wiggler_gfx:
 	JSR.w $02D378|!bank
-	LDA.w !1504,x
+	LDA.w !wiggler_bloomer,x
 	STA.b $0B
 	LDA.w !1570,x     ; \ animation frame counter
 	STA.b $03         ; /
@@ -241,8 +236,6 @@ wiggler_gfx:
 	LDX.b $06
 	LDA.w wiggler_body_tiles,x
 .draw_head:
-;	CLC
-;	ADC.b !tile_off_scratch
 	LDY.b $0A
 	STA.w $0302|!addr,y
 	LDA.b $07
@@ -265,8 +258,6 @@ wiggler_gfx:
 	ORA.w !157C,x           ; horz facing dir
 	TAX
 	LDA.w wiggler_small_tiles,x
-;	CLC
-;	ADC.b !tile_off_scratch
 	STA.w $0302|!addr,y
 	; carry clear free from above: won't overflow
 	LDA.w $0304|!addr,y
@@ -286,13 +277,13 @@ wiggler_gfx:
 	TYA
 	LSR   #2
 	TAY
-; store tilesizes
-; this is shorter and less cycles than
-; staying in 8-bit mode
+	; store tilesizes
+	; this is shorter and less cycles than
+	; staying in 8-bit mode
 	REP.b #$20
 	LDA.w #$0200
 	STA.w $0460|!addr,y
-; is one byte larger but one cycle faster than two INCs
+	; is one byte larger but one cycle faster than two INCs
 	LDA.w #$0202
 	STA.w $0462|!addr,y
 	STA.w $0464|!addr,y

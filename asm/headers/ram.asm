@@ -338,10 +338,10 @@ includeonce
 ; !pause_menu_tilemap_orig      = !pause_menu_l3_ypos_orig+$02 ; 0x02 bytes
 
 
+!wiggler_segment_buffer = $7F9A7B
 ; Dynamic sprite graphics upload buffer
-!wiggler_segment_buffer = $7FA000
-!dynamic_buffer = $7FA200         ; 0x800 bytes long
-; 7FAA00 - 7FABFF free
+!dynamic_buffer = !wiggler_segment_buffer+$200
+; 7FA800 - 7FABFF free
 
 ; unused here, i'm using -d255spl
 ;!spr_load_status          = $7FAF00
@@ -366,3 +366,7 @@ includeonce
 !Freeram_SSP_CarrySpr   ?= !sspipes_carry_spr
 !Freeram_BlockedStatBkp ?= !sspipes_blocked_backup
 ; ram defs done ;
+
+
+
+!hw_dma_enable = $420B

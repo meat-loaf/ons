@@ -271,7 +271,7 @@ if !use_midway_imem_sram_dma == !true
 	LDA.b #%10000000
 	STA.w $4300
 	LDA.b #$01
-	TSB.w $0D9F|!addr
+	STA.w !hw_dma_enable
 	SEP.b #$10
 .midway_done:
 ; ---- midway point dma stuff done ----
