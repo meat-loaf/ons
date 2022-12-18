@@ -12,6 +12,8 @@
 
 0B sakasa.json
 
+0D DancingSpearGuy.json
+
 10 arrowlift.cfg
 11 yispike.cfg
 12 spikemace.cfg

@@ -38,12 +38,23 @@ warnpc $00D0E8|!bank
 
 ; gm18: gamemode transition -> temp fade
 %replace_pointer($009359|!bank,$009F37|!bank)
+%replace_pointer($00935B|!bank,gamemode_19|!bank)
+%replace_pointer($00935D|!bank,gamemode_1b|!bank)
+;%replace_pointer($00935D|!bank,$009F37|!bank)
+;%replace_pointer($00935F|!bank,gamemode_1b|!bank)
 
 org $009468|!bank
 gamemode_19:
 autoclean \
 	JSL.l gm19
 	RTS
+;; todo: should be the 'death/return to level or midpoint' menu'
+gamemode_1b:
+	LDA.b #$10
+	STA.w !gamemode
+	RTS
+
+warnpc $009557|!bank
 
 freecode
 EntranceType5Check:
@@ -73,9 +84,10 @@ YwingReturn:
 	JML $00C82F|!bank
 
 gm19:
+	;LDA.b #$10
+	;STA.w !gamemode
 	; setup next game mode
-	LDA.b #$10
-	STA.w !gamemode
+	INC.w !gamemode
 
 	; don't do 'from overworld' stuff
 	LDA.b #$01
@@ -144,6 +156,8 @@ midway_tables:
 .level_001:
 .level_002:
 .level_003:
+	%midway_table_entry($0003, !true, !false)
+	%midway_table_entry($0029, !true, !false)
 .level_004:
 .level_005:
 .level_006:

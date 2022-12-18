@@ -1396,4 +1396,62 @@
 		"yoff":"20",
 		"tile":"5C6"
 	}]
+},{
+	"id":"BB",
+	"name":"Grey Castle Block, horizontal.",
+	"desc":"A grey castle block, moves 5 tiles back and forth (left, then right).",
+	"custom":false,
+	"extra_bit":false,
+	"n_bytes":0,
+	"reqfiles":[{"sp3":"112"}],
+	"smap16":[{
+		"tile":"6E2"
+	},{
+		"xoff":"10",
+		"tile":"6E3"
+	},{
+		"yoff":"10",
+		"tile":"6F2"
+	},{
+		"yoff":"10",
+		"xoff":"10",
+		"tile":"6F3"
+	},{
+		"xoff": "-12",
+		"yoff":"14",
+		"tile":"593"
+	},{
+		"xoff": "-12",
+		"yoff":"4",
+		"tile":"593"
+	}]
+},{
+	"id":"BB",
+	"name":"...moves right first.",
+	"desc":"A grey castle block, moves 5 tiles back and forth (right, then left).",
+	"custom":false,
+	"extra_bit":true,
+	"n_bytes":0,
+	"reqfiles":[{"sp3":"112"}],
+	"smap16":[{
+		"tile":"6E2"
+	},{
+		"xoff":"10",
+		"tile":"6E3"
+	},{
+		"yoff":"10",
+		"tile":"6F2"
+	},{
+		"yoff":"10",
+		"xoff":"10",
+		"tile":"6F3"
+	},{
+		"xoff": "1A",
+		"yoff":"14",
+		"tile":"582"
+	},{
+		"xoff": "1A",
+		"yoff":"4",
+		"tile":"582"
+	}]
 }]

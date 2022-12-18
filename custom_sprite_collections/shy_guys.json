@@ -39,6 +39,67 @@
 		"tile":"562"
 	}
 },{
+	"id":"0D",
+	"name":"Spear Guy",
+	"desc":"A Spear Guy from Yoshi's Island. He dances back and forth with his spear facing upwards. The spear hurts but can be spinjumped from above, and the Shy Guy can be killed with a precise jump.",
+	"category":"forest",
+	"custom":"true",
+	"extra_bit":false,
+	"back_color":"ccff33",
+	"n_exbytes":0,
+	"display_xoff":0,
+	"display_yoff":-1,
+	"smap16":[{
+		"tile":"649"
+	},{
+		"yoff":"-10",
+		"xoff":"2",
+		"tile":"64A"
+	},{
+		"yoff":"-20",
+		"xoff":"2",
+		"tile":"64B"
+	},{
+		"xoff":"-1",
+		"yoff":"2",
+		"tile":"66C"
+	},{
+		"xoff":"A",
+		"yoff":"2",
+		"tile":"64C"
+	}]
+},{
+	"id":"0D",
+	"name":"Spear Guy",
+	"desc":"A Spear Guy from Yoshi's Island. He dances in place with his spear facing upwards. The spear hurts but can be spinjumped from above, and the Shy Guy can be killed with a precise jump.",
+	"category":"forest",
+	"custom":"true",
+	"extra_bit":true,
+	"back_color":"ccff33",
+	"n_exbytes":0,
+	"display_xoff":0,
+	"display_yoff":-1,
+	"smap16":[{
+		"tile":"648"
+	},{
+		"yoff":"-10",
+		"xoff":"2",
+		"tile":"64A"
+	},{
+		"yoff":"-20",
+		"xoff":"2",
+		"tile":"64B"
+	},{
+		"xoff":"-1",
+		"yoff":"2",
+		"tile":"66C"
+	},{
+		"xoff":"A",
+		"yoff":"2",
+		"tile":"64C"
+	}]
+
+},{
 	"id":"15",
 	"name":"Woozy Guy (dynamic)",
 	"desc":"A Woozy Guy from Yoshi's Island. He does somersaults towards Mario. Its color is based on its starting X position.",

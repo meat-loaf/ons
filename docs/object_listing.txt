@@ -37,6 +37,8 @@
 +-----------+-------------------------------------+---------------------------------------------------+
 | 2D (01)   | SMB3 block with screws in corner    | Argument 00 through 07, determines which palette  |
 |           |                                     | to use.                                           |
+|           |                                     |                                                   |
+|           | SMW Castle Bricks                   | Arg = 08: palette 2, Arg = 09: palette 3          |
 +-----------+-------------------------------------+---------------------------------------------------+
 | 2D (02)   | Vertical screen scrolling pipes,    | Arg 00: green, enterable from top                 |
 |           | other 'wide' vertical objects       | Arg 01: green, enterable from bottom              |

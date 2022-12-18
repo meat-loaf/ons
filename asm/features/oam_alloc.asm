@@ -174,7 +174,7 @@ if !cSupportCustomSprites
 ; You should update this table as you add custom sprites to your game.
 .CustomSpriteTileCount
 	db $18,$10,$08,$10,$0C,$08,$04,$10 ; 00-07
-	db $04,$00,$04,$0C,$00,$00,$00,$00 ; 08-0F
+	db $04,$00,$04,$0C,$00,$20,$00,$00 ; 08-0F
 	db $10,$14,$10,$10,$10,$10,$18,$10 ; 10-17
 	db $04,$00,$00,$00,$00,$00,$00,$10 ; 18-1F
 	db $04,$00,$28,$10,$04,$14,$00,$00 ; 20-27

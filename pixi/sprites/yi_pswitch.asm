@@ -153,10 +153,14 @@ VISUALS:
 	LDA #$01
 	%SpawnSmoke()
 
-	STZ !14C8,x		;erase
+;	STZ !14C8,x		;erase
+	LDA.b #$00
+	LDY.w !161A,x
+	STA.w !14C8,x
+	STA.w !1938,y
 	
-	STZ !1570,x		;then zero SQUISH status
-	STZ !1602,x		;zero SQUISH index
+	STA !1570,x		;then zero SQUISH status
+	STA !1602,x		;zero SQUISH index
 
 SQUISHMORE:
 	CMP #$10		;time to turn yellow yet?

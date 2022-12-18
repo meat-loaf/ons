@@ -460,7 +460,6 @@ CustObj0A:
 	LDA !object_argument
 	SEC : SBC #!cluster_exobjs_start
 	JMP ClusterNormObjects
-
 CustObj0B:
 CustObj0C:
 CustObj0D:
@@ -714,10 +713,6 @@ CustObjFF:
 ;
 ;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-BitTable:
-	db $01,$02,$04,$08,$10,$20,$40,$80
-
-
 Obj1x1TilesUnset:
 	dw $02F9,$02FA,$04BE,$04AF,$04BF,$049F
 Obj1x1TilesSet:
@@ -725,33 +720,6 @@ Obj1x1TilesSet:
 
 Obj1x1SwitchCementOutline:
 	dw $006A,$006B
-
-Obj2x1Tiles:
-	dw $0000,$0000
-
-Obj1x2Tiles:
-	dw $0000,$0000
-
-SquareObjTiles2A:
-	dw $0200,$0201,$0202,$0210,$0211,$0212,$0220,$0221,$0222 : dw $0230,$0231,$0232 : dw $0203,$0213,$0223 : dw $0233
-
-SquareObjTiles2B:
-	dw $0204,$0201,$0205,$0210,$0211,$0212,$0214,$0221,$0215 : dw $0224,$0231,$0225 : dw $0206,$0213,$0216 : dw $0226
-
-UnidimensionalObjTiles2:
-	dw $020C,$020D,$020E : dw $021F
-
-UnidimensionalObjCheckTiles:
-	dw $0000,$021B,$0000 : dw $0000
-
-UnidimensionalObjReplaceTiles:
-	dw $0000,$021E,$0000 : dw $0000
-
-Horiz2EndTiles:
-	dw $0000,$0000,$0000 : dw $0000
-
-Vert2EndTiles:
-	dw $0000,$0000,$0000 : dw $0000
 
 ;------------------------------------------------
 ; make an object consisting of a 3x3 square
@@ -985,46 +953,6 @@ Objects1x1Stretchable:
 	RTS
 
 ;------------------------------------------------
-; make an object consisting of a 2x1 rectangle
-;------------------------------------------------
-
-Objects2x1:
-	ASL #2
-	TAX
-	LDY $57
-	LDA.w Obj2x1Tiles,x
-	STA [$6B],y
-	LDA.w Obj2x1Tiles+1,x
-	STA [$6E],y
-	INX #2
-	JSR ShiftObjRight
-	LDA.w Obj2x1Tiles,x
-	STA [$6B],y
-	LDA.w Obj2x1Tiles+1,x
-	STA [$6E],y
-	RTS
-
-;------------------------------------------------
-; make an object consisting of a 1x2 rectangle
-;------------------------------------------------
-
-Objects1x2:
-	ASL #2
-	TAX
-	LDY $57
-	LDA.w Obj1x2Tiles,x
-	STA [$6B],y
-	LDA.w Obj1x2Tiles+1,x
-	STA [$6E],y
-	INX #2
-	JSR ShiftObjDown
-	LDA.w Obj1x2Tiles,x
-	STA [$6B],y
-	LDA.w Obj1x2Tiles+1,x
-	STA [$6E],y
-	RTS
-
-;------------------------------------------------
 ; make an object consisting of 9 blocks that can be stretched
 ;------------------------------------------------
 ; for the "BigSquareObjects" routine, $58 is used for 8 extra size bits (yyyyxxxx)
@@ -1042,6 +970,8 @@ SquareObjTiles:
 	dw $0260,$0261,$0262,$0263,$0264,$0265,$0266,$0267,$0268 : dw $0269,$026A,$026B : dw $026C,$026D,$026E : dw $026F ; smb3 square: pal 5
 	dw $0270,$0271,$0272,$0273,$0274,$0275,$0276,$0277,$0278 : dw $0279,$027A,$027B : dw $027C,$027D,$027E : dw $027F ; smb3 square: pal 6
 	dw $0280,$0281,$0282,$0283,$0284,$0285,$0286,$0287,$0288 : dw $0289,$028A,$028B : dw $028C,$028D,$028E : dw $028F ; smb3 square: pal 7
+	dw $0520,$0521,$0522,$0523,$0524,$0525,$0526,$0527,$0528 : dw $0529,$052A,$052B : dw $052C,$052D,$052E : dw $052F ; smw castle brick: pal 2
+	dw $0530,$0531,$0532,$0533,$0534,$0535,$0536,$0537,$0538 : dw $0539,$053A,$053B : dw $053C,$053D,$053E : dw $053F ; smw castle brick: pal 3
 
 BigSquareObjects:
 	JSR SquareObjectsInit
@@ -1070,6 +1000,7 @@ SquareObjectsSub:
 	JMP .StartObjLoop
 .VertOnly
 	REP #$30
+	; table index
 	LDA $0C
 	CLC
 	ADC #$000C
@@ -1085,7 +1016,7 @@ SquareObjectsSub:
 	BNE .SetTileIndexV
 	INX
 .SetTileIndexV
-	REP #$20
+	REP #$30
 	TXA
 	ASL
 	TAX
@@ -1118,7 +1049,7 @@ SquareObjectsSub:
 	BNE .SetTileIndexH
 	INX
 .SetTileIndexH
-	REP #$20
+	REP #$30
 	TXA
 	ASL
 	TAX
@@ -1237,274 +1168,6 @@ AlternatingBrickObjs:
 	DEC $01
 	BPL .vloop
 .done
-	RTS
-;SquareObjects2Tiles
-;SquareObjects2:
-;.Return
-;	RTS
-
-;------------------------------------------------
-; make an object consisting of 3 blocks that can be stretched horizontally only
-;------------------------------------------------
-
-Horiz2EndObjects:
-	LDY $57
-	REP #$30
-	AND.w #$00FF
-	ASL #3
-	TAX
-	LDA $08
-	AND #$00FF
-	BNE .NotSingleTile
-	LDA.w Horiz2EndTiles+6,x
-	STA $0E
-	SEP #$30
-	BRA .StoreOnlyOne
-.NotSingleTile
-	LDA.w Horiz2EndTiles+4,x
-	STA $0E
-	LDA.w Horiz2EndTiles+2,x
-	STA $0C
-	LDA.w Horiz2EndTiles,x
-	SEP #$30
-	STA [$6B],y
-	XBA
-	STA [$6E],y
-	LDX $08
-	BRA .End
-.Loop
-	LDA $0C
-	STA [$6B],y
-	LDA $0D
-	STA [$6E],y
-.End
-	JSR ShiftObjRight
-	DEX
-	BNE .Loop
-	LDA $0E
-.StoreOnlyOne
-	STA [$6B],y
-	LDA $0F
-	STA [$6E],y
-	RTS
-
-;------------------------------------------------
-; make an object consisting of 3 blocks that can be stretched vertically only
-;------------------------------------------------
-
-Vert2EndObjects:
-	LDY $57
-	REP #$30
-	AND.w #$00FF
-	ASL #3
-	TAX
-	LDA $09
-	AND #$00FF
-	BNE .NotSingleTile
-	LDA.w Vert2EndTiles+6,x
-	STA $0E
-	SEP #$30
-	BRA .StoreOnlyOne
-.NotSingleTile
-	LDA.w Vert2EndTiles+4,x
-	STA $0E
-	LDA.w Vert2EndTiles+2,x
-	STA $0C
-	LDA.w Vert2EndTiles,x
-	SEP #$30
-	STA [$6B],y
-	XBA
-	STA [$6E],y
-	LDX $09
-	BRA .End
-.Loop
-	LDA $0C
-	STA [$6B],y
-	LDA $0D
-	STA [$6E],y
-.End
-	JSR ShiftObjDown
-	DEX
-	BNE .Loop
-	LDA $0E
-.StoreOnlyOne
-	STA [$6B],y
-	LDA $0F
-	STA [$6E],y
-	RTS
-
-;------------------------------------------------
-; make an object that can be stretched in one direction only and checks which direction that is; also checks for overlap with specific other tiles and changes the spawned tile accordingly
-;------------------------------------------------
-; Note: Currently, stretching it in both directions will just cause it to return without creating any tiles, because I'm not sure what those cases should do.
-;------------------------------------------------
-
-UnidimensionalObjects2:
-	REP #$30
-	AND #$00FF
-	ASL #3
-	TAX
-	LDA.w UnidimensionalObjTiles2,x
-	STA $0A
-	LDA.w UnidimensionalObjTiles2+2,x
-	STA $0C
-	LDA.w UnidimensionalObjTiles2+4,x
-	STA $0E
-	LDA.w UnidimensionalObjCheckTiles,x
-	STA $45
-	LDA.w UnidimensionalObjCheckTiles+2,x
-	STA $47
-	LDA.w UnidimensionalObjCheckTiles+4,x
-	STA $49
-	LDA.w UnidimensionalObjReplaceTiles,x
-	STA !ObjScratch
-	LDA.w UnidimensionalObjReplaceTiles+2,x
-	STA !ObjScratch+2
-	LDA.w UnidimensionalObjReplaceTiles+4,x
-	STA !ObjScratch+4
-	LDA.w UnidimensionalObjTiles2+6,x
-	STA !ObjScratch+6
-	LDA.w UnidimensionalObjCheckTiles+6,x
-	STA !ObjScratch+8
-	LDA.w UnidimensionalObjReplaceTiles+6,x
-	STA !ObjScratch+10
-	SEP #$30
-	JSR StoreNybbles
-	LDY $57
-	LDA $09
-	BEQ .Horiz
-	LDA $08
-	BEQ .Vert
-; both H and V?
-	RTS
-.Zero
-	LDA [$6E],y
-	XBA
-	LDA [$6B],y
-	REP #$20
-	CMP !ObjScratch+8
-	BEQ .ReplaceZero
-	LDA !ObjScratch+6
-	BRA .StoreTileZero
-.ReplaceZero
-	LDA !ObjScratch+10
-.StoreTileZero
-	SEP #$20
-	STA [$6B],y
-	XBA
-	STA [$6E],y
-	RTS
-.Horiz
-	LDA $08
-	BEQ .Zero
-	LDA [$6E],y
-	XBA
-	LDA [$6B],y
-	REP #$20
-	CMP $45
-	BEQ .Replace1H
-	LDA $0A
-	BRA .SetTile1H
-.Replace1H
-	LDA !ObjScratch
-.SetTile1H
-	SEP #$20
-	STA [$6B],y
-	XBA
-	STA [$6E],y
-	LDX $08
-	BRA .EndH
-.LoopH
-	LDA [$6E],y
-	XBA
-	LDA [$6B],y
-	REP #$20
-	CMP $47
-	BEQ .Replace2H
-	LDA $0C
-	BRA .SetTile2H
-.Replace2H
-	LDA !ObjScratch+2
-.SetTile2H
-	SEP #$20
-	STA [$6B],y
-	XBA
-	STA [$6E],y
-.EndH
-	JSR ShiftObjRight
-	DEX
-	BNE .LoopH
-	LDA [$6E],y
-	XBA
-	LDA [$6B],y
-	REP #$20
-	CMP $49
-	BEQ .Replace3H
-	LDA $0E
-	BRA .SetTile3H
-.Replace3H
-	LDA !ObjScratch+4
-.SetTile3H
-	SEP #$20
-	STA [$6B],y
-	XBA
-	STA [$6E],y
-	RTS
-.Vert
-	LDA $09
-	BEQ .Zero
-	LDA [$6E],y
-	XBA
-	LDA [$6B],y
-	REP #$20
-	CMP $45
-	BEQ .Replace1V
-	LDA $0A
-	BRA .SetTile1V
-.Replace1V
-	LDA !ObjScratch
-.SetTile1V
-	SEP #$20
-	STA [$6B],y
-	XBA
-	STA [$6E],y
-	LDX $09
-	BRA .EndV
-.LoopV
-	LDA [$6E],y
-	XBA
-	LDA [$6B],y
-	REP #$20
-	CMP $47
-	BEQ .Replace2V
-	LDA $0C
-	BRA .SetTile2V
-.Replace2V
-	LDA !ObjScratch+2
-.SetTile2V
-	SEP #$20
-	STA [$6B],y
-	XBA
-	STA [$6E],y
-.EndV
-	JSR ShiftObjDown
-	DEX
-	BNE .LoopV
-	LDA [$6E],y
-	XBA
-	LDA [$6B],y
-	REP #$20
-	CMP $49
-	BEQ .Replace3V
-	LDA $0E
-	BRA .SetTile3V
-.Replace3V
-	LDA !ObjScratch+4
-.SetTile3V
-	SEP #$20
-	STA [$6B],y
-	XBA
-	STA [$6E],y
 	RTS
 
 ;------------------------------------------------

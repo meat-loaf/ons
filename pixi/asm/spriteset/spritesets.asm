@@ -42,6 +42,8 @@ endif
 %replace_wide_pointer($01822D|!bank,horz_rock_init|!bank)
 ; replace wiggler init, extra bit to 1504
 %replace_wide_pointer($018289|!bank,wiggler_init)
+; replace castle block init, extra bit moves right first
+%replace_wide_pointer($0182F3|!bank,castle_block_init|!bank)
 
 ; subspr gfx 0 optimization
 org $019CFC|!bank
@@ -256,6 +258,12 @@ getdrawinfo_generic_prefix:
 	LDA   !spriteset_offset,x
 	STA.b !tile_off_scratch
 	JMP.w $01A365|!bank
+castle_block_init:
+	LDA !extra_bits,x
+	AND #$04
+	LSR
+	STA !C2,x
+	RTS
 warnpc $01B129|!bank
 
 ;; bank 02 hijacks ;;
@@ -278,7 +286,7 @@ mex_store_tile1_lo_bank2:
 ; this is messy but the best I will do for now...
 cls_store_tile1_bank2:
 	LDX.w $15E9|!addr
-.noloadx
+.noloadx:
 	%storetile_hijack("!cls_spriteset_offset,x", $0302|!addr,RTS)
 ; A has the sprite to spawn, Y has its slot.
 ; X has the sprite spawning it.

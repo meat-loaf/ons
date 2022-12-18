@@ -25,6 +25,7 @@ Locals:
 18  originals/24 Yoshi's Island.txt
 19  snow_road.txt
 1A  kalm.txt
+1B  fmgh_inv.txt
 
 1E  sfii_insert_coin.txt
 1F  Rekord3.txt

@@ -188,7 +188,7 @@ spriteset_off_ptrs:
 	dw spritesets_carrot_timed_plats      ; sprite B8 - carrot plat up-left
 	dw spritesets_messagebox              ; sprite B9 - message box
 	dw spritesets_carrot_timed_plats      ; sprite BA - timed platform
-	dw spritesets_castle_blk_bnc_gndr     ; sprite BB - grey moving castle block
+	dw spritesets_castle_blk              ; sprite BB - grey moving castle block
 	dw spritesets_bowser_statue           ; sprite BC - bowser statue
 	dw spritesets_null_spriteset          ; sprite BD - sliding blue koopa
 	dw spritesets_null_spriteset          ; sprite BE - swooper
@@ -218,7 +218,7 @@ if !pixi_installed
 	dw spritesets_nipper                  ; custom sprite 0A - nipper
 	dw spritesets_sakasatachi             ; custom sprite 0B - sakasatachi
 	dw spritesets_null_spriteset          ; custom sprite 0C
-	dw spritesets_null_spriteset          ; custom sprite 0D
+	dw spritesets_spear_guy               ; custom sprite 0D - spear guy
 	dw spritesets_null_spriteset          ; custom sprite 0E
 	dw spritesets_null_spriteset          ; custom sprite 0F
 	dw spritesets_null_spriteset          ; custom sprite 10 - yi arrowlift (dyn)
@@ -509,7 +509,7 @@ endif ; remap_koopa
 .nipper:
 	db $00,$00,$C0,$00,$00,$00,$00,$00    ; spritesets 00-07
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 08-0F
-	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 10-17
+	db $00,$00,$40,$00,$00,$00,$00,$00    ; spritesets 10-17
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 18-1F
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 20-27
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 28-2F
@@ -704,10 +704,11 @@ endif ; !remap_jumpin_pplant_vine
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 30-37
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 38-3F
 .ball_n_chain:
+.castle_blk:
 .castle_blk_bnc_gndr:
 	db $00,$00,$00,$00,$00,$00,$00,$A0    ; spritesets 00-07
 	db $00,$00,$00,$00,$00,$00,$00,$60    ; spritesets 08-0F
-	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 10-17
+	db $00,$00,$20,$00,$00,$00,$00,$00    ; spritesets 10-17
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 18-1F
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 20-27
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 28-2F
@@ -862,6 +863,16 @@ endif
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 28-2F
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 30-37
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 38-3F
+.spear_guy:
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 00-07
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 08-0F
+	db $00,$00,$60,$00,$00,$00,$00,$00    ; spritesets 10-17
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 18-1F
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 20-27
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 28-2F
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 30-37
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 38-3F
+
 
 
 if !hijack_lm_code == 0
@@ -889,7 +900,7 @@ spriteset_gfx_listing:
 	dw $007F,$007F,$007F,$007F,$0122,$0121,$0120,$0123		; spriteset 0F: dry bones/bony/beetle/pencil/grinder/castle block/reflec ball
 	dw $007F,$007F,$007F,$007F,$007F,$0107,$0124,$010D		; spriteset 10: piranhas, expanding pipes, lotus
 	dw $007F,$007F,$007F,$007F,$010C,$0125,$0115,$010D		; spriteset 11: cave: piranhas, lakitu/spiny, buzzy/spiny upside-down, yi spike
-	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 12: none
+	dw $007F,$007F,$007F,$007F,$0126,$0102,$0122,$010E		; spriteset 12: wiggler, castle block/grinder, fish, spearguy
 	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 13: none
 	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 14: none
 	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 15: none

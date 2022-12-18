@@ -6,6 +6,8 @@
 
 ;Extra prop 1 = How close Mario should get in order to drop payload.
 
+;extra byte 1: payload config index
+
 ;Graphics defines:
 !Balloon =	$2C		;Baron Von Zeppelin's tile
 !Chain =	$2E		;Chain tile
