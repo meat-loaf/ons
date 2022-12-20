@@ -31,6 +31,13 @@ org <location>
 pullpc
 endmacro
 
+macro replace_long_pointer(location, ptr)
+pushpc
+org <location>
+	dl <ptr>
+pullpc
+endmacro
+
 macro storetile_hijack(scratch, oam, return)
 	CLC : ADC <scratch>
 .tile_store:

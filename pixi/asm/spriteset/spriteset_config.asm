@@ -138,4 +138,5 @@ spr_tweaker_167A_tbl = $07F4C7|!bank
 spr_tweaker_1686_tbl = $07F590|!bank
 spr_tweaker_190F_tbl = $07F659|!bank
 
-
+; LOCAL
+_sub_horz_pos_bank1  = $01AD30|!bank
