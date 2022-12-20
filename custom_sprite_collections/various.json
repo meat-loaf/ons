@@ -1,0 +1,13 @@
+[{
+	"id":"34",
+	"name":"Falling Spike",
+	"desc": "A hazard that will fall if Mario gets too close.",
+	"category": "castle",
+	"custom": false,
+	"extra_bit": false,
+	"back_color":"FFEB99",
+	"smap16":{
+		"tile":"6D2"
+	}
+
+}]

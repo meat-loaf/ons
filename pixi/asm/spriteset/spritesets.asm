@@ -45,6 +45,12 @@ endif
 ; replace castle block init, extra bit moves right first
 %replace_wide_pointer($0182F3|!bank,castle_block_init|!bank)
 
+; boss fireball -> falling spike (reimplemented in remaps/falling_spike.asm)
+%replace_wide_pointer($018634|!bank,falling_spike_main|!bank)
+
+!bank1_bossfire_free = $01D442|!bank
+!bank1_bossfire_end  = $01D4E4|!bank
+
 ; subspr gfx 0 optimization
 org $019CFC|!bank
 	; saves a byte, originally LDY/TYA for no discernable reason

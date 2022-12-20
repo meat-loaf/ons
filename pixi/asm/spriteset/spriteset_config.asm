@@ -129,4 +129,13 @@ else
 	!mex_off_on_wram_mirror = 1
 endif
 
+;; other constants
+
+spr_tweaker_1656_tbl = $07F26C|!bank
+spr_tweaker_1662_tbl = $07F335|!bank
+spr_tweaker_166E_tbl = $07F3FE|!bank
+spr_tweaker_167A_tbl = $07F4C7|!bank
+spr_tweaker_1686_tbl = $07F590|!bank
+spr_tweaker_190F_tbl = $07F659|!bank
+
 
