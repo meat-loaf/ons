@@ -261,6 +261,8 @@ includeonce
 !dyn_slots     = $06FE|!addr
 
 !on_platform_ix = $1864|!addr
+
+!screen_shake_timer = $1887|!addr
 ; 1 byte
 ; Toggles the use of item memory.
 ; ------r- : Disable reading (everything will always respawn).

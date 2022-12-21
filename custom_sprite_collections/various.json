@@ -1,7 +1,7 @@
 [{
 	"id":"34",
 	"name":"Falling Spike",
-	"desc": "A hazard that will fall if Mario gets too close.",
+	"desc": "A spike that will fall if Mario gets too close.",
 	"category": "castle",
 	"custom": false,
 	"extra_bit": false,
@@ -9,5 +9,201 @@
 	"smap16":{
 		"tile":"6D2"
 	}
+
+},{
+	"id":"0A",
+	"name":"Nipper",
+	"desc":" A Nipper from SMB3 that jumps up when Mario gets close.",
+	"category": "river",
+	"custom":true,
+	"extra_bit":false,
+	"n_exbytes":1,
+	"which_exbyte":0,
+	"which_exbyte_val":0,
+	"smap16":{
+		"tile":"60D"
+	}
+},{
+	"id":"0A",
+	"name":"...waits, then approaches",
+	"desc":" A Nipper from SMB3 that is stationary until Mario gets close, then starts hopping towards him, making a larger jump if he gets too close.",
+	"category": "river",
+	"custom":true,
+	"extra_bit":false,
+	"n_exbytes":1,
+	"which_exbyte":0,
+	"which_exbyte_val":1,
+	"smap16":{
+		"tile":"60E"
+	}
+},{
+	"id":"0A",
+	"name":"...hops towards Mario",
+	"desc":" A Nipper from SMB3 that hops towards Mario, and jumps up if he gets too close.",
+	"category": "river",
+	"custom":true,
+	"extra_bit":false,
+	"n_exbytes":1,
+	"which_exbyte":0,
+	"which_exbyte_val":2,
+	"smap16":{
+		"tile":"60C"
+	}
+},{
+	"id":"0A",
+	"name":"...shoots fireballs",
+	"desc":" A Nipper from SMB3 that stays in place and occasionally shoots 4 fireballs at Mario.",
+	"category": "river",
+	"custom":true,
+	"extra_bit":false,
+	"n_exbytes":1,
+	"which_exbyte":0,
+	"which_exbyte_val":3,
+	"smap16":[{
+		"tile":"60C"
+	},{
+		"xoff":-6,
+		"yoff":-2,
+		"tile":"66B"
+	},{
+		"xoff":-10,
+		"yoff":-4,
+		"tile":"66B"
+	}]
+},{
+	"id":"A7",
+	"name":"Thwomp, falls down",
+	"desc":"A thwomp, which quickly falls downward if Mario gets too close.",
+	"category":"castle",
+	"custom":false,
+	"extra_bit":false,
+	"n_exbytes":1,
+	"which_exbyte":0,
+	"which_exbyte_val":0,
+	"smap16":[{
+		"tile":"6C4",
+		"xoff":"4"
+	},{
+		"tile":"6C5",
+		"xoff":"14"
+	},{
+		"tile":"6C6",
+		"xoff":"4",
+		"yoff":"10"
+	},{
+		"tile":"6C7",
+		"xoff":"14",
+		"yoff":"10"
+	},{
+		"tile":"6D4",
+		"yoff":"24",
+		"xoff":"6"
+	},{
+		"tile":"583",
+		"yoff":"24",
+		"xoff":"A"
+	}]
+},{
+	"id":"A7",
+	"name":"...falls up",
+	"desc":"A thwomp, which quickly falls upward if Mario gets too close.",
+	"category":"castle",
+	"custom":false,
+	"extra_bit":false,
+	"n_exbytes":1,
+	"which_exbyte":0,
+	"which_exbyte_val":1,
+	"smap16":[{
+		"tile":"6C4",
+		"xoff":"4"
+	},{
+		"tile":"6C5",
+		"xoff":"14"
+	},{
+		"tile":"6C6",
+		"xoff":"4",
+		"yoff":"10"
+	},{
+		"tile":"6C7",
+		"xoff":"14",
+		"yoff":"10"
+	},{
+		"tile":"6D5",
+		"yoff":"-C",
+		"xoff":"5"
+	},{
+		"tile":"592",
+		"yoff":"-C",
+		"xoff":"B"
+
+	}]
+},{
+	"id":"A7",
+	"name":"...falls right",
+	"desc":"A thwomp, which quickly falls rightward if Mario gets too close.",
+	"category":"castle",
+	"custom":false,
+	"extra_bit":false,
+	"n_exbytes":1,
+	"which_exbyte":0,
+	"which_exbyte_val":2,
+	"smap16":[{
+		"tile":"6C4",
+		"xoff":"4"
+	},{
+		"tile":"6C5",
+		"xoff":"14"
+	},{
+		"tile":"6C6",
+		"xoff":"4",
+		"yoff":"10"
+	},{
+		"tile":"6C7",
+		"xoff":"14",
+		"yoff":"10"
+	},{
+		"tile":"582",
+		"yoff":"4",
+		"xoff":"16"
+	},{
+
+		"tile":"582",
+		"xoff":"16",
+		"yoff":"14"
+	}]
+},{
+	"id":"A7",
+	"name":"...falls left",
+	"desc":"A thwomp, which quickly falls leftward if Mario gets too close.",
+	"category":"castle",
+	"custom":false,
+	"extra_bit":false,
+	"n_exbytes":1,
+	"which_exbyte":0,
+	"which_exbyte_val":3,
+	"smap16":[{
+		"tile":"6C4",
+		"xoff":"4"
+	},{
+		"tile":"6C5",
+		"xoff":"14"
+	},{
+		"tile":"6C6",
+		"xoff":"4",
+		"yoff":"10"
+	},{
+		"tile":"6C7",
+		"xoff":"14",
+		"yoff":"10"
+
+	},{
+		"tile":"593",
+		"yoff":"4",
+		"xoff":"-E"
+	},{
+		"tile":"593",
+		"xoff":"-E",
+		"yoff":"14"
+	}]
 
 }]

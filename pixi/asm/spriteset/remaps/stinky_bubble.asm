@@ -1,7 +1,5 @@
 ; stinky gas bubble
-;org $02E372|!bank
-;	db $00,$02,$04,$06,$08,$09,$0A,$0C
-;	db $08,$09,$0A,$0C,$00,$02,$04,$06
+; new code: adapted from pixi sprite originally by dogemaster
 
 !y_update_freq = $03
 !y_accel       = $01
@@ -23,6 +21,7 @@ org !bank1_bossfire_free
 stinky_bubble_init:
 	LDA !extra_bits,x
 	AND #$04
+	STA !1594,x
 	BNE .end
 	LDA !extra_byte_1,x
 	AND #$04
@@ -53,76 +52,121 @@ stinky_bubble_main:
 	PLB
 	JSR stinky_bubble_gfx
 	LDA !sprites_locked
-	BNE .done
-	JSR .y_movement
+	BNE stinky_bubble_spr_done
+	LDA !1594,x
+	BNE casio
+	JSR y_movement
 .x_movement:
 	LDA !1504,x
 	BEQ .constant
 	LDA !1540,x
-	BNE .common
+	BNE common_interact
 if !x_update_freq != $00
 	LDA $14
 	AND #!x_update_freq
-	BNE .common
+	BNE common_interact
 endif
 	LDA !1534,x
 	AND #$01
 	TAY
 	LDA !sprite_speed_x,x
 	CLC
-	ADC .x_accel,y
+	ADC x_accel,y
 	STA !sprite_speed_x,x
-	CMP .x_speed_max,y
-	BNE .common
+	CMP x_speed_max,y
+	BNE common_interact
 	INC !1534,x
 	LDA #!max_x_speed_tmr
 	STA !1540,x
-	BRA .common
+	BRA common_interact
 .constant:
 	LDY !1534,x
-	LDA .x_speed_const,y
+	LDA x_speed_const,y
 	STA !sprite_speed_x,x
-.common:
+common_interact:
 	INC !1570,x
 	; suboffscreen 0: bank 2
 	JSR.w $02D025|!bank
 	JSL $018022|!bank
 	JSL $01801A|!bank
 	JSL $01A7DC|!bank
-.done:
+stinky_bubble_spr_done:
 	PLB
 	RTL
 casio:
-	
+;	LDA !extra_byte_1,x
+;	BMI .disco
+	LDA !sprite_x_low,x
+	CLC
+	ADC #$20
+	STA $00
+	LDA !sprite_x_high,x
+	ADC #$00
+	STA $01
 
-.y_movement:
+	LDA !sprite_y_low,x
+	ADC #$20
+	STA $02
+	LDA !sprite_y_high,x
+	ADC #$00
+	STA $03
+
+	REP #$20
+
+	LDA $00
+	SEC
+	SBC $94
+	STA $00
+;	LDA $01
+;	SBC $95
+;	STA $01
+
+;	REP #$20
+	LDA $02
+	SEC
+	SBC $96
+	SBC #$0010
+	STA $02
+
+	SEP #$20
+
+	LDA #$18
+	JSL spr_aiming|!bank
+	LDA $00
+	STA !sprite_speed_x,x
+	LDA $02
+	STA !sprite_speed_y,x
+	BRA common_interact
+;.disco:
+
+y_movement:
 if !y_update_freq != 00
 	LDA $14
 	AND #!y_update_freq
-	BNE ..skip
+	BNE .skip
 endif
 	LDA !1594,x
 	AND #$01
 	TAY
 	LDA !sprite_speed_y,x
 	CLC
-	ADC .y_accel,y
+	ADC y_accel,y
 	STA !sprite_speed_y,x
-	CMP .y_speed_max,y
-	BNE ..skip
+	CMP y_speed_max,y
+	BNE .skip
 	INC !1594,x
-..skip:
+.skip:
 	RTS
 
-.y_accel:
+y_accel:
 	db !y_accel,-!y_accel
-.y_speed_max:
+y_speed_max:
 	db !y_speed_max,-!y_speed_max
-.x_accel:
+x_accel:
 	db -!x_accel, !x_accel
-.x_speed_max:
+x_speed_max:
 	db -!x_speed_max,!x_speed_max
-.x_speed_const
+x_speed_const:
 	db -!const_x_speed,!const_x_speed
 
 ; pretty much ripped from the disasm real lazy-like
@@ -132,7 +176,7 @@ DATA_02E352:
 DATA_02E362:
 	db $00,$00,$00,$00,$10,$10,$10,$10
 	db $20,$20,$20,$20,$30,$30,$30,$30
-DATA_02E372:
+stinky_bubble_tiles:
 	db $00,$02,$04,$06,$08,$09,$0A,$0C
 	db $08,$09,$0A,$0C,$00,$02,$04,$06
 DATA_02E382:
@@ -196,7 +240,7 @@ CODE_02E3F5:
 	SEC
 	SBC.B $03
 	+ STA.W $0301|!addr,Y
-	LDA.W DATA_02E372,X
+	LDA.W stinky_bubble_tiles,X
 	STA.W $0302|!addr,Y
 	LDA.W DATA_02E382,X
 	STA.W $0303|!addr,Y
@@ -212,5 +256,4 @@ CODE_02E3F5:
 	JSL finish_oam_write|!bank
 	RTS
 
-;error pc
 warnpc $02E414|!bank

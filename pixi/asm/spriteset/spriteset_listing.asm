@@ -168,7 +168,7 @@ spriteset_off_ptrs:
 	dw spritesets_null_spriteset          ; sprite A4
 	dw spritesets_fuzzy_and_sparky        ; sprite A5 - wall following fuzzy/sparky
 	dw spritesets_big_hothead             ; sprite A6 - large wall following hothead
-	dw spritesets_null_spriteset          ; sprite A7 - iggy's ball
+	dw spritesets_thwomp                  ; sprite A7 - thwomp (was iggy's ball)
 	dw spritesets_blargg                  ; sprite A8 - blargg
 	dw spritesets_null_spriteset          ; sprite A9 - reznor
 	dw spritesets_fishbone                ; sprite AA - fishbone
@@ -686,8 +686,9 @@ endif ; !remap_jumpin_pplant_vine
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 38-3F
 .fishbone:
 .thwomp_thwimp_spike:
+.thwomp:
 	db $00,$00,$00,$00,$00,$00,$00,$60    ; spritesets 00-07
-	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 08-0F
+	db $00,$00,$00,$00,$00,$00,$00,$80    ; spritesets 08-0F
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 10-17
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 18-1F
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 20-27
@@ -897,7 +898,7 @@ spriteset_gfx_listing:
 	dw $007F,$007F,$0108,$011D,$011C,$0105,$011E,$0103		; spriteset 0C: snow 2: chucks (pitchin), bumpty, ninji, plats
 	dw $007F,$007F,$007F,$00E0,$007F,$007F,$007F,$0013		; spriteset 0D: testing (replace later)
 	dw $007F,$007F,$007F,$007F,$0105,$0104,$0103,$0107		; spriteset 0E: chucks + kickin chuck, volc lotus
-	dw $007F,$007F,$007F,$007F,$0122,$0121,$0120,$0123		; spriteset 0F: dry bones/bony/beetle/pencil/grinder/castle block/reflec ball
+	dw $007F,$007F,$007F,$0127,$0122,$0121,$0120,$0123		; spriteset 0F: dry bones/bony/beetle/pencil/grinder/castle block/reflec ball, thwomp
 	dw $007F,$007F,$007F,$007F,$007F,$0107,$0124,$010D		; spriteset 10: piranhas, expanding pipes, lotus
 	dw $007F,$007F,$007F,$007F,$010C,$0125,$0115,$010D		; spriteset 11: cave: piranhas, lakitu/spiny, buzzy/spiny upside-down, yi spike
 	dw $007F,$007F,$007F,$007F,$0126,$0102,$0122,$010E		; spriteset 12: wiggler, castle block/grinder, fish, spearguy

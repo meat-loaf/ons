@@ -48,8 +48,11 @@ endif
 ; boss fireball -> falling spike (reimplemented in remaps/falling_spike.asm)
 %replace_wide_pointer($018634|!bank,falling_spike_main|!bank)
 
-!bank1_bossfire_free = $01D442|!bank
-!bank1_bossfire_end  = $01D4E4|!bank
+!bank1_bossfire_free  = $01D442|!bank
+!bank1_bossfire_end   = $01D4E4|!bank
+
+!bank1_koopakids_free = $01FA4C|!bank
+!bank1_koopakids_end  = $01FFBF|!bank
 
 ; subspr gfx 0 optimization
 org $019CFC|!bank
@@ -641,6 +644,7 @@ spriteset_setup_lm:
 endif
 
 incsrc "spriteset_listing.asm"
+incsrc "extra_routines.asm"
 
 pushpc
 incsrc "remaps.asm"
