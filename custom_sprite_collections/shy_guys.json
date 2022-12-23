@@ -40,7 +40,7 @@
 	}
 },{
 	"id":"0D",
-	"name":"Spear Guy",
+	"name":"Spear Guy, dances back and forth",
 	"desc":"A Spear Guy from Yoshi's Island. He dances back and forth with his spear facing upwards. The spear hurts but can be spinjumped from above, and the Shy Guy can be killed with a precise jump.",
 	"category":"forest",
 	"custom":"true",
@@ -70,7 +70,7 @@
 	}]
 },{
 	"id":"0D",
-	"name":"Spear Guy",
+	"name":"...dances in place",
 	"desc":"A Spear Guy from Yoshi's Island. He dances in place with his spear facing upwards. The spear hurts but can be spinjumped from above, and the Shy Guy can be killed with a precise jump.",
 	"category":"forest",
 	"custom":"true",

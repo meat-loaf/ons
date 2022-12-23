@@ -39,7 +39,7 @@ spriteset_off_ptrs:
 	dw spritesets_climbing_koopas         ; sprite 23 - net koopa (red, vert)
 	dw spritesets_climbing_koopas         ; sprite 24 - net koopa (grn, horz)
 	dw spritesets_climbing_koopas         ; sprite 25 - net koopa (red, horz)
-	dw spritesets_thwomp_thwimp_spike     ; sprite 26 - thwomp
+	dw spritesets_blurp                   ; sprite 26 - blurp fish
 	dw spritesets_thwomp_thwimp_spike     ; sprite 27 - thwimp
 	dw spritesets_bigboo_smashplayers     ; sprite 28 - big boo
 	dw spritesets_null_spriteset          ; sprite 29 - koopa kids
@@ -598,7 +598,7 @@ endif ; !remap_jumpin_pplant_vine
 .rip_van_fish:
 .blurp:
 	db $00,$40,$00,$A0,$00,$00,$00,$00    ; spritesets 00-07
-	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 08-0F
+	db $00,$00,$00,$00,$00,$00,$00,$20    ; spritesets 08-0F
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 10-17
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 18-1F
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 20-27

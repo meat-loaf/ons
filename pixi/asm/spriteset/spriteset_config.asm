@@ -139,6 +139,11 @@ spr_tweaker_1686_tbl = $07F590|!bank
 spr_tweaker_190F_tbl = $07F659|!bank
 
 ; LOCAL
+_spr_inits_start     = $01817D|!bank
+_spr_face_mario_rt   = $01857C|!bank
+_spr_mains_start     = $0185CC|!bank
+_spr_set_ani_frame   = $018E5F|!bank
+_sprspr_mario_spr_rt = $018FC1|!bank
 _spr_obj_interact    = $019140|!bank
 _get_draw_info_bank1 = $01A365|!bank
 _mario_spr_interact  = $01A7E4|!bank
@@ -149,4 +154,4 @@ _suboffscr0_bank1    = $01AC31|!bank
 _suboffscr1_bank1    = $01AC2B|!bank
 _suboffscr2_bank1    = $01AC27|!bank
 _suboffscr3_bank1    = $01AC21|!bank
-
+_spr_invis_solid_rt  = $01B457|!bank

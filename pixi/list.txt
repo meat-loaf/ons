@@ -34,7 +34,6 @@
 25 bumpty.cfg
 
 38 beezo_eerielike.cfg
-39 para_beetle.cfg
 3A fly_guy.cfg
 
 41 dry_dolphin.cfg

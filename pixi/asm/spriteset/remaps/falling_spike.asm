@@ -23,17 +23,16 @@ org $019B83+read1(($019C7F|!bank)+!falling_spike_sprnum)
 ; moved to bank 1, replaces part of boss fireball code
 org !bank1_bossfire_free
 falling_spike_main:
-	; generic spr gfx 2
-	JSR.w $019F0D|!bank
+	JSR.w sub_spr_gfx_2
 	LDY.w !sprite_oam_index,x
 	LDA.w $0301|!addr,y
 	DEC
 	STA.w $0301|!addr,y
 	LDA.w !1540,x
 	BEQ.b .no_shuffle
+	; clear carry for free
+	AND.b #$04
 	LSR   #2
-	AND.b #$01
-	CLC
 	ADC.w $0300|!addr,y
 	STA.w $0300|!addr,y
 .no_shuffle:

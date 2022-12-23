@@ -48,11 +48,18 @@ endif
 ; boss fireball -> falling spike (reimplemented in remaps/falling_spike.asm)
 %replace_wide_pointer($018634|!bank,falling_spike_main|!bank)
 
-!bank1_bossfire_free  = $01D442|!bank
-!bank1_bossfire_end   = $01D4E4|!bank
+; thwomp's code was rewritten and moved
+!bank1_thwomp_free     = $01AE96|!bank
+!bank1_thwomp_end      = $01AF9F|!bank
 
-!bank1_koopakids_free = $01FA4C|!bank
-!bank1_koopakids_end  = $01FFBF|!bank
+!bank1_boss_mode7_free = $01CC9D|!bank
+!bank1_boss_mode7_end  = $01CCF0|!bank
+
+!bank1_bossfire_free   = $01D442|!bank
+!bank1_bossfire_end    = $01D4E4|!bank
+
+!bank1_koopakids_free  = $01FA4C|!bank
+!bank1_koopakids_end   = $01FFBF|!bank
 
 ; subspr gfx 0 optimization
 org $019CFC|!bank
@@ -194,8 +201,9 @@ brown_plat_main:
 warnpc $019E0D|!bank
 
 ; subsprgfx 2 optimization
+org $019F0D|!bank
 sub_spr_gfx_2:
-org $019F0F|!bank
+	STZ.b $04
 	JSR.w getdrawinfo_generic_prefix|!bank
 org $019F27|!bank
 	; carry cleared at $019F1C, we get to save a (needed) byte
@@ -227,6 +235,7 @@ org $019F27|!bank
 	JMP.w $01A3DF|!bank
 warnpc $019F5B|!bank
 
+; TODO with current bank1 shuffling these can likely go elsewhere in time
 org $01FFBF|!bank
 horz_rock_init:
 	LDA !extra_bits,x

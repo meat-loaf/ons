@@ -79,3 +79,7 @@ incsrc "remaps/mex_boostream.asm"
 
 ; assorted stuff that doesnt use spritesets
 incsrc "remaps/sp01_stuff.asm"
+
+; custom stuff
+incsrc "remaps/para_beetle.asm"
+incsrc "remaps/throw_block.asm"

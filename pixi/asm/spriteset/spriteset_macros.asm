@@ -38,12 +38,17 @@ org <location>
 pullpc
 endmacro
 
+macro replace_sprite_rt(sprite_id, table, newval)
+	%replace_wide_pointer(<table>+(<sprite_id>*2),<newval>)
+endmacro
+
 macro storetile_hijack(scratch, oam, return)
 	CLC : ADC <scratch>
 .tile_store:
 	STA <oam>,y
 	<return>
 endmacro
+
 
 macro altsprite_spawn(snum_table, off_table, inherit, inherit_from, on_wram_mirror, noinherit_routine, return)
 	STA.w <snum_table>,y
