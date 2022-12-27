@@ -1,23 +1,23 @@
 @includefrom "spritesets.asm"
 
 spriteset_off_ptrs:
-	dw spritesets_koopas                  ; sprite 00 - nakie koopa grn
-	dw spritesets_koopas                  ; sprite 01 - nakie koopa red
-	dw spritesets_koopas                  ; sprite 02 - nakie koopa blu
-	dw spritesets_koopas                  ; sprite 03 - nakie koopa ylw
-	dw spritesets_koopas                  ; sprite 04 - koopa grn
-	dw spritesets_koopas                  ; sprite 05 - koopa red
-	dw spritesets_koopas                  ; sprite 06 - koopa blu
-	dw spritesets_koopas                  ; sprite 07 - koopa ylw
-	dw spritesets_koopas                  ; sprite 08 - parakoopa grn (flies)
-	dw spritesets_koopas                  ; sprite 09 - parakoopa grn (bounces)
-	dw spritesets_koopas                  ; sprite 0A - parakoopa red (vert)
-	dw spritesets_koopas                  ; sprite 0B - parakoopa red (horz)
-	dw spritesets_koopas                  ; sprite 0C - parakoopa ylw (dumb)
+	dw spritesets_null_spriteset          ; sprite 00 - nakie koopa grn
+	dw spritesets_null_spriteset          ; sprite 01 - nakie koopa red
+	dw spritesets_null_spriteset          ; sprite 02 - nakie koopa blu
+	dw spritesets_null_spriteset          ; sprite 03 - nakie koopa ylw
+	dw spritesets_null_spriteset          ; sprite 04 - koopa grn
+	dw spritesets_null_spriteset          ; sprite 05 - koopa red
+	dw spritesets_null_spriteset          ; sprite 06 - koopa blu
+	dw spritesets_null_spriteset          ; sprite 07 - koopa ylw
+	dw spritesets_null_spriteset          ; sprite 08 - parakoopa grn (flies)
+	dw spritesets_null_spriteset          ; sprite 09 - parakoopa grn (bounces)
+	dw spritesets_null_spriteset          ; sprite 0A - parakoopa red (vert)
+	dw spritesets_null_spriteset          ; sprite 0B - parakoopa red (horz)
+	dw spritesets_null_spriteset          ; sprite 0C - parakoopa ylw (dumb)
 	dw spritesets_null_spriteset          ; sprite 0D - bob omb
 	dw spritesets_null_spriteset          ; sprite 0E - keyhole
-	dw spritesets_goomba                  ; sprite 0F - goomba     (galoomba)
-	dw spritesets_goomba                  ; sprite 10 - paragoomba (paragaloomba)
+	dw spritesets_null_spriteset          ; sprite 0F - goomba     (galoomba)
+	dw spritesets_null_spriteset          ; sprite 10 - paragoomba (paragaloomba)
 	dw spritesets_sakasatachi             ; sprite 11 - buzzy beetle
 	dw spritesets_null_spriteset          ; sprite 12 - unused sprite
 	dw spritesets_lakitu_spiny            ; sprite 13 - spiny
@@ -184,10 +184,10 @@ spriteset_off_ptrs:
 	dw spritesets_castle_blk_bnc_gndr     ; sprite B4 - non-line-guided grinder
 	dw spritesets_null_spriteset          ; sprite B5
 	dw spritesets_dry_bones_beetle_pencil ; sprite B6 - reflecting fireball
-	dw spritesets_carrot_timed_plats      ; sprite B7 - carrot plat down-right
-	dw spritesets_carrot_timed_plats      ; sprite B8 - carrot plat up-left
+	dw spritesets_null_spriteset          ; sprite B7 - carrot plat down-right
+	dw spritesets_null_spriteset          ; sprite B8 - carrot plat up-left
 	dw spritesets_dynamic_sprs            ; sprite B9 - star coin
-	dw spritesets_carrot_timed_plats      ; sprite BA - timed platform
+	dw spritesets_dynamic_sprs            ; sprite BA - woozyguy
 	dw spritesets_castle_blk              ; sprite BB - grey moving castle block
 	dw spritesets_bowser_statue           ; sprite BC - bowser statue
 	dw spritesets_dynamic_sprs            ; sprite BD - yi pswitch (dynamic)
@@ -452,21 +452,6 @@ exm_spriteset_off_ptrs:
 endif
 
 spritesets:
-if !remap_koopa == 0
-.koopas
-endif
-if !remap_goomba == 0
-.goomba:
-endif
-if !remap_message_box == 0
-.messagebox:
-endif
-if !remap_jumpin_pplant_vine == 0
-.piranhas:
-endif
-if !goal_sphere_on_sp0_sp1 == 1
-.goalsphere
-endif
 .null_spriteset:                              ; used by sprites that don't use the system.
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 00-07
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 08-0F
@@ -485,17 +470,6 @@ endif
 	db $C0,$C0,$C0,$C0,$C0,$C0,$C0,$C0    ; spritesets 28-2F
 	db $C0,$C0,$C0,$C0,$C0,$C0,$C0,$C0    ; spritesets 30-37
 	db $C0,$C0,$C0,$C0,$C0,$C0,$C0,$C0    ; spritesets 38-3F
-if !remap_koopa
-.koopas:                                      ; koopa variants
-	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 00-07
-	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 08-0F
-	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 10-17
-	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 18-1F
-	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 20-27
-	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 28-2F
-	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 30-37
-	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 38-3F
-endif ; remap_koopa
 .sakasatachi                                  ; buzzy beetle, upsd. buzzy/spiny
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 00-07
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 08-0F
@@ -560,22 +534,6 @@ endif ; remap_koopa
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 28-2F
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 30-37
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 38-3F
-.carrot_timed_plats:
-	db $00,$00,$A0,$00,$00,$00,$00,$00    ; spritesets 00-07
-	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 08-0F
-	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 10-17
-	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 18-1F
-	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 20-27
-	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 28-2F
-	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 30-37
-	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 38-3F
-if !remap_goomba
-.goomba:
-endif ; !remap_goomba
-if !remap_message_box
-.messagebox:
-endif
-if !remap_jumpin_pplant_vine
 .piranhas:
 	db $A0,$80,$E0,$00,$C0,$80,$00,$20    ; spritesets 00-07
 	db $00,$A0,$00,$00,$00,$00,$00,$00    ; spritesets 08-0F
@@ -585,7 +543,6 @@ if !remap_jumpin_pplant_vine
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 28-2F
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 30-37
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 38-3F
-endif ; !remap_jumpin_pplant_vine
 .dolphin
 	db $00,$00,$00,$20,$00,$00,$00,$00    ; spritesets 00-07
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 08-0F
@@ -753,9 +710,7 @@ endif ; !remap_jumpin_pplant_vine
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 28-2F
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 30-37
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 38-3F
-if !goal_sphere_on_sp0_sp1 == 0
 .goalsphere:
-endif
 .beezo:
 .parabeetle:
 .rock_grass_plats:

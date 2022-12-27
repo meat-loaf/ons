@@ -42,6 +42,11 @@ hurt_mario            = $00F5B7|!bank
 !spr_inits_start     = $01817D|!bank
 !spr_mains_start     = $0185CC|!bank
 
+_spr_face_mario_bank1 = $01857C|!bank
+
+spr_update_x_no_grv_l = $018022|!bank
+spr_invis_blk_rt_l    = $01B44F|!bank
+
 !true  = $01
 !false = $00
 

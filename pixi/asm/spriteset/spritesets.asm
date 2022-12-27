@@ -43,7 +43,7 @@ endif
 ; replace wiggler init, extra bit to 1504
 %replace_wide_pointer($018289|!bank,wiggler_init)
 ; replace castle block init, extra bit moves right first
-%replace_wide_pointer($0182F3|!bank,castle_block_init|!bank)
+;%replace_wide_pointer($0182F3|!bank,castle_block_init|!bank)
 
 ; boss fireball -> falling spike (reimplemented in remaps/falling_spike.asm)
 %replace_wide_pointer($018634|!bank,falling_spike_main|!bank)
@@ -437,6 +437,7 @@ org $07F7A0|!bank
 load_tweaker_bytes:
 
 freecode
+prot dyn_gfxs_1
 sprset_init:
 	PHY
 	PHX

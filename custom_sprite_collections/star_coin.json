@@ -1,11 +1,11 @@
 [{
-	"id":"1F",
+	"id":"B9",
 	"name":"Star Coin (dynamic)",
 	"desc":"A Star Coin, of which there are 5 in a level.",
 	"category": "dynamic",
 	"back_color": "0",
 	"text_color": "FFFFFF",
-	"custom": true,
+	"custom": false,
 	"extra_bit": false,
 	"n_exbytes": 1,
 	"which_exbyte": 0,
@@ -28,13 +28,13 @@
 			"tile":"551"
 		}]
 },{
-	"id":"1F",
+	"id":"B9",
 	"name":"...offset 8 pixels right",
 	"desc":"A Star Coin, of which there are 5 in a level. This one is offset 8 pixels to the right.",
 	"category": "dynamic",
 	"back_color": "0",
 	"text_color": "FFFFFF",
-	"custom": true,
+	"custom": false,
 	"extra_bit": false,
 	"n_exbytes": 1,
 	"which_exbyte": 0,
@@ -57,13 +57,13 @@
 			"tile":"551"
 		}]
 },{
-	"id":"1F",
+	"id":"B9",
 	"name":"...offset 8 pixels down",
 	"desc":"A Star Coin, of which there are 5 in a level. This one is offset 8 pixels down.",
 	"category": "dynamic",
 	"back_color": "0",
 	"text_color": "FFFFFF",
-	"custom": true,
+	"custom": false,
 	"extra_bit": false,
 	"n_exbytes": 1,
 	"which_exbyte": 0,
@@ -86,13 +86,13 @@
 			"tile":"551"
 		}]
 },{
-	"id":"1F",
+	"id":"B9",
 	"name":"...offset 8 pixels down and to the right",
 	"desc":"A Star Coin, of which there are 5 in a level. This one is offset 8 pixels down and to the right.",
 	"category": "dynamic",
 	"back_color": "0",
 	"text_color": "FFFFFF",
-	"custom": true,
+	"custom": false,
 	"extra_bit": false,
 	"n_exbytes": 1,
 	"which_exbyte": 0,

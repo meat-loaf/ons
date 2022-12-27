@@ -13,7 +13,7 @@ pushpc
 org !bank1_koopakids_free
 starcoin_init:
 	; todo make shared routine
-;	%sprite_init_do_pos_offset(!extra_byte_1,x)
+	%sprite_init_do_pos_offset(!extra_byte_1,x)
 	rts
 .done:
 
@@ -32,6 +32,7 @@ starcoin_main:
 
 	lda !sprites_locked
 	bne .exit
+	; update ani frame
 	inc !starcoin_ani_timer,x
 	jsr.w _suboffscr0_bank3
 	jsl   mario_spr_interact_l
@@ -42,18 +43,18 @@ starcoin_main:
 	sec
 	rol !yoshi_coins_collected
 
-.popcount:
-	stz.b $00
-	lda.w !yoshi_coins_collected
-.loop:
-	inc $00
-	lsr
-	bne .loop
-	lda.b #$08
-	clc
-	adc $00
-	; todo this routine uses mario's position, before we were using sprite's position
-	jsl $00F377|!bank
+;.popcount:
+;	stz.b $00
+;	lda.w !yoshi_coins_collected
+;.loop:
+;	inc $00
+;	lsr
+;	bne .loop
+;	lda.b #$08
+;	clc
+;	adc $00
+;	; todo this routine uses mario's position, before we were using sprite's position
+;	jsl $00F377|!bank
 
 	jsl sprite_write_item_memory|!bank
 

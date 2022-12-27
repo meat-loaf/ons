@@ -17,7 +17,6 @@
 10 arrowlift.cfg
 11 yispike.cfg
 12 spikemace.cfg
-13 yi_pswitch.cfg
 14 chomprock.cfg
 15 woozyguy.cfg
 16 yiblowhardv2.cfg

@@ -7,6 +7,7 @@
 
 !first_32x32_sprnum = $B9
 
+; TODO handle y-flipping
 spr_gfx_32x32:
 ;	stz $0E
 ;	stz $0F
@@ -78,14 +79,14 @@ spr_gfx_32x32:
 ;   the porcu-puffer, where its sprite position is at its center,
 ;   or the castle block which has the posotion at the top-left)
 .tile_off_x_base:
-	db $00,$00,$00,$00,$F2,$00,$00,$00,$00,$00,$08
+	db $00,$F8,$00,$00,$F2,$00,$00,$00,$00,$00,$08
 .tile_off_y_base:
-	db $00,$00,$00,$00,$00,$00,$F0,$00,$00,$00,$F8
+	db $00,$F6,$00,$00,$00,$00,$F0,$00,$00,$00,$F8
 ; helper tables
 .tile_loop_ixval:
 	db $03,$07
 .tile_index:
-	db $00,$08,$10,$18
+	db $00,$08,$20,$28
 .tile_offsets_x:
 	db $00,$10,$00,$10
 	db $10,$00,$10,$00
@@ -120,7 +121,7 @@ spr_dyn_allocate_slot_long:
 spr_dyn_allocate_slot:
 	; preserve calling value
 	lda !dyn_slots
-	cmp #!dyn_max_slots-1
+	cmp #!dyn_max_slots
 	bcc .slots_avail
 	ldx !current_sprite_process
 	sec
@@ -211,12 +212,11 @@ spr_dyn_allocate_slot:
 	sta !dyn_spr_slot_tbl,x
 	clc
 	rts
-; slots are 2 8x16 strips
+; slots are 2 16x64 strips
 .buffer_offs_hi:
 	db $00,$01
 	db $04,$05
 .gfx:
-	dl yi_pswitch
+	dl yi_pswitch_gfx
 	dl starcoin_gfx
-
-
+	dl woozyguy_gfx

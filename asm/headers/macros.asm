@@ -38,6 +38,17 @@ pushpc
 pullpc
 endmacro
 
+macro dump_sprite_cfg(sprite_id)
+	!one #= read1(!spr_tweaker_1656_tbl+<sprite_id>)
+	!two #= read1(!spr_tweaker_1662_tbl+<sprite_id>)
+	!three #= read1(!spr_tweaker_166E_tbl+<sprite_id>)
+	!four #= read1(!spr_tweaker_167A_tbl+<sprite_id>)
+	!five #= read1(!spr_tweaker_1686_tbl+<sprite_id>)
+	!six #= read1(!spr_tweaker_190F_tbl+<sprite_id>)
+	error "sprite id ", <sprite_id>, "cfg vals (in decimal): !one, !two, !three, !four, !five, !six"
+
+endmacro
+
 macro alloc_spr(sprite_id, sprite_init, sprite_main, spr_1656_val, spr_1662_val, spr_166E_val, spr_167A_val, spr_1686_val, spr_190F_val)
 	%replace_pointer(!spr_inits_start+(<sprite_id>*2)|!bank, <sprite_init>|!bank)
 	%replace_pointer(!spr_mains_start+(<sprite_id>*2)|!bank, <sprite_main>|!bank)

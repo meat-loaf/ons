@@ -119,7 +119,7 @@
 			"tile":"5DF"
 		}]
 },{
-	"id":"13",
+	"id":"BD",
 	"name":"Red `!' Switch (dynamic)",
 	"desc":"A red switch from Yoshi's Island that cannot be moved. It activates the blue POW timer.",
 	"category": "dynamic",
@@ -127,7 +127,7 @@
 	"display_xoff":0,
 	"display_yoff":-1,
 	"text_color": "FFFFFF",
-	"custom": true,
+	"custom": false,
 	"extra_bit": false,
 	"n_exbytes": 0,
 	"smap16":[{

@@ -1,11 +1,12 @@
 includefrom "remaps.asm"
 
+; TODO riding is buggy
+
 !megamole_sprnum = $BF
 
-;%alloc_spr(!megamole_sprnum, megamole_init, bank3_sprcaller,\
-;	$8E, $0E, $75, $9B, $B9, $46)
+%alloc_spr(!megamole_sprnum, mega_mole_init, bank3_sprcaller,\
+	14, 48, 17, 161, 0, 32)
 
-%alloc_spr_nocfg(!megamole_sprnum, mega_mole_init, bank3_sprcaller)
 
 !mega_mole_falling_timer = !1540
 !mega_mole_ride_timer    = !154C
@@ -40,7 +41,7 @@ mega_mole_main:
 	sta !mega_mole_ani_frame,x
 
 	jsr.w _suboffscr3_bank3
-	ldy !mega_mole_moving_dir,x
+	ldy !mega_mole_facing_dir,x
 	lda .speeds,y
 	sta !sprite_speed_x,x
 	lda !sprite_blocked_status,x
@@ -73,22 +74,23 @@ mega_mole_main:
 	lda #$10
 	sta !mega_mole_turning_timer,x
 .no_upd_turning_timer:
-	lda !mega_mole_moving_dir,x
+	lda !mega_mole_facing_dir,x
 	eor #$01
-	sta !mega_mole_moving_dir,x
+	sta !mega_mole_facing_dir,x
 .noturn:
 	cpy #$00
 	bne .no_upd_facing_dir
-	lda !mega_mole_moving_dir,x
-	sta !mega_mole_facing_dir,x
+	lda !mega_mole_facing_dir,x
+	sta !mega_mole_moving_dir,x
 .no_upd_facing_dir:
 	jsl mario_spr_interact_l
 	bcc .exit
 	jsr.w _sub_vert_pos_bank3
-	; Todo was $0E??
-	lda $0F
+	lda $0E
 	cmp #$D8
-	bmi .check_ride
+	bpl .ok
+	bra .check_ride
+.ok
 	lda !mega_mole_ride_timer,x
 	ora !sprite_being_eaten,x
 	bne .exit
@@ -109,9 +111,11 @@ mega_mole_main:
 	adc !sprite_y_low,x
 	sta !player_y_next
 
-	lda !sprite_x_high,x
-	adc #$ff
-	sta !player_y_next+1
+	; todo this is just like the original code
+	; but always puts mario at y_high = 0...
+	;lda !sprite_x_high,x
+	;adc #$ff
+	;sta !player_y_next+1
 
 	ldy #$00
 	lda !sprite_x_movement

@@ -21,8 +21,8 @@ bank3_callspr_main:
 	rts
 .rts:
 	dw starcoin_main-1
-	dw $0000
-	dw $0000
+	dw woozyguy_main-1
+	dw castle_block_main-1
 	dw $0000
 	dw yi_pswitch_main-1
 	dw $0000

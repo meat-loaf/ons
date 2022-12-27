@@ -35,11 +35,18 @@ spr_spawn_smoke:
 	clc
 	rtl
 
+pushpc
+freedata
+dyn_gfxs_1:
 ; TODO move
-yi_pswitch:
+yi_pswitch_gfx:
 	incbin "../../../gfx/dyn/yi_pswitch.bin"
 starcoin_gfx:
 	incbin "../../../gfx/dyn/starcoin.bin"
+woozyguy_gfx:
+	incbin "../../../gfx/dyn/woozyguy.bin"
+pullpc
+
 ;
 ;Aiming Routine by MarioE. 
 

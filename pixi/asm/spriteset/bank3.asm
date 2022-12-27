@@ -11,5 +11,7 @@ incsrc "bank3/dyn_spr_rts.asm"
 incsrc "bank3/starcoin.asm"
 incsrc "bank3/yi_pswitch.asm"
 incsrc "bank3/mega_mole.asm"
+incsrc "bank3/castle_block.asm"
+incsrc "bank3/woozy.asm"
 
 warnpc $03B56C|!bank

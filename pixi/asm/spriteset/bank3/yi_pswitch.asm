@@ -36,10 +36,9 @@ yi_pswitch_main:
 	lda $9D
 	ora !sprite_being_eaten,x
 	bne .ret1
-	jsr.w _suboffscr0_bank1
+	jsr.w _suboffscr0_bank3
 	lda !pswitch_squish_state,x
 	bne .squish
-;	beq .not_squished
 .not_squished:
 	jsl $01802A|!bank
 	jsl $01A7DC|!bank
@@ -64,10 +63,6 @@ yi_pswitch_main:
 	lda #$01
 	sta !player_on_solid_platform
 
-	; ???
-	;lda #$06
-	;sta !154C,x
-	
 	ldy !player_on_yoshi
 	lda .squish_displacement,y
 	clc
@@ -82,9 +77,7 @@ yi_pswitch_main:
 .ret1
 	rts
 .check_sides:
-;	jsr.w _sub_horz_pos_bank1
 	jsr .sub_horz_pos
-;	tya
 	beq ..right
 ..left:
 	lda $0E
@@ -115,7 +108,6 @@ yi_pswitch_main:
 	stz $7B
 	inc !pswitch_squish_index,x
 	lda !pswitch_squish_index,x
-;	cmp.b #(yi_pswitch_gfx_frames_end-yi_pswitch_gfx_frames)
 	cmp.b #(.dyn_frames_end-.dyn_frames)
 	bne .squish_more
 	; rocket lawnchair
