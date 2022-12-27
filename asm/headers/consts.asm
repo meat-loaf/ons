@@ -1,3 +1,6 @@
+if not(defined("__const_incl"))
+!__const_incl = 1
+
 if read1($00FFD5) == $23
 	if read1($00FFD7) == $0D ; full 6/8 mb sa-1 rom
 		fullsa1rom
@@ -27,7 +30,17 @@ else
 	!num_sprites = $0C
 endif
 
+hurt_mario            = $00F5B7|!bank
 
+!spr_tweaker_1656_tbl = $07F26C|!bank
+!spr_tweaker_1662_tbl = $07F335|!bank
+!spr_tweaker_166E_tbl = $07F3FE|!bank
+!spr_tweaker_167A_tbl = $07F4C7|!bank
+!spr_tweaker_1686_tbl = $07F590|!bank
+!spr_tweaker_190F_tbl = $07F659|!bank
+
+!spr_inits_start     = $01817D|!bank
+!spr_mains_start     = $0185CC|!bank
 
 !true  = $01
 !false = $00
@@ -36,6 +49,8 @@ endif
 
 !JML_OPCODE = $5C
 !JSL_OPCODE = $22
+
+!dyn_max_slots = $04
 
 !red_coin_sfx_id      = $2E
 !last_red_coin_sfx_id = $2F
@@ -74,6 +89,28 @@ endif
 !19D8_flag_b8_12_seconary = %11110000
 
 !slip_block_slipperyness = $FF
+;; sprite props ;;
+!spr_167a_prop_keep_clipping_on_starkill   = %00000001
+!spr_167a_prop_nodie_fire_cape_star_bounce = %00000010
+!spr_167a_prop_process_offscreen           = %00000100
+!spr_167a_not_shell_when_stunned           = %00001000
+!spr_167a_not_shell_kickable               = %00010000
+!spr_167a_player_interact_every_frame      = %00100000
+!spr_167a_powerup_on_yoshi_eat             = %01000000
+!spr_167a_no_default_player_interaction    = %10000000
+
+;; spr 0 to 13 props ;;
+; originals
+!gen_spr_prop_move_fast         = %00000001
+!gen_spr_prop_stay_on_ledge     = %00000010
+!gen_spr_prop_follow_mario      = %00000100
+!gen_spr_prop_jump_over_shells  = %00001000
+!gen_spr_prop_use_32x16_tilemap = %01000000
+!gen_spr_prop_fast_ani_in_air   = %10000000
+
+; NEW, added by changes (TODO);
+!gen_spr_prop_reverse_gravity   = %00010000
+
 
 ;;; screen scrolling pipe stuff ;;;
 ;This will make mario visible and in front of objects when enabled, set to 1 if you encounter issues like Mario ignoring turn corners.
@@ -175,4 +212,4 @@ if !Setting_SSP_FuSoYaSpd == 0
 endif
 
 ;;; end screen scrolling pipe stuff ;;;
-
+endif

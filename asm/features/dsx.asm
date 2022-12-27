@@ -18,20 +18,7 @@ incsrc "../main.asm"
 
 lorom
 
-!slots_used	= !dyn_slots ;how many slots have been used
-!dsx_buffer = !dynamic_buffer
-
-;org $00A08A
-;	autoclean jml garble
-;	LDA $1B9C
-;	BEQ +
-;	JSL $04853B
-;+
-;	JSR $A1A6
-
-;FastROM registration data
-;org $80FFD5
-;	db $30
+!dsx_buffer     = !dynamic_buffer
 
 org $00816A
 	autoclean jml dsx_main
@@ -83,7 +70,7 @@ dsx_main:
 	BNE return
 
 GameModeOK:
-	LDA !slots_used		;and only if there's actual stuff to transfer
+	LDA !dyn_slots		;and only if there's actual stuff to transfer
 	BEQ return
 	
 	REP #$20
@@ -95,11 +82,12 @@ GameModeOK:
 	LDY.b #!dsx_buffer/65536
 	STY $4304
 	LDY #$01
-	
-	LDA !slots_used
+
+	LDA !dyn_slots
 	ASL
 	TAX			;upload gfx
-	STZ !slots_used
+	; todo this should really be elsewhere in the sprite loop!
+	STZ !dyn_slots
 	JMP (dsx_modes-2,x)
 
 dsx_modes:
@@ -108,26 +96,22 @@ dsx_modes:
 	dw .transfer_three
 	dw .transfer_four
 
-.transfer_one		;transfer a 32x32 square (one slot)
-	%transferslot(0, $0080, $C0)
-	%transferslot(1, $0080, $C0)	
-	%transferslot(2, $0080, $C0)
-	%transferslot(3, $0080, $C0)
-.transfer_two		;transfer a 64x32 rectangle (two slots)
-	%transferslot(0, $0100, $80)
-	%transferslot(1, $0100, $80)	
-	%transferslot(2, $0100, $80)
-	%transferslot(3, $0100, $80)
-	SEP #$30		;8bit AXY
-	JML $808176		;jump to code just after pushing, into FastROM area
-.transfer_three		;transfer a 96x32 rectangle (three slots)
-	%transferslot(0, $0180, $40)
-	%transferslot(1, $0180, $40)	
-	%transferslot(2, $0180, $40)
-	%transferslot(3, $0180, $40)
-	SEP #$30		;8bit AXY
-	JML $808176		;jump to code just after pushing, into FastROM area
-.transfer_four		;transfer a 128x32 rectangle (four slots)
+.transfer_one:
+	%transferslot(0, $0100, $00)
+	%transferslot(1, $0100, $00)
+	SEP #$30
+	JML $808176
+
+.transfer_two:
+	%transferslot(0, $0400, $00)
+	SEP #$30
+	JML $808176
+.transfer_three:
+	%transferslot(0, $0500, $00)
+	%transferslot(3, $0100, $00)
+	SEP #$30
+	JML $808176
+.transfer_four:
 	%transferslot(0, $0800, $00)
-	SEP #$30		;8bit AXY
-	JML $808176		;jump to code just after pushing, into FastROM area
+	SEP #$30
+	JML $808176

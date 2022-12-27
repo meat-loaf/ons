@@ -12,7 +12,7 @@ def clean_line(line, ignore) -> str:
 	l = re.sub(r';.*', '', line).strip()
 	if any(e in l for e in ignore):
 		return ""
-	return l.replace("\t","").replace(" ", "").replace("|!addr", "")
+	return l.replace("\t","").replace(" ", "").replace("|!addr", "").replace("|!bank", "")
 
 def get_base(s) -> int:
 	base = 10

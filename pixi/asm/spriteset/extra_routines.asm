@@ -1,3 +1,46 @@
+; TODO move to rts-callable section. this is a shim
+;Input:  A   = number of sprite to spawn
+;        $00 = x offset  \
+;        $01 = y offset  | you could also just ignore these and set them later
+;        $02 = timer     /
+;
+;Output: Y   = index to spawned sprite (#$FF means no sprite spawned)
+;        C   = Carry Set = spawn failed, Carry Clear = spawn successful.
+spr_spawn_smoke:
+	ldy #$03
+	xba
+.loop
+	lda $17C0|!addr,y
+	beq .found
+	dey
+	bpl .loop
+	sec
+	rtl
+
+.found:
+	xba
+	sta $17C0|!addr,y
+	lda $02
+	sta $17CC|!addr,y
+
+	lda !D8,x
+	clc
+	adc $01
+	sta $17C4|!addr,y
+
+	lda !E4,x
+	clc
+	adc $00
+	sta $17C8|!addr,y
+	clc
+	rtl
+
+; TODO move
+yi_pswitch:
+	incbin "../../../gfx/dyn/yi_pswitch.bin"
+starcoin_gfx:
+	incbin "../../../gfx/dyn/starcoin.bin"
+;
 ;Aiming Routine by MarioE. 
 
 ;Input:  A   = 8 bit projectile speed

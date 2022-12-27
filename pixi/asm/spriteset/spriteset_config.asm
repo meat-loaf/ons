@@ -129,21 +129,20 @@ else
 	!mex_off_on_wram_mirror = 1
 endif
 
-;; other constants
+!sprite_rt_fin_ret = RTS
+!sprite_rt_fin_jmp = JMP
 
-spr_tweaker_1656_tbl = $07F26C|!bank
-spr_tweaker_1662_tbl = $07F335|!bank
-spr_tweaker_166E_tbl = $07F3FE|!bank
-spr_tweaker_167A_tbl = $07F4C7|!bank
-spr_tweaker_1686_tbl = $07F590|!bank
-spr_tweaker_190F_tbl = $07F659|!bank
+; LONG
+generate_block       = $00BEB0|!bank
+mario_spr_interact_l = $01A7DC|!bank
+update_sprite_pos    = $01802A|!bank
+spr_spr_interact     = $018032|!bank
 
 ; LOCAL
-_spr_inits_start     = $01817D|!bank
 _spr_face_mario_rt   = $01857C|!bank
-_spr_mains_start     = $0185CC|!bank
 _spr_set_ani_frame   = $018E5F|!bank
 _sprspr_mario_spr_rt = $018FC1|!bank
+_spr_upd_pos         = $019032|!bank
 _spr_obj_interact    = $019140|!bank
 _get_draw_info_bank1 = $01A365|!bank
 _mario_spr_interact  = $01A7E4|!bank
@@ -155,3 +154,18 @@ _suboffscr1_bank1    = $01AC2B|!bank
 _suboffscr2_bank1    = $01AC27|!bank
 _suboffscr3_bank1    = $01AC21|!bank
 _spr_invis_solid_rt  = $01B457|!bank
+
+_get_draw_info_bank3 = $03B760|!bank
+_suboffscr0_bank3    = $03B85D|!bank
+_suboffscr3_bank3    = $03B84F|!bank
+_sub_vert_pos_bank3  = $03B829|!bank
+
+spr_tweaker_1656_tbl = $07F26C|!bank
+spr_tweaker_1662_tbl = $07F335|!bank
+spr_tweaker_166E_tbl = $07F3FE|!bank
+spr_tweaker_167A_tbl = $07F4C7|!bank
+spr_tweaker_1686_tbl = $07F590|!bank
+spr_tweaker_190F_tbl = $07F659|!bank
+
+_spr_inits_start     = $01817D|!bank
+_spr_mains_start     = $0185CC|!bank

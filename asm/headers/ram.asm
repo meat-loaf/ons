@@ -69,7 +69,6 @@ includeonce
 !screens_stop_horz = $5E
 !screens_stop_vert = $5F      ; free if not using vertical levels
 
-
 ; direction of screen scrolling pipe
 ; Bit format: PPPPDDDD
 ; DDDD bits (The stem and pipe cap directions):
@@ -107,11 +106,20 @@ includeonce
 !player_ani_trigger_state = $71
 !player_dir               = $76
 !player_x_spd             = $7B
+!player_y_speed           = $7D
+
+
+
 ; backup of $77
 !sspipes_blocked_backup  = $79
 !status_bar_config       = $7C
 
 !level_slippery          = $86
+
+; 2 bytes.
+!player_x_next           = $94
+; 2 bytes.
+!player_y_next           = $96
 ; 2 bytes.
 !block_ypos              = $98
 ; 2 bytes.
@@ -202,7 +210,7 @@ includeonce
 
 ; 4 bytes
 !wiggler_segment_slots  = $1487|!addr
-
+!sprite_x_movement      = $1491|!addr
 !end_level_timer        = $1493|!addr
 !player_ani_timer       = $1496|!addr
 !player_invuln_timer    = $1497|!addr
@@ -260,8 +268,8 @@ includeonce
 !dyn_slot_dest = $0663|!addr
 !dyn_slots     = $06FE|!addr
 
-!on_platform_ix = $1864|!addr
-
+!on_platform_ix     = $1864|!addr
+!player_on_yoshi    = $187A|!addr
 !screen_shake_timer = $1887|!addr
 ; 1 byte
 ; Toggles the use of item memory.

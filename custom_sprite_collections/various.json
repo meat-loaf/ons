@@ -457,4 +457,14 @@
 	"smap16":{
 		"tile":"5CA"
 	}
+},{
+	"id":"29",
+	"name":"Growing Vine",
+	"desc": "A vine that spawns and starts growing, drawing vines until it hits a solid tile. It sets item memory whenever it draws a tile (Use object 1E with argument x4 to draw vines on tiles where item memory is set).",
+	"category":"general",
+	"custom":false,
+	"extra_bit":false,
+	"smap16":{
+		"tile":"539"
+	}
 }]

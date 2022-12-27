@@ -36,7 +36,6 @@
 38 beezo_eerielike.cfg
 3A fly_guy.cfg
 
-41 dry_dolphin.cfg
 42 roto_disc_custom.cfg
 43 roto_disc_custom.cfg
 

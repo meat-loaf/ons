@@ -16,7 +16,6 @@ spr_obj_interact     = $019138|!bank
 spr_mario_interact   = $01A7DC|!bank
 spr_pos_update_main  = $01802A|!bank
 displ_contact_p      = $01AB99|!bank
-hurt_mario           = $00F5B7|!bank
 mario_bounce         = $01AA33|!bank
 ;finish_oam_write     = $01B7B3|!bank
 

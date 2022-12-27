@@ -103,6 +103,7 @@ SQUISH:
 	STA $1DF9|!Base2
 ;	LDA #$0E
 ;	STA $1DFB|!Base2	;music
+
 	LDA #$20
 	STA $1887|!Base2	;ground
 ;	LDA #$B0

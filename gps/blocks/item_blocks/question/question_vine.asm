@@ -23,7 +23,7 @@ JMP MarioCorner : JMP MarioInside : JMP MarioHead
 
 ; The first argument is if Mario is small, the second for big
 SpriteNumber:
-db $79,$79
+db $29,$29
 
 IsCustom:
 db $00,$00	; $00 (or any other even number) for normal, $01 (or any other odd number) for custom

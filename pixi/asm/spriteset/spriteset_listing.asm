@@ -42,7 +42,7 @@ spriteset_off_ptrs:
 	dw spritesets_blurp                   ; sprite 26 - blurp fish
 	dw spritesets_thwomp_thwimp_spike     ; sprite 27 - thwimp
 	dw spritesets_bigboo_smashplayers     ; sprite 28 - big boo
-	dw spritesets_null_spriteset          ; sprite 29 - koopa kids
+	dw spritesets_piranhas                ; sprite 29 - growing vine
 	dw spritesets_piranhas                ; sprite 2A - upside-down piranha
 	dw spritesets_null_spriteset          ; sprite 2B - sumo bros lightning
 	dw spritesets_null_spriteset          ; sprite 2C - yoshi egg
@@ -186,11 +186,11 @@ spriteset_off_ptrs:
 	dw spritesets_dry_bones_beetle_pencil ; sprite B6 - reflecting fireball
 	dw spritesets_carrot_timed_plats      ; sprite B7 - carrot plat down-right
 	dw spritesets_carrot_timed_plats      ; sprite B8 - carrot plat up-left
-	dw spritesets_messagebox              ; sprite B9 - message box
+	dw spritesets_dynamic_sprs            ; sprite B9 - star coin
 	dw spritesets_carrot_timed_plats      ; sprite BA - timed platform
 	dw spritesets_castle_blk              ; sprite BB - grey moving castle block
 	dw spritesets_bowser_statue           ; sprite BC - bowser statue
-	dw spritesets_null_spriteset          ; sprite BD - sliding blue koopa
+	dw spritesets_dynamic_sprs            ; sprite BD - yi pswitch (dynamic)
 	dw spritesets_null_spriteset          ; sprite BE - swooper
 	dw spritesets_mega_mole               ; sprite BF - mega_mole
 	dw spritesets_rock_grass_plats        ; sprite C0 - sinking grey rock
@@ -476,6 +476,15 @@ endif
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 28-2F
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 30-37
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 38-3F
+.dynamic_sprs:
+	db $C0,$C0,$C0,$C0,$C0,$C0,$C0,$C0    ; spritesets C0-07
+	db $C0,$C0,$C0,$C0,$C0,$C0,$C0,$C0    ; spritesets 08-0F
+	db $C0,$C0,$C0,$C0,$C0,$C0,$C0,$C0    ; spritesets 10-17
+	db $C0,$C0,$C0,$C0,$C0,$C0,$C0,$C0    ; spritesets 18-1F
+	db $C0,$C0,$C0,$C0,$C0,$C0,$C0,$C0    ; spritesets 20-27
+	db $C0,$C0,$C0,$C0,$C0,$C0,$C0,$C0    ; spritesets 28-2F
+	db $C0,$C0,$C0,$C0,$C0,$C0,$C0,$C0    ; spritesets 30-37
+	db $C0,$C0,$C0,$C0,$C0,$C0,$C0,$C0    ; spritesets 38-3F
 if !remap_koopa
 .koopas:                                      ; koopa variants
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 00-07
@@ -889,7 +898,7 @@ spriteset_gfx_listing:
 	dw $007F,$007F,$0117,$0124,$0112,$0116,$0114,$0111		; spriteset 03: dolphins, porcupuffer
 	dw $0105,$0110,$0104,$011A,$010A,$0109,$0108,$0107		; spriteset 04: all chucks, spike top, buzzy, swooper, blargg
 	dw $007F,$007F,$007F,$010D,$0100,$0112,$0111,$0110		; spriteset 05: boos, big boo
-	dw $007F,$007F,$007F,$007F,$007F,$007F,$011F,$007F		; spriteset 06: lakitu
+	dw $007F,$007F,$007F,$007F,$007F,$007F,$011F,$0128		; spriteset 06: lakitu, porcu-puffer
 	dw $007F,$007F,$007F,$010C,$011D,$011C,$010D,$0108		; spriteset 07: snow outside -- platforms, piranhas, bumptys, ninji, yi spike
 	dw $007F,$007F,$007F,$007F,$007F,$0111,$0127,$007F		; spriteset 08: athletic
 	dw $007F,$007F,$0110,$010F,$010A,$0128,$0108,$0107		; spriteset 09: underground with diggin chucks

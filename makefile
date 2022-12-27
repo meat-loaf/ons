@@ -158,6 +158,7 @@ pixi_asm_sources= \
 	$(wildcard ${PIXI_DIR}/asm/*.asm) \
 	$(wildcard ${PIXI_DIR}/asm/spriteset/*.asm) \
 	$(wildcard ${PIXI_DIR}/asm/spriteset/remaps/*.asm) \
+	$(wildcard ${PIXI_DIR}/asm/spriteset/bank3/*.asm) \
 	$(wildcard ${PIXI_DIR}/routines/*.asm) \
 	$(wildcard ${sprites_dir}/*.asm) \
 	$(wildcard ${sprites_dir}/*.bin) \

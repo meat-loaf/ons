@@ -21,6 +21,33 @@ macro replace_pointer(addr,ptr)
 	pullpc
 endmacro
 
+macro sprite_set_cfg(sprite_id, spr_1656_val, spr_1662_val, spr_166E_val, spr_167A_val, spr_1686_val, spr_190F_val)
+pushpc
+	org !spr_tweaker_1656_tbl+<sprite_id>
+		db <spr_1656_val>
+	org !spr_tweaker_1662_tbl+<sprite_id>
+		db <spr_1662_val>
+	org !spr_tweaker_166E_tbl+<sprite_id>
+		db <spr_166E_val>
+	org !spr_tweaker_167A_tbl+<sprite_id>
+		db <spr_167A_val>
+	org !spr_tweaker_1686_tbl+<sprite_id>
+		db <spr_1686_val>
+	org !spr_tweaker_190F_tbl+<sprite_id>
+		db <spr_190F_val>
+pullpc
+endmacro
+
+macro alloc_spr(sprite_id, sprite_init, sprite_main, spr_1656_val, spr_1662_val, spr_166E_val, spr_167A_val, spr_1686_val, spr_190F_val)
+	%replace_pointer(!spr_inits_start+(<sprite_id>*2)|!bank, <sprite_init>|!bank)
+	%replace_pointer(!spr_mains_start+(<sprite_id>*2)|!bank, <sprite_main>|!bank)
+	%sprite_set_cfg(<sprite_id>,<spr_1656_val>,<spr_1662_val>,<spr_166E_val>,<spr_167A_val>,<spr_1686_val>,<spr_190F_val>)
+endmacro
+
+macro alloc_spr_nocfg(sprite_id, sprite_init, sprite_main)
+	%replace_pointer(!spr_inits_start+(<sprite_id>*2)|!bank, <sprite_init>|!bank)
+	%replace_pointer(!spr_mains_start+(<sprite_id>*2)|!bank, <sprite_main>|!bank)
+endmacro
 
 macro sprite_init_do_pos_offset(spr_table,index)
 	; y offset

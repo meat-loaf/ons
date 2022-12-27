@@ -22,18 +22,21 @@ includefrom "remaps.asm"
 !parabeetle_sprnum = $12
 !parabeetle_tile_off_loc = $09
 
-org spr_tweaker_1656_tbl+!parabeetle_sprnum
-	db $10
-org spr_tweaker_1662_tbl+!parabeetle_sprnum
-	db $95
-org spr_tweaker_166E_tbl+!parabeetle_sprnum
-	db $11
-org spr_tweaker_167A_tbl+!parabeetle_sprnum
-	db $B9
-org spr_tweaker_1686_tbl+!parabeetle_sprnum
-	db $90
-org spr_tweaker_190F_tbl+!parabeetle_sprnum
-	db $01
+%alloc_spr(!parabeetle_sprnum, parabeetle_init, parabeetle_main, \
+	$10, $95, $11, $B9, $90, $01)
+
+;org spr_tweaker_1656_tbl+!parabeetle_sprnum
+;	db $10
+;org spr_tweaker_1662_tbl+!parabeetle_sprnum
+;	db $95
+;org spr_tweaker_166E_tbl+!parabeetle_sprnum
+;	db $11
+;org spr_tweaker_167A_tbl+!parabeetle_sprnum
+;	db $B9
+;org spr_tweaker_1686_tbl+!parabeetle_sprnum
+;	db $90
+;org spr_tweaker_190F_tbl+!parabeetle_sprnum
+;	db $01
 
 org ($019C7F+!parabeetle_sprnum)|!bank
 	db !parabeetle_tile_off_loc
@@ -46,8 +49,8 @@ org ($019B83+!parabeetle_tile_off_loc)|!bank
 !ani_frame      = !1602
 !fast_ani_speed = !160E
 
-%replace_wide_pointer($0181A1|!bank,parabeetle_init|!bank)
-%replace_wide_pointer($0185F0|!bank,parabeetle_main|!bank)
+;%replace_wide_pointer($0181A1|!bank,parabeetle_init|!bank)
+;%replace_wide_pointer($0185F0|!bank,parabeetle_main|!bank)
 
 org !bank1_thwomp_free|!bank
 x_speed:
