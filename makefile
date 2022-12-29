@@ -1,4 +1,4 @@
-LUNAR_MAGIC=lunar_magic_332
+LUNAR_MAGIC=lunar_magic_333
 SYM_DIR=.sym
 ASAR=asar --symbols=wla --symbols-path=${SYM_DIR}/$(notdir $@).sym
 TEST_EMU=snes9x-gtk
@@ -87,24 +87,38 @@ FT_IMEM_TS=${TS_DIR}/item_mem
 8x8_DMA_TS=${TS_DIR}/8x8dyn
 SPR_COLLECTION_TS=${TS_DIR}/sprcoll
 
+#CORE_BUILD_RULES= \
+#	${GFX_FAKE_TS} \
+#	${INIT_LEVEL_TS} \
+#	${OVERWORLD_TS} \
+#	${GLOBAL_ANI_TS} \
+#	${PIXI_FAKE_TS} \
+#	${MWL_FAKE_TS} \
+#	${M16_FAKE_TS} \
+#	${OBJTOOL_TS} \
+#	${GPS_FAKE_TS} \
+#	${AMK_FAKE_TS} \
+#	${UBER_FAKE_TS} \
+#	${SBAR_FAKE_TS} \
+#	${ASM_PATCH_TS} \
+#	${ASM_TWEAK_TS} \
+#	${FT_IMEM_TS} \
+#	${8x8_DMA_TS} \
+#	${SPR_COLLECTION_TS} \
+
+
 CORE_BUILD_RULES= \
 	${GFX_FAKE_TS} \
-	${INIT_LEVEL_TS} \
-	${OVERWORLD_TS} \
-	${GLOBAL_ANI_TS} \
-	${PIXI_FAKE_TS} \
-	${MWL_FAKE_TS} \
 	${M16_FAKE_TS} \
+	${GLOBAL_ANI_TS} \
 	${OBJTOOL_TS} \
 	${GPS_FAKE_TS} \
 	${AMK_FAKE_TS} \
-	${UBER_FAKE_TS} \
 	${SBAR_FAKE_TS} \
 	${ASM_PATCH_TS} \
 	${ASM_TWEAK_TS} \
 	${FT_IMEM_TS} \
-	${8x8_DMA_TS} \
-	${SPR_COLLECTION_TS} \
+	${8x8_DMA_TS}
 
 # should list _all_ the deps here but too many files have spaces.
 # it's a ton of stuff to change and not currently worth the effort
@@ -123,7 +137,7 @@ GPS_DIR=gps
 GPS_BLK_DIR=${GPS_DIR}/blocks
 GPS_RT_DIR=${GPS_DIR}/routines
 #$GPS=WINEPREFIX=${HOME}/.wineprefix/smw_gps wine ./gps.exe
-GPS=./gps3
+GPS=./gps4
 
 UBERASM_DIR=uberasm
 UBERASM_ASM_FILES= \
@@ -223,6 +237,7 @@ ${CLEAN_ROM_FULL}:
 
 ${ROM_NAME}: ${ROM_RAW_BASE_SRC}
 	cp ${ROM_RAW_BASE_SRC} ${ROM_NAME}
+	asar scripts/smw_clean.asm ${ROM_NAME}
 
 ${GLOBALANI_SRC_ROM}: ${GLOBALANI_SRC_P}
 	flips --apply ${GLOBALANI_SRC_P} ${CLEAN_ROM_FULL} ${GLOBALANI_SRC_ROM}

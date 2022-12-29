@@ -1,0 +1,6 @@
+
+spr_killed   = $019AA2|!bank
+spr_smushed  = $019AE4|!bank
+spr_spinkill = $019ACB|!bank
+spr_lavadie  = $019A7B|!bank
+spr_levelend = $01816D|!bank

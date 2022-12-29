@@ -1,0 +1,14 @@
+!bank6_free_start            = $068063|!bank
+!bank6_free_end              = $06FFFF|!bank
+
+!bank1_thwomp_free_start     = $01AE96|!bank
+!bank1_thwomp_free_end       = $01AF9F|!bank
+
+!bank1_boss_mode7_free_start = $01CC9D|!bank
+!bank1_boss_mode7_free_end   = $01CCF0|!bank
+
+!bank1_bossfire_free_start   = $01D442|!bank
+!bank1_bossfire_free_end     = $01D4E4|!bank
+
+!bank1_koopakids_free_start  = $01FA4C|!bank
+!bank1_koopakids_free_end    = $01FFFF|!bank

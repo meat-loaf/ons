@@ -206,11 +206,21 @@ includeonce
 
 !red_coin_adder         = $1475|!addr
 
+!carrying_flag          = $1470|!addr
+
 !midway_imem_dma_stage  = $147D|!addr
 
 ; 4 bytes
 !wiggler_segment_slots  = $1487|!addr
+; 2 bytes
+!rng_calc               = $148B|!addr
+; 2 bytes
+!random_number_output   = $148D|!addr
+!player_carrying_item    = $148F|!addr
+!invincibility_timer    = $1490|!addr
 !sprite_x_movement      = $1491|!addr
+; for end of level
+!player_peace_timer     = $1492|!addr
 !end_level_timer        = $1493|!addr
 !player_ani_timer       = $1496|!addr
 !player_invuln_timer    = $1497|!addr
@@ -271,12 +281,15 @@ includeonce
 !on_platform_ix     = $1864|!addr
 !player_on_yoshi    = $187A|!addr
 !screen_shake_timer = $1887|!addr
+!screen_shake_player_yoff = $188B|!addr
 ; 1 byte
 ; Toggles the use of item memory.
 ; ------r- : Disable reading (everything will always respawn).
 ; -------w : Disable writing.
-!item_memory_mask = $18BB|!addr
-
+!item_memory_mask  = $18BB|!addr
+!player_in_cloud   = $18C2|!addr
+!current_yoshi_slot = $18DF|!addr
+!yoshi_is_loose     = $18E2|!addr
 !give_player_lives = $18E4|!addr
 
 !level_general_purpose_1 = $1923|!addr

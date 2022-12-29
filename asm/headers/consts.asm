@@ -29,6 +29,9 @@ else
 	!ramhi = $7F0000
 	!num_sprites = $0C
 endif
+!JSL_OPCODE           = $22
+!JML_OPCODE           = $5C
+!RTL_OPCODE           = $6B
 
 hurt_mario            = $00F5B7|!bank
 
