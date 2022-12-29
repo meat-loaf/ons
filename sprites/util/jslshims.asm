@@ -30,9 +30,9 @@ org $019B0F|!bank
 org $01E75A|!bank
 	rtl
 
-%set_free_start("bank6")
+%set_free_start("bank1_bossfire")
 spr_spinkill_shim:
 	pea !bank01_jsl2rts_rtl
 	jml spr_spinkill
 .done
-%set_free_finish("bank6", spr_spinkill_shim_done)
+%set_free_finish("bank1_bossfire", spr_spinkill_shim_done)

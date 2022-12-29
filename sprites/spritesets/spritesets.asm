@@ -58,26 +58,12 @@ sprset_init:
 	lda.b #spritesets>>16
 	sta.b !sprset_tbl_scr+$02
 
-if !pixi_installed == 1
-	lda   !extra_bits,x
-	and #$08
-	beq .notcustom
-	lda   !new_sprite_num,x
-	rep #$30
-	and #$00FF
-	asl
-	tax
-	lda spriteset_off_ptrs_custom,x
-	bra .custom_done
-endif
-.notcustom:
 	%sprite_num(LDA,x)
 	rep #$30
 	and #$00FF
 	asl
 	tax
 	lda.l spriteset_off_ptrs,x
-.custom_done
 	sta !sprset_tbl_scr
 	sep #$30
 	ldy   !current_spriteset
@@ -148,9 +134,9 @@ spriteset_setup_lm:
 	lda $0100|!addr
 	cmp #$12
 	bne .skip
-	cpy #$0012          ; SP3 index
-	beq .ss_continue
 	cpy #$0010          ; SP4 index
+	beq .ss_continue
+	cpy #$0012          ; SP3 index
 	beq .ss_continue
 	cpy #$0014          ; SP2 index
 	beq .cont_hardcode
@@ -166,12 +152,20 @@ spriteset_setup_lm:
 	jml $0FF900|!bank
 .ss_continue:
 	tyx
-	ldy #$0003
-	lda !current_spriteset
 	rep #$20
+	lda.l .nfiles-$10,x
+	tay
+
+	; a = current_spriteset * 12
+	lda !current_spriteset
 	and #$00FF
-	asl   #4
+	asl
+	asl
+	sta $55
+	asl
 	clc
+	adc $55
+
 	; x will be 0012 or 0010 here
 	; the result is an index into the graphics table
 	; based on the spriteset number
@@ -185,26 +179,23 @@ spriteset_setup_lm:
 	clc
 	; 1KB file
 	adc #$0400
-	; NOTE: technically we should check for needing to inc the high byte here,
-	; but I don't think thats a realistic scenario (default ram is 7EAD00,
-	; unlikely to ever change nor be near the bank border as thats where the map16
-	; data goes...).
 	sta $00
 	dex
 	dex
 	dey
 	bpl.b .gfx_loop
 
-	lda #$AD00      ; \ restore original upload destination
-	sta $00         ; / (unsure when this is actually set)
+	lda #$AD00             ; \ restore original upload destination
+	sta $00                ; /
 	plp : pla : ply : plx
 	rtl
 .indexes:
-	dw $0006,$000E
+	dw $0002,$000A
+.nfiles:
+	dw $0002-1,$0004-1
 .hardcoded_files:
 	dw $0001,$0000
 sprset_stuff_done:
-;%set_free_finish("bank6", sprset_stuff_done)
 
 incsrc "spriteset_listing.asm"
 ;incsrc "extra_routines.asm"

@@ -202,211 +202,6 @@ spriteset_off_ptrs:
 	dw spritesets_disco                   ; sprite C6 - disco ball
 	dw spritesets_null_spriteset          ; sprite C7 - invisible mushroom
 	dw spritesets_null_spriteset          ; sprite C8 - light switch block
-if !pixi_installed
-; your custom sprite pointers here, if desired.
-.custom:
-	dw spritesets_chucks                  ; custom sprite 00 - chucks
-	dw spritesets_vlotus                  ; custom sprite 01 - custom lotus
-	dw spritesets_cloud_drop              ; custom sprite 02 - cloud drop
-	dw spritesets_wood_checkered_plats    ; custom sprite 03 - platform megapack platforms
-	dw spritesets_piranhas                ; custom sprite 04 - piranha plants
-	dw spritesets_null_spriteset          ; custom sprite 05
-	dw spritesets_hoopster                ; custom sprite 06
-	dw spritesets_null_spriteset          ; custom sprite 07
-	dw spritesets_null_spriteset          ; custom sprite 08
-	dw spritesets_null_spriteset          ; custom sprite 09 - cobrat
-	dw spritesets_nipper                  ; custom sprite 0A - nipper
-	dw spritesets_sakasatachi             ; custom sprite 0B - sakasatachi
-	dw spritesets_null_spriteset          ; custom sprite 0C
-	dw spritesets_spear_guy               ; custom sprite 0D - spear guy
-	dw spritesets_null_spriteset          ; custom sprite 0E
-	dw spritesets_null_spriteset          ; custom sprite 0F
-	dw spritesets_null_spriteset          ; custom sprite 10 - yi arrowlift (dyn)
-	dw spritesets_yi_spike                ; custom sprite 11 - yi spike
-	dw spritesets_null_spriteset          ; custom sprite 12 - yi spinning spike mace (dyn)
-	dw spritesets_null_spriteset          ; custom sprite 13 - yi pswitch (dyn)
-	dw spritesets_null_spriteset          ; custom sprite 14 - yi chomp rock (dyn)
-	dw spritesets_null_spriteset          ; custom sprite 15 - yi woozy guy (dyn)
-	dw spritesets_blowhard                ; custom sprite 16 - yi blowhard (partial dyn)
-	dw spritesets_null_spriteset          ; custom sprite 17 - yi floating rock (dyn)
-	dw spritesets_fish                    ; custom sprite 18 - fish that jumps like dolphin
-	dw spritesets_null_spriteset          ; custom sprite 19
-	dw spritesets_null_spriteset          ; custom sprite 1A
-	dw spritesets_null_spriteset          ; custom sprite 1B
-	dw spritesets_null_spriteset          ; custom sprite 1C
-	dw spritesets_null_spriteset          ; custom sprite 1D
-	dw spritesets_null_spriteset          ; custom sprite 1E
-	dw spritesets_null_spriteset          ; custom sprite 1F
-	dw spritesets_null_spriteset          ; custom sprite 20
-	dw spritesets_null_spriteset          ; custom sprite 21
-	dw spritesets_boo_booblock            ; custom sprite 22 - boo ring
-	dw spritesets_falling_leaf            ; custom sprite 23 - a fucking leaf
-	dw spritesets_needlenose              ; custom sprite 24 - needlenose
-	dw spritesets_bumpty                  ; custom sprite 25 - bumpty
-	dw spritesets_null_spriteset          ; custom sprite 26
-	dw spritesets_null_spriteset          ; custom sprite 27
-	dw spritesets_null_spriteset          ; custom sprite 28
-	dw spritesets_null_spriteset          ; custom sprite 29
-	dw spritesets_null_spriteset          ; custom sprite 2A
-	dw spritesets_null_spriteset          ; custom sprite 2B
-	dw spritesets_null_spriteset          ; custom sprite 2C
-	dw spritesets_null_spriteset          ; custom sprite 2D
-	dw spritesets_null_spriteset          ; custom sprite 2E
-	dw spritesets_null_spriteset          ; custom sprite 2F
-	dw spritesets_null_spriteset          ; custom sprite 30
-	dw spritesets_null_spriteset          ; custom sprite 31
-	dw spritesets_null_spriteset          ; custom sprite 32
-	dw spritesets_null_spriteset          ; custom sprite 33
-	dw spritesets_null_spriteset          ; custom sprite 34
-	dw spritesets_null_spriteset          ; custom sprite 35
-	dw spritesets_null_spriteset          ; custom sprite 36
-	dw spritesets_null_spriteset          ; custom sprite 37
-	dw spritesets_beezo                   ; custom sprite 38 - beezo with eerie motion
-	dw spritesets_parabeetle              ; custom sprite 39 - parabeetle
-	dw spritesets_fly_guy                 ; custom sprite 3A - fly guy
-	dw spritesets_null_spriteset          ; custom sprite 3B
-	dw spritesets_null_spriteset          ; custom sprite 3C
-	dw spritesets_null_spriteset          ; custom sprite 3D
-	dw spritesets_null_spriteset          ; custom sprite 3E
-	dw spritesets_null_spriteset          ; custom sprite 3F
-	dw spritesets_null_spriteset          ; custom sprite 40
-	dw spritesets_null_spriteset          ; custom sprite 41
-	dw spritesets_null_spriteset          ; custom sprite 42
-	dw spritesets_null_spriteset          ; custom sprite 43
-	dw spritesets_null_spriteset          ; custom sprite 44
-	dw spritesets_null_spriteset          ; custom sprite 45
-	dw spritesets_null_spriteset          ; custom sprite 46
-	dw spritesets_null_spriteset          ; custom sprite 47
-	dw spritesets_null_spriteset          ; custom sprite 48
-	dw spritesets_pipe                    ; custom sprite 49 - custom expanding pipe
-	dw spritesets_null_spriteset          ; custom sprite 4A
-	dw spritesets_lakitu_spiny            ; custom sprite 4B - customizable pipe lakitu
-	dw spritesets_null_spriteset          ; custom sprite 4C
-	dw spritesets_null_spriteset          ; custom sprite 4D
-	dw spritesets_null_spriteset          ; custom sprite 4E
-	dw spritesets_null_spriteset          ; custom sprite 4F
-	dw spritesets_null_spriteset          ; custom sprite 50
-	dw spritesets_null_spriteset          ; custom sprite 51
-	dw spritesets_null_spriteset          ; custom sprite 52
-	dw spritesets_null_spriteset          ; custom sprite 53
-	dw spritesets_ninji                   ; custom sprite 54 - sideways ninji
-	dw spritesets_null_spriteset          ; custom sprite 55
-	dw spritesets_null_spriteset          ; custom sprite 56
-	dw spritesets_null_spriteset          ; custom sprite 57
-	dw spritesets_null_spriteset          ; custom sprite 58
-	dw spritesets_null_spriteset          ; custom sprite 59
-	dw spritesets_null_spriteset          ; custom sprite 5A
-	dw spritesets_null_spriteset          ; custom sprite 5B
-	dw spritesets_null_spriteset          ; custom sprite 5C
-	dw spritesets_null_spriteset          ; custom sprite 5D
-	dw spritesets_null_spriteset          ; custom sprite 5E
-	dw spritesets_null_spriteset          ; custom sprite 5F
-	dw spritesets_switch                  ; custom sprite 60 - event switch
-	dw spritesets_null_spriteset          ; custom sprite 61
-	dw spritesets_null_spriteset          ; custom sprite 62
-	dw spritesets_null_spriteset          ; custom sprite 63
-	dw spritesets_null_spriteset          ; custom sprite 64
-	dw spritesets_null_spriteset          ; custom sprite 65
-	dw spritesets_null_spriteset          ; custom sprite 66
-	dw spritesets_null_spriteset          ; custom sprite 67
-	dw spritesets_null_spriteset          ; custom sprite 68
-	dw spritesets_null_spriteset          ; custom sprite 69
-	dw spritesets_null_spriteset          ; custom sprite 6A
-	dw spritesets_null_spriteset          ; custom sprite 6B
-	dw spritesets_null_spriteset          ; custom sprite 6C
-	dw spritesets_null_spriteset          ; custom sprite 6D
-	dw spritesets_null_spriteset          ; custom sprite 6E
-	dw spritesets_null_spriteset          ; custom sprite 6F
-	dw spritesets_cluster_spawner         ; custom sprite 70 - cluster spawner
-	dw spritesets_null_spriteset          ; custom sprite 71
-	dw spritesets_null_spriteset          ; custom sprite 72
-	dw spritesets_null_spriteset          ; custom sprite 73
-	dw spritesets_null_spriteset          ; custom sprite 74
-	dw spritesets_null_spriteset          ; custom sprite 75
-	dw spritesets_null_spriteset          ; custom sprite 76
-	dw spritesets_null_spriteset          ; custom sprite 77
-	dw spritesets_null_spriteset          ; custom sprite 78
-	dw spritesets_null_spriteset          ; custom sprite 79
-	dw spritesets_null_spriteset          ; custom sprite 7A
-	dw spritesets_null_spriteset          ; custom sprite 7B
-	dw spritesets_null_spriteset          ; custom sprite 7C
-	dw spritesets_null_spriteset          ; custom sprite 7D
-	dw spritesets_null_spriteset          ; custom sprite 7E
-	dw spritesets_null_spriteset          ; custom sprite 7F
-	dw spritesets_null_spriteset          ; custom sprite 80
-	dw spritesets_null_spriteset          ; custom sprite 81
-	dw spritesets_null_spriteset          ; custom sprite 82
-	dw spritesets_null_spriteset          ; custom sprite 83
-	dw spritesets_null_spriteset          ; custom sprite 84
-	dw spritesets_null_spriteset          ; custom sprite 85
-	dw spritesets_null_spriteset          ; custom sprite 86
-	dw spritesets_null_spriteset          ; custom sprite 87
-	dw spritesets_null_spriteset          ; custom sprite 88
-	dw spritesets_null_spriteset          ; custom sprite 89
-	dw spritesets_null_spriteset          ; custom sprite 8A
-	dw spritesets_null_spriteset          ; custom sprite 8B
-	dw spritesets_null_spriteset          ; custom sprite 8C
-	dw spritesets_null_spriteset          ; custom sprite 8D
-	dw spritesets_null_spriteset          ; custom sprite 8E
-	dw spritesets_null_spriteset          ; custom sprite 8F
-	dw spritesets_null_spriteset          ; custom sprite 90
-	dw spritesets_null_spriteset          ; custom sprite 91
-	dw spritesets_null_spriteset          ; custom sprite 92
-	dw spritesets_null_spriteset          ; custom sprite 93
-	dw spritesets_null_spriteset          ; custom sprite 94
-	dw spritesets_null_spriteset          ; custom sprite 95
-	dw spritesets_null_spriteset          ; custom sprite 96
-	dw spritesets_null_spriteset          ; custom sprite 97
-	dw spritesets_null_spriteset          ; custom sprite 98
-	dw spritesets_null_spriteset          ; custom sprite 99
-	dw spritesets_null_spriteset          ; custom sprite 9A
-	dw spritesets_null_spriteset          ; custom sprite 9B
-	dw spritesets_null_spriteset          ; custom sprite 9C
-	dw spritesets_null_spriteset          ; custom sprite 9D
-	dw spritesets_null_spriteset          ; custom sprite 9E
-	dw spritesets_null_spriteset          ; custom sprite 9F
-	dw spritesets_null_spriteset          ; custom sprite A0 - pendulum platform (slippery)
-	dw spritesets_null_spriteset          ; custom sprite A1
-	dw spritesets_null_spriteset          ; custom sprite A2
-	dw spritesets_null_spriteset          ; custom sprite A3 - pendulum platform (noslip)
-	dw spritesets_null_spriteset          ; custom sprite A4
-	dw spritesets_null_spriteset          ; custom sprite A5
-	dw spritesets_null_spriteset          ; custom sprite A6
-	dw spritesets_null_spriteset          ; custom sprite A7
-	dw spritesets_null_spriteset          ; custom sprite A8
-	dw spritesets_null_spriteset          ; custom sprite A9
-	dw spritesets_null_spriteset          ; custom sprite AA
-	dw spritesets_null_spriteset          ; custom sprite AB
-	dw spritesets_null_spriteset          ; custom sprite AC
-	dw spritesets_null_spriteset          ; custom sprite AD
-	dw spritesets_null_spriteset          ; custom sprite AE
-	dw spritesets_null_spriteset          ; custom sprite AF
-	dw spritesets_null_spriteset          ; custom sprite B0
-	dw spritesets_null_spriteset          ; custom sprite B1
-	dw spritesets_null_spriteset          ; custom sprite B2
-	dw spritesets_null_spriteset          ; custom sprite B3
-	dw spritesets_null_spriteset          ; custom sprite B4
-	dw spritesets_null_spriteset          ; custom sprite B5
-	dw spritesets_null_spriteset          ; custom sprite B6
-	dw spritesets_null_spriteset          ; custom sprite B7
-	dw spritesets_null_spriteset          ; custom sprite B8
-	dw spritesets_null_spriteset          ; custom sprite B9
-	dw spritesets_null_spriteset          ; custom sprite BA
-	dw spritesets_null_spriteset          ; custom sprite BB
-	dw spritesets_null_spriteset          ; custom sprite BC
-	dw spritesets_null_spriteset          ; custom sprite BD
-	dw spritesets_null_spriteset          ; custom sprite BE
-	dw spritesets_null_spriteset          ; custom sprite BF
-	dw spritesets_null_spriteset          ; custom sprite C0
-	dw spritesets_null_spriteset          ; custom sprite C1
-	dw spritesets_null_spriteset          ; custom sprite C2
-	dw spritesets_null_spriteset          ; custom sprite C3
-	dw spritesets_null_spriteset          ; custom sprite C4
-	dw spritesets_null_spriteset          ; custom sprite C5
-	dw spritesets_null_spriteset          ; custom sprite C6
-	dw spritesets_null_spriteset          ; custom sprite C7
-	dw spritesets_null_spriteset          ; custom sprite C8
-endif
 
 ; TODO use a nybble per spriteset
 spritesets:
@@ -800,73 +595,71 @@ spritesets:
 
 ; NOTE: The VRAM uploads happen backwards, so the first item is the bottom-most (16 pixel high) row of SP4,
 ; NOTE: the second entry is the second-bottom-most 16-pixel row, and so on.
-; NOTE: In other words, the rightmost entry is uploaded at the lowest VRAM address.
-; TODO remove the final two listings, as theyre for dynamic sprites
 spriteset_gfx_listing:
-	dw $007F,$007F,$010D,$0108,$010B,$010A,$0104,$0103		; spriteset 00: chargin, clappin chucks, cloud drop, grass plat w beetles/beezos, piranha plants
-	dw $007F,$007F,$0108,$010D,$0116,$011F,$0115,$0102		; spriteset 01: fish, nipper, lakitu, rip van fish, blurp, needlenose, gras plat w/beezo, buzzy beetle
-	dw $007F,$007F,$0108,$010B,$010A,$0105,$0104,$0103		; spriteset 02: ss 00 alt: no piranhas, adds pitchin chucks
-	dw $007F,$007F,$0117,$0124,$0112,$0116,$0114,$0111		; spriteset 03: dolphins, porcupuffer
-	dw $0105,$0110,$0104,$011A,$010A,$0109,$0108,$0107		; spriteset 04: all chucks, spike top, buzzy, swooper, blargg
-	dw $007F,$007F,$007F,$010D,$0100,$0112,$0111,$0110		; spriteset 05: boos, big boo
-	dw $007F,$007F,$007F,$007F,$007F,$007F,$011F,$0128		; spriteset 06: lakitu, porcu-puffer
-	dw $007F,$007F,$007F,$010C,$011D,$011C,$010D,$0108		; spriteset 07: snow outside -- platforms, piranhas, bumptys, ninji, yi spike
-	dw $007F,$007F,$007F,$007F,$007F,$0111,$0127,$007F		; spriteset 08: athletic
-	dw $007F,$007F,$0110,$010F,$010A,$0128,$0108,$0107		; spriteset 09: underground with diggin chucks
-	dw $007F,$007F,$007F,$007F,$012B,$012A,$0129,$007F		; spriteset 0A: mechakoopa
-	dw $007F,$007F,$010F,$0108,$010C,$010E,$0107,$010D		; spriteset 0B: wiggler, volcano lotus, piranha plants, platforms, mega mole
-	dw $007F,$007F,$0108,$011D,$011C,$0105,$011E,$0103		; spriteset 0C: snow 2: chucks (pitchin), bumpty, ninji, plats
-	dw $007F,$007F,$007F,$00E0,$007F,$007F,$007F,$0013		; spriteset 0D: testing (replace later)
-	dw $007F,$007F,$007F,$007F,$0105,$0104,$0103,$0107		; spriteset 0E: chucks + kickin chuck, volc lotus
-	dw $007F,$007F,$007F,$0127,$0122,$0121,$0120,$0123		; spriteset 0F: dry bones/bony/beetle/pencil/grinder/castle block/reflec ball, thwomp
-	dw $007F,$007F,$007F,$007F,$007F,$0107,$0124,$010D		; spriteset 10: piranhas, expanding pipes, lotus
-	dw $007F,$007F,$007F,$007F,$010C,$0125,$0115,$010D		; spriteset 11: cave: piranhas, lakitu/spiny, buzzy/spiny upside-down, yi spike
-	dw $007F,$007F,$007F,$007F,$0126,$0102,$0122,$010E		; spriteset 12: wiggler, castle block/grinder, fish, spearguy
-	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 13: none
-	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 14: none
-	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 15: none
-	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 16: none
-	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 16: none
-	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 17: none
-	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 18: none
-	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 19: none
-	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 1A: none
-	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 1B: none
-	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 1C: none
-	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 1D: none
-	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 1E: none
-	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 1F: none
-	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 20: none
-	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 21: none
-	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 22: none
-	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 23: none
-	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 24: none
-	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 25: none
-	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 26: none
-	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 26: none
-	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 27: none
-	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 28: none
-	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 29: none
-	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 2A: none
-	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 2B: none
-	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 2C: none
-	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 2D: none
-	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 2E: none
-	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 2F: none
-	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 30: none
-	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 31: none
-	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 32: none
-	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 33: none
-	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 34: none
-	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 35: none
-	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 36: none
-	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 36: none
-	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 37: none
-	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 38: none
-	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 39: none
-	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 3A: none
-	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 3B: none
-	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 3C: none
-	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 3D: none
-	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 3E: none
-	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 3F: none
+	dw $010D,$0108,$010B,$010A,$0104,$0103		; spriteset 00: chargin, clappin chucks, cloud drop, grass plat w beetles/beezos, piranha plants
+	dw $0108,$010D,$0116,$011F,$0115,$0102		; spriteset 01: fish, nipper, lakitu, rip van fish, blurp, needlenose, gras plat w/beezo, buzzy beetle
+	dw $0108,$010B,$010A,$0105,$0104,$0103		; spriteset 02: ss 00 alt: no piranhas, adds pitchin chucks
+	dw $0117,$0124,$0112,$0116,$0114,$0111		; spriteset 03: dolphins, porcupuffer
+	dw $0104,$011A,$010A,$0109,$0108,$0107		; spriteset 04: all chucks, spike top, buzzy, swooper, blargg
+	dw $007F,$010D,$0100,$0112,$0111,$0110		; spriteset 05: boos, big boo
+	dw $007F,$007F,$007F,$007F,$011F,$0128		; spriteset 06: lakitu, porcu-puffer
+	dw $007F,$010C,$011D,$011C,$010D,$0108		; spriteset 07: snow outside -- platforms, piranhas, bumptys, ninji, yi spike
+	dw $007F,$007F,$007F,$0111,$0127,$007F		; spriteset 08: athletic
+	dw $0110,$010F,$010A,$0128,$0108,$0107		; spriteset 09: underground with diggin chucks
+	dw $007F,$007F,$012B,$012A,$0129,$007F		; spriteset 0A: mechakoopa
+	dw $010F,$0108,$010C,$010E,$0107,$010D		; spriteset 0B: wiggler, volcano lotus, piranha plants, platforms, mega mole
+	dw $0108,$011D,$011C,$0105,$011E,$0103		; spriteset 0C: snow 2: chucks (pitchin), bumpty, ninji, plats
+	dw $007F,$00E0,$007F,$007F,$007F,$0013		; spriteset 0D: testing (replace later)
+	dw $007F,$007F,$0105,$0104,$0103,$0107		; spriteset 0E: chucks + kickin chuck, volc lotus
+	dw $007F,$0127,$0122,$0121,$0120,$0123		; spriteset 0F: dry bones/bony/beetle/pencil/grinder/castle block/reflec ball, thwomp
+	dw $007F,$007F,$007F,$0107,$0124,$010D		; spriteset 10: piranhas, expanding pipes, lotus
+	dw $007F,$007F,$010C,$0125,$0115,$010D		; spriteset 11: cave: piranhas, lakitu/spiny, buzzy/spiny upside-down, yi spike
+	dw $007F,$007F,$0126,$0102,$0122,$010E		; spriteset 12: wiggler, castle block/grinder, fish, spearguy
+	dw $007F,$007F,$007F,$007F,$007F,$007F		; spriteset 13: none
+	dw $007F,$007F,$007F,$007F,$007F,$007F		; spriteset 14: none
+	dw $007F,$007F,$007F,$007F,$007F,$007F		; spriteset 15: none
+	dw $007F,$007F,$007F,$007F,$007F,$007F		; spriteset 16: none
+	dw $007F,$007F,$007F,$007F,$007F,$007F		; spriteset 16: none
+	dw $007F,$007F,$007F,$007F,$007F,$007F		; spriteset 17: none
+	dw $007F,$007F,$007F,$007F,$007F,$007F		; spriteset 18: none
+	dw $007F,$007F,$007F,$007F,$007F,$007F		; spriteset 19: none
+	dw $007F,$007F,$007F,$007F,$007F,$007F		; spriteset 1A: none
+	dw $007F,$007F,$007F,$007F,$007F,$007F		; spriteset 1B: none
+	dw $007F,$007F,$007F,$007F,$007F,$007F		; spriteset 1C: none
+	dw $007F,$007F,$007F,$007F,$007F,$007F		; spriteset 1D: none
+	dw $007F,$007F,$007F,$007F,$007F,$007F		; spriteset 1E: none
+	dw $007F,$007F,$007F,$007F,$007F,$007F		; spriteset 1F: none
+	dw $007F,$007F,$007F,$007F,$007F,$007F		; spriteset 20: none
+	dw $007F,$007F,$007F,$007F,$007F,$007F		; spriteset 21: none
+	dw $007F,$007F,$007F,$007F,$007F,$007F		; spriteset 22: none
+	dw $007F,$007F,$007F,$007F,$007F,$007F		; spriteset 23: none
+	dw $007F,$007F,$007F,$007F,$007F,$007F		; spriteset 24: none
+	dw $007F,$007F,$007F,$007F,$007F,$007F		; spriteset 25: none
+	dw $007F,$007F,$007F,$007F,$007F,$007F		; spriteset 26: none
+	dw $007F,$007F,$007F,$007F,$007F,$007F		; spriteset 26: none
+	dw $007F,$007F,$007F,$007F,$007F,$007F		; spriteset 27: none
+	dw $007F,$007F,$007F,$007F,$007F,$007F		; spriteset 28: none
+	dw $007F,$007F,$007F,$007F,$007F,$007F		; spriteset 29: none
+	dw $007F,$007F,$007F,$007F,$007F,$007F		; spriteset 2A: none
+	dw $007F,$007F,$007F,$007F,$007F,$007F		; spriteset 2B: none
+	dw $007F,$007F,$007F,$007F,$007F,$007F		; spriteset 2C: none
+	dw $007F,$007F,$007F,$007F,$007F,$007F		; spriteset 2D: none
+	dw $007F,$007F,$007F,$007F,$007F,$007F		; spriteset 2E: none
+	dw $007F,$007F,$007F,$007F,$007F,$007F		; spriteset 2F: none
+	dw $007F,$007F,$007F,$007F,$007F,$007F		; spriteset 30: none
+	dw $007F,$007F,$007F,$007F,$007F,$007F		; spriteset 31: none
+	dw $007F,$007F,$007F,$007F,$007F,$007F		; spriteset 32: none
+	dw $007F,$007F,$007F,$007F,$007F,$007F		; spriteset 33: none
+	dw $007F,$007F,$007F,$007F,$007F,$007F		; spriteset 34: none
+	dw $007F,$007F,$007F,$007F,$007F,$007F		; spriteset 35: none
+	dw $007F,$007F,$007F,$007F,$007F,$007F		; spriteset 36: none
+	dw $007F,$007F,$007F,$007F,$007F,$007F		; spriteset 36: none
+	dw $007F,$007F,$007F,$007F,$007F,$007F		; spriteset 37: none
+	dw $007F,$007F,$007F,$007F,$007F,$007F		; spriteset 38: none
+	dw $007F,$007F,$007F,$007F,$007F,$007F		; spriteset 39: none
+	dw $007F,$007F,$007F,$007F,$007F,$007F		; spriteset 3A: none
+	dw $007F,$007F,$007F,$007F,$007F,$007F		; spriteset 3B: none
+	dw $007F,$007F,$007F,$007F,$007F,$007F		; spriteset 3C: none
+	dw $007F,$007F,$007F,$007F,$007F,$007F		; spriteset 3D: none
+	dw $007F,$007F,$007F,$007F,$007F,$007F		; spriteset 3E: none
+	dw $007F,$007F,$007F,$007F,$007F,$007F		; spriteset 3F: none
