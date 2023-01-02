@@ -11,4 +11,10 @@
 !bank1_bossfire_free_end     = $01D4E4|!bank
 
 !bank1_koopakids_free_start  = $01FA4C|!bank
-!bank1_koopakids_free_end    = $01FFFF|!bank
+!bank1_koopakids_free_end    = $020000|!bank
+
+!bank2_d51e_free_start       = $02D51E|!bank
+!bank2_d51e_free_end         = $02D580|!bank
+
+!bank2_end_free_start        = $02FFE2|!bank
+!bank2_end_free_end          = $030000|!bank

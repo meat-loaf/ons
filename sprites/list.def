@@ -1,4 +1,5 @@
 incsrc "sprites/originals_unconverted.asm"
+incsrc "sprites/parabeetle.asm"
 incsrc "sprites/19_levelmessage.asm"
 
-incsrc "sprites/a7_thwomp.asm"
+incsrc "sprites/thwomp.asm"

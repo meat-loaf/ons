@@ -238,7 +238,7 @@ if !SA1 == 0
 		DEY
 		DEY
 		JML SprtOffset
-	warnpc $02B60E|!BankB
+	warnpc $02B0E|!BankB
 
 	org $02ABEF|!BankB
 		JMP DisplaceIndex

@@ -5,15 +5,18 @@ includefrom "list.def"
 %alloc_sprite($02, shelless_koopa_init, shelless_koopa_main, 0, $70, $00, $06, $00, $00, $00)
 %alloc_sprite($03, shelless_koopa_init, shelless_koopa_main, 0, $70, $00, $04, $00, $00, $00)
 
+%alloc_sprite_sharedgfx_entry_5($00,$C8,$CA,$CA,$CE,$CC)
+%alloc_sprite_sharedgfx_entry_mirror($01, $00)
+%alloc_sprite_sharedgfx_entry_mirror($02, $00)
+%alloc_sprite_sharedgfx_entry_mirror($03, $00)
+
 %set_free_start("bank6")
 shelless_koopa_init:
-	pea !bank01_jsl2rts_rtl
-	jml $018575|!bank
+	%jsl2rts(!bank01_jsl2rts_rtl, $018575|!bank)
 shelless_koopa_main:
 	lda #$01
 	pha
 	plb
-	pea !bank01_jsl2rts_rtl
-	jml $018904|!bank
+	%jsl2rts(!bank01_jsl2rts_rtl, $018904|!bank)
 .done:
 %set_free_finish("bank6", shelless_koopa_main_done)

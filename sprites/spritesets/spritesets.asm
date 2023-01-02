@@ -1,22 +1,21 @@
 incsrc "spriteset_macros.asm"
 incsrc "spriteset_config.asm"
 incsrc "finish_oam_write.asm"
-
-;; bank 00 hijacks ;;
-
-org $0096F8|!bank
-; TODO figure out why this crashes
-ss_hijack:
-	jml ss_set_spriteset|!bank
-	NOP #6
-.done:
-;warnpc $009705|!bank
+incsrc "generic_gfx_routines.asm"
 
 if read1($0FF8C6|!bank) != $22
 	error "LM Super GFX hijack not installed, or this code has changed. Install this hijack first before patching with LM hijacks."
 else
 	!exgfx_table #= read3($0FF7FF)
 endif
+
+org $0096F8|!bank
+ss_hijack:
+	jml ss_set_spriteset|!bank
+	NOP #6
+.done:
+;warnpc $009705|!bank
+
 ; orignally, a call to the LM code that decompresses graphics files after
 ; pulling the graphics file number from a long pointer at $8A
 org $0FF8C6|!bank

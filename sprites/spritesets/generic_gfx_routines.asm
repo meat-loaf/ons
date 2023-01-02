@@ -120,6 +120,10 @@ sub_spr_gfx_1:
 	STA.w $0460|!addr,y
 	STA.w $0461|!addr,y
 	JMP.w $01A3DF|!bank
+getdrawinfo_generic_prefix:
+	LDA   !spriteset_offset,x
+	STA.b !tile_off_scratch
+	JMP.w $01A365|!bank
 ; todo mark free space here to be usable
 warnpc $019E0D|!bank
 
@@ -157,5 +161,3 @@ org $019F27|!bank
 	; saves a byte (2/2): originally jsr'd then rts'd after. we just JMP and save the byte + 12 cycles
 	JMP.w $01A3DF|!bank
 warnpc $019F5B|!bank
-
-

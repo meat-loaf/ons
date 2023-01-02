@@ -1,10 +1,13 @@
 if not(defined("__ons_sprs_config_def__"))
 !__ons_sprs_config_def__ = 1
 
+; save sprite extra bits to table on sprite load
+!sprites_save_exbits = 1
+
 ; dont change this - lm required for extra bytes
 sprite_size_table_ptr     = $0EF30C|!bank
 
-!sprite_size_table         = $0CB636|!bank
+!sprite_size_table         = $0CB800|!bank
 !sprite_init_table_lo      #= !sprite_size_table+($100*4)
 !sprite_init_table_hi      #= !sprite_init_table_lo+($100)
 !sprite_init_table_bk      #= !sprite_init_table_hi+($100)
@@ -14,13 +17,17 @@ sprite_size_table_ptr     = $0EF30C|!bank
 !sprite_tables_free_start  #= !sprite_main_table_bk+($100)
 !sprite_table_free_end      = $0CC94D|!bank
 
-sprite_init_table_lo = !sprite_init_table_lo
-sprite_init_table_hi = !sprite_init_table_hi
-sprite_init_table_bk = !sprite_init_table_bk
+sprite_size_table         = $0CB800|!bank
+sprite_init_table_lo      = !sprite_init_table_lo
+sprite_init_table_hi      = !sprite_init_table_hi
+sprite_init_table_bk      = !sprite_init_table_bk
 
-sprite_main_table_lo = !sprite_main_table_lo
-sprite_main_table_hi = !sprite_main_table_hi
-sprite_main_table_bk = !sprite_main_table_bk
+sprite_main_table_lo      = !sprite_main_table_lo
+sprite_main_table_hi      = !sprite_main_table_hi
+sprite_main_table_bk      = !sprite_main_table_bk
+
+sprite_tilemaps           = $019B83|!bank
+sprite_tilemap_offsets    = $019C7F|!bank
 
 !spr_tweaker_1656_tbl      = $07F26C|!bank
 !spr_tweaker_1662_tbl      = $07F335|!bank
@@ -29,7 +36,7 @@ sprite_main_table_bk = !sprite_main_table_bk
 !spr_tweaker_1686_tbl      = $07F590|!bank
 !spr_tweaker_190F_tbl      = $07F659|!bank
 
-!bank01_jsl2rts_rtl       = $80CA-1
+!bank01_jsl2rts_rtl       = $0180CA|!bank
 
 !sprite_num               = $9E
 !sprite_speed_y           = $AA

@@ -13,23 +13,20 @@ includefrom "list.def"
 !thwomp_spawn_hi            = !1534
 !thwomp_hit_ground_wait     = !1540
 !thwomp_block_check         = !1594
+!thwomp_dir                 = !spr_extra_bits
 
 !thwomp_speed_tbl_ptr       = $45
 !thwomp_speed_upd_ptr       = $47
 !thwomp_pos_lo_tbl_ptr      = $4A
 !thwomp_pos_hi_tbl_ptr      = $4C
-; extra byte: direction
+; extra bits: direction
 ; 00: down
 ; 01: up
 ; 02: right
 ; 03: left
 %set_free_start("bank1_koopakids")
 thwomp_init:
-	lda !extra_byte_1,x
-	and #$03
-	sta !extra_byte_1,x
-
-	tay
+	ldy !thwomp_dir,x
 	lda .what_blocks,y
 	sta !thwomp_block_check,x
 
@@ -51,38 +48,38 @@ thwomp_init:
 	db $04,$08,$01,$02
 
 thwomp_ptr_setup:
-	LDA !extra_byte_1,x
-	TAY
-	STX $00
-	LDA .speed_lo_ptr,y
-	CLC
-	ADC $00
-	STA !thwomp_speed_tbl_ptr
-	STZ !thwomp_speed_tbl_ptr+1
+	lda !thwomp_dir,x
+	tay
+	stx $00
+	lda .speed_lo_ptr,y
+	clc
+	adc $00
+	sta !thwomp_speed_tbl_ptr
+	stz !thwomp_speed_tbl_ptr+1
 	; opcode JMP
-	LDA #$4C
-	STA !thwomp_speed_upd_ptr
-	LDA .speed_upd_ptr_lo,y
-	STA !thwomp_speed_upd_ptr+1
-	LDA .speed_upd_ptr_hi,y
-	STA !thwomp_speed_upd_ptr+2
+	lda #$4C
+	sta !thwomp_speed_upd_ptr
+	lda .speed_upd_ptr_lo,y
+	sta !thwomp_speed_upd_ptr+1
+	lda .speed_upd_ptr_hi,y
+	sta !thwomp_speed_upd_ptr+2
 
 .pos_only:
-	LDA .pos_lo_ptr,y
-	CLC
-	ADC $00
-	STA !thwomp_pos_lo_tbl_ptr
-	STZ !thwomp_pos_lo_tbl_ptr+1
+	lda .pos_lo_ptr,y
+	clc
+	adc $00
+	sta !thwomp_pos_lo_tbl_ptr
+	stz !thwomp_pos_lo_tbl_ptr+1
 
-	LDA .pos_hi_lo_ptr,y
-	CLC
-	ADC $00
-	STA !thwomp_pos_hi_tbl_ptr
-	LDA .pos_hi_hi_ptr,y
-	ADC #$00
-	STA !thwomp_pos_hi_tbl_ptr+1
+	lda .pos_hi_lo_ptr,y
+	clc
+	adc $00
+	sta !thwomp_pos_hi_tbl_ptr
+	lda .pos_hi_hi_ptr,y
+	adc #$00
+	sta !thwomp_pos_hi_tbl_ptr+1
 
-	RTS
+	rts
 .speed_lo_ptr:
 	db !sprite_speed_y,!sprite_speed_y,!sprite_speed_x,!sprite_speed_x
 .pos_lo_ptr:
@@ -148,7 +145,7 @@ thwomp_main:
 .phase_falling:
 	jsr.w !thwomp_speed_upd_ptr
 	lda (!thwomp_speed_tbl_ptr)
-	ldy !extra_byte_1,x
+	ldy !thwomp_dir,x
 	cmp ..speed_max,y
 	beq ..done_accel
 	adc ..accels,y
@@ -188,7 +185,7 @@ thwomp_main:
 ..ret:
 	rtl
 ..keep_rising:
-	ldy !extra_byte_1,x
+	ldy !thwomp_dir,x
 	lda ..rise_speed,y
 	sta (!thwomp_speed_tbl_ptr)
 	jsr.w !thwomp_speed_upd_ptr

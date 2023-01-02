@@ -72,7 +72,7 @@ ASM_TWEAKS_FULL=$(addprefix ${asm_tweaks_dir}/, ${ASM_TWEAKS})
 TS_DIR=.ts
 
 AMK_FAKE_TS=${TS_DIR}/addmusic
-PIXI_FAKE_TS=${TS_DIR}/pixi_run
+SPRITES_FAKE_TS=${TS_DIR}/sprites_run
 GPS_FAKE_TS=${TS_DIR}/gps_run
 UBER_FAKE_TS=${TS_DIR}/uberasm_run
 GFX_FAKE_TS=${TS_DIR}/gfx_ins
@@ -112,6 +112,7 @@ CORE_BUILD_RULES= \
 	${M16_FAKE_TS} \
 	${GLOBAL_ANI_TS} \
 	${OBJTOOL_TS} \
+	${SPRITES_FAKE_TS} \
 	${GPS_FAKE_TS} \
 	${AMK_FAKE_TS} \
 	${SBAR_FAKE_TS} \
@@ -126,10 +127,11 @@ CORE_BUILD_RULES= \
 AMK_MUSIC_DEPS= \
 	$(wildcard ./amk/music/*.txt) \
 
-PIXI_DIR=pixi
-PIXI_FLAGS+=-d255spl -sym ${SYM_DIR}/pixi.sym
-PIXI_LIST=${PIXI_DIR}/list.txt
-PIXI=LD_LIBRARY_PATH=/usr/local/lib ${PIXI_DIR}/pixi3
+SPRITES_DIR=sprites
+#PIXI_FLAGS+=-d255spl -sym ${SYM_DIR}/pixi.sym
+#PIXI_LIST=${PIXI_DIR}/list.txt
+#PIXI=LD_LIBRARY_PATH=/usr/local/lib ${PIXI_DIR}/pixi3
+
 
 GPS_FLAGS+=-sym ../${SYM_DIR}/gps.sym
 
@@ -149,8 +151,6 @@ UBERASM_ASM_FILES= \
 	$(wildcard ${UBERASM_DIR}/asm/base/*.asm) \
 
 sprites_dir=${PIXI_DIR}/sprites
-clusspr_dir=${PIXI_DIR}/cluster
-shooter_dir=${PIXI_DIR}/shooters
 
 
 asm_base_deps=${asm_dir}/main.asm \
@@ -167,22 +167,16 @@ statusbar_deps=${sbar_dir}/statusbar_defs.asm \
 	${sbar_dir}/disable_irq.asm \
 	${sbar_dir}/sbar_tilemap_rewrite.asm
 
-pixi_asm_sources= \
-	${PIXI_DIR}/asm/DefaultSize.bin \
-	$(wildcard ${PIXI_DIR}/asm/*.asm) \
-	$(wildcard ${PIXI_DIR}/asm/spriteset/*.asm) \
-	$(wildcard ${PIXI_DIR}/asm/spriteset/remaps/*.asm) \
-	$(wildcard ${PIXI_DIR}/asm/spriteset/bank3/*.asm) \
-	$(wildcard ${PIXI_DIR}/routines/*.asm) \
-	$(wildcard ${sprites_dir}/*.asm) \
-	$(wildcard ${sprites_dir}/*.bin) \
-	$(wildcard ${sprites_dir}/**/*.asm) \
-	$(wildcard ${sprites_dir}/**/*.cfg) \
-	$(wildcard ${sprites_dir}/*.cfg) \
-	$(wildcard ${sprites_dir}/*.json) \
-	$(wildcard ${shooter_dir}/*.asm) \
-	$(wildcard ${shooter_dir}/*.cfg) \
-	$(wildcard ${clusspr_dir}/*.asm)
+sprites_asm_main_file=${SPRITES_DIR}/sprites.asm
+sprites_asm_sources= \
+	${sprites_asm_main_file} \
+	${SPRITES_DIR}/list.def \
+	$(wildcard ${SPRITES_DIR}/engine/*.asm) \
+	$(wildcard ${SPRITES_DIR}/include/*.def) \
+	$(wildcard ${SPRITES_DIR}/macros/*.asm) \
+	$(wildcard ${SPRITES_DIR}/sprites/*.asm) \
+	$(wildcard ${SPRITES_DIR}/spritesets/*.asm) \
+	$(wildcard ${SPRITES_DIR}/util/*.asm)
 
 gps_asm_sources=${GPS_DIR}/main.asm \
 	$(wildcard ${GPS_BLK_DIR}/*.asm) \
@@ -258,8 +252,11 @@ ${AMK_FAKE_TS}: ${AMK_MUSIC_DEPS} ./amk/Addmusic_list.txt ./amk/Addmusic_sample\
 	cd ./amk && ./amk ../${ROM_NAME}
 	touch $@
 
-${PIXI_FAKE_TS}: ${pixi_asm_sources} ${PIXI_LIST} ${INIT_LEVEL_TS} ${OBJTOOL_TS} ${ASM_HEADERS}
-	${PIXI} ${PIXI_FLAGS} -l ${PIXI_LIST} ${ROM_NAME}
+#${PIXI_FAKE_TS}: ${pixi_asm_sources} ${PIXI_LIST} ${INIT_LEVEL_TS} ${OBJTOOL_TS} ${ASM_HEADERS}
+#	${PIXI} ${PIXI_FLAGS} -l ${PIXI_LIST} ${ROM_NAME}
+#	touch $@
+${SPRITES_FAKE_TS}: ${sprites_asm_sources} ${OBJTOOL_TS} ${ASM_HEADERS}
+	${ASAR} ${sprites_asm_main_file} ${ROM_NAME}
 	touch $@
 
 ${GPS_FAKE_TS}: ${gps_asm_sources} ${GPS_DIR}/list.txt ${ASM_HEADERS}

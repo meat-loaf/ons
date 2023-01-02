@@ -126,7 +126,7 @@ includeonce
 !block_xpos              = $9A
 !block_to_generate       = $9C
 !sprites_locked          = $9D
-
+!level_sprite_data_ptr   = $CE
 !wiggler_segment_ptr     = $D5
 
 !gamemode                = $0100|!addr
