@@ -3,3 +3,6 @@ incsrc "sprites/parabeetle.asm"
 incsrc "sprites/19_levelmessage.asm"
 
 incsrc "sprites/thwomp.asm"
+
+incsrc "sprites/star_coin.asm"
+incsrc "sprites/mega_mole.asm"

@@ -5,7 +5,9 @@ includefrom "list.def"
 %alloc_sprite($02, shelless_koopa_init, shelless_koopa_main, 0, $70, $00, $06, $00, $00, $00)
 %alloc_sprite($03, shelless_koopa_init, shelless_koopa_main, 0, $70, $00, $04, $00, $00, $00)
 
-%alloc_sprite_sharedgfx_entry_5($00,$C8,$CA,$CA,$CE,$CC)
+; todo: change kicking animation frame index, to save a slot
+; note: stunned frames are (eventually) not going to be used
+%alloc_sprite_sharedgfx_entry_5($00,$CE,$CC,$CC,$FF,$80)
 %alloc_sprite_sharedgfx_entry_mirror($01, $00)
 %alloc_sprite_sharedgfx_entry_mirror($02, $00)
 %alloc_sprite_sharedgfx_entry_mirror($03, $00)

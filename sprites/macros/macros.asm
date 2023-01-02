@@ -24,9 +24,44 @@ macro alloc_sprite(sprite_id, init_rt, main_rt, n_exbyte, spr_1656_val, spr_1662
 	if !sid < 16
 		!fmt = 0
 	endif
-	print "sprite $!fmt", hex(!sid), " init at $", hex(!{sprite_!{sid}_init})
-	print "sprite $!fmt", hex(!sid), " main at $", hex(!{sprite_!{sid}_main})
+	print "sprite $!fmt", hex(!sid), " init at $", hex(!{sprite_!{sid}_init}), ", main at $", hex(!{sprite_!{sid}_main})
 	undef "fmt"
+endmacro
+
+macro alloc_sprite_dynamic_512k(sprite_id, init_rt, main_rt, n_exbyte, spr_1656_val, spr_1662_val, spr_166E_val, spr_167A_val, spr_1686_val, spr_190F_val, gfx_name, free_tag)
+	%alloc_sprite(<sprite_id>, <init_rt>, <main_rt>, <n_exbyte>, <spr_1656_val>, <spr_1662_val>, <spr_166E_val>, <spr_167A_val>, <spr_1686_val>, <spr_190F_val>)
+	if not(defined("n_dyn_gfx"))
+		!n_dyn_gfx #= 0
+	endif
+	!n_dyn_gfx #= !n_dyn_gfx+1
+	if not(getfilestatus("dyn_gfx/<gfx_name>.bin"))
+		error "No read access to file `<gfx_name>.bin'."
+	else
+		if !n_dyn_gfx > !dyn_gfx_files_max
+			error "Too many dynamic gfx files. Allocate more space (define dyn_gfx_files_max)"
+		else
+			%set_free_start(<free_tag>)
+			dyn_gfx_!{n_dyn_gfx}_dat:
+			incbin "../dyn_gfx/<gfx_name>.bin"
+			dyn_gfx_!{n_dyn_gfx}_dat_end:
+			%set_free_finish(<free_tag>, dyn_gfx_!{n_dyn_gfx}_ptr_end)
+			!dyn_spr_<gfx_name>_gfx_id #= !n_dyn_gfx-1
+		endif
+	endif
+endmacro
+
+macro write_dynamic_spr_gfx_ptrs_at()
+;org <origin>
+org !spr_dyn_gfx_tbl
+print "Dynamic gfx pointers start at $", pc, " (max !dyn_gfx_files_max)"
+!ix #= 0
+while !ix < !n_dyn_gfx
+	dl dyn_gfx_!{n_dyn_gfx}_dat
+	!ix #= !ix+1
+endif
+print "Dynamic gfx pointers end at $", pc, " (total used: !ix)"
+undef "ix"
+
 endmacro
 
 macro __alloc_sprite_sharedgfx_begin(sprite_id)
@@ -79,6 +114,9 @@ endmacro
 
 
 macro write_sprite_tables()
+if defined("spr_dyn_gfx_tbl")
+	%write_dynamic_spr_gfx_ptrs_at()
+endif
 org sprite_size_table_ptr
 if !sprites_have_exbytes
 	print "Sprites have extra bytes."
@@ -86,11 +124,20 @@ if !sprites_have_exbytes
 	dl sprite_size_table
 	db $42
 else
-	print "No sprites have extra bytes."
-	db $FF,$FF,$FF,$FF
+	; the code in the sprite loader isn't reliable to undo (because it needs to overwrite
+	; lm hijacks), so if the code gets written once, it stays.
+	!magic #= read1(!sprite_size_table_ptr+3)
+	if !magic == $42
+		print "No sprites have extra bytes, but they did previously. Overriding."
+		!sprites_have_exbytes = 1
+	else
+		print "No sprites have extra bytes."
+		; db $FF,$FF,$FF,$FF
+	endif
+	undef "magic"
 endif
 	!ix #= 0
-	while !ix != $FF
+	while !ix < $100
 	if defined("sprite_!{ix}_defined")
 		if defined("sprite_!{ix}_sz")
 			assert !{sprite_!{ix}_sz} >= 3, "Sprite size for sprite id !ix is less than 3."
@@ -190,8 +237,8 @@ macro jsl2rts(rtl_addr, target_addr)
 	jml.l <target_addr>|!bank
 endmacro
 
-macro jump_hijack(jump_op, prefix, target, hijack_addr, maxaddr)
+macro jump_hijack(jump_op, length, target, hijack_addr, maxaddr)
 	org <hijack_addr>
-	<jump_op>.<prefix> <target>
+	<jump_op>.<length> <target>
 	warnpc <maxaddr>
 endmacro

@@ -5,7 +5,8 @@ if not(defined("__ons_sprs_config_def__"))
 !sprites_save_exbits = 1
 
 ; dont change this - lm required for extra bytes
-sprite_size_table_ptr     = $0EF30C|!bank
+!sprite_size_table_ptr     = $0EF30C|!bank
+sprite_size_table_ptr     = !sprite_size_table_ptr
 
 !sprite_size_table         = $0CB800|!bank
 !sprite_init_table_lo      #= !sprite_size_table+($100*4)
