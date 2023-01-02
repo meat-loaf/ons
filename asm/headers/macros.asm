@@ -28,45 +28,7 @@ macro replace_pointer(addr,ptr)
 	pullpc
 endmacro
 
-macro sprite_set_cfg(sprite_id, spr_1656_val, spr_1662_val, spr_166E_val, spr_167A_val, spr_1686_val, spr_190F_val)
-pushpc
-	org !spr_tweaker_1656_tbl+<sprite_id>
-		db <spr_1656_val>
-	org !spr_tweaker_1662_tbl+<sprite_id>
-		db <spr_1662_val>
-	org !spr_tweaker_166E_tbl+<sprite_id>
-		db <spr_166E_val>
-	org !spr_tweaker_167A_tbl+<sprite_id>
-		db <spr_167A_val>
-	org !spr_tweaker_1686_tbl+<sprite_id>
-		db <spr_1686_val>
-	org !spr_tweaker_190F_tbl+<sprite_id>
-		db <spr_190F_val>
-pullpc
-endmacro
-
-macro dump_sprite_cfg(sprite_id)
-	!one #= read1(!spr_tweaker_1656_tbl+<sprite_id>)
-	!two #= read1(!spr_tweaker_1662_tbl+<sprite_id>)
-	!three #= read1(!spr_tweaker_166E_tbl+<sprite_id>)
-	!four #= read1(!spr_tweaker_167A_tbl+<sprite_id>)
-	!five #= read1(!spr_tweaker_1686_tbl+<sprite_id>)
-	!six #= read1(!spr_tweaker_190F_tbl+<sprite_id>)
-	error "sprite id ", <sprite_id>, "cfg vals (in decimal): !one, !two, !three, !four, !five, !six"
-
-endmacro
-
-macro alloc_spr(sprite_id, sprite_init, sprite_main, spr_1656_val, spr_1662_val, spr_166E_val, spr_167A_val, spr_1686_val, spr_190F_val)
-	%replace_pointer(!spr_inits_start+(<sprite_id>*2)|!bank, <sprite_init>|!bank)
-	%replace_pointer(!spr_mains_start+(<sprite_id>*2)|!bank, <sprite_main>|!bank)
-	%sprite_set_cfg(<sprite_id>,<spr_1656_val>,<spr_1662_val>,<spr_166E_val>,<spr_167A_val>,<spr_1686_val>,<spr_190F_val>)
-endmacro
-
-macro alloc_spr_nocfg(sprite_id, sprite_init, sprite_main)
-	%replace_pointer(!spr_inits_start+(<sprite_id>*2)|!bank, <sprite_init>|!bank)
-	%replace_pointer(!spr_mains_start+(<sprite_id>*2)|!bank, <sprite_main>|!bank)
-endmacro
-
+; todo remove
 macro sprite_init_do_pos_offset(spr_table,index)
 	; y offset
 	LDA <spr_table>,<index>
@@ -91,20 +53,6 @@ macro sprite_init_do_pos_offset(spr_table,index)
 	INC !14E0,x
 ?+
 
-endmacro
-
-macro sprite_read_item_memory(routine)
-	LDA !D8,x
-	AND #$F0
-	STA $98
-	LDA !E4,x
-	AND #$F0
-	STA $9A
-	LDA !14D4,x
-	STA $99
-	LDA !14E0,x
-	STA $9B
-	JSL <routine>
 endmacro
 
 macro midway_table_entry(lvl_or_secondary_exit, is_midpoint_or_water, is_secondary)

@@ -5,8 +5,6 @@ incsrc "include/512kfree.def"
 incsrc "include/smw_routines.def"
 
 incsrc "macros/macros.asm"
-incsrc "util/jslshims.asm"
-!spriteset_offset = !spr_spriteset_off
 
 incsrc "engine/engine.asm"
 

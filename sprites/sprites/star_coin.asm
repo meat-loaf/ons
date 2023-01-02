@@ -1,6 +1,6 @@
 !starcoin_sprnum = $B9
 
-%alloc_sprite_dynamic_512k(!starcoin_sprnum, starcoin_init_exit, starcoin_main, 1,\
+%alloc_sprite_dynamic_512k(!starcoin_sprnum, starcoin_init_exit, starcoin_main, 4, 1,\
 	$8E, $0E, $75, $9B, $B9, $46, "starcoin", "bank7")
 
 !starcoin_collect_sfx = $1A
@@ -16,6 +16,7 @@ starcoin_init:
 .exit:
 	rtl
 
+print "starcoin gfx id: !dyn_spr_starcoin_gfx_id"
 starcoin_main:
 	lda !starcoin_ani_timer,x
 	lsr #3

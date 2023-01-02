@@ -58,12 +58,9 @@ ASM_TWEAKS=optimize_2132_store.asm \
 	sspipe_fixes.asm \
 	qblocks_item_mem.asm \
 	level_constrain.asm \
-	growvine_imem.asm \
 	timer_backup.asm \
 	left_at_goal.asm \
-	minor_tweaks.asm \
 	layer2_ledge_fix.asm \
-	grey_parakoopa.asm \
 	mosaic.asm \
 
 ASM_TWEAK_TS=$(addprefix ${TS_DIR}/, $(patsubst %.asm, %_ts,$(ASM_TWEAKS)))
@@ -176,7 +173,7 @@ sprites_asm_sources= \
 	$(wildcard ${SPRITES_DIR}/macros/*.asm) \
 	$(wildcard ${SPRITES_DIR}/sprites/*.asm) \
 	$(wildcard ${SPRITES_DIR}/spritesets/*.asm) \
-	$(wildcard ${SPRITES_DIR}/util/*.asm)
+	$(wildcard ${SPRITES_DIR}/dyn_gfx/*.bin)
 
 gps_asm_sources=${GPS_DIR}/main.asm \
 	$(wildcard ${GPS_BLK_DIR}/*.asm) \

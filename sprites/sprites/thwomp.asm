@@ -1,6 +1,8 @@
 includefrom "list.def"
 
-%alloc_sprite($A7, thwomp_init, thwomp_main, 0, $01, $06, $33, $01, $01, $24)
+!thwomp_sprnum = $A7
+%alloc_sprite(!thwomp_sprnum, thwomp_init, thwomp_main, 5, 0, \
+	$01, $06, $33, $01, $01, $24)
 
 !thwomp_angry_face_tile = $06
 

@@ -26,6 +26,9 @@ warnpc load_normal_sprite
 ; silver p-switch is active.
 org $02A978|!bank
 load_new_sprite_dat:
+	lda $02
+	sta !sprite_load_index,x
+
 	phy
 	; go to spr y pos: get extra bits
 	dey #2

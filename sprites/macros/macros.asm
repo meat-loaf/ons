@@ -1,7 +1,7 @@
 ; set as needed
 !sprites_have_exbytes = 0
 
-macro alloc_sprite(sprite_id, init_rt, main_rt, n_exbyte, spr_1656_val, spr_1662_val, spr_166E_val, spr_167A_val, spr_1686_val, spr_190F_val)
+macro alloc_sprite(sprite_id, init_rt, main_rt, n_oam_tiles, n_exbyte, spr_1656_val, spr_1662_val, spr_166E_val, spr_167A_val, spr_1686_val, spr_190F_val)
 	!sid #= <sprite_id>
 	if defined("sprite_!{sid}_defined")
 		error "Sprite id !sid already defined."
@@ -14,6 +14,7 @@ macro alloc_sprite(sprite_id, init_rt, main_rt, n_exbyte, spr_1656_val, spr_1662
 	!{sprite_!{sid}_init} = <init_rt>-1
 	!{sprite_!{sid}_main} = <main_rt>-1
 	!{sprite_!{sid}_sz}   #= 3+<n_exbyte>
+	!{sprite_!{sid}_oamtiles} = <n_oam_tiles>*4
 	!{sprite_!{sid}_1656} = <spr_1656_val>
 	!{sprite_!{sid}_1662} = <spr_1662_val>
 	!{sprite_!{sid}_167A} = <spr_167A_val>
@@ -29,8 +30,8 @@ macro alloc_sprite(sprite_id, init_rt, main_rt, n_exbyte, spr_1656_val, spr_1662
 	undef "fmt"
 endmacro
 
-macro alloc_sprite_dynamic_512k(sprite_id, init_rt, main_rt, n_exbyte, spr_1656_val, spr_1662_val, spr_166E_val, spr_167A_val, spr_1686_val, spr_190F_val, gfx_name, free_tag)
-	%alloc_sprite(<sprite_id>, <init_rt>, <main_rt>, <n_exbyte>, <spr_1656_val>, <spr_1662_val>, <spr_166E_val>, <spr_167A_val>, <spr_1686_val>, <spr_190F_val>)
+macro alloc_sprite_dynamic_512k(sprite_id, init_rt, main_rt, n_oam_tiles, n_exbyte, spr_1656_val, spr_1662_val, spr_166E_val, spr_167A_val, spr_1686_val, spr_190F_val, gfx_name, free_tag)
+	%alloc_sprite(<sprite_id>, <init_rt>, <main_rt>, <n_oam_tiles>, <n_exbyte>, <spr_1656_val>, <spr_1662_val>, <spr_166E_val>, <spr_167A_val>, <spr_1686_val>, <spr_190F_val>)
 	if not(defined("n_dyn_gfx"))
 		!n_dyn_gfx #= 0
 	endif
@@ -45,23 +46,25 @@ macro alloc_sprite_dynamic_512k(sprite_id, init_rt, main_rt, n_exbyte, spr_1656_
 			dyn_gfx_!{n_dyn_gfx}_dat:
 			incbin "../dyn_gfx/<gfx_name>.bin"
 			dyn_gfx_!{n_dyn_gfx}_dat_end:
-			%set_free_finish(<free_tag>, dyn_gfx_!{n_dyn_gfx}_ptr_end)
+			%set_free_finish(<free_tag>, dyn_gfx_!{n_dyn_gfx}_dat_end)
 			!dyn_spr_<gfx_name>_gfx_id #= !n_dyn_gfx-1
 		endif
 	endif
 endmacro
 
-macro write_dynamic_spr_gfx_ptrs_at()
-;org <origin>
+macro write_dynamic_spr_gfx_ptrs()
 org !spr_dyn_gfx_tbl
 print "Dynamic gfx pointers start at $", pc, " (max !dyn_gfx_files_max)"
 !ix #= 0
 while !ix < !n_dyn_gfx
-	dl dyn_gfx_!{n_dyn_gfx}_dat
+	!ix_real #= !ix+1
+	print "write pointer to dyn_gfx_!{ix_real}_dat"
+	dl dyn_gfx_!{ix_real}_dat
 	!ix #= !ix+1
 endif
 print "Dynamic gfx pointers end at $", pc, " (total used: !ix)"
 undef "ix"
+undef "ix_real"
 
 endmacro
 
@@ -115,8 +118,13 @@ endmacro
 
 
 macro write_sprite_tables()
+
 if defined("spr_dyn_gfx_tbl")
-	%write_dynamic_spr_gfx_ptrs_at()
+	%write_dynamic_spr_gfx_ptrs()
+endif
+
+if and(!sprites_have_exbytes, not(!sprites_use_exbytes))
+	error "Sprites have extra bytes, but extra byte functionality is not enabled."
 endif
 org sprite_size_table_ptr
 if !sprites_have_exbytes
@@ -140,6 +148,12 @@ endif
 	!ix #= 0
 	while !ix < $100
 	if defined("sprite_!{ix}_defined")
+		if defined("sprite_!{ix}_oamtiles")
+			org oam_tile_count+!ix
+			db !{sprite_!{ix}_oamtiles}
+		else
+			error "Number of OAM tiles to allocate for sprite not defined."
+		endif
 		if defined("sprite_!{ix}_sz")
 			assert !{sprite_!{ix}_sz} >= 3, "Sprite size for sprite id !ix is less than 3."
 			org !{sprite_size_table}+($100*0)+(!ix*1)
@@ -197,6 +211,8 @@ endif
 		org !{sprite_size_table}+($100*3)+(!ix*1)
 		db $03
 	  endif
+		org oam_tile_count+!ix
+			db $00
 	endif
 
 	!ix #= !ix+1

@@ -1,3 +1,6 @@
+!bank1_fish_free_start       = $01B00B|!bank
+!bank1_fish_free_end         = $01B192|!bank
+
 !bank1_thwomp_free_start     = $01AE96|!bank
 !bank1_thwomp_free_end       = $01AF9F|!bank
 

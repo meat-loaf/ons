@@ -1,8 +1,10 @@
 if not(defined("__ons_sprs_config_def__"))
 !__ons_sprs_config_def__ = 1
 
+; todo implement these flags
 ; save sprite extra bits to table on sprite load
 !sprites_save_exbits = 1
+; sprites can use extra bytes
 !sprites_use_exbytes = 1
 
 ; dont change this - lm required for extra bytes

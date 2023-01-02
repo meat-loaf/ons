@@ -6,3 +6,4 @@ incsrc "sprites/thwomp.asm"
 
 incsrc "sprites/star_coin.asm"
 incsrc "sprites/mega_mole.asm"
+incsrc "sprites/yi_pswitch.asm"
