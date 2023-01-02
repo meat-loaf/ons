@@ -139,7 +139,7 @@ GPS_DIR=gps
 GPS_BLK_DIR=${GPS_DIR}/blocks
 GPS_RT_DIR=${GPS_DIR}/routines
 #$GPS=WINEPREFIX=${HOME}/.wineprefix/smw_gps wine ./gps.exe
-GPS=./gps4
+GPS=./gps3
 
 UBERASM_DIR=uberasm
 UBERASM_ASM_FILES= \
