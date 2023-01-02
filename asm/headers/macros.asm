@@ -1,5 +1,12 @@
 includeonce
 
+macro implement_timer(ram)
+	lda <ram>
+	beq ?no_dec
+	dec <ram>
+?no_dec:
+endmacro
+
 ;function on_wram_mirror(ram) = and(less(<ram>&$FFFF,$2000),not(eq(bank(<ram>),!ramhi)))
 
 function pack_props(flip, priority, palette, page) = ((flip&03)<<$06)|((priority&03)<<$04)|((palette&$07)<<1)|(page&$01)
@@ -207,5 +214,6 @@ if !use_midway_imem_sram_dma == !true
 	%move_block(!item_memory_mirror_s,!item_memory,!item_memory_size)
   endif
 endif
+
 
 endmacro

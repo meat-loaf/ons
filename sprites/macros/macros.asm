@@ -24,7 +24,8 @@ macro alloc_sprite(sprite_id, init_rt, main_rt, n_exbyte, spr_1656_val, spr_1662
 	if !sid < 16
 		!fmt = 0
 	endif
-	print "sprite $!fmt", hex(!sid), " init at $", hex(!{sprite_!{sid}_init}), ", main at $", hex(!{sprite_!{sid}_main})
+	
+	print "sprite $!fmt", hex(!sid), " init ptr-1 = $", hex(!{sprite_!{sid}_init}), ", main ptr-1 = $", hex(!{sprite_!{sid}_main})
 	undef "fmt"
 endmacro
 
@@ -208,6 +209,7 @@ macro set_free_start(tag)
 		error "Freespace tag '<tag>' invalid [start]."
 	else
 		org !<tag>_free_start
+		;print "(<tag>) free start: ", pc
 		!next_free_tag = <tag>
 		!free_finished = 0
 	endif
@@ -223,7 +225,8 @@ macro set_free_finish(tag, label)
 	  	error "use 'set_free_start' before 'set_free_finish'."
 	  	pullpc ; silence error
 	  else
-	  	assert stringsequal("<tag>","!next_free_tag"), "Expected to free tag !next_free_tag next."
+		;print "(<tag>) free finish: ", hex(<label>)
+		assert stringsequal("<tag>","!next_free_tag"), "Expected to free tag !next_free_tag next."
 		!<tag>_free_start = <label>
 		!free_finished = 1
 		pullpc

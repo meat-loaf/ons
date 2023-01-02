@@ -1,4 +1,4 @@
-if !sprites_have_exbytes
+if !sprites_use_exbytes
 
 load_next_sprite       = $02A82E|!bank
 load_normal_sprite     = $02A8DD|!bank
