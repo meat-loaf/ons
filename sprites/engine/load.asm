@@ -1,5 +1,3 @@
-if !sprites_have_exbytes
-
 load_next_sprite       = $02A82E|!bank
 load_normal_sprite     = $02A8DD|!bank
 load_normal_sprite_fin = $02A9C9|!bank
@@ -41,7 +39,7 @@ sprite_loader_prep_for_next_sprite:
 	tay
 	plx
 	inx
-	jml load_next_sprite
+	jmp.w load_next_sprite
 
 warnpc load_normal_sprite
 
@@ -95,5 +93,4 @@ warnpc load_normal_sprite_fin
 org $02A9D7|!bank
 	; restore 'sprite index in level' count
 	ldx $02
-	jmp sprite_loader_prep_for_next_sprite_no_y_adj
-endif
+	jmp.w sprite_loader_prep_for_next_sprite_no_y_adj

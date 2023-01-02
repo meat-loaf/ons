@@ -6,15 +6,10 @@ incsrc "include/smw_routines.def"
 
 incsrc "macros/macros.asm"
 incsrc "util/jslshims.asm"
-!spriteset_offset = !spr_spriteset_off
 
-incsrc "spritesets/spritesets.asm"
+incsrc "engine/engine.asm"
 
 incsrc "list.def"
-
-incsrc "engine/run.asm"
-incsrc "engine/load.asm"
-
 
 %write_sprite_tables()
 

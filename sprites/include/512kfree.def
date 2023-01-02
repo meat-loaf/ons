@@ -1,6 +1,3 @@
-!bank6_free_start            = $068063|!bank
-!bank6_free_end              = $06FFFF|!bank
-
 !bank1_thwomp_free_start     = $01AE96|!bank
 !bank1_thwomp_free_end       = $01AF9F|!bank
 
@@ -18,3 +15,12 @@
 
 !bank2_end_free_start        = $02FFE2|!bank
 !bank2_end_free_end          = $030000|!bank
+
+!bank3_sprites_free_start    = $038000|!bank
+!bank3_sprites_free_end      = $03AF34|!bank
+
+!bank6_free_start            = $068063|!bank
+!bank6_free_end              = $070000|!bank
+
+!bank7_free_start            = $078003|!bank
+!bank7_free_end              = $07F0C8|!bank

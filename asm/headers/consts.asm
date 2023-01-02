@@ -35,21 +35,6 @@ endif
 
 hurt_mario            = $00F5B7|!bank
 
-!spr_tweaker_1656_tbl = $07F26C|!bank
-!spr_tweaker_1662_tbl = $07F335|!bank
-!spr_tweaker_166E_tbl = $07F3FE|!bank
-!spr_tweaker_167A_tbl = $07F4C7|!bank
-!spr_tweaker_1686_tbl = $07F590|!bank
-!spr_tweaker_190F_tbl = $07F659|!bank
-
-!spr_inits_start     = $01817D|!bank
-!spr_mains_start     = $0185CC|!bank
-
-_spr_face_mario_bank1 = $01857C|!bank
-
-spr_update_x_no_grv_l = $018022|!bank
-spr_invis_blk_rt_l    = $01B44F|!bank
-
 !true  = $01
 !false = $00
 
