@@ -5,7 +5,6 @@ includefrom "list.def"
 %alloc_sprite_dynamic_512k(!yi_pswitch_sprnum, yi_pswitch_init, yi_pswitch_main, 4, 0,\
 	$11, $89, $39, $A3, $19, $44, "yi_pswitch", "bank7")
 
-
 !pswitch_squish_state = !sprite_misc_151c
 !pswitch_squish_index = !sprite_misc_1528
 !pswitch_current_slot = !sprite_misc_1602
@@ -22,14 +21,8 @@ yi_pswitch_init:
 .exit
 	rtl
 
-print "yi_pswitch gfx id: !dyn_spr_yi_pswitch_gfx_id"
 yi_pswitch_main:
-	ldy !pswitch_squish_index,x
-	lda .dyn_frames,y
-	sta !spr_dyn_alloc_slot_arg_frame_num
-	lda #!dyn_spr_yi_pswitch_gfx_id
-	sta !spr_dyn_alloc_slot_arg_gfx_id
-	jsr spr_dyn_gfx_rt
+	%dynamic_gfx_rt_bank3("ldy !pswitch_squish_index,x : lda .dyn_frames,y", "yi_pswitch")
 	
 	lda !sprites_locked
 	bne .ret1
@@ -74,7 +67,7 @@ yi_pswitch_main:
 .ret1
 	rtl
 .check_sides:
-	jsr .sub_horz_pos
+	jsl sub_horz_pos
 	beq ..right
 ..left:
 	lda $0E
@@ -191,20 +184,5 @@ yi_pswitch_main:
 ; indexed by 'player on yoshi' flag (187A), which can be $02 if yoshi is turning
 .squish_displacement:
 	db $EE,$DE,$DE
-; todo it would be nice to put this somewhere shared...its a couple bytes too big to overwrite
-;      the original in-place
-.sub_horz_pos:
-	ldy #$00
-	lda $94
-	sec
-	sbc !E4,x
-	sta $0E
-	lda $95
-	sbc !14E0,x
-	sta $0F
-	bpl .left
-	iny
-.left:
-	rts
 .done:
 %set_free_finish("bank3_sprites", yi_pswitch_main_done)

@@ -16,15 +16,8 @@ starcoin_init:
 .exit:
 	rtl
 
-print "starcoin gfx id: !dyn_spr_starcoin_gfx_id"
 starcoin_main:
-	lda !starcoin_ani_timer,x
-	lsr #3
-	and #$03
-	sta !spr_dyn_alloc_slot_arg_frame_num
-	lda #!dyn_spr_starcoin_gfx_id
-	sta !spr_dyn_alloc_slot_arg_gfx_id
-	jsr spr_dyn_gfx_rt
+	%dynamic_gfx_rt_bank3("lda !starcoin_ani_timer,x : lsr #3 : and #$03", "starcoin")
 
 	lda !sprites_locked
 	bne starcoin_init_exit

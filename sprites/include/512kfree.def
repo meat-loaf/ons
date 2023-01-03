@@ -22,6 +22,9 @@
 !bank3_sprites_free_start    = $038000|!bank
 !bank3_sprites_free_end      = $03AF34|!bank
 
+!bank4_free_start            = $04A1B6|!bank
+!bank4_free_end              = $04A400|!bank
+
 !bank6_free_start            = $068063|!bank
 !bank6_free_end              = $070000|!bank
 

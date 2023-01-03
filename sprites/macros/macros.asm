@@ -52,13 +52,24 @@ macro alloc_sprite_dynamic_512k(sprite_id, init_rt, main_rt, n_oam_tiles, n_exby
 	endif
 endmacro
 
+macro dynamic_gfx_rt_bank3(load_frame_code, dyn_name)
+	<load_frame_code>
+	sta !spr_dyn_alloc_slot_arg_frame_num
+	if !{dyn_spr_<dyn_name>_gfx_id} == 0
+	    stz !spr_dyn_alloc_slot_arg_gfx_id
+	else
+	    lda #!{dyn_spr_<dyn_name>_gfx_id}
+	    sta !spr_dyn_alloc_slot_arg_gfx_id
+	endif
+	jsr.w spr_dyn_gfx_rt
+endmacro
+
 macro write_dynamic_spr_gfx_ptrs()
 org !spr_dyn_gfx_tbl
 print "Dynamic gfx pointers start at $", pc, " (max !dyn_gfx_files_max)"
 !ix #= 0
 while !ix < !n_dyn_gfx
 	!ix_real #= !ix+1
-	print "write pointer to dyn_gfx_!{ix_real}_dat"
 	dl dyn_gfx_!{ix_real}_dat
 	!ix #= !ix+1
 endif

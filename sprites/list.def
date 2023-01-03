@@ -1,9 +1,14 @@
 incsrc "sprites/originals_unconverted.asm"
 incsrc "sprites/parabeetle.asm"
+incsrc "sprites/fishe.asm"
+; todo this could be a level script instead, when that gets implemented
 incsrc "sprites/19_levelmessage.asm"
 
 incsrc "sprites/thwomp.asm"
 
+incsrc "sprites/brown_rot_plat.asm"
+
 incsrc "sprites/star_coin.asm"
-incsrc "sprites/mega_mole.asm"
+incsrc "sprites/castle_block.asm"
 incsrc "sprites/yi_pswitch.asm"
+incsrc "sprites/mega_mole.asm"

@@ -216,7 +216,7 @@ includeonce
 !rng_calc               = $148B|!addr
 ; 2 bytes
 !random_number_output   = $148D|!addr
-!player_carrying_item    = $148F|!addr
+!player_carrying_item   = $148F|!addr
 !invincibility_timer    = $1490|!addr
 !sprite_x_movement      = $1491|!addr
 ; for end of level
@@ -292,6 +292,7 @@ includeonce
 !yoshi_is_loose     = $18E2|!addr
 !give_player_lives = $18E4|!addr
 
+!sprite_buoyancy         = $190E|!addr
 !level_general_purpose_1 = $1923|!addr
 !level_general_purpose_2 = !level_general_purpose_1+$01
 
