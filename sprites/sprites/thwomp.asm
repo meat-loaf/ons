@@ -1,5 +1,9 @@
 includefrom "list.def"
 
+; TODO: * fix object interaction to make it consistent on sides
+;       * fix issue with horz position check wrapping when the thwomp is partially off-screen
+;           (use new long sub_horz_pos routine to check high byte of diff)
+
 !thwomp_sprnum = $A7
 %alloc_sprite(!thwomp_sprnum, thwomp_init, thwomp_main, 5, 0, \
 	$01, $06, $33, $01, $01, $24)

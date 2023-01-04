@@ -8,6 +8,8 @@ incsrc "sprites/thwomp.asm"
 
 incsrc "sprites/brown_rot_plat.asm"
 
+incsrc "sprites/cloud_drop.asm"
+
 incsrc "sprites/star_coin.asm"
 incsrc "sprites/castle_block.asm"
 incsrc "sprites/yi_pswitch.asm"

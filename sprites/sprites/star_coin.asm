@@ -21,9 +21,10 @@ starcoin_main:
 
 	lda !sprites_locked
 	bne starcoin_init_exit
+	jsl sub_off_screen
 	; update ani frame
 	inc !starcoin_ani_timer,x
-	jsr.w _suboffscr0_bank3
+;	jsr.w _suboffscr0_bank3
 	jsl   mario_spr_interact_l
 	bcc starcoin_init_exit
 	lda #!starcoin_collect_sfx

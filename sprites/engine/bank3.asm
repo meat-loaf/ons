@@ -15,7 +15,7 @@ spr_gfx_32x32:
 ;	stz $0E
 ;	stz $0F
 .alt:
-	jsr.w _get_draw_info_bank3
+	jsl get_draw_info
 .no_getdrawinfo:
 	ldy !sprite_num,x
 	lda .tile_off_x_base-!first_32x32_sprnum,y

@@ -4,6 +4,10 @@ spr_smushed          = $019AE4|!bank
 spr_spinkill         = $019ACB|!bank
 spr_lavadie          = $019A7B|!bank
 spr_levelend         = $01816D|!bank
+spr_stunned          = $01953C|!bank
+spr_kicked           = $019913|!bank
+spr_carried          = $019F71|!bank
+;spr_goal_power       = $018157|!bank
 
 ; LONG-CALLABLE ROUTINES
 generate_block       = $00BEB0|!bank

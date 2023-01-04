@@ -169,10 +169,10 @@ sprites_asm_sources= \
 	${sprites_asm_main_file} \
 	${SPRITES_DIR}/list.def \
 	$(wildcard ${SPRITES_DIR}/engine/*.asm) \
+	$(wildcard ${SPRITES_DIR}/engine/spritesets/*.asm) \
 	$(wildcard ${SPRITES_DIR}/include/*.def) \
 	$(wildcard ${SPRITES_DIR}/macros/*.asm) \
 	$(wildcard ${SPRITES_DIR}/sprites/*.asm) \
-	$(wildcard ${SPRITES_DIR}/spritesets/*.asm) \
 	$(wildcard ${SPRITES_DIR}/dyn_gfx/*.bin)
 
 gps_asm_sources=${GPS_DIR}/main.asm \
@@ -320,5 +320,5 @@ ${SYM_DIR}:
 	mkdir -p ${SYM_DIR}
 
 clean:
-	rm -rf ${TS_DIR} ${GLOBALANI_SRC_ROM} ${OVERWORLD_SRC_ROM} ${GEN_ROUTINE_FILES} ${SYM_DIR} `find -name '${ROM_NAME_BASE}.*' -and -not -name '*.s16'`
+	rm -rf ${TS_DIR} ${GLOBALANI_SRC_ROM} ${OVERWORLD_SRC_ROM} ${GEN_ROUTINE_FILES} ${SYM_DIR} RATS.log `find -name '${ROM_NAME_BASE}.*' -and -not -name '*.s16'`
 

@@ -31,7 +31,7 @@ run_sprites:
 warnpc $0180CB|!bank
 assert read1($0180CA) == !RTL_OPCODE, "RTL used for JSL2RTS by Lunar Magic overwritten."
 
-org $0180D2|!bank
+%set_free_start("bank1_sprcall_inits")
 allocate_oam_dec_timers:
 	lda !sprite_status,x
 	beq .done
@@ -97,13 +97,19 @@ handle_sprite:
 	dw spr_spinkill_shim-1
 	; 5
 	dw spr_lavadie_shim-1
-	; 6
+	; 6 - todo (code overwritten at the moment)
 	dw spr_levelend-1
 	; 7 - unused: TODO yoshi tongue state?
 	dw !bank01_jsl2rts_rtl-1
 	; 8
 	dw spr_handle_main-1
-	; todo - 9 through C
+	; 9
+	dw spr_stunned_shim-1
+	; A
+	dw spr_kicked_shim-1
+	; B
+	dw spr_carried_shim-1
+	; C todo
 spr_handle_init:
 	lda #$08
 	sta !sprite_status,x
@@ -133,13 +139,14 @@ spr_handle_main:
 	pha
 	ldx !current_sprite_process
 	rtl
-warnpc $01830F|!bank
+spr_callers_done:
+%set_free_finish("bank1_sprcall_inits", spr_callers_done)
 
 org $00A1DA|!bank
 oam_refresh_hijack:
 	jml oam_refresh|!bank
 	nop
-;.done:
+
 oam_refresh_hijack_done  = $00A1DF|!bank
 oam_refresh_hijack_done2 = $00A1E4|!bank
 

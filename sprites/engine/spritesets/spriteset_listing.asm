@@ -106,7 +106,7 @@ spriteset_off_ptrs:
 	dw spritesets_line_machines           ; sprite 66 - line guided chainsaw, upside-down
 	dw spritesets_castle_blk_bnc_gndr     ; sprite 67 - line guided grinder
 	dw spritesets_fuzzy                   ; sprite 68 - line guided fuzzy
-	dw spritesets_null_spriteset          ; sprite 69
+	dw spritesets_cloud_drop              ; sprite 69 - cloud drop
 	dw spritesets_null_spriteset          ; sprite 6A
 	dw spritesets_null_spriteset          ; sprite 6B
 	dw spritesets_null_spriteset          ; sprite 6C

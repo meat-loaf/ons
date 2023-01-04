@@ -148,6 +148,12 @@ includeonce
 !oam_tilesize_lo         = $0460|!addr
 
 !on_off_cooldown         = $0AF5|!addr
+
+; 2 bytes; lm exlevel impl-defined
+!scr_min_y_off_sprspawn  = $0BF0|!addr
+; 2 bytes; lm exlevel impl-defined
+!scr_max_y_off_sprspawn  = $0BF2|!addr
+
 !next_oam_index          = $0D9C|!addr
 
 !hdma_channel_enable_mirror = $0D9F|!addr
