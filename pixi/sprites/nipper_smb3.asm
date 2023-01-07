@@ -60,7 +60,6 @@
 Tilemap:
 	db $08,$0A,$0C,$0E
 
-
 InitState:
 	db $00,$00,$02,$00
 
