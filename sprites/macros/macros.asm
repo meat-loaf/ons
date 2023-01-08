@@ -252,7 +252,6 @@ macro set_free_finish(tag, label)
 	  	error "use 'set_free_start' before 'set_free_finish'."
 	  	pullpc ; silence error
 	  else
-		;print "(<tag>) free finish: ", hex(<label>)
 		assert stringsequal("<tag>","!next_free_tag"), "Expected to free tag !next_free_tag next."
 		!<tag>_free_start = <label>
 		!free_finished = 1

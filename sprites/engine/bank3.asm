@@ -3,14 +3,21 @@
 %set_free_start("bank3_sprites")
 ; a generic 32x32 sprite routine
 ; inputs:
-
-; 15f6,x: oam props
-; 157c,x: horizontal direction, controls flipping
-; 1602,x: animation frame. Made for spritesets, so first frame is $00, second is $08, third is $20, fourth is $28
+;   15f6,x: oam props
+;   157c,x: horizontal direction, controls flipping
+;     note: if both the x-flip setting and 157c are set,
+;             the sprite will not be x-flipped
+;   1602,x: animation frame. Made for spritesets, so first frame is $00,
+;             second is $08, third is $20, fourth is $28
+;     note: dynamic sprites should populate this as the slot index they
+;             are using, and have a 'spriteset offset' of $C0 to properly
+;             set up the tiles
 
 !first_32x32_sprnum = $B9
 
-; TODO handle y-flipping
+!spr_horz_dir  = !sprite_misc_157c
+!spr_ani_frame = !sprite_misc_1602
+
 spr_gfx_32x32:
 ;	stz $0E
 ;	stz $0F
@@ -19,85 +26,99 @@ spr_gfx_32x32:
 .no_getdrawinfo:
 	ldy !sprite_num,x
 	lda .tile_off_x_base-!first_32x32_sprnum,y
-	sta $02
+	clc
+	adc $00
+	sta $00
 	lda .tile_off_y_base-!first_32x32_sprnum,y
-	sta $03
+	clc
+	adc $01
+	sta $01
 
-	ldy !1602,x
+
+	ldy !spr_ani_frame,x
 	lda .tile_index,y
-	sta $04
+	sta $02
 
 	ldy #$00
-	lda !157C,x
+	lda !spr_horz_dir,x
 	bne .no_x_flip
 	ldy #$40
 .no_x_flip:
 	tya
-	ora !sprite_oam_properties,x
+	eor !sprite_oam_properties,x
 	ora !sprite_level_props
-	sta $05
+	sta $03
 
-	ldy !157C,x
-	lda .tile_loop_ixval,y
 	ldy !sprite_oam_index,x
+
+	rol #3
+	and #$03
+	asl #2
 	tax
-; todo this might be best unrolled
+
+	lda #$03
+	sta $04
 .draw_loop:
 	lda $00
 	clc
-	adc $02
 	adc .tile_offsets_x,x
 	sta $0300|!addr,y
+
 	lda $01
 	clc
-	adc $03
 	adc .tile_offsets_y,x
 	sta $0301|!addr,y
 
-	lda $04
+	lda $02
 	sta $0302|!addr,y
-	inc : inc
-	sta $04
+	inc
+	inc
+	sta $02
 
-	lda $05
+	lda $03
 	sta $0303|!addr,y
+
 	iny #4
-
-	txa
-	and #$03
-	dex
-	dec
+	inx
+	dec $04
 	bpl .draw_loop
-
+.ret:
 	ldx !current_sprite_process
 	lda #$03
 	ldy #$02
-
 	jsl finish_oam_write
-.ret:
 	rts
+
 ; per-sprite tables, x/y offset applied to each sprite tile
 ; most 32x32 sprites are drawn with slightly different offsets
 ; (see mega mole, where sprite position is at the bottom-left, or
 ;   the porcu-puffer, where its sprite position is at its center,
 ;   or the castle block which has the posotion at the top-left)
+;   TODO with clipping updates many of these may be able to be unified,
+;   and the per-sprite offset may not be needed
 .tile_off_x_base:
 	db $00,$F8,$00,$00,$F2,$00,$00,$00,$00,$00,$08
 .tile_off_y_base:
 	db $00,$F6,$00,$00,$00,$00,$F0,$00,$00,$00,$F8
-; helper tables
-.tile_loop_ixval:
-	db $03,$07
+; indexed by yx flip
+.tile_off_start:
+	db $00
+	db $04
+	db $08
+	db $0C
 .tile_index:
 	db $00,$08,$20,$28
 .tile_offsets_x:
 	db $00,$10,$00,$10
 	db $10,$00,$10,$00
+	db $00,$10,$00,$10
+	db $10,$00,$10,$00
 .tile_offsets_y:
+	db $00,$00,$10,$10
+	db $00,$00,$10,$10
 	db $10,$10,$00,$00
 	db $10,$10,$00,$00
 
-; set $0E and $0F as needed for 
 spr_dyn_gfx_rt:
 	; do this first to abort remainder if we're not going to draw anyway
 	jsr.w _get_draw_info_bank3

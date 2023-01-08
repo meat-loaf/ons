@@ -26,7 +26,8 @@ yi_pswitch_main:
 	
 	lda !sprites_locked
 	bne .ret1
-	jsr.w _suboffscr0_bank3
+	jsl sub_off_screen
+;	jsr.w _suboffscr0_bank3
 	lda !pswitch_squish_state,x
 	bne .squish
 .not_squished:
