@@ -1,6 +1,6 @@
 !nipper_sprnum = $1A
 
-%alloc_sprite(!nipper_sprnum, nipper_init, nipper_main, 1, 0,\
+%alloc_sprite(!nipper_sprnum, "smb3 nipper", nipper_init, nipper_main, 1, 0,\
 	$00, $00, $0B, $01, $00, $00)
 
 %alloc_sprite_sharedgfx_entry_4(!nipper_sprnum,\

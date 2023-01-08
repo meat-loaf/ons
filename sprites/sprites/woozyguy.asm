@@ -1,7 +1,7 @@
 !woozyguy_sprnum = $BA
 
-%alloc_sprite_dynamic_512k(!woozyguy_sprnum, woozyguy_init, woozyguy_main, 4, 0, \
-	$30, $80, $01, $01, $00, $00, "woozyguy", "bank7")
+%alloc_sprite_dynamic_512k(!woozyguy_sprnum, "woozyguy", woozyguy_init, woozyguy_main, 4, 0, \
+	$30, $80, $01, $01, $00, $00, "bank7")
 
 !woozy_phase         = !C2
 !woozy_phase_counter = !1534
@@ -34,12 +34,6 @@ woozyguy_init:
 
 woozyguy_main:
 	%dynamic_gfx_rt_bank3("lda !woozy_ani_frame_id,x", "woozyguy")
-
-	; clear flip props from last frame
-	; todo this is only from rotation, should it be done here?
-	lda !sprite_oam_properties,x
-	and #(~$C0)
-	sta !sprite_oam_properties,x
 
 	lda !sprite_status,x
 	eor #$08
@@ -127,6 +121,8 @@ woozyguy_main:
 	inc !woozy_phase,x
 	rts
 
+; todo setting props better would be nice, if possible
+;      this is kind of ugly
 ..rotating:
 	tyx
 	; gfx - TODO handle flipping
@@ -139,7 +135,14 @@ woozyguy_main:
 	ora !sprite_oam_properties,x
 	sta !sprite_oam_properties,x
 	pla
+	bra ..cont
 ..nofr:
+	pha
+	lda !sprite_oam_properties,x
+	and #(~$C0)
+	sta !sprite_oam_properties,x
+	pla
+..cont:
 	and #$0F
 	sta !woozy_ani_frame_id,x
 
@@ -149,6 +152,10 @@ woozyguy_main:
 	lda !sprite_blocked_status,x
 	and #$04
 	beq ...done
+	lda !sprite_oam_properties,x
+	and #(~$C0)
+	sta !sprite_oam_properties,x
+
 	lda #!squish_interval
 	sta !woozy_phase_counter,x
 	inc !woozy_phase,x

@@ -4,7 +4,7 @@
 ; castle block init in spritesets.asm
 ;%alloc_spr_nocfg(!castle_block_sprnum, castle_block_init, bank3_sprcaller)
 
-%alloc_sprite(!castle_block_sprnum, castle_block_init, castle_block_main, 4, 0, \
+%alloc_sprite(!castle_block_sprnum, "moving_castle_block", castle_block_init, castle_block_main, 4, 0, \
 	$00, $2F, $3B, $A2, $19, $40)
 !castle_block_phase        = !C2
 !castle_block_x_movement   = !1528

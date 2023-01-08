@@ -7,7 +7,7 @@ brown_chain_plat_main = $01C773|!bank
 !brown_plat_ball_tile_num = $2E
 !brown_plat_props_scratch = $45
 
-%alloc_sprite(!brown_rot_plat_sprnum, brown_chain_plat_init, brown_chain_plat_main_new, 10, 1, \
+%alloc_sprite(!brown_rot_plat_sprnum, "brown_spinny_plat", brown_chain_plat_init, brown_chain_plat_main_new, 10, 1, \
 	$00, $A9, $00, $E2, $A2, $45)
 
 ; platform tile numbers

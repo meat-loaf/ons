@@ -19,7 +19,7 @@
 !parabeetle_sprnum = $12
 !parabeetle_tile_off_loc = $09
 
-%alloc_sprite(!parabeetle_sprnum, parabeetle_init, parabeetle_main, 1, 1, \
+%alloc_sprite(!parabeetle_sprnum, "smb3_parabeetle", parabeetle_init, parabeetle_main, 1, 1, \
 	$10, $95, $11, $B9, $90, $01)
 %alloc_sprite_sharedgfx_entry_2(!parabeetle_sprnum, $08, $0A)
 

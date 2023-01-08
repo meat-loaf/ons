@@ -1,9 +1,9 @@
 includefrom "list.def"
 
-%alloc_sprite($00, shelless_koopa_init, shelless_koopa_main, 2, 0, $70, $00, $0A, $00, $00, $00)
-%alloc_sprite($01, shelless_koopa_init, shelless_koopa_main, 2, 0, $70, $00, $08, $00, $00, $00)
-%alloc_sprite($02, shelless_koopa_init, shelless_koopa_main, 2, 0, $70, $00, $06, $00, $00, $00)
-%alloc_sprite($03, shelless_koopa_init, shelless_koopa_main, 2, 0, $70, $00, $04, $00, $00, $00)
+%alloc_sprite($00, "shelless_koopa_green", shelless_koopa_init, shelless_koopa_main, 2, 0, $70, $00, $0A, $00, $00, $00)
+%alloc_sprite($01, "shelless_koopa_red", shelless_koopa_init, shelless_koopa_main, 2, 0, $70, $00, $08, $00, $00, $00)
+%alloc_sprite($02, "shelless_koopa_blue", shelless_koopa_init, shelless_koopa_main, 2, 0, $70, $00, $06, $00, $00, $00)
+%alloc_sprite($03, "shelless_koopa_yellow", shelless_koopa_init, shelless_koopa_main, 2, 0, $70, $00, $04, $00, $00, $00)
 
 ; todo: change kicking animation frame index, to save a slot
 ; note: stunned frames are (eventually) not going to be used

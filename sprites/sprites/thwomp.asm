@@ -5,7 +5,7 @@ includefrom "list.def"
 ;           (use new long sub_horz_pos routine to check high byte of diff)
 
 !thwomp_sprnum = $A7
-%alloc_sprite(!thwomp_sprnum, thwomp_init, thwomp_main, 5, 0, \
+%alloc_sprite(!thwomp_sprnum, "thwomp", thwomp_init, thwomp_main, 5, 0, \
 	$01, $06, $33, $01, $01, $24)
 
 !thwomp_angry_face_tile = $06

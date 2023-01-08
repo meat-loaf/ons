@@ -1,7 +1,7 @@
 ; set as needed
 !sprites_have_exbytes = 0
 
-macro alloc_sprite(sprite_id, init_rt, main_rt, n_oam_tiles, n_exbyte, spr_1656_val, spr_1662_val, spr_166E_val, spr_167A_val, spr_1686_val, spr_190F_val)
+macro alloc_sprite(sprite_id, name, init_rt, main_rt, n_oam_tiles, n_exbyte, spr_1656_val, spr_1662_val, spr_166E_val, spr_167A_val, spr_1686_val, spr_190F_val)
 	!sid #= <sprite_id>
 	if defined("sprite_!{sid}_defined")
 		error "Sprite id !sid already defined."
@@ -11,6 +11,7 @@ macro alloc_sprite(sprite_id, init_rt, main_rt, n_oam_tiles, n_exbyte, spr_1656_
 	if <n_exbyte> > 0
 		!sprites_have_exbytes = 1
 	endif
+	!{sprite_!{sid}_tag} = <name>
 	!{sprite_!{sid}_init} = <init_rt>-1
 	!{sprite_!{sid}_main} = <main_rt>-1
 	!{sprite_!{sid}_sz}   #= 3+<n_exbyte>
@@ -21,17 +22,10 @@ macro alloc_sprite(sprite_id, init_rt, main_rt, n_oam_tiles, n_exbyte, spr_1656_
 	!{sprite_!{sid}_166E} = <spr_166E_val>
 	!{sprite_!{sid}_1686} = <spr_1686_val>
 	!{sprite_!{sid}_190F} = <spr_190F_val>
-	!fmt = ""
-	if !sid < 16
-		!fmt = 0
-	endif
-	
-	print "sprite $!fmt", hex(!sid), " init ptr-1 = $", hex(!{sprite_!{sid}_init}), ", main ptr-1 = $", hex(!{sprite_!{sid}_main})
-	undef "fmt"
 endmacro
 
-macro alloc_sprite_dynamic_512k(sprite_id, init_rt, main_rt, n_oam_tiles, n_exbyte, spr_1656_val, spr_1662_val, spr_166E_val, spr_167A_val, spr_1686_val, spr_190F_val, gfx_name, free_tag)
-	%alloc_sprite(<sprite_id>, <init_rt>, <main_rt>, <n_oam_tiles>, <n_exbyte>, <spr_1656_val>, <spr_1662_val>, <spr_166E_val>, <spr_167A_val>, <spr_1686_val>, <spr_190F_val>)
+macro alloc_sprite_dynamic_512k(sprite_id, gfx_name, init_rt, main_rt, n_oam_tiles, n_exbyte, spr_1656_val, spr_1662_val, spr_166E_val, spr_167A_val, spr_1686_val, spr_190F_val, free_tag)
+	%alloc_sprite(<sprite_id>, <gfx_name>, <init_rt>, <main_rt>, <n_oam_tiles>, <n_exbyte>, <spr_1656_val>, <spr_1662_val>, <spr_166E_val>, <spr_167A_val>, <spr_1686_val>, <spr_190F_val>)
 	if not(defined("n_dyn_gfx"))
 		!n_dyn_gfx #= 0
 	endif
@@ -210,9 +204,15 @@ endif
 		db !{sprite_!{ix}_1686}
 		org !spr_tweaker_190F_tbl+(!ix)
 		db !{sprite_!{ix}_190F}
+		!fmt = ""
+		if !ix < 16
+			!fmt = 0
+		endif
+
+		print "sprite $!fmt", hex(!ix), " [!{sprite_!{ix}_tag}]:"," init ptr-1 = $", hex(!{sprite_!{ix}_init}), ", main ptr-1 = $", hex(!{sprite_!{ix}_main})
+		undef "fmt"
 	else
 	  if !sprites_have_exbytes
-		;print "Sprite id !ix not defined, but we have exbytes...populating with defaults."
 		org !{sprite_size_table}+($100*0)+(!ix*1)
 		db $03
 		org !{sprite_size_table}+($100*1)+(!ix*1)

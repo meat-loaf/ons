@@ -1,7 +1,7 @@
 includefrom "list.def"
 
 !fish_sprnum = $15
-%alloc_sprite(!fish_sprnum, fish_init, fish_main, 1, 0, \
+%alloc_sprite(!fish_sprnum, "cheep-cheep", fish_init, fish_main, 1, 0, \
 	$00, $00, $45, $99, $10, $00)
 
 %alloc_sprite_sharedgfx_entry_4(!fish_sprnum,$04,$06,$00,$02)

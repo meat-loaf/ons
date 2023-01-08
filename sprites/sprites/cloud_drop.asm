@@ -7,7 +7,7 @@ includefrom "list.def"
 
 !cloud_drop_sprnum = $69
 
-%alloc_sprite(!cloud_drop_sprnum, cloud_drop_init, cloud_drop_main, 2, 2, \
+%alloc_sprite(!cloud_drop_sprnum, "yi_cloud_drop", cloud_drop_init, cloud_drop_main, 2, 2, \
 	$80, $80, $37, $19, $91, $44)
 
 !cloud_drop_orient  = !spr_extra_bits
