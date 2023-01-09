@@ -4,7 +4,7 @@
 macro alloc_sprite(sprite_id, name, init_rt, main_rt, n_oam_tiles, n_exbyte, spr_1656_val, spr_1662_val, spr_166E_val, spr_167A_val, spr_1686_val, spr_190F_val)
 	!sid #= <sprite_id>
 	if defined("sprite_!{sid}_defined")
-		error "Sprite id !sid already defined."
+		error "Sprite id <sprite_id> already defined."
 	endif
 	!{sprite_!{sid}_defined} = 1
 	assert <n_exbyte> <= 4, "Maximum allowed number of extra bytes is 4."
@@ -44,6 +44,15 @@ macro alloc_sprite_dynamic_512k(sprite_id, gfx_name, init_rt, main_rt, n_oam_til
 			!dyn_spr_<gfx_name>_gfx_id #= !n_dyn_gfx-1
 		endif
 	endif
+endmacro
+
+macro alloc_ambient_sprite(ambient_id, name, main_rt)
+	!aid #= <ambient_id>
+	assert not(defined("ambient_!{aid}_defined")), "Ambient sprite id <ambient_id> already defined."
+	assert bank(<main_rt>)&$7F == $02, "Ambient sprites are allowed in bank 2 only."
+	!{ambient_!{aid}_defined} = 1
+	!{ambient_!{aid}_tag} = <name>
+	!{ambient_!{aid}_main} = <main_rt>
 endmacro
 
 macro dynamic_gfx_rt_bank3(load_frame_code, dyn_name)
@@ -227,6 +236,24 @@ endif
 	endif
 
 	!ix #= !ix+1
+	endif
+endmacro
+
+macro write_ambient_tables(table_label, default)
+	org <table_label>
+	!ix #= 0
+	while !ix < !ambient_sprid_max
+		if defined("ambient_!{ix}_defined")
+			dw !{ambient_!{ix}_main}
+			!fmt = ""
+			if !ix < 16
+				!fmt = 0
+			endif
+			print "ambient sprid $!fmt", hex(!ix), " [!{ambient_!{ix}_tag}] main: $", hex(!{ambient_!{ix}_main})
+		else
+			dw <default>
+		endif
+		!ix #= !ix+1
 	endif
 endmacro
 

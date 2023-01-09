@@ -7,6 +7,27 @@ if not(defined("__ons_sprs_config_def__"))
 ; sprites can use extra bytes
 !sprites_use_exbytes = 1
 
+;!num_ambient_sprs = $31
+
+; room for $31 based on these rams
+!num_ambient_sprs = $28
+
+!ambient_sprid_max = $3F
+
+!ambient_rt_ptr    #= $1E02|!addr
+!ambient_x_pos     #= !ambient_rt_ptr+(!num_ambient_sprs*2)
+!ambient_y_pos     #= !ambient_x_pos+(!num_ambient_sprs*2)
+; high byte: decimal low byte: frac
+!ambient_x_speed   #= !ambient_y_pos+(!num_ambient_sprs*2)
+; high byte: decimal low byte: frac
+!ambient_y_speed   #= !ambient_x_speed+(!num_ambient_sprs*2)
+
+!ambient_gen_timer #= $1699|!addr
+!ambient_misc_1    #= !ambient_gen_timer+(!num_ambient_sprs*2)
+;!ambient_misc_2    #= !ambient_misc_1+(!num_ambient_sprs*2)
+!ambient_props     #= $7FA800
+!ambient_misc_2    #= !ambient_props+(!num_ambient_sprs*2)
+
 ; dont change this - lm required for extra bytes
 !sprite_size_table_ptr     = $0EF30C|!bank
 sprite_size_table_ptr     = !sprite_size_table_ptr

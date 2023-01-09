@@ -167,5 +167,4 @@ sub_off_screen:
 .offscr_x_off_hi:
 	db $01,$FF,$01,$FF,$01,$FF,$01,$FF
 spr_long_rts_done:
-print "bank4 pc $",pc
 %set_free_finish("bank4", spr_long_rts_done)

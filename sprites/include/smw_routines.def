@@ -43,6 +43,8 @@ _suboffscr3_bank1    = $01AC21|!bank
 _spr_kick            = $01B12A|!bank
 _spr_invis_solid_rt  = $01B457|!bank
 
+_load_spr_from_lvl   = $02A7FC|!bank
+
 ; bank 3
 _get_draw_info_bank3 = $03B760|!bank
 _suboffscr0_bank3    = $03B85D|!bank

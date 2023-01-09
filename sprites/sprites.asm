@@ -11,6 +11,7 @@ incsrc "engine/engine.asm"
 incsrc "list.def"
 
 %write_sprite_tables()
+%write_ambient_tables(ambient_rts, ambient_sprcaller_default)
 
 print "freespace used: ", freespaceuse, " bytes."
 print "bytes modified: ", bytes, " bytes."

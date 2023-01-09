@@ -147,9 +147,6 @@ UBERASM_ASM_FILES= \
 	$(wildcard ${UBERASM_DIR}/overworld/*.asm) \
 	$(wildcard ${UBERASM_DIR}/asm/base/*.asm) \
 
-sprites_dir=${PIXI_DIR}/sprites
-
-
 asm_base_deps=${asm_dir}/main.asm \
 	${ASM_HEADERS}
 
@@ -173,6 +170,7 @@ sprites_asm_sources= \
 	$(wildcard ${SPRITES_DIR}/include/*.def) \
 	$(wildcard ${SPRITES_DIR}/macros/*.asm) \
 	$(wildcard ${SPRITES_DIR}/sprites/*.asm) \
+	$(wildcard ${SPRITES_DIR}/sprites/ambient/*.asm) \
 	$(wildcard ${SPRITES_DIR}/dyn_gfx/*.bin)
 
 gps_asm_sources=${GPS_DIR}/main.asm \

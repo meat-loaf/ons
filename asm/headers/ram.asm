@@ -309,6 +309,8 @@ includeonce
 !sprite_buoyancy         = $190E|!addr
 !level_general_purpose_1 = $1923|!addr
 !level_general_purpose_2 = !level_general_purpose_1+$01
+; 2 bytes
+!current_ambient_process = $1926|!addr
 
 !exit_table              = $19B8|!addr
 !exit_table_new_lm       = $19D8|!addr
@@ -381,8 +383,7 @@ includeonce
 !dynamic_buffer = !wiggler_segment_buffer+$200
 ; 7FA800 - 7FABFF free
 
-; unused here, i'm using -d255spl
-;!spr_load_status          = $7FAF00
+; todo remove these, deprecated
 ; 7FB000 - 7FB408 free
 !bounce_blocks_map16_low  = $7FB408
 !bounce_blocks_map16_hi   = !bounce_blocks_map16_low+$4

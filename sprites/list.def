@@ -17,3 +17,7 @@ incsrc "sprites/castle_block.asm"
 incsrc "sprites/yi_pswitch.asm"
 incsrc "sprites/woozyguy.asm"
 incsrc "sprites/mega_mole.asm"
+
+
+; ambient sprites
+incsrc "sprites/ambient/mario_turn_dust.asm"

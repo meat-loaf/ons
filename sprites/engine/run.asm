@@ -142,6 +142,52 @@ spr_handle_main:
 spr_callers_done:
 %set_free_finish("bank1_sprcall_inits", spr_callers_done)
 
+; note: this nukes the functionality for sprites that auto-respawn (lakitu, magikoopa)
+org $028B05|!bank
+	jsr ambient_sprcaller
+	; cape interaction
+	jsr.w $0294F5|!bank
+	jsr.w _load_spr_from_lvl
+	plb
+	rtl
+
+; todo move this
+; input: a = ambient sprite id to spawn
+;        $45 = ambient sprite xpos
+;        $47 = ambient sprite ypos
+; output:
+;       carry set: failure, clear: success
+; clobbers:
+;       y
+ambient_generic_init:
+	phx
+	rep #$30
+	and #$00FF
+	pha
+	ldy.w #(!num_ambient_sprs*2)-2
+.loop:
+	lda !ambient_rt_ptr,y
+	beq .found
+	dey : dey
+	bpl .loop
+	sec
+	rtl
+.found:
+	pla
+	asl
+	tax
+	; TODO generic initer
+	lda.l ambient_rts,x
+	sta !ambient_rt_ptr,y
+	lda $45
+	sta !ambient_x_pos,y
+	lda $47
+	sta !ambient_y_pos,y
+	sep #$30
+	plx
+	rtl
+warnpc $028B67|!bank
+
 org $00A1DA|!bank
 oam_refresh_hijack:
 	jml oam_refresh|!bank
@@ -151,6 +197,7 @@ oam_refresh_hijack_done  = $00A1DF|!bank
 oam_refresh_hijack_done2 = $00A1E4|!bank
 
 %set_free_start("bank6")
+; courtesy of ragey. thanks!
 oam_refresh:
 	lda $1426|!addr
 	beq +
