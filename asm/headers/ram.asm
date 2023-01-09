@@ -105,8 +105,14 @@ includeonce
 !map16_data_hi            = $6E
 !player_ani_trigger_state = $71
 !player_dir               = $76
+!player_x_spd_spx         = $7A
 !player_x_spd             = $7B
+!player_y_spd_spx         = $7C
 !player_y_speed           = $7D
+; 2 bytes
+!player_x_scr_rel         = $7E
+; 2 bytes
+!player_y_scr_rel         = $80
 
 
 
@@ -276,6 +282,7 @@ includeonce
 !level_constrain_flags  = $15E8|!addr
 !current_sprite_process = $15E9|!addr
 
+!sprite_stomp_counter    = $7E1697
 ; repurposed: low nybble used as bitfield for object generation parameters
 !sprite_memory_header    = $1692|!addr
 
@@ -294,6 +301,7 @@ includeonce
 ; -------w : Disable writing.
 !item_memory_mask  = $18BB|!addr
 !player_in_cloud   = $18C2|!addr
+!starkill_counter  = $18D2|!addr
 !current_yoshi_slot = $18DF|!addr
 !yoshi_is_loose     = $18E2|!addr
 !give_player_lives = $18E4|!addr

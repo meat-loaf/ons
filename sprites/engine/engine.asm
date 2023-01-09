@@ -5,6 +5,10 @@ incsrc "jslshims.asm"
 incsrc "load.asm"
 incsrc "run.asm"
 
+; generic bank-specific stuff
+incsrc "bank1.asm"
+; todo will implement ambient sprites
+; incsrc "bank2.asm"
 incsrc "bank3.asm"
 ; routines only
 incsrc "bank4.asm"

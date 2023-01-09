@@ -15,8 +15,10 @@ mario_spr_interact_l = $01A7DC|!bank
 update_sprite_pos    = $01802A|!bank
 spr_spr_interact     = $018032|!bank
 get_rand             = $01ACF9|!bank
-spr_update_x_no_grv_l = $018022|!bank
-spr_invis_blk_rt_l    = $01B44F|!bank
+spr_invis_blk_rt_l   = $01B44F|!bank
+spr_obj_interact     = $019138|!bank
+
+spr_give_points      = $02ACE5|!bank
 
 
 ; BANK-LOCAL ROUTINES

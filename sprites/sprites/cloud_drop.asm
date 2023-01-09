@@ -145,8 +145,7 @@ cloud_drop_main:
 	inc !cloud_drop_turning,x
 .interact:
 	; todo use names
-	jsl $018022|!BankB		;speed update
-	jsl $01801A|!BankB		;speed update
+	jsl spr_upd_yx_no_grav_l
 	jsl $01A7DC|!BankB		;mario interact
 	jml $018032|!BankB		;sprites
 

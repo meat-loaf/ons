@@ -33,7 +33,7 @@ castle_block_main:
 	lda .move_speed,y
 	sta !sprite_speed_x,x
 .no_phase_change:
-	jsl spr_update_x_no_grv_l
+	jsl spr_upd_x_no_grv_l
 	sta !castle_block_x_movement,x
 	jml spr_invis_blk_rt_l
 .move_timing:

@@ -6,6 +6,8 @@ incsrc "sprites/19_levelmessage.asm"
 
 incsrc "sprites/thwomp.asm"
 
+incsrc "sprites/wiggler.asm"
+
 incsrc "sprites/brown_rot_plat.asm"
 
 incsrc "sprites/cloud_drop.asm"

@@ -102,7 +102,7 @@ sub_off_screen:
 	sta $03
 	lda !sprite_off_screen_horz,x
 	ora !sprite_off_screen_vert,x
-	bne .exit
+	beq .exit
 	lda !sprite_y_high,x
 	xba
 	lda !sprite_y_low,x
