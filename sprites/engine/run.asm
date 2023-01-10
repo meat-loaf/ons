@@ -151,41 +151,26 @@ org $028B05|!bank
 	plb
 	rtl
 
-; todo move this
-; input: a = ambient sprite id to spawn
-;        $45 = ambient sprite xpos
-;        $47 = ambient sprite ypos
-; output:
-;       carry set: failure, clear: success
-; clobbers:
-;       y
-ambient_generic_init:
-	phx
+ambient_sprcaller:
+	lda #$24
+	sta !next_oam_index
 	rep #$30
-	and #$00FF
-	pha
-	ldy.w #(!num_ambient_sprs*2)-2
+	ldx.w #(!num_ambient_sprs*2)-2
 .loop:
-	lda !ambient_rt_ptr,y
-	beq .found
-	dey : dey
+	lda !ambient_rt_ptr,x
+	beq .cont
+	stx !current_ambient_process
+	lda !sprites_locked
+	bne .no_timers
+	%implement_timer("!ambient_gen_timer,x")
+.no_timers:
+	jsr (!ambient_rt_ptr,x)
+.cont
+	dex : dex
 	bpl .loop
-	sec
-	rtl
-.found:
-	pla
-	asl
-	tax
-	; TODO generic initer
-	lda.l ambient_rts,x
-	sta !ambient_rt_ptr,y
-	lda $45
-	sta !ambient_x_pos,y
-	lda $47
-	sta !ambient_y_pos,y
-	sep #$30
-	plx
-	rtl
+        sep #$30
+.default:
+       rts
 warnpc $028B67|!bank
 
 org $00A1DA|!bank

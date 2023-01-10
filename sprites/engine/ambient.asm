@@ -8,20 +8,23 @@ mario_turn_smoke_spawn_hijack:
 	bne .ret
 org $00FE65|!bank
 	bcc .ret
+	rep #$20
 	lda !player_x_next
+	adc #$0004
 	sta $45
-	lda !player_x_next+1
-	sta $46
 	lda !player_y_next
+	adc #$001A
 	ldy !player_on_yoshi
 	beq .no_yoshi
-	adc #$10
+	adc #$0010
 .no_yoshi:
 	sta $47
-	lda !player_y_next+1
-	sta $48
-	lda #$00
-	jsl ambient_generic_init
+	lda #$0018
+	sta $49
+
+	lda #$0000
+	jsl ambient_get_slot
+	; axy width cleaned up here
 .ret:
 	rts
 warnpc $00FE93|!bank

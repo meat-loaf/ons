@@ -23,10 +23,12 @@ if not(defined("__ons_sprs_config_def__"))
 !ambient_y_speed   #= !ambient_x_speed+(!num_ambient_sprs*2)
 
 !ambient_gen_timer #= $1699|!addr
-!ambient_misc_1    #= !ambient_gen_timer+(!num_ambient_sprs*2)
-;!ambient_misc_2    #= !ambient_misc_1+(!num_ambient_sprs*2)
-!ambient_props     #= $7FA800
-!ambient_misc_2    #= !ambient_props+(!num_ambient_sprs*2)
+!ambient_props     #= !ambient_gen_timer+(!num_ambient_sprs*2)
+
+!ambient_ss_tilesz #= $7FA800
+; todo it would be nice to have one of these on the wram mirrors
+!ambient_misc_1    #= !ambient_ss_tilesz+(!num_ambient_sprs*2)
+!ambient_misc_2    #= !ambient_misc_1+(!num_ambient_sprs*2)
 
 ; dont change this - lm required for extra bytes
 !sprite_size_table_ptr     = $0EF30C|!bank

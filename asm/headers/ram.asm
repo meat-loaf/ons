@@ -160,8 +160,6 @@ includeonce
 ; 2 bytes; lm exlevel impl-defined
 !scr_max_y_off_sprspawn  = $0BF2|!addr
 
-!next_oam_index          = $0D9C|!addr
-
 !hdma_channel_enable_mirror = $0D9F|!addr
 !asstd_state_flags_1        = $0DA1|!addr
 
@@ -292,6 +290,10 @@ includeonce
 !dyn_slots     = $06FE|!addr
 
 !on_platform_ix     = $1864|!addr
+
+; two bytes: ambient sprites access in 16-bit mode
+!next_oam_index     = $1869|!addr
+
 !player_on_yoshi    = $187A|!addr
 !screen_shake_timer = $1887|!addr
 !screen_shake_player_yoff = $188B|!addr

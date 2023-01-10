@@ -295,13 +295,14 @@ endif
 	JSR.w .timer
 	JSR.w .item_box
 	JSR.w .coins
-	JSR.w .rcoins
+	;JSR.w .rcoins
 	JSR.w .lives
-	JSR.w .star_coins
-	JSR.w .score
+	;JSR.w .star_coins
+	;JSR.w .score
 
 if !enable_debug_cpu_meter == !true
 	JSR.w .cpu_meter
+	jsr.w .ambient_inf
 endif
 	PLB
 	RTL
@@ -350,6 +351,40 @@ if !enable_debug_cpu_meter == !true
 	STZ $045B
 	RTS
 endif
+
+.ambient_inf:
+	phx
+	rep #$30
+	stz $00
+	ldx.w #(!num_ambient_sprs*2)-2
+.loop
+	lda !ambient_rt_ptr,x
+	beq .cont
+	sep #$20
+	lda $00
+	inc
+	cmp #$0a
+	bcc .lostore
+	inc $01
+	lda #$00
+.lostore:
+	sta $00
+	rep #$20
+.cont:
+	dex : dex
+	bpl .loop
+	sep #$30
+	plx
+
+	%get_next_oam_tile(status_bar_oam_tiles, no_oam_left)
+	%draw_digit_tile($08,$d0,$01,B,\
+			!tile_noflip,$00,$00,$00)
+
+	%get_next_oam_tile(status_bar_oam_tiles, no_oam_left)
+	%draw_digit_tile($10,$d0,$00,B,\
+			!tile_noflip,$00,$00,$00)
+
+	rts
 
 .number_tilenums:
 	db !zero_digit_tile,!one_digit_tile,!two_digit_tile,!three_digit_tile

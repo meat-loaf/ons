@@ -1,6 +1,7 @@
 if not(defined("__const_incl"))
 !__const_incl = 1
 
+
 if read1($00FFD5) == $23
 	if read1($00FFD7) == $0D ; full 6/8 mb sa-1 rom
 		fullsa1rom
@@ -33,7 +34,10 @@ endif
 !JML_OPCODE           = $5C
 !RTL_OPCODE           = $6B
 
+
 hurt_mario            = $00F5B7|!bank
+
+!num_ambient_sprs = $28
 
 !spr_tweaker_1656_tbl = $07F26C|!bank
 !spr_tweaker_1662_tbl = $07F335|!bank
@@ -217,4 +221,6 @@ if !Setting_SSP_FuSoYaSpd == 0
 endif
 
 ;;; end screen scrolling pipe stuff ;;;
+
+incsrc "../../sprites/include/config.def"
 endif

@@ -46,13 +46,18 @@ macro alloc_sprite_dynamic_512k(sprite_id, gfx_name, init_rt, main_rt, n_oam_til
 	endif
 endmacro
 
-macro alloc_ambient_sprite(ambient_id, name, main_rt)
+macro alloc_ambient_sprite(ambient_id, name, main_rt, tilesz)
 	!aid #= <ambient_id>
+	!tsz #= <tilesz>
 	assert not(defined("ambient_!{aid}_defined")), "Ambient sprite id <ambient_id> already defined."
 	assert bank(<main_rt>)&$7F == $02, "Ambient sprites are allowed in bank 2 only."
+	assert or(equal(!tsz, 2), equal(!tsz, 0)), "Ambient tilesize must be 0 (8x8) or 2 (16x16)"
 	!{ambient_!{aid}_defined} = 1
-	!{ambient_!{aid}_tag} = <name>
-	!{ambient_!{aid}_main} = <main_rt>
+	!{ambient_!{aid}_tag}     = <name>
+	!{ambient_!{aid}_main}    = <main_rt>
+	!{ambient_!{aid}_tilesz}  = <tilesz>
+	undef "aid"
+	undef "tsz"
 endmacro
 
 macro dynamic_gfx_rt_bank3(load_frame_code, dyn_name)
@@ -239,12 +244,15 @@ endif
 	endif
 endmacro
 
-macro write_ambient_tables(table_label, default)
-	org <table_label>
+macro write_ambient_tables(table_label, tsize_label, default)
+;	org <table_label>
 	!ix #= 0
 	while !ix < !ambient_sprid_max
+		org <table_label>+(!{ix}*2)
 		if defined("ambient_!{ix}_defined")
 			dw !{ambient_!{ix}_main}
+			org <tsize_label>+(!{ix}*2)
+				dw !{ambient_!{ix}_tilesz}
 			!fmt = ""
 			if !ix < 16
 				!fmt = 0
