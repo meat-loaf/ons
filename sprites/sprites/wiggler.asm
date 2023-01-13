@@ -306,11 +306,28 @@ wiggler_main:
 	inc
 	sta !sprite_stomp_counter
 ..stomp_maxx:
-	jsl spr_give_points
+	;jsl spr_give_points
 	lda #$40
 	sta !wiggler_stunned_timer,x
 	inc !wiggler_angry,x
-	; TODO: spawn flower
+	; spawn flower
+	; TODO make this sprite-callable subroutine
+	lda !sprite_x_low,x
+	sta $45
+	lda !sprite_x_high,x
+	sta $46
+	lda !sprite_y_low,x
+	sta $47
+	lda !sprite_y_high,x
+	sta $48
+
+	stz $49
+	lda #$08
+	sta $4b
+	lda #$d0
+	sta $4c
+	lda #$02
+	jsl ambient_get_slot
 	rtl
 
 .wiggler_fucking_dies:

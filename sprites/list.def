@@ -21,3 +21,4 @@ incsrc "sprites/mega_mole.asm"
 
 ; ambient sprites
 incsrc "sprites/ambient/mario_turn_dust.asm"
+incsrc "sprites/ambient/wiggler_flower.asm"

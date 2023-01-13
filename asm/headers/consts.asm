@@ -39,6 +39,8 @@ hurt_mario            = $00F5B7|!bank
 
 !num_ambient_sprs = $28
 
+!ambient_sprid_max = $3F
+
 !spr_tweaker_1656_tbl = $07F26C|!bank
 !spr_tweaker_1662_tbl = $07F335|!bank
 !spr_tweaker_166E_tbl = $07F3FE|!bank
@@ -48,6 +50,19 @@ hurt_mario            = $00F5B7|!bank
 
 !spr_inits_start     = $01817D|!bank
 !spr_mains_start     = $0185CC|!bank
+
+!ambient_twk_pos_upd          = %1000000000000000
+!ambient_twk_has_grav         = %0100000000000000
+!ambient_twk_check_offscr     = %0010000000000000
+;!ambient_twk_grav_inv        = %0001000000000000
+!ambient_twk_player_interact  = %0000010000000000
+!ambient_twk_cape_interact    = %0000001000000000
+!ambient_twk_spinjumpable     = %0000000100000000
+!ambient_gfx_tilesz_big       = %0000000000000010
+
+; intended to be set by ambient gfx routines! dont set it
+; in configs
+!ambient_gfx_xhigh            = %0000000000000001
 
 _spr_face_mario_bank1 = $01857C|!bank
 

@@ -1,5 +1,8 @@
 includeonce
 
+; not actually ram...
+!ambient_tblsz     = !num_ambient_sprs+!num_ambient_sprs
+
 !lag_flag          = $10
 !irq_kind          = $11
 !stripe_image_ix   = $12  ; should be divisible by 3
@@ -114,8 +117,6 @@ includeonce
 ; 2 bytes
 !player_y_scr_rel         = $80
 
-
-
 ; backup of $77
 !sspipes_blocked_backup  = $79
 !status_bar_config       = $7C
@@ -189,6 +190,8 @@ includeonce
 !player_score           = $0F34+$00|!addr
 !player_score_mid       = $0F34+$01|!addr
 !player_score_hi        = $0F34+$02|!addr
+
+!ambient_gen_timer      = $0F4A|!addr
 
 !main_level_num         = $13BF|!addr
 
@@ -284,6 +287,18 @@ includeonce
 ; repurposed: low nybble used as bitfield for object generation parameters
 !sprite_memory_header    = $1692|!addr
 
+!ambient_rt_ptr    = $1699|!addr
+!ambient_x_pos     = !ambient_rt_ptr+!ambient_tblsz
+!ambient_y_pos     = !ambient_x_pos+!ambient_tblsz
+
+; high byte: decimal low byte: frac
+!ambient_x_speed   = !ambient_y_pos+!ambient_tblsz
+; high byte: decimal low byte: frac
+!ambient_y_speed   = !ambient_x_speed+!ambient_tblsz
+
+assert !ambient_y_speed+(!num_ambient_sprs*2) <= $185C, "ambient sprite ram exceeded bounds"
+
+
 !dyn_slot_ptr  = $0660|!addr
 !dyn_slot_bank = $0662|!addr
 !dyn_slot_dest = $0663|!addr
@@ -317,34 +332,33 @@ includeonce
 !exit_table              = $19B8|!addr
 !exit_table_new_lm       = $19D8|!addr
 
+
+
 ; XXX: in SA1 add |!addr define to these, but you cant do them all!
-!spr_extra_bits         = $19F8                            ; 384 bytes free due to relocating item memory (up until $1B84)
-!spr_new_sprite_num     = !spr_extra_bits+!num_sprites     ; $1A04
-!spr_extra_byte_1       = !spr_new_sprite_num+!num_sprites ; $1A10
-!spr_extra_byte_2       = !spr_extra_byte_1+!num_sprites   ; $1A1C
-!spr_extra_byte_3       = !spr_extra_byte_2+!num_sprites   ; $1A28
-!spr_extra_byte_4       = !spr_extra_byte_3+!num_sprites   ; $1A34
-!spr_shoot_exbyte_1     = !spr_extra_byte_4+!num_sprites   ; $1A40 currently not setup?
-!spr_shoot_exbyte_2     = !spr_shoot_exbyte_1+!num_sprites ; $1A4C currently not setup?
-!spr_shoot_exbyte_3     = !spr_shoot_exbyte_2+!num_sprites ; $1A58 currently not setup?
-!pixi_new_code_flag     = !spr_shoot_exbyte_3+!num_sprites ; $1A64
-!spr_spriteset_off      = !pixi_new_code_flag+$1           ; $1A65 (12 bytes)
-!cls_spriteset_off      = !spr_spriteset_off+$0C           ; $1A71 (20 bytes)
-!ext_spriteset_off      = !cls_spriteset_off+$14           ; $1A85 (x bytes)
-!167A_doodad            = !ext_spriteset_off+10            ;
-
+!spr_extra_bits         = $19F8                                ; 384 bytes free due to relocating item memory (up until $1B84)
+!spr_extra_byte_1       = !spr_extra_bits+!num_sprites         ; $1A04
+!spr_extra_byte_2       = !spr_extra_byte_1+!num_sprites       ; $1A10
+!spr_extra_byte_3       = !spr_extra_byte_1+!num_sprites       ; $1A1C
+!spr_extra_byte_4       = !spr_extra_byte_2+!num_sprites       ; $1A28
+!spr_spriteset_off      = !spr_extra_byte_3+!num_sprites       ; $1A34
+!ambient_twk_tilesz     = !spr_spriteset_off+!ambient_tblsz    ; $1A40
 ; alt name of above
-!spr_shooter_extra_byte_1 = !spr_shoot_exbyte_1
-!spr_shooter_extra_byte_2 = !spr_shoot_exbyte_2
-!spr_shooter_extra_byte_3 = !spr_shoot_exbyte_3
 
-!level_load_obj_tile     = $1BA1
+; TODO implement - needs to be set to (!ambient_spr_sz*2)-2 on level load
+!ambient_spr_ring_ix     = $1B97|!addr
+
+!level_load_obj_tile     = $1BA1|!addr
 !time_huns_bak           = $1DEF|!addr
 
 !spc_io_1_sfx_1DF9       = $1DF9|!addr
 !spc_io_2_sfx_1DFA       = $1DFA|!addr
 !spc_io_3_music_1DFB     = $1DFB|!addr
 !spc_io_4_sfx_1DFC       = $1DFC|!addr
+
+!ambient_props           = $1E02|!addr
+!ambient_misc_1          = !ambient_props+!ambient_tblsz
+
+assert !ambient_misc_1+(!num_ambient_sprs*2) <= $1EA2, "ambient sprite ram exceeded bounds"
 
 !red_coin_sfx_port       ?= !spc_io_1_sfx_1DF9
 

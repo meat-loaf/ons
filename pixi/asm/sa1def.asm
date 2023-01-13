@@ -131,10 +131,8 @@ endmacro
 
 ;sprite tool / pixi defines
 %define_sprite_table("7FAB10",!spr_extra_bits,$6040)
-%define_sprite_table("7FAB1C",!pixi_new_code_flag,$6056)
 %define_sprite_table("7FAB28",!spr_extra_prop_1,$6057)
 %define_sprite_table("7FAB34",!spr_extra_prop_2,$606D)
-%define_sprite_table("7FAB9E",!spr_new_sprite_num,$6083)
 %define_sprite_table("7FAB40",!spr_extra_byte_1,$6099)
 %define_sprite_table("7FAB4C",!spr_extra_byte_2,$60AF)
 %define_sprite_table("7FAB58",!spr_extra_byte_3,$60C5)
@@ -145,20 +143,12 @@ endmacro
 %define_sprite_table("7FAC10",$7FAC10,$6038)
 
 %define_sprite_table("extra_bits",!spr_extra_bits,$6040)
-%define_sprite_table("new_code_flag",!pixi_new_code_flag,$6056)
 %define_sprite_table("extra_prop_1",!spr_extra_prop_1,$6057)
 %define_sprite_table("extra_prop_2",!spr_extra_prop_2,$606D)
-%define_sprite_table("new_sprite_num",!spr_new_sprite_num,$6083)
 %define_sprite_table("extra_byte_1",!spr_extra_byte_1,$6099)
 %define_sprite_table("extra_byte_2",!spr_extra_byte_2,$60AF)
 %define_sprite_table("extra_byte_3",!spr_extra_byte_3,$60C5)
 %define_sprite_table("extra_byte_4",!spr_extra_byte_4,$60DB)
-
-%define_sprite_table("shooter_extra_byte_1",!spr_shoot_exbyte_1,$60F1)
-%define_sprite_table("shooter_extra_byte_2",!spr_shoot_exbyte_2,$6030)
-%define_sprite_table("shooter_extra_byte_3",!spr_shoot_exbyte_3,$6038)
-
-;%define_sprite_table(shoot_misc,$7FAB64,$4000DB)
 
 ;shooter defines
 %define_base2_address(shoot_num,$1783)		; shooter number -#$BC, also has the extra bit in #$40

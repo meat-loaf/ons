@@ -31,7 +31,7 @@ macro alloc_sprite_dynamic_512k(sprite_id, gfx_name, init_rt, main_rt, n_oam_til
 	endif
 	!n_dyn_gfx #= !n_dyn_gfx+1
 	if not(getfilestatus("dyn_gfx/<gfx_name>.bin"))
-		error "No read access to file `<gfx_name>.bin'."
+		error "No read access to file `<gfx_name>.bin', or file doesn't exist."
 	else
 		if !n_dyn_gfx > !dyn_gfx_files_max
 			error "Too many dynamic gfx files. Allocate more space (define dyn_gfx_files_max)"
@@ -46,18 +46,15 @@ macro alloc_sprite_dynamic_512k(sprite_id, gfx_name, init_rt, main_rt, n_oam_til
 	endif
 endmacro
 
-macro alloc_ambient_sprite(ambient_id, name, main_rt, tilesz)
+macro alloc_ambient_sprite(ambient_id, name, main_rt, tweaker_bitfield)
 	!aid #= <ambient_id>
-	!tsz #= <tilesz>
 	assert not(defined("ambient_!{aid}_defined")), "Ambient sprite id <ambient_id> already defined."
 	assert bank(<main_rt>)&$7F == $02, "Ambient sprites are allowed in bank 2 only."
-	assert or(equal(!tsz, 2), equal(!tsz, 0)), "Ambient tilesize must be 0 (8x8) or 2 (16x16)"
 	!{ambient_!{aid}_defined} = 1
 	!{ambient_!{aid}_tag}     = <name>
 	!{ambient_!{aid}_main}    = <main_rt>
-	!{ambient_!{aid}_tilesz}  = <tilesz>
+	!{ambient_!{aid}_tweaker} = <tweaker_bitfield>
 	undef "aid"
-	undef "tsz"
 endmacro
 
 macro dynamic_gfx_rt_bank3(load_frame_code, dyn_name)
@@ -252,7 +249,7 @@ macro write_ambient_tables(table_label, tsize_label, default)
 		if defined("ambient_!{ix}_defined")
 			dw !{ambient_!{ix}_main}
 			org <tsize_label>+(!{ix}*2)
-				dw !{ambient_!{ix}_tilesz}
+				dw !{ambient_!{ix}_tweaker}
 			!fmt = ""
 			if !ix < 16
 				!fmt = 0

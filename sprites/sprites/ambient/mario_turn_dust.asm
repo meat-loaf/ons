@@ -1,30 +1,14 @@
 includefrom "list.def"
 
 !ambient_player_dust_id = $00
+!ambient_dust_puff_id   = $01
 
-%alloc_ambient_sprite(!ambient_player_dust_id, "turn_dust", ambient_dust_main, 0)
-
-;org $029922|!bank
-;	db $E6,$E6,$E4,$E2,$E2
+%alloc_ambient_sprite(!ambient_player_dust_id, "turn_dust", ambient_dust_main, \
+	0)
+%alloc_ambient_sprite(!ambient_dust_puff_id, "smoke_puff", ambient_dust_main, \
+	!ambient_gfx_tilesz_big)
 
 %set_free_start("bank2_altspr2")
-ambient_basic_gfx:
-	jsr ambient_sub_off_screen
-	;jsr ambient_get_draw_info
-	lda $00
-	sta $0200|!addr,y
-	lda !ambient_props,x
-	sta $0202|!addr,y
-	tya
-	lsr #2
-	tay
-
-	lda $0420|!addr,y
-	and #$FFF0
-	ora $0e
-	sta $0420|!addr,y
-	rts
-
 ambient_dust_main:
 	lda !ambient_gen_timer,x
 	bne .cont
@@ -34,12 +18,10 @@ ambient_dust_main:
 .cont:
 	lsr #2
 	asl
-	;and #$000e
 	tay
 	lda !sprite_level_props-1
 	and #$FF00
 	ora .prop_tiles_tbl,y
-	stz $0e
 	sta !ambient_props,x
 	jmp ambient_basic_gfx
 .prop_tiles_tbl:

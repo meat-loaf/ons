@@ -28,3 +28,8 @@ org $00FE65|!bank
 .ret:
 	rts
 warnpc $00FE93|!bank
+
+
+; replace bounce block spawns
+org $028792|!addr
+; todo - theres a lot of stuff here

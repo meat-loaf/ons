@@ -158,14 +158,17 @@ ambient_sprcaller:
 	ldx.w #(!num_ambient_sprs*2)-2
 .loop:
 	lda !ambient_rt_ptr,x
-	beq .cont
+	beq .go_next
 	stx !current_ambient_process
 	lda !sprites_locked
 	bne .no_timers
 	%implement_timer("!ambient_gen_timer,x")
 .no_timers:
 	jsr (!ambient_rt_ptr,x)
-.cont
+	lda !ambient_twk_tilesz,x
+	bpl .go_next
+	jsr ambient_physics
+.go_next:
 	dex : dex
 	bpl .loop
         sep #$30

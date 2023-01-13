@@ -228,10 +228,11 @@ SPRITE_CHECK_CUSTOM_CHOMPROCK:
 	LDA !14C8,x
 	CMP #$08
 	BCC .ret_bad
-	LDA !extra_bits,x
-	AND #$08
-	BEQ .ret_bad
-	LDA !new_sprite_num,x
+;	LDA !extra_bits,x
+;	AND #$08
+;	BEQ .ret_bad
+;	LDA !new_sprite_num,x
+	lda !sprite_num,x
 	CMP #!chomprock_sprite_num
 	BNE .ret_bad
 	SEC

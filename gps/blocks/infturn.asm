@@ -6,6 +6,7 @@ JMP TopCorner : JMP BodyInside : JMP HeadInside
 MarioBelow:
 MarioAbove:
 MarioSide:
+	rtl
 	LDA $16
 	AND #%01000000
 	BEQ ret

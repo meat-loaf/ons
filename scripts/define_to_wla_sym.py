@@ -12,6 +12,8 @@ def clean_line(line, ignore) -> str:
 	l = re.sub(r';.*', '', line).strip()
 	if any(e in l for e in ignore):
 		return ""
+	elif l.startswith("assert"):
+		return ""
 	return l.replace("\t","").replace(" ", "").replace("|!addr", "").replace("|!bank", "")
 
 def get_base(s) -> int:
@@ -74,9 +76,13 @@ def main(argv) -> int:
 	print("\n[labels]")
 	for k,v in ram.items():
 		if v < 0x0100:
-			print("00:00{} {}".format(hex(v).lstrip("0x").zfill(2), k.replace("!", "")))
+			print("80:00{} {}".format(hex(v).lstrip("0x").zfill(2), k.replace("!", "")))
+			print("81:00{} {}".format(hex(v).lstrip("0x").zfill(2), k.replace("!", "")))
+			print("82:00{} {}".format(hex(v).lstrip("0x").zfill(2), k.replace("!", "")))
 		elif v < 0x2000:
-			print("00:{} {}".format(hex(v).lstrip("0x").zfill(4), k.replace("!", "")))
+			print("80:{} {}".format(hex(v).lstrip("0x").zfill(4), k.replace("!", "")))
+			print("81:{} {}".format(hex(v).lstrip("0x").zfill(4), k.replace("!", "")))
+			print("82:{} {}".format(hex(v).lstrip("0x").zfill(4), k.replace("!", "")))
 		else:
 			hv = hex(v).lstrip("0x").zfill(6)
 			print("{}:{} {}".format(hv[0:2], hv[2:6], k.replace("!", "")))
