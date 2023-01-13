@@ -1,6 +1,6 @@
 !starcoin_sprnum = $B9
 
-%alloc_sprite_dynamic_512k(!starcoin_sprnum, "starcoin", starcoin_init_exit, starcoin_main, 4, 1,\
+%alloc_sprite_dynamic_512k(!starcoin_sprnum, "starcoin", starcoin_init, starcoin_main, 4, 1,\
 	$8E, $0E, $75, $9B, $B9, $46, "bank7")
 
 !starcoin_collect_sfx = $1A
@@ -13,6 +13,9 @@
 starcoin_init:
 	; todo make shared routine
 ;	%sprite_init_do_pos_offset(!extra_byte_1,x)
+	jsl sprite_read_item_memory
+	beq .exit
+	stz !sprite_status,x
 .exit:
 	rtl
 

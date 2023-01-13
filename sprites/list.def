@@ -1,3 +1,5 @@
+incsrc "ambient_list.def"
+
 incsrc "sprites/originals_unconverted.asm"
 incsrc "sprites/parabeetle.asm"
 incsrc "sprites/fishe.asm"
@@ -19,6 +21,4 @@ incsrc "sprites/woozyguy.asm"
 incsrc "sprites/mega_mole.asm"
 
 
-; ambient sprites
-incsrc "sprites/ambient/mario_turn_dust.asm"
-incsrc "sprites/ambient/wiggler_flower.asm"
+

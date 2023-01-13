@@ -281,9 +281,10 @@ includeonce
 ; Settings for level constrain block interaction.
 ; Format: ----TBLR (Top, Bottom, Left, Right)
 !level_constrain_flags  = $15E8|!addr
+
 !current_sprite_process = $15E9|!addr
 
-!sprite_stomp_counter    = $7E1697
+!sprite_stomp_counter    = $1697|!addr
 ; repurposed: low nybble used as bitfield for object generation parameters
 !sprite_memory_header    = $1692|!addr
 
@@ -297,7 +298,6 @@ includeonce
 !ambient_y_speed   = !ambient_x_speed+!ambient_tblsz
 
 assert !ambient_y_speed+(!num_ambient_sprs*2) <= $185C, "ambient sprite ram exceeded bounds"
-
 
 !dyn_slot_ptr  = $0660|!addr
 !dyn_slot_bank = $0662|!addr
@@ -332,8 +332,6 @@ assert !ambient_y_speed+(!num_ambient_sprs*2) <= $185C, "ambient sprite ram exce
 !exit_table              = $19B8|!addr
 !exit_table_new_lm       = $19D8|!addr
 
-
-
 ; XXX: in SA1 add |!addr define to these, but you cant do them all!
 !spr_extra_bits         = $19F8                                ; 384 bytes free due to relocating item memory (up until $1B84)
 !spr_extra_byte_1       = !spr_extra_bits+!num_sprites         ; $1A04
@@ -341,7 +339,8 @@ assert !ambient_y_speed+(!num_ambient_sprs*2) <= $185C, "ambient sprite ram exce
 !spr_extra_byte_3       = !spr_extra_byte_1+!num_sprites       ; $1A1C
 !spr_extra_byte_4       = !spr_extra_byte_2+!num_sprites       ; $1A28
 !spr_spriteset_off      = !spr_extra_byte_3+!num_sprites       ; $1A34
-!ambient_twk_tilesz     = !spr_spriteset_off+!ambient_tblsz    ; $1A40
+!ambient_twk_tilesz     = !spr_spriteset_off+!num_sprites      ; $1A40
+!ambient_grav_setting   = !ambient_twk_tilesz+!ambient_tblsz
 ; alt name of above
 
 ; TODO implement - needs to be set to (!ambient_spr_sz*2)-2 on level load
@@ -361,6 +360,62 @@ assert !ambient_y_speed+(!num_ambient_sprs*2) <= $185C, "ambient sprite ram exce
 assert !ambient_misc_1+(!num_ambient_sprs*2) <= $1EA2, "ambient sprite ram exceeded bounds"
 
 !red_coin_sfx_port       ?= !spc_io_1_sfx_1DF9
+
+; sprite tables
+!sprite_num               = $9E
+!sprite_speed_y           = $AA
+!sprite_speed_x           = $B6
+!sprite_misc_c2           = $C2
+!sprite_y_low             = $D8
+!sprite_x_low             = $E4
+!sprite_status            = $14C8
+!sprite_y_high            = $14D4
+!sprite_x_high            = $14E0
+!sprite_speed_y_frac      = $14EC
+!sprite_speed_x_frac      = $14F8
+!sprite_misc_1504         = $1504
+!sprite_misc_1510         = $1510
+!sprite_misc_151c         = $151C
+!sprite_misc_1528         = $1528
+!sprite_misc_1534         = $1534
+!sprite_misc_1540         = $1540
+!sprite_misc_154c         = $154C
+!sprite_misc_1558         = $1558
+!sprite_misc_1564         = $1564
+!sprite_misc_1570         = $1570
+!sprite_misc_157c         = $157C
+!sprite_blocked_status    = $1588
+!sprite_misc_1594         = $1594
+!sprite_off_screen_horz   = $15A0
+!sprite_misc_15ac         = $15AC
+!sprite_slope             = $15B8
+!sprite_off_screen        = $15C4
+!sprite_being_eaten       = $15D0
+!sprite_obj_interact      = $15DC
+!sprite_oam_index         = $15EA
+!sprite_oam_properties    = $15F6
+!sprite_misc_1602         = $1602
+!sprite_misc_160e         = $160E
+!sprite_load_index        = $161A
+!sprite_misc_1626         = $1626
+!sprite_behind_scenery    = $1632
+!sprite_misc_163e         = $163E
+!sprite_in_water          = $164A
+!sprite_tweaker_1656      = $1656
+!sprite_tweaker_1662      = $1662
+!sprite_tweaker_166e      = $166E
+!sprite_tweaker_167a      = $167A
+!sprite_tweaker_1686      = $1686
+!sprite_off_screen_vert   = $186C
+!sprite_misc_187b         = $187B
+!sprite_tweaker_190f      = $190F
+
+!sprite_load_table        = $1938
+
+!sprite_misc_1fd6         = $1FD6
+!sprite_cape_disable_time = $1FE2
+
+
 
 !mario_gfx               = $7E2000
 

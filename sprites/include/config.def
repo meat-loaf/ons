@@ -1,6 +1,8 @@
 if not(defined("__ons_sprs_config_def__"))
 !__ons_sprs_config_def__ = 1
 
+!next_ambient_id #= 0
+
 ; todo implement these flags
 ; save sprite extra bits to table on sprite load
 !sprites_save_exbits = 1
@@ -64,58 +66,5 @@ sprite_tilemap_offsets    = $019C7F|!bank
 !spr_tweaker_190F_tbl      = $07F659|!bank
 
 !bank01_jsl2rts_rtl       = $0180CA|!bank
-
-!sprite_num               = $9E
-!sprite_speed_y           = $AA
-!sprite_speed_x           = $B6
-!sprite_misc_c2           = $C2
-!sprite_y_low             = $D8
-!sprite_x_low             = $E4
-!sprite_status            = $14C8
-!sprite_y_high            = $14D4
-!sprite_x_high            = $14E0
-!sprite_speed_y_frac      = $14EC
-!sprite_speed_x_frac      = $14F8
-!sprite_misc_1504         = $1504
-!sprite_misc_1510         = $1510
-!sprite_misc_151c         = $151C
-!sprite_misc_1528         = $1528
-!sprite_misc_1534         = $1534
-!sprite_misc_1540         = $1540
-!sprite_misc_154c         = $154C
-!sprite_misc_1558         = $1558
-!sprite_misc_1564         = $1564
-!sprite_misc_1570         = $1570
-!sprite_misc_157c         = $157C
-!sprite_blocked_status    = $1588
-!sprite_misc_1594         = $1594
-!sprite_off_screen_horz   = $15A0
-!sprite_misc_15ac         = $15AC
-!sprite_slope             = $15B8
-!sprite_off_screen        = $15C4
-!sprite_being_eaten       = $15D0
-!sprite_obj_interact      = $15DC
-!sprite_oam_index         = $15EA
-!sprite_oam_properties    = $15F6
-!sprite_misc_1602         = $1602
-!sprite_misc_160e         = $160E
-!sprite_load_index        = $161A
-!sprite_misc_1626         = $1626
-!sprite_behind_scenery    = $1632
-!sprite_misc_163e         = $163E
-!sprite_in_water          = $164A
-!sprite_tweaker_1656      = $1656
-!sprite_tweaker_1662      = $1662
-!sprite_tweaker_166e      = $166E
-!sprite_tweaker_167a      = $167A
-!sprite_tweaker_1686      = $1686
-!sprite_off_screen_vert   = $186C
-!sprite_misc_187b         = $187B
-!sprite_tweaker_190f      = $190F
-
-!sprite_load_table        = $1938
-
-!sprite_misc_1fd6         = $1FD6
-!sprite_cape_disable_time = $1FE2
 
 endif

@@ -326,7 +326,7 @@ wiggler_main:
 	sta $4b
 	lda #$d0
 	sta $4c
-	lda #$02
+	lda #!ambient_wiggler_flower_id
 	jsl ambient_get_slot
 	rtl
 

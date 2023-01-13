@@ -20,19 +20,6 @@ incsrc "../main.asm"
 ;
 ; ----------------------------------------------------------------------------------------------------------------------------------
 
-macro spr_imem_entry()
-	LDA !D8,x
-	AND #$F0
-	STA $98
-	LDA !E4,x
-	AND #$F0
-	STA $9A
-	LDA !14D4,x
-	STA $99
-	LDA !14E0,x
-	STA $9B
-endmacro
-
 !ExLevelScreenSize = !exlvl_screen_size
 !ItemMemory = !item_memory
 !ItemMemoryMask = !item_memory_mask
@@ -96,8 +83,60 @@ warnpc $00C063|!bank
 
 freecode
 print "sprite_write_item_memory = $", pc
-SpriteWriteItemMemory:
-	%spr_imem_entry()
+; sprite item memory: use the last 16 bytes of the item memory buffer
+; as a faux (compacted) sprite load table. In practice these are never used anyway
+; gen entry is used as follows:
+;  y = nonzero does a read (with result in Z flag) of item memory
+;  y = 0: does a write of the sprite load index bit value to item memory
+sprite_item_memory:
+.write:
+	lda !item_memory_mask
+	and #$01
+	bne .done
+	ldy #$00
+.gen_entry:
+	lda !sprite_load_index,x
+	and #$0F
+	sta $00
+	stz $01
+	lda !sprite_load_index,x
+	lsr #4
+	sta $02
+	stz $03
+
+	lda !item_memory_setting
+	asl
+	tax
+	rep #$30
+	lda ItemMemoryBlockOffsets,x
+	lsr #3
+	clc
+	; offset to the end of the buffer
+	adc #$0700-($10)
+	adc $02
+	; store index to buffer
+	sta $02
+	ldx $00
+	; load bit to set
+	sep #$20
+	lda.l $00C0AA|!bank,x
+	ldx $02
+	cpy #$0000
+	bne .read
+	ora !item_memory,x
+	sta !item_memory,x
+	sep #$10
+	ldx !current_sprite_process
+.done:
+	rtl
+.read:
+	and !item_memory,x
+	sep #$10
+	sta $00
+	ldx !current_sprite_process
+	lda $00
+	rtl
+
 ; WriteItemMemory. Marks a certain coordinate as collected.
 ; This can be used as a shared routine.
 ; On entry, $98 should be set to the X position and $9A as the Y position.
@@ -167,68 +206,14 @@ WriteItemMemory:
 	LDX $4F
 .Return
 	RTL
-
-load_blk_ptrs = $00BEA8|!bank
-
-; TODO doesn't work properly
 print "sprite_read_item_memory = $", pc
-SpriteReadItemMemory:
-	LDA !ItemMemoryMask
-	BIT #$02
-	BEQ .set_up_data
-	LDA #$00
-	RTL
-.set_up_data:
-	%spr_imem_entry()
-	; save layer1 data ptrs
-	LDA  $65
-	PHA
-	LDA  $66
-	PHA
-	LDA  $67
-	PHA
+sprite_read_item_memory:
+	lda !item_memory_mask
+	and #$02
+	bne ReadItemMemory_abort
+	ldy #$01
+	jmp sprite_item_memory_gen_entry
 
-	REP  #$10
-	LDY  $98
-	LDX  #$0000
-	LDA.l load_blk_ptrs,x
-	STA  $65
-	LDA.l load_blk_ptrs+1,x
-	STA  $66
-	STZ  $67
-	LDA  $1925|!addr
-	ASL
-	TAY
-	LDA  [$65],y
-	STA  $04
-	INY
-	LDA  [$65],y
-	STA  $05
-	STZ  $06
-	LDA  $9B
-	STA  $07
-	ASL
-	CLC
-	ADC  $07
-	TAY
-	LDA  [$04],y
-	STA  $6B
-	INY
-	LDA  [$04],y
-	STA  $6C
-	LDA  #$7E
-	STA  $6D
-	SEP  #$10
-
-	; restore layer1 data ptrs
-	PLA
-	STA $67
-	PLA
-	STA $66
-	PLA
-	STA $65
-	LDX  $15E9|!addr
-	BRA ReadItemMemory_do_read
 print "read_item_memory = $", pc
 ; ReadItemMemory. Checks if the current block coordinate is marked as collected.
 ; This can be used as a shared (object generation) routine.
@@ -239,6 +224,7 @@ ReadItemMemory:
 	LDA !ItemMemoryMask
 	BIT #$02
 	BEQ .do_read
+.abort:
 	LDA #$00
 	RTL
 .do_read:

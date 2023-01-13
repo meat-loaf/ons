@@ -25,3 +25,4 @@ amk/asm/SNES/AMUndo.asm
 asm/headers/routines/item_memory_rts.asm
 *__pycache__*
 RATS.log
+*.vim
