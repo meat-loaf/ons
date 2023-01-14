@@ -1,2 +1,5 @@
+includefrom "list.def"
+
 incsrc "sprites/ambient/mario_turn_dust.asm"
 incsrc "sprites/ambient/wiggler_flower.asm"
+incsrc "sprites/ambient/bounce.asm"

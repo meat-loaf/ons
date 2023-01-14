@@ -7,6 +7,9 @@
 !bank1_thwomp_free_start     = $01AE96|!bank
 !bank1_thwomp_free_end       = $01AF9F|!bank
 
+!bank1_growvine_free_start   = $01C183
+!bank1_growvine_free_end     = $01C1EE
+
 !bank1_boss_mode7_free_start = $01CC9D|!bank
 !bank1_boss_mode7_free_end   = $01CCF0|!bank
 

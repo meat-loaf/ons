@@ -18,8 +18,8 @@ macro alloc_sprite(sprite_id, name, init_rt, main_rt, n_oam_tiles, n_exbyte, spr
 	!{sprite_!{sid}_oamtiles} = <n_oam_tiles>*4
 	!{sprite_!{sid}_1656} = <spr_1656_val>
 	!{sprite_!{sid}_1662} = <spr_1662_val>
-	!{sprite_!{sid}_167A} = <spr_167A_val>
 	!{sprite_!{sid}_166E} = <spr_166E_val>
+	!{sprite_!{sid}_167A} = <spr_167A_val>
 	!{sprite_!{sid}_1686} = <spr_1686_val>
 	!{sprite_!{sid}_190F} = <spr_190F_val>
 endmacro
@@ -47,6 +47,10 @@ macro alloc_sprite_dynamic_512k(sprite_id, gfx_name, init_rt, main_rt, n_oam_til
 endmacro
 
 macro alloc_ambient_sprite(ambient_id, name, main_rt, tweaker_bitfield)
+	%alloc_ambient_sprite_grav(<ambient_id>, <name>, <main_rt>, <tweaker_bitfield>, 0, 0)
+endmacro
+
+macro alloc_ambient_sprite_grav(ambient_id, name, main_rt, tweaker_bitfield, grav_accel, grav_max)
 	!aid #= <ambient_id>
 	assert not(defined("ambient_!{aid}_defined")), "Ambient sprite id <ambient_id> already defined."
 	assert bank(<main_rt>)&$7F == $02, "Ambient sprites are allowed in bank 2 only."
@@ -54,6 +58,8 @@ macro alloc_ambient_sprite(ambient_id, name, main_rt, tweaker_bitfield)
 	!{ambient_!{aid}_tag}     = <name>
 	!{ambient_!{aid}_main}    = <main_rt>
 	!{ambient_!{aid}_tweaker} = <tweaker_bitfield>
+	!{ambient_!{aid}_grav_accel} = <grav_accel>
+	!{ambient_!{aid}_grav_tv}    = <grav_max>
 	undef "aid"
 endmacro
 
@@ -241,7 +247,7 @@ endif
 	endif
 endmacro
 
-macro write_ambient_tables(table_label, tsize_label, default)
+macro write_ambient_tables(table_label, tsize_label, grv_tbl, default)
 ;	org <table_label>
 	!ix #= 0
 	while !ix < !ambient_sprid_max
@@ -250,6 +256,8 @@ macro write_ambient_tables(table_label, tsize_label, default)
 			dw !{ambient_!{ix}_main}
 			org <tsize_label>+(!{ix}*2)
 				dw !{ambient_!{ix}_tweaker}
+			org <grv_tbl>+(!{ix}*2)
+				dw (!{ambient_!{ix}_grav_accel})|(!{ambient_!{ix}_grav_tv}<<8)
 			!fmt = ""
 			if !ix < 16
 				!fmt = 0

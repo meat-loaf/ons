@@ -152,6 +152,9 @@ org $028B05|!bank
 	rtl
 
 ambient_sprcaller:
+	lda !sprites_locked
+	sta !ambient_sprlocked_mirror
+
 	lda #$24
 	sta !next_oam_index
 	rep #$30
@@ -160,10 +163,10 @@ ambient_sprcaller:
 	lda !ambient_rt_ptr,x
 	beq .go_next
 	stx !current_ambient_process
-	lda !sprites_locked
-	bne .no_timers
+	lda !ambient_sprlocked_mirror
+	bne .no_timer
 	%implement_timer("!ambient_gen_timer,x")
-.no_timers:
+.no_timer:
 	jsr (!ambient_rt_ptr,x)
 	lda !ambient_twk_tilesz,x
 	bpl .go_next

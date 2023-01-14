@@ -14,6 +14,8 @@ oam_reset                       = $7F8000
 init_sprite_tables              = $07F7D2|!bank
 nuke_sprite_tables              = $07F722|!bank
 
+spawn_ambient_bounce_sprite     = $028792|!bank
+
 if getfilestatus("routines/item_memory_rts.asm") == 0
   incsrc "routines/item_memory_rts.asm"
 endif

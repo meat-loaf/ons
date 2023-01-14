@@ -31,5 +31,25 @@ warnpc $00FE93|!bank
 
 
 ; replace bounce block spawns
-org $028792|!addr
+; $04 has the block id
+org spawn_ambient_bounce_sprite|!bank
+	rep #$20
+	lda !block_xpos
+	sta !ambient_get_slot_xpos
+	lda !block_ypos
+	sta !ambient_get_slot_ypos
+	; y speed of $C0
+	lda #$C000
+	sta !ambient_get_slot_xspd
+	lda #$0008
+	sta !ambient_get_slot_timer
+	ldy $04
+	ldx .id_conversion_tbl-$5,y
+	txa
+	jml ambient_get_slot
+; todo get rid of this, involves hacking the block interaction code
+;      in bank 0 though, this is easier for now
+print "bounce id conversion table: ", pc
+.id_conversion_tbl:
+	db $04,$03
 ; todo - theres a lot of stuff here

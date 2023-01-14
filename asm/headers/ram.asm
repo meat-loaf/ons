@@ -306,6 +306,7 @@ assert !ambient_y_speed+(!num_ambient_sprs*2) <= $185C, "ambient sprite ram exce
 
 !on_platform_ix     = $1864|!addr
 
+!powerup_ix_slot_overwrite = $1861|!addr
 ; two bytes: ambient sprites access in 16-bit mode
 !next_oam_index     = $1869|!addr
 
@@ -333,14 +334,17 @@ assert !ambient_y_speed+(!num_ambient_sprs*2) <= $185C, "ambient sprite ram exce
 !exit_table_new_lm       = $19D8|!addr
 
 ; XXX: in SA1 add |!addr define to these, but you cant do them all!
-!spr_extra_bits         = $19F8                                ; 384 bytes free due to relocating item memory (up until $1B84)
-!spr_extra_byte_1       = !spr_extra_bits+!num_sprites         ; $1A04
-!spr_extra_byte_2       = !spr_extra_byte_1+!num_sprites       ; $1A10
-!spr_extra_byte_3       = !spr_extra_byte_1+!num_sprites       ; $1A1C
-!spr_extra_byte_4       = !spr_extra_byte_2+!num_sprites       ; $1A28
-!spr_spriteset_off      = !spr_extra_byte_3+!num_sprites       ; $1A34
-!ambient_twk_tilesz     = !spr_spriteset_off+!num_sprites      ; $1A40
-!ambient_grav_setting   = !ambient_twk_tilesz+!ambient_tblsz
+!spr_extra_bits           = $19F8                                ; 384 bytes free due to relocating item memory (up until $1B84)
+!spr_extra_byte_1         = !spr_extra_bits+!num_sprites         ; $1A04
+!spr_extra_byte_2         = !spr_extra_byte_1+!num_sprites       ; $1A10
+!spr_extra_byte_3         = !spr_extra_byte_1+!num_sprites       ; $1A1C
+!spr_extra_byte_4         = !spr_extra_byte_2+!num_sprites       ; $1A28
+!spr_spriteset_off        = !spr_extra_byte_3+!num_sprites       ; $1A34
+!ambient_twk_tilesz       = !spr_spriteset_off+!num_sprites      ; $1A40
+!ambient_grav_setting     = !ambient_twk_tilesz+!ambient_tblsz   ; $1A68
+; two bytes! used as a mirror of $9D to not cause trouble loading
+; in 16 bit mode
+!ambient_sprlocked_mirror = !ambient_grav_setting+!ambient_tblsz ; $1A90
 ; alt name of above
 
 ; TODO implement - needs to be set to (!ambient_spr_sz*2)-2 on level load

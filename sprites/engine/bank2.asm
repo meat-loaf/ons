@@ -49,7 +49,8 @@ ambient_sub_off_screen:
 	lda !ambient_y_pos,x
 	sec
 	sbc !layer_1_ypos_curr
-	bpl .yok
+	cmp #$00F0
+	bcc .yok
 	lda #$00F0
 .yok:
 	sta $01
@@ -66,9 +67,12 @@ ambient_sub_off_screen:
 	; immediately terminate the ambient sprite routine
 	; by destroying this return val
 	pla
+.exit:
 	rts
 
 ambient_physics:
+	lda !ambient_sprlocked_mirror
+	bne ambient_sub_off_screen_exit
 	sep #$30
 	lda !ambient_x_speed+1,x
 	beq .no_x_upd
@@ -124,37 +128,36 @@ ambient_physics:
 	and.b #(!ambient_twk_has_grav>>8)
 	beq .exit
 	lda !ambient_y_speed+1,x
-	cmp #$30
+	cmp !ambient_grav_setting+1,x
 	bpl .exit
 	clc
-	adc #$02
+	adc !ambient_grav_setting,x
 	sta !ambient_y_speed+1,x
 .exit:
 	rep #$30
 	rts
 
-; TODO spritesets (if applicable)
+; TODO spritesets
 ambient_initer:
 	lda !ambient_misc_1,x
+	; id stored in high byte
+	xba
 	asl
 	tay
 	lda ambient_twk_tsz,y
 	sta !ambient_twk_tilesz,x
 	lda ambient_rts,y
 	sta !ambient_rt_ptr,x
-	stz !ambient_misc_1,x
-	; decremented by sprite caller,
-	; fix timer to account for init if set
-	; ugly but it is what it is, i think its better than
-	; comparing the routine ptr to this init in the main loop
-	lda !ambient_gen_timer,x
-	beq .exit
-	inc !ambient_gen_timer,x
-.exit:
-	rts
+	lda ambient_grav_vals,y
+	sta !ambient_grav_setting,x
+
+	; execute the sprites code
+	jmp (!ambient_rt_ptr,x)
 ambient_twk_tsz:
 	skip !ambient_sprid_max*2
 ambient_rts:
+	skip !ambient_sprid_max*2
+ambient_grav_vals:
 	skip !ambient_sprid_max*2
 .done
 %set_free_finish("bank2_altspr1", ambient_rts_done)
@@ -180,8 +183,6 @@ ambient_basic_gfx:
 	lda $00
 	sta $0200|!addr,y
 	lda !ambient_props,x
-	;clc
-	;adc $02
 	sta $0202|!addr,y
 	tya
 	lsr #2
@@ -208,6 +209,7 @@ ambient_basic_gfx:
 ambient_get_slot:
 	rep #$30
 	and #$00FF
+	xba
 	pha
 	ldy.w #(!num_ambient_sprs*2)-2
 .loop:
@@ -216,31 +218,35 @@ ambient_get_slot:
 	beq .found
 	dey : dey
 	bpl .loop
+	; tidy the stack
+	pla
 	sep #$30
 	sec
 	rtl
 .found:
 	pla
+	; note: ambinet id stored in high byte
+	; low byte for common use as e.g. phase pointer
 	sta !ambient_misc_1,y
 	lda #ambient_initer
 	sta !ambient_rt_ptr,y
 	
-	lda $45
+	lda !ambient_get_slot_xpos
 	sta !ambient_x_pos,y
-	lda $47
+	lda !ambient_get_slot_ypos
 	sta !ambient_y_pos,y
-	lda $49
+	lda !ambient_get_slot_timer
+	; todo fix call sites to zero top byte if applicable
 	and #$00FF
 	sta !ambient_gen_timer,y
-
 	sep #$30
 
 	lda #$00
 	sta !ambient_x_speed,y
 	sta !ambient_y_speed,y
-	lda $4B
+	lda !ambient_get_slot_xspd
 	sta !ambient_x_speed+1,y
-	lda $4C
+	lda !ambient_get_slot_yspd
 	sta !ambient_y_speed+1,y
 	clc
 	rtl

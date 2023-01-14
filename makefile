@@ -45,7 +45,7 @@ ASM_HEADERS=$(wildcard ${asm_dir}/headers/*.asm) $(wildcard ${asm_dir}/headers/*
 
 M16_FILE=AllMap16.map16
 
-ASM_PATCHES=custom_bounce_blocks.asm dsx.asm main_gamemode_changes.asm
+ASM_PATCHES=dsx.asm main_gamemode_changes.asm
 ASM_PATCH_TS=$(addprefix ${TS_DIR}/, $(patsubst %.asm,%_ts,$(ASM_PATCHES)))
 ASM_PATCHES_FULL=$(addprefix ${asm_features_dir}/, ${ASM_PATCHES})
 

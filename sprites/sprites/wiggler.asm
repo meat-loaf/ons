@@ -271,8 +271,6 @@ wiggler_main:
 	bpl .segment_check_contact
 ..exit:
 	rtl
-;.hurt_mario:
-;	jml hurt_mario
 
 ..handle_contact:
 	lda !invincibility_timer
@@ -306,6 +304,7 @@ wiggler_main:
 	inc
 	sta !sprite_stomp_counter
 ..stomp_maxx:
+	; todo when ambient score sprites are implemented
 	;jsl spr_give_points
 	lda #$40
 	sta !wiggler_stunned_timer,x
@@ -327,8 +326,7 @@ wiggler_main:
 	lda #$d0
 	sta $4c
 	lda #!ambient_wiggler_flower_id
-	jsl ambient_get_slot
-	rtl
+	jml ambient_get_slot
 
 .wiggler_fucking_dies:
 	lda #$02
@@ -346,28 +344,7 @@ wiggler_main:
 ;	ldy !starkill_counter
 	rtl
 
-; very beginning of wiggler main (after the wrapper)
-;org $02F035|!bank
-;	JSR.w wiggler_segment_ptr_init|!bank
-;org $02F067|!bank
-;wiggler_offscreen_invoc:
-;	JMP.w wiggler_offscreen_call|!bank
-;.done
-;
-; TODO impl
-;; extended flower spawn
-;org $02F2E4|!bank
-;	JSR.w extsprite_spawn_bank2|!bank
-
-;; extended flower sprite: tile store
-;org $029D2F|!bank
-;	LDA.b #!wiggler_flower_tile
-;	JSR.w ext_store_tile1_lo_bank2|!bank
-
-;org $02F0DB|!bank
-
 ; actual remap next
-
 wiggler_small_tile_xoffs:
 	db $00,$08
 	db $04,$04

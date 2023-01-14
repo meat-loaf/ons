@@ -9,6 +9,12 @@ if not(defined("__ons_sprs_config_def__"))
 ; sprites can use extra bytes
 !sprites_use_exbytes = 1
 
+!ambient_get_slot_xpos  = $45
+!ambient_get_slot_ypos  = $47
+!ambient_get_slot_timer = $49
+!ambient_get_slot_xspd = $4B
+!ambient_get_slot_yspd = $4C
+
 ;!num_ambient_sprs = $31
 
 ; room for $2D based on these rams, except for the last two tables!
