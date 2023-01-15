@@ -67,8 +67,7 @@ ambient_bounce_spr:
 ...exit:
 	rts
 ..write_block_die:
-	lda !ambient_misc_1,x
-	xba
+	lda !ambient_misc_1+1,x
 	and #$00FF
 	asl
 	tay

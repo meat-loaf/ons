@@ -1,6 +1,7 @@
 LUNAR_MAGIC=lunar_magic_333
 SYM_DIR=.sym
-ASAR=asar --symbols=wla --symbols-path=${SYM_DIR}/$(notdir $@).sym
+SYMFILE_NAME=${SYM_DIR}/$(notdir $@).sym
+ASAR=asar --symbols=wla --symbols-path=${SYMFILE_NAME}
 TEST_EMU=snes9x-gtk
 DBG_EMU=bsnes
 FLIPS=flips
@@ -251,10 +252,13 @@ ${AMK_FAKE_TS}: ${AMK_MUSIC_DEPS} ./amk/Addmusic_list.txt ./amk/Addmusic_sample\
 #	${PIXI} ${PIXI_FLAGS} -l ${PIXI_LIST} ${ROM_NAME}
 #	touch $@
 ${SPRITES_FAKE_TS}: ${sprites_asm_sources} ${OBJTOOL_TS} ${ASM_HEADERS}
+	rm -f ${asm_dir}/headers/routines/sprite_rts.asm
 	${ASAR} ${sprites_asm_main_file} ${ROM_NAME}
+	# todo maybe do somethign with tee to make this more sane, shouldnt depend on output syms being enabled...
+	grep '\<ambient_get_slot\>'  ${SYMFILE_NAME} | sed 's/://' | sed "s/^/$$/" | sed 's/ / = /' | sed 's/ambient_get_slot/ambient_get_slot_rt/' | sed -e 's/\(.*\) = \(.*\)/\2 = \1/' > ${asm_dir}/headers/routines/sprite_rts.asm
 	touch $@
 
-${GPS_FAKE_TS}: ${gps_asm_sources} ${GPS_DIR}/list.txt ${ASM_HEADERS}
+${GPS_FAKE_TS}: ${gps_asm_sources} ${GPS_DIR}/list.txt ${SPRITES_FAKE_TS} ${ASM_HEADERS}
 	cd gps && ${GPS} ${GPS_FLAGS} ../${ROM_NAME}
 	touch $@
 

@@ -341,7 +341,7 @@ assert !ambient_y_speed+(!num_ambient_sprs*2) <= $185C, "ambient sprite ram exce
 !spr_extra_byte_4         = !spr_extra_byte_2+!num_sprites       ; $1A28
 !spr_spriteset_off        = !spr_extra_byte_3+!num_sprites       ; $1A34
 !ambient_twk_tilesz       = !spr_spriteset_off+!num_sprites      ; $1A40
-!ambient_grav_setting     = !ambient_twk_tilesz+!ambient_tblsz   ; $1A68
+!ambient_grav_setting     = !ambient_twk_tilesz+!ambient_tblsz   ; $1A90
 ; two bytes! used as a mirror of $9D to not cause trouble loading
 ; in 16 bit mode
 !ambient_sprlocked_mirror = !ambient_grav_setting+!ambient_tblsz ; $1A90

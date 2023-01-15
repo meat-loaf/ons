@@ -19,3 +19,6 @@ spawn_ambient_bounce_sprite     = $028792|!bank
 if getfilestatus("routines/item_memory_rts.asm") == 0
   incsrc "routines/item_memory_rts.asm"
 endif
+if getfilestatus("routines/sprite_rts.asm") == 0
+  incsrc "routines/sprite_rts.asm"
+endif

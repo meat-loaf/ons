@@ -1,6 +1,7 @@
 ; GPS block list
 009E:0025        teleport_accurate.asm
 00b1:0130        item_block_all.asm
+00b2:0130        item_block_all.asm
 
 00D0:0025        midway.asm
 00D1:0025        midway.asm

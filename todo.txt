@@ -14,6 +14,13 @@
 * Score per-level, save this as well
 * OW display of level percentage, score (sma2 menu like maybe?)
 
+* ~ambient sprites~
+  * spinning coins
+  * score
+  * minor extended stuff (breaking bricks, sparkles for coins,
+    sparkles for star coins)
+  * bounce block changes for original block spawns
+  * spinning turn block handling
 -- not important, but would be nice --
 * Pendulum platforms have some oam positioning issues,
   they seem off-by-one in some cases when near the edge

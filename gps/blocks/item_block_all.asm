@@ -7,6 +7,7 @@ JMP MarioCorner : JMP MarioInside : JMP MarioHead
 
 
 !map16_base        = $B1
+!map16_coin_start  = $B2
 !blk_map16_num_lo  = $03
 ; first entry is for small, second is for big
 sprite_to_spawn:
@@ -22,7 +23,7 @@ sprite_1540_vals:
 bounce_spr_to_spawn:
 	       ; conversion offset
 	db $04+$01
-
+	db $04+$01
 MarioCorner:
 MarioAbove:
 
@@ -75,7 +76,12 @@ gen_item_block_spawn_item:
 	jsl spawn_ambient_bounce_sprite
 	plb
 	jsl write_item_memory
-.do_spawn:
+
+	lda !blk_map16_num_lo
+	cmp #!map16_coin_start
+	bcc .do_spr_spawn
+	jmp do_coin_spawn
+.do_spr_spawn:
 	ldx #!num_sprites-1
 .loop:
 	lda !sprite_status,x
@@ -124,10 +130,6 @@ gen_item_block_spawn_item:
 	lda.b !block_ypos+1
 	sta.w !sprite_y_high,x
 
-;	stz $00
-;	stz $01
-;	%move_spawn_into_block()
-
 	lda #$d0
 	sta !sprite_speed_y,x
 
@@ -147,5 +149,17 @@ gen_item_block_spawn_item:
 	plx
 	rtl
 
-
+do_coin_spawn:
+	rep #$21
+	lda !block_xpos
+	sta !ambient_get_slot_xpos
+	lda !block_ypos
+	adc #(~$0010)+1
+	sta !ambient_get_slot_ypos
+	lda #$d000
+	sta !ambient_get_slot_xspd
+	stz !ambient_get_slot_timer
+	lda #$000b
+	jsl ambient_get_slot_rt
+	bra gen_item_block_spawn_item_exit
 print "A generic item block. Insert as an object to use item memory."

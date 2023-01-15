@@ -16,9 +16,7 @@ wiggler_flower_main:
 	sta !ambient_gen_timer,x
 	rep #$20
 .no_inv:
-	lda !sprite_level_props-1
-	and #$FF00
-	ora #$01ff
+	lda #$0B18
 	sta !ambient_props,x
 	jmp ambient_basic_gfx
 wiggler_flower_done:

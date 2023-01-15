@@ -35,7 +35,6 @@ ambient_sub_off_screen:
 	;      ambient sprites won't despawn when offscreen to the left
 	bcs .erase
 .ok:
-	; todo consider merging with the above checks?
 	lda !ambient_x_pos,x
 	sec
 	sbc !layer_1_xpos_curr
@@ -54,6 +53,7 @@ ambient_sub_off_screen:
 	lda #$00F0
 .yok:
 	sta $01
+.next_oam_slot:
 	lda !next_oam_index
 	cmp #$0100
 	bcs .no_oam_left
@@ -159,7 +159,7 @@ ambient_rts:
 	skip !ambient_sprid_max*2
 ambient_grav_vals:
 	skip !ambient_sprid_max*2
-.done
+ambient_rts_done:
 %set_free_finish("bank2_altspr1", ambient_rts_done)
 
 %set_free_start("bank2_altspr2")
@@ -174,6 +174,9 @@ ambient_kill_on_timer:
 ; basic 'check despawn and draw single tile' ambient gfx routine.
 ambient_basic_gfx:
 	jsr ambient_sub_off_screen
+	lda !sprite_level_props-1
+	and #$FF00
+	sta $02
 	; todo put spriteset offset in high nybble of low byte
 	;lda !ambient_twk_tilesz,x
 	;and #$00F0
@@ -183,6 +186,7 @@ ambient_basic_gfx:
 	lda $00
 	sta $0200|!addr,y
 	lda !ambient_props,x
+	ora $02
 	sta $0202|!addr,y
 	tya
 	lsr #2
@@ -206,6 +210,7 @@ ambient_basic_gfx:
 ; output:
 ;       carry set: failure, clear: success
 ;       y: ambient slot index
+print "ambient_get_slot_rt = $",pc
 ambient_get_slot:
 	rep #$30
 	and #$00FF
