@@ -304,6 +304,7 @@ assert !ambient_y_speed+(!num_ambient_sprs*2) <= $185C, "ambient sprite ram exce
 !dyn_slot_dest = $0663|!addr
 !dyn_slots     = $06FE|!addr
 
+!spr_touch_tile_lo  = $185F|!bank
 !on_platform_ix     = $1864|!addr
 
 !powerup_ix_slot_overwrite = $1861|!addr
@@ -317,12 +318,13 @@ assert !ambient_y_speed+(!num_ambient_sprs*2) <= $185C, "ambient sprite ram exce
 ; Toggles the use of item memory.
 ; ------r- : Disable reading (everything will always respawn).
 ; -------w : Disable writing.
-!item_memory_mask  = $18BB|!addr
-!player_in_cloud   = $18C2|!addr
-!starkill_counter  = $18D2|!addr
-!current_yoshi_slot = $18DF|!addr
-!yoshi_is_loose     = $18E2|!addr
-!give_player_lives = $18E4|!addr
+!item_memory_mask    = $18BB|!addr
+!player_in_cloud     = $18C2|!addr
+!starkill_counter    = $18D2|!addr
+!spr_touch_tile_high = $18D7|!addr
+!current_yoshi_slot  = $18DF|!addr
+!yoshi_is_loose      = $18E2|!addr
+!give_player_lives   = $18E4|!addr
 
 !sprite_buoyancy         = $190E|!addr
 !level_general_purpose_1 = $1923|!addr

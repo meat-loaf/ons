@@ -19,9 +19,17 @@ HeadInside:
 	%change_map16()
 	SEP #$10
 
-	STZ $00
-	STZ $01
+	lda !block_xpos
+	and #$F0
+	sta !block_xpos
+
+	lda !block_ypos
+	and #$F0
+	sta !block_ypos
+	; the ambient spawner does not preserve Y
+	PHY
 	%spawn_red_coin()
+	PLY
 
 SpriteV:
 SpriteH:

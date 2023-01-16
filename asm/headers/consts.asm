@@ -1,7 +1,6 @@
 if not(defined("__const_incl"))
 !__const_incl = 1
 
-
 if read1($00FFD5) == $23
 	if read1($00FFD7) == $0D ; full 6/8 mb sa-1 rom
 		fullsa1rom

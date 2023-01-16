@@ -166,6 +166,7 @@ sprites_asm_main_file=${SPRITES_DIR}/sprites.asm
 sprites_asm_sources= \
 	${sprites_asm_main_file} \
 	${SPRITES_DIR}/list.def \
+	${SPRITES_DIR}/ambient_list.def \
 	$(wildcard ${SPRITES_DIR}/engine/*.asm) \
 	$(wildcard ${SPRITES_DIR}/engine/spritesets/*.asm) \
 	$(wildcard ${SPRITES_DIR}/include/*.def) \

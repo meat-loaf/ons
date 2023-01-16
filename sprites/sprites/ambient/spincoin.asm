@@ -1,7 +1,7 @@
 includefrom "ambient_list.def"
 
-!spincoin_sprnum   = $0A
-!spincoin_r_sprnum = $0B
+!spincoin_sprnum   = $10
+!spincoin_r_sprnum = $11
 
 ; sprite's terminal velocity doesn't matter much, sprite kills itself once
 ; it exceeds it
@@ -22,9 +22,14 @@ ambient_coin:
 	cmp #$20
 	rep #$20
 	bmi .gfx
-	; todo convert to score sprite,
-	;      give coin/red coin
-	stz !ambient_rt_ptr,x
+	; todo convert to score sprite
+	lda #$0100
+	sta !ambient_misc_1,x
+	lda #$0018
+	sta !ambient_gen_timer,x
+	lda #ambient_initer
+	sta !ambient_rt_ptr,x
+	;stz !ambient_rt_ptr,x
 	rts
 .gfx:
 	lda !effective_frame

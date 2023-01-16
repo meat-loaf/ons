@@ -200,6 +200,9 @@ ambient_basic_gfx:
 	sta $0420|!addr,y
 	rep #$20
 	rts
+; TODO
+spr_give_points:
+	rtl
 
 ; input: a = ambient sprite id to spawn
 ;        $45 = ambient sprite xpos

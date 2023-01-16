@@ -1,6 +1,4 @@
 ; spawns a red coin at current block pos
-; xoff in $00
-; yoff in $01
 
 	INC !red_coin_adder
 	LDX #!red_coin_sfx_id
@@ -13,30 +11,13 @@
 .not_final_coin:
 	STX !red_coin_sfx_port
 
-	LDX $1865|!addr
-	BPL .nofix
-	LDX #$03
-	STX $1865|!addr
-.nofix:
-	LDA #$02
-	STA $17D0|!addr,x
-	LDA $98
-	AND #$F0
-	CLC : ADC $01
-	STA $17D4|!addr,x
-	LDA $99
-	;ADC #$00
-	STA $17E8|!addr,x
-	LDA $9A
-	AND #$F0
-	CLC : ADC $00
-	STA $17E0|!addr,x
-	LDA $9B
-	;ADC #$00
-	STA $17EC|!addr,x
-	LDA #$D0
-	STA $17D8|!addr,x
-
-	DEC $1865|!addr
-
-	RTL
+	rep #$20
+	lda !block_xpos
+	sta !ambient_get_slot_xpos
+	lda !block_ypos
+	sta !ambient_get_slot_ypos
+	lda #$d000
+	sta !ambient_get_slot_xspd
+	stz !ambient_get_slot_timer
+	lda #$0011
+	jml ambient_get_slot_rt

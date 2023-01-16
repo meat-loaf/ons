@@ -9,6 +9,7 @@ JMP MarioCorner : JMP MarioInside : JMP MarioHead
 !map16_base        = $B1
 !map16_coin_start  = $B2
 !blk_map16_num_lo  = $03
+
 ; first entry is for small, second is for big
 sprite_to_spawn:
 	; vine
@@ -18,12 +19,9 @@ sprite_1540_vals:
 	db $3E,$3E
 
 ; ambient id
-; todo the ambient spawner code uses a conversion table
-;      that needs to be gotten rid of
 bounce_spr_to_spawn:
-	       ; conversion offset
-	db $04+$01
-	db $04+$01
+	db $09
+	db $09
 MarioCorner:
 MarioAbove:
 
@@ -57,6 +55,17 @@ Cape:
 gen_item_block_spawn_item:
 	phx
 	phy
+	lda #$02
+	ldx !blk_map16_num_lo
+	cpx #!map16_base
+	beq .not_vine
+	lda #$03
+.not_vine:
+	cpx #!map16_coin_start
+	bcs .no_sound_here
+	sta $1DFC|!addr
+.no_sound_here:
+
 	lda !block_xpos
 	pha
 	and #$F0
@@ -66,6 +75,7 @@ gen_item_block_spawn_item:
 	and #$F0
 	sta !block_ypos
 
+
 	ldx !blk_map16_num_lo
 	lda bounce_spr_to_spawn-!map16_base,x
 	sta $04
@@ -73,6 +83,7 @@ gen_item_block_spawn_item:
 	lda.b #bank(spawn_ambient_bounce_sprite)
 	pha
 	plb
+	stz $05
 	jsl spawn_ambient_bounce_sprite
 	plb
 	jsl write_item_memory
@@ -80,7 +91,7 @@ gen_item_block_spawn_item:
 	lda !blk_map16_num_lo
 	cmp #!map16_coin_start
 	bcc .do_spr_spawn
-	jmp do_coin_spawn
+	jmp .do_coin_spawn
 .do_spr_spawn:
 	ldx #!num_sprites-1
 .loop:
@@ -140,6 +151,16 @@ gen_item_block_spawn_item:
 	bpl .exit
 	lda #$10
 	sta !sprite_misc_15ac,x
+	bra .exit
+.do_coin_spawn:
+	lda !block_ypos
+	sec
+	sbc #$10
+	sta !block_ypos
+	bcs ..ypos_ok
+	dec !block_ypos+1
+..ypos_ok
+	%spawn_red_coin()
 .exit:
 	pla
 	sta !block_ypos
@@ -149,17 +170,4 @@ gen_item_block_spawn_item:
 	plx
 	rtl
 
-do_coin_spawn:
-	rep #$21
-	lda !block_xpos
-	sta !ambient_get_slot_xpos
-	lda !block_ypos
-	adc #(~$0010)+1
-	sta !ambient_get_slot_ypos
-	lda #$d000
-	sta !ambient_get_slot_xspd
-	stz !ambient_get_slot_timer
-	lda #$000b
-	jsl ambient_get_slot_rt
-	bra gen_item_block_spawn_item_exit
 print "A generic item block. Insert as an object to use item memory."

@@ -304,8 +304,7 @@ wiggler_main:
 	inc
 	sta !sprite_stomp_counter
 ..stomp_maxx:
-	; todo when ambient score sprites are implemented
-	;jsl spr_give_points
+	jsl spr_give_points
 	lda #$40
 	sta !wiggler_stunned_timer,x
 	inc !wiggler_angry,x
