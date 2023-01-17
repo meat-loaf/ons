@@ -1,7 +1,9 @@
 ; GPS block list
 009E:0025        teleport_accurate.asm
+00b0:0130        item_block_all.asm
 00b1:0130        item_block_all.asm
 00b2:0130        item_block_all.asm
+00b3:0130        item_block_all.asm
 
 00D0:0025        midway.asm
 00D1:0025        midway.asm
@@ -38,18 +40,18 @@
 03BE:0130        solids/onoff_switch_act_reversed.asm
 03CE:0130        solids/onoff_switch_act.asm
 03CF:0130        solids/mario_solid.asm
-03C8:0130        item_blocks/question/question_vine.asm
-03D8:0130        item_blocks/brick/brick_cape.asm
-03D9:0130        item_blocks/brick/brick_key.asm
-03DA:0130        item_blocks/brick/brick_springboard.asm
-03DB:0130        item_blocks/question/question_springboard.asm
-03DC:0130        item_blocks/question/question_poison.asm
-03DD:0130        item_blocks/brick/brick_vine.asm
-03DE:0130        item_blocks/yoshi/yoshi_block_egg_grn.asm
-03E8:0130        item_blocks/brick/brick_flower.asm
-03E9:0130        SMB3Brick.asm
-03EB:0130        item_blocks/brick/brick_poison.asm
-03FE:0130        item_blocks/yoshi/yoshi_block_egg_red.asm
+;03C8:0130        item_blocks/question/question_vine.asm
+;03D8:0130        item_blocks/brick/brick_cape.asm
+;03D9:0130        item_blocks/brick/brick_key.asm
+;03DA:0130        item_blocks/brick/brick_springboard.asm
+;03DB:0130        item_blocks/question/question_springboard.asm
+;03DC:0130        item_blocks/question/question_poison.asm
+;03DD:0130        item_blocks/brick/brick_vine.asm
+;03DE:0130        item_blocks/yoshi/yoshi_block_egg_grn.asm
+;03E8:0130        item_blocks/brick/brick_flower.asm
+;03E9:0130        SMB3Brick.asm
+;03EB:0130        item_blocks/brick/brick_poison.asm
+;03FE:0130        item_blocks/yoshi/yoshi_block_egg_red.asm
 
 049C:0130        slip.asm
 049D:0130        slip.asm
@@ -231,88 +233,92 @@
 @dsc
 
 001	8	Water, used in the display of custom object 2D.
-09E	2	154
-09F	2	006
-09F	0	A vine, which appears only if item memory is set. Non-functional, use object 1E with size value x4.
-02D	0	The bottom of a 16x32 key block (not functional). Only used for Lunar Magic's display; use extended object 41 instead.
-02E	0	The top of a 16x32 key block (not functional). Only used for Lunar Magic's display; use extended object 41 instead.
-04A	0	A bush tile. Used in the display of custom object 2D.
-0BE	0	A block that is solid when the ON/OFF state is ON (not functional). Only used for Lunar Magic's display; use object 01 instead.
-0CE	0	A block that is solid when the ON/OFF state is OFF (not functional). Only used for Lunar Magic's display; use object 06 instead.
-0CF	0	A block that is solid to Mario and Yoshi but not to other sprites (not functional). Only used for Lunar Magic's display; use object 03 instead.
-3C8	10	539
-0C8	0	A question block that spawns a vine (not functional). Only used for Lunar Magic's display; use extended object 1E instead.
-0C8	10	539
-3C8	0	A question block that spawns a vine. Use extended object 1E instead.
 
-0D8	10	106
-3D8	10	106
-0D8	0	A breakable brick from SMB3 with a Feather inside (not functional). Only used for Lunar Magic's display; use extended object 15 instead.
-0D9	10	56F
-3D9	10	56F
-0D9	0	A brick from SMB3 with a key inside (not functional). Only used for Lunar Magic's display; use extended object 19 instead.
-0DA	10	56D
-3DA	10	56D
-0DA	0	A brick from SMB3 with a springboard inside (not functional). Only used for Lunar Magic's display; use extended object 1A instead.
-0DB	10	56D
-3DB	10	56D
-0DB	0	A question block with a springboard inside (not functional). Only used for Lunar Magic's display; use extended object 1A instead.
-0DC	10      56C
-0DC	0       A question block with a poison mushroom inside (not functional). Only used for Lunar Magic's display; use extended object 1D instead.
-0EB	10	56C
-0DC	0       A brick block with a poison mushroom inside (not functional). Only used for Lunar Magic's display; use extended object 1C instead.
-3DD	10	539
-0DD	0	A brick block that spawns a vine (not functional). Only used for Lunar Magic's display; use extended object 21 instead.
-0DD	10	539
-3DD	0	A brick block that spawns a vine. Use extended object 21 instead.
-0DE	10	5A5
-0DE	0	A special item block that spawns a green yoshi (not functional). Only used for Lunar Magic's display; use extended object 20 instead.
-3DE	10	5A5
-3DE	0	A special item block that spawns a green yoshi. Use extended object 20 instead.
-
-0E0	10	599
-0E1	10	599
-0E2	10	599
-
-0DF	10	073
-3DF	10	073
-0FE	10	5A4
-0FE	0	A special item block that spawns a Red yoshi. Use extended object 1F instead.
-3FE	10	5A4
-3FE	0	A special item block that spawns a Red yoshi. Use extended object 1F instead.
-0FF	10	072
-3FF	10	072
-
-
-
-0E8	10	104
-3E8	10	104
-0E8	0	A breakable brick from SMB3 with a Flower inside (not functional). Only used for Lunar Magic's display; use extended object 10 instead.
-0E9	0	A breakable brick from SMB3 (not functional). Only used for Lunar Magic's display; use object 07 instead.
-10C	0	Part of a pipe cross section (decorative). Is rounded if there is nothing behind it, otherwise becomes a corner (not functional). Only used for Lunar Magic's display, use extended object 7F instead.
-10D	0	Part of a pipe cross section (decorative). Is rounded if there is nothing behind it, otherwise becomes a corner (not functional). Only used for Lunar Magic's display, use extended object 7F instead.
-10E	0	Part of a pipe cross section (decorative). Is rounded if there is nothing behind it, otherwise becomes a corner (not functional). Only used for Lunar Magic's display, use extended object 7F instead.
-10F	0	Part of a pipe cross section (decorative). Is rounded if there is nothing behind it, otherwise becomes a corner (not functional). Only used for Lunar Magic's display, use extended object 7F instead.
-154	0	A block that is solid to sprites, but not to Mario and Yoshi (not functional). Only used for Lunar Magic's Display; use object 0C instead.
-
-308	0	Part of a pipe cross section (decorative). Is rounded if there is nothing behind it, otherwise becomes a corner (not functional). Use extended object 7F instead.
-309	0	Part of a pipe cross section (decorative). Is rounded if there is nothing behind it, otherwise becomes a corner (not functional). Use extended object 7F instead.
-30A	0	Part of a pipe cross section (decorative). Is rounded if there is nothing behind it, otherwise becomes a corner (not functional). Use extended object 7F instead.
-30B	0	Part of a pipe cross section (decorative). Is rounded if there is nothing behind it, otherwise becomes a corner (not functional). Use extended object 7F instead.
-30C	0	Part of a pipe cross section (decorative). Is rounded if there is nothing behind it, otherwise becomes a corner (not functional). Use extended object 7F instead.
-30D	0	Part of a pipe cross section (decorative). Is rounded if there is nothing behind it, otherwise becomes a corner (not functional). Use extended object 7F instead.
-30E	0	Part of a pipe cross section (decorative). Is rounded if there is nothing behind it, otherwise becomes a corner (not functional). Use extended object 7F instead.
-30F	0	Part of a pipe cross section (decorative). Is rounded if there is nothing behind it, otherwise becomes a corner (not functional). Use extended object 7F instead.
-
-312	0	An On/Off block. Use the platforms spriteset file (ExGFX108) for the correct graphics. Use extended object 24 instead of direct map16 insertion.
-354	0	A block that is solid to sprites, but not to Mario and Yoshi. Use object 0C instead.
-3BE	0	A block that is solid when the ON/OFF state is ON. Use object 01 instead.
-3CE	0	A block that is solid when the ON/OFF state is OFF. Use object 06 instead.
-3CF	0	A block that is solid to Mario and Yoshi but not to other sprites. Use object 03 instead.
-3E9	0	A breakable brick from SMB3. Use object 07 instead.
-
-131	0	A slope assist tile that Mario can't walk through. If used on its own, there can be some unusual or glitchy side effects. Mario can pass through it but other sprites tend to freeze in place if placed directly on top or glide if they walk on top of it.
-34B	0	A slope assist tile that Mario can't walk through. Placed automatically when an edge tile intersects with a steep slope assist tile (left).
-34C	0	A slope assist tile that Mario can't walk through. Placed automatically when an edge tile intersects with a steep slope assist tile (right).
-
-
+00b0	0	A ? block that spawns a vine. Use extended object XX instead.
+00b1	0	A ? block that spawns a springboard. Use extended object XX instead.
+00b2	0	A ? block that spawns a poison mushroom. Use extended object XX instead.
+;09E	2	154
+;09F	2	006
+;09F	0	A vine, which appears only if item memory is set. Non-functional, use object 1E with size value x4.
+;02D	0	The bottom of a 16x32 key block (not functional). Only used for Lunar Magic's display; use extended object 41 instead.
+;02E	0	The top of a 16x32 key block (not functional). Only used for Lunar Magic's display; use extended object 41 instead.
+;04A	0	A bush tile. Used in the display of custom object 2D.
+;0BE	0	A block that is solid when the ON/OFF state is ON (not functional). Only used for Lunar Magic's display; use object 01 instead.
+;0CE	0	A block that is solid when the ON/OFF state is OFF (not functional). Only used for Lunar Magic's display; use object 06 instead.
+;0CF	0	A block that is solid to Mario and Yoshi but not to other sprites (not functional). Only used for Lunar Magic's display; use object 03 instead.
+;3C8	10	539
+;0C8	0	A question block that spawns a vine (not functional). Only used for Lunar Magic's display; use extended object 1E instead.
+;0C8	10	539
+;3C8	0	A question block that spawns a vine. Use extended object 1E instead.
+;
+;0D8	10	106
+;3D8	10	106
+;0D8	0	A breakable brick from SMB3 with a Feather inside (not functional). Only used for Lunar Magic's display; use extended object 15 instead.
+;0D9	10	56F
+;3D9	10	56F
+;0D9	0	A brick from SMB3 with a key inside (not functional). Only used for Lunar Magic's display; use extended object 19 instead.
+;0DA	10	56D
+;3DA	10	56D
+;0DA	0	A brick from SMB3 with a springboard inside (not functional). Only used for Lunar Magic's display; use extended object 1A instead.
+;0DB	10	56D
+;3DB	10	56D
+;0DB	0	A question block with a springboard inside (not functional). Only used for Lunar Magic's display; use extended object 1A instead.
+;0DC	10      56C
+;0DC	0       A question block with a poison mushroom inside (not functional). Only used for Lunar Magic's display; use extended object 1D instead.
+;0EB	10	56C
+;0DC	0       A brick block with a poison mushroom inside (not functional). Only used for Lunar Magic's display; use extended object 1C instead.
+;3DD	10	539
+;0DD	0	A brick block that spawns a vine (not functional). Only used for Lunar Magic's display; use extended object 21 instead.
+;0DD	10	539
+;3DD	0	A brick block that spawns a vine. Use extended object 21 instead.
+;0DE	10	5A5
+;0DE	0	A special item block that spawns a green yoshi (not functional). Only used for Lunar Magic's display; use extended object 20 instead.
+;3DE	10	5A5
+;3DE	0	A special item block that spawns a green yoshi. Use extended object 20 instead.
+;
+;0E0	10	599
+;0E1	10	599
+;0E2	10	599
+;
+;0DF	10	073
+;3DF	10	073
+;0FE	10	5A4
+;0FE	0	A special item block that spawns a Red yoshi. Use extended object 1F instead.
+;3FE	10	5A4
+;3FE	0	A special item block that spawns a Red yoshi. Use extended object 1F instead.
+;0FF	10	072
+;3FF	10	072
+;
+;
+;
+;0E8	10	104
+;3E8	10	104
+;0E8	0	A breakable brick from SMB3 with a Flower inside (not functional). Only used for Lunar Magic's display; use extended object 10 instead.
+;0E9	0	A breakable brick from SMB3 (not functional). Only used for Lunar Magic's display; use object 07 instead.
+;10C	0	Part of a pipe cross section (decorative). Is rounded if there is nothing behind it, otherwise becomes a corner (not functional). Only used for Lunar Magic's display, use extended object 7F instead.
+;10D	0	Part of a pipe cross section (decorative). Is rounded if there is nothing behind it, otherwise becomes a corner (not functional). Only used for Lunar Magic's display, use extended object 7F instead.
+;10E	0	Part of a pipe cross section (decorative). Is rounded if there is nothing behind it, otherwise becomes a corner (not functional). Only used for Lunar Magic's display, use extended object 7F instead.
+;10F	0	Part of a pipe cross section (decorative). Is rounded if there is nothing behind it, otherwise becomes a corner (not functional). Only used for Lunar Magic's display, use extended object 7F instead.
+;154	0	A block that is solid to sprites, but not to Mario and Yoshi (not functional). Only used for Lunar Magic's Display; use object 0C instead.
+;
+;308	0	Part of a pipe cross section (decorative). Is rounded if there is nothing behind it, otherwise becomes a corner (not functional). Use extended object 7F instead.
+;309	0	Part of a pipe cross section (decorative). Is rounded if there is nothing behind it, otherwise becomes a corner (not functional). Use extended object 7F instead.
+;30A	0	Part of a pipe cross section (decorative). Is rounded if there is nothing behind it, otherwise becomes a corner (not functional). Use extended object 7F instead.
+;30B	0	Part of a pipe cross section (decorative). Is rounded if there is nothing behind it, otherwise becomes a corner (not functional). Use extended object 7F instead.
+;30C	0	Part of a pipe cross section (decorative). Is rounded if there is nothing behind it, otherwise becomes a corner (not functional). Use extended object 7F instead.
+;30D	0	Part of a pipe cross section (decorative). Is rounded if there is nothing behind it, otherwise becomes a corner (not functional). Use extended object 7F instead.
+;30E	0	Part of a pipe cross section (decorative). Is rounded if there is nothing behind it, otherwise becomes a corner (not functional). Use extended object 7F instead.
+;30F	0	Part of a pipe cross section (decorative). Is rounded if there is nothing behind it, otherwise becomes a corner (not functional). Use extended object 7F instead.
+;
+;312	0	An On/Off block. Use the platforms spriteset file (ExGFX108) for the correct graphics. Use extended object 24 instead of direct map16 insertion.
+;354	0	A block that is solid to sprites, but not to Mario and Yoshi. Use object 0C instead.
+;3BE	0	A block that is solid when the ON/OFF state is ON. Use object 01 instead.
+;3CE	0	A block that is solid when the ON/OFF state is OFF. Use object 06 instead.
+;3CF	0	A block that is solid to Mario and Yoshi but not to other sprites. Use object 03 instead.
+;3E9	0	A breakable brick from SMB3. Use object 07 instead.
+;
+;131	0	A slope assist tile that Mario can't walk through. If used on its own, there can be some unusual or glitchy side effects. Mario can pass through it but other sprites tend to freeze in place if placed directly on top or glide if they walk on top of it.
+;34B	0	A slope assist tile that Mario can't walk through. Placed automatically when an edge tile intersects with a steep slope assist tile (left).
+;34C	0	A slope assist tile that Mario can't walk through. Placed automatically when an edge tile intersects with a steep slope assist tile (right).
+;
+;

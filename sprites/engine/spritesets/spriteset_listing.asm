@@ -31,7 +31,7 @@ spriteset_off_ptrs:
 	dw spritesets_chucks                  ; sprite 1B - chuck football
 	dw spritesets_bills                   ; sprite 1C - bullet bill
 	dw spritesets_null_spriteset          ; sprite 1D - hoppin' flame
-	dw spritesets_lakitu_spiny            ; sprite 1E - lakitu/fishin' lakitu
+	dw spritesets_hoopster                ; sprite 1E - hoopster
 	dw spritesets_magikoopa_bgflame       ; sprite 1F - magikoopa
 	dw spritesets_magikoopa_bgflame       ; sprite 20 - magikoopa's magic
 	dw spritesets_null_spriteset          ; sprite 21 - moving coin

@@ -19,9 +19,7 @@ ambient_dust_main:
 	lsr #2
 	asl
 	tay
-	lda !sprite_level_props-1
-	and #$FF00
-	ora .prop_tiles_tbl,y
+	lda .prop_tiles_tbl,y
 	sta !ambient_props,x
 	jmp ambient_basic_gfx
 .prop_tiles_tbl:

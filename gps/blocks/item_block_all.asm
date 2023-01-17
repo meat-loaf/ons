@@ -6,20 +6,30 @@ JMP Cape : JMP Fireball
 JMP MarioCorner : JMP MarioInside : JMP MarioHead
 
 
-!map16_base        = $B1
-!map16_coin_start  = $B2
+!map16_base        = $B0
+!map16_coin_start  = $B3
 !blk_map16_num_lo  = $03
 
-; first entry is for small, second is for big
+; first entry is for when mario is small, second is for big
 sprite_to_spawn:
 	; vine
 	db $29,$29
+	; springboard
+	db $2F,$2F
+	; poison mushroom
+	db $43,$43
 sprite_1540_vals:
 	; vine
+	db $3E,$3E
+	; springboard
+	db $00,$00
+	; poison mushroom
 	db $3E,$3E
 
 ; ambient id
 bounce_spr_to_spawn:
+	db $09
+	db $09
 	db $09
 	db $09
 MarioCorner:
@@ -152,6 +162,7 @@ gen_item_block_spawn_item:
 	lda #$10
 	sta !sprite_misc_15ac,x
 	bra .exit
+
 .do_coin_spawn:
 	lda !block_ypos
 	sec

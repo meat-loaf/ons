@@ -154,11 +154,11 @@ ambient_initer:
 	; execute the sprites code
 	jmp (!ambient_rt_ptr,x)
 ambient_twk_tsz:
-	skip !ambient_sprid_max*2
+	skip (!ambient_sprid_max+1)*2
 ambient_rts:
-	skip !ambient_sprid_max*2
+	skip (!ambient_sprid_max+1)*2
 ambient_grav_vals:
-	skip !ambient_sprid_max*2
+	skip (!ambient_sprid_max+1)*2
 ambient_rts_done:
 %set_free_finish("bank2_altspr1", ambient_rts_done)
 
@@ -166,7 +166,7 @@ ambient_rts_done:
 ambient_kill_on_timer:
 	lda !ambient_gen_timer,x
 	bne .ok
-	stz !ambient_gen_timer,x
+	stz !ambient_rt_ptr,x
 	; destroy the return, exiting out of the sprite code entirely
 	pla
 .ok:
@@ -188,6 +188,7 @@ ambient_basic_gfx:
 	lda !ambient_props,x
 	ora $02
 	sta $0202|!addr,y
+.smallstore:
 	tya
 	lsr #2
 	tay

@@ -7,8 +7,14 @@
 !bank1_thwomp_free_start     = $01AE96|!bank
 !bank1_thwomp_free_end       = $01AF9F|!bank
 
-!bank1_growvine_free_start   = $01C183
-!bank1_growvine_free_end     = $01C1EE
+!bank1_growvine_free_start   = $01C183|!bank
+!bank1_growvine_free_end     = $01C1EE|!bank
+
+; TODO validate this range. this is a lot of code and i only
+;      skimmed through it. some of it is used by the moving coin
+;      as well, which is yet to be implemented at the time of writing
+!bank1_powerups_free_start   = $01C313|!bank
+!bank1_powerups_free_end     = $01C74A|!bank
 
 !bank1_boss_mode7_free_start = $01CC9D|!bank
 !bank1_boss_mode7_free_end   = $01CCF0|!bank

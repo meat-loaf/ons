@@ -126,7 +126,7 @@ endmacro
 macro write_ambient_tables(table_label, tsize_label, grv_tbl, default)
 ;	org <table_label>
 	!ix #= 0
-	while !ix < !ambient_sprid_max
+	while !ix < !ambient_sprid_max+1
 		org <table_label>+(!{ix}*2)
 		if defined("ambient_!{ix}_defined")
 			dw !{ambient_!{ix}_main}

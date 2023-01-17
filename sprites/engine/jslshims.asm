@@ -31,6 +31,10 @@ org $019AA8|!bank
 ;	rtl
 
 %set_free_start("bank1_bossfire")
+; springboard graphics caller when carried
+springshim:
+	jsl $01E6F0|!bank
+	rts
 spr_spinkill_shim:
 	%jsl2rts(!bank01_jsl2rts_rtl, spr_spinkill)
 spr_lavadie_shim:

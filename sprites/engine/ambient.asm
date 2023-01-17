@@ -1,5 +1,9 @@
 includefrom "engine.asm"
 
+; generic interaction - replace with stub
+org $01AB64|!bank
+	jsl spr_give_points
+
 ; this table is used as a 'bounce block id'.
 ; in the original game it was a bit weirder, but the new code
 ; uses it directly as an ambient sprite id.

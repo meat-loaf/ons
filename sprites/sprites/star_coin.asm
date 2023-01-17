@@ -11,13 +11,14 @@
 
 %set_free_start("bank3_sprites")
 starcoin_init:
-	; todo make shared routine
-;	%sprite_init_do_pos_offset(!extra_byte_1,x)
 	jsl sprite_read_item_memory
-	beq .exit
+	beq .nodie
 	stz !sprite_status,x
 .exit:
 	rtl
+.nodie:
+	lda !spr_extra_byte_1,x
+	jml spr_init_pos_offset
 
 starcoin_main:
 	%dynamic_gfx_rt_bank3("lda !starcoin_ani_timer,x : lsr #3 : and #$03", "starcoin")
@@ -27,7 +28,6 @@ starcoin_main:
 	jsl sub_off_screen
 	; update ani frame
 	inc !starcoin_ani_timer,x
-;	jsr.w _suboffscr0_bank3
 	jsl   mario_spr_interact_l
 	bcc starcoin_init_exit
 	lda #!starcoin_collect_sfx
@@ -46,8 +46,7 @@ starcoin_main:
 ;	lda.b #$08
 ;	clc
 ;	adc $00
-;	; todo this routine uses mario's position, before we were using sprite's position
-;	jsl $00F377|!bank
+;	jsl spr_give_points
 
 	stz !sprite_status,x
 	jml sprite_write_item_memory|!bank

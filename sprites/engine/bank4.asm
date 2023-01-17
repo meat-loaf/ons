@@ -15,7 +15,25 @@ sub_horz_pos:
 
 sub_vert_pos:
 	rtl
-
+; a: packed sprite offset in pixels, YX
+spr_init_pos_offset:
+	sta $00
+	and #$0F
+	clc
+	adc !sprite_x_low,x
+	sta !sprite_x_low,x
+	bcc .no_xhi_adj
+	inc !sprite_x_high,x
+.no_xhi_adj:
+	lda $00
+	lsr #4
+	clc
+	adc !sprite_y_low,x
+	sta !sprite_y_low,x
+	bcc .no_yhi_adj
+	inc !sprite_y_high,x
+.no_yhi_adj:
+	rtl
 ; sets $00 to screen-relative x-position, and
 ; $01 to screen-relative y-position for sprite graphics
 ; routines. If sprite is offscreen, destroys the JSL used

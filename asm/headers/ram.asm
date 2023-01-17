@@ -304,7 +304,7 @@ assert !ambient_y_speed+(!num_ambient_sprs*2) <= $185C, "ambient sprite ram exce
 !dyn_slot_dest = $0663|!addr
 !dyn_slots     = $06FE|!addr
 
-!spr_touch_tile_lo  = $185F|!bank
+!spr_touch_tile_low = $185F|!bank
 !on_platform_ix     = $1864|!addr
 
 !powerup_ix_slot_overwrite = $1861|!addr

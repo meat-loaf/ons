@@ -2,6 +2,14 @@
 org $02ABF3|!bank
 	db $7F
 
+; basic init routine for carryable sprites
+org $018435|!bank
+generic_carryable_init:
+	lda #$09
+	sta !sprite_status,x
+	rtl
+warnpc $01843B|!bank
+
 org $01808C|!bank
 run_sprites:
 	phb
