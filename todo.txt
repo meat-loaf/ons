@@ -1,5 +1,3 @@
--- fix/implement before any sort of proper release --
-
 * Finish death->level transition
   * Restart at midway without ow transition and item memory
     already implemented. Implement post-death menu to abort
@@ -15,12 +13,22 @@
 * OW display of level percentage, score (sma2 menu like maybe?)
 
 * ~ambient sprites~
-  * spinning coins
-  * score
-  * minor extended stuff (breaking bricks, sparkles for coins,
+  * compact ram better
+    * ambient x/y speed accitentally tried to use layer1/2 delta
+      ram (because smw is dumb and just throws stuff everywhere),
+      and we will probably need at least one more table, so compact
+      it a bit better...the normal sprites stuff can probably go where
+      the ambient routine ptr etc are at the moment, as they take up
+      far less space
+  * score sprites (implement shim for spawning them also)
+  * minor extended stuff (sparkles for coins,
     sparkles for star coins)
-  * bounce block changes for original block spawns
-  * spinning turn block handling
+    * maybe move these to a system like the one used for
+      spinning turn blocks? they dont need much and it
+      might be too much pressure on the 40 ambient slots
+  * port gps' changemap16 routine to replace
+    beb0 calls in bounce blocks, for slight performance gain
+    and required for smb3 bricks to work as intended
 -- not important, but would be nice --
 * Pendulum platforms have some oam positioning issues,
   they seem off-by-one in some cases when near the edge

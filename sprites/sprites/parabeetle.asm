@@ -34,7 +34,7 @@
 x_speed:
 	db $0C,$0C,$06,$1A,$0C,$14,$0C,$0C        ; normal speeds. order is sequential with the palette (first = palette 8, last = palette F)
 parabeetle_init:
-	lda !extra_byte_1,x
+	lda !spr_extra_byte_1,x
 	and #$07
 	sta !para_pal_index,x
 	asl
@@ -53,7 +53,7 @@ parabeetle_init:
 	bpl .EndInit
 	inc !para_facing_dir,x
 .EndInit
-	lda !extra_byte_1,x
+	lda !spr_extra_byte_1,x
 	and #$30
 	beq .Return
 	cmp #$30

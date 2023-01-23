@@ -117,7 +117,8 @@ CORE_BUILD_RULES= \
 	${ASM_PATCH_TS} \
 	${ASM_TWEAK_TS} \
 	${FT_IMEM_TS} \
-	${8x8_DMA_TS}
+	${8x8_DMA_TS} \
+	${SPR_COLLECTION_TS} \
 
 # should list _all_ the deps here but too many files have spaces.
 # it's a ton of stuff to change and not currently worth the effort

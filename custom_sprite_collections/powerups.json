@@ -1,0 +1,55 @@
+[{
+	"id":"3F",
+	"name":"Powerup Roulette",
+	"desc": "A Powerup Roulette sprite that alternates between a Poison Mushroom and one of a Fire Flower, a Cape Feather, or a Star.",
+	"category": "generic",
+	"custom": false,
+	"extra_bit": false,
+	"smap16": [{
+		"tile":"6F4"
+	},{
+		"tile":"687",
+		"xoff":2,
+		"yoff":-4
+	}]
+},{
+	"id":"40",
+	"name":"Mushroom",
+	"desc": "A Mushroom that turns Mario into Super Mario. If placed on the ground it stays in place, but moves away from the player otherwise.",
+	"category": "generic",
+	"custom": false,
+	"extra_bit": false,
+	"smap16": {
+		"tile":"6E4"
+	}
+},{
+	"id":"41",
+	"name":"Cape Feather",
+	"desc": "A Feather that turns Mario into Caped Mario. If placed on the ground it stays in place, but falls and floats offscreen otherwise.",
+	"category": "generic",
+	"custom": false,
+	"extra_bit": false,
+	"smap16": {
+		"tile":"6E6"
+	}
+},{
+	"id":"42",
+	"name":"Fire Flower",
+	"desc": "A Fire Flower that turns Mario into Fire Mario. If placed on the ground it stays in place, but falls towards the ground otherwise.",
+	"category": "generic",
+	"custom": false,
+	"extra_bit": false,
+	"smap16": {
+		"tile":"6F4"
+	}
+},{
+	"id":"43",
+	"name":"Poison Mushroom",
+	"desc": "A Poison Mushroom that hurts Mario. If placed on the ground it stays in place, but moves towards the player otherwise.",
+	"category": "generic",
+	"custom": false,
+	"extra_bit": false,
+	"smap16": {
+		"tile":"6E7"
+	}
+}]

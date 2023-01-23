@@ -1,0 +1,22 @@
+[{
+	"id":"2F",
+	"name":"Springboard",
+	"desc":"A portable springboard, which Mario can carry. It launches Mario in the air if he jumps on it.",
+	"category":"carryable",
+	"custom": false,
+	"extra_bit": false,
+	"smap16":{
+		"tile":"6F7"
+	}
+},{
+	"id":"80",
+	"name":"Key",
+	"desc":"A portable key, which Mario can stand on. It activates the secret exit if transported to a keyhole.",
+	"category":"carryable",
+	"custom": false,
+	"extra_bit": false,
+	"smap16":{
+		"tile":"6A7"
+	}
+
+}]

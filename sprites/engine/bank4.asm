@@ -14,6 +14,16 @@ sub_horz_pos:
 	rtl
 
 sub_vert_pos:
+	ldy #$00
+	lda !player_y_next
+	sec
+	sbc !sprite_y_low,x
+	sta $0F
+	lda !player_y_next+1
+	sbc !sprite_y_high,x
+	bpl .above
+	iny
+.above:
 	rtl
 ; a: packed sprite offset in pixels, YX
 spr_init_pos_offset:

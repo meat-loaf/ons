@@ -2,6 +2,7 @@ includefrom "engine.asm"
 
 %set_free_start("bank2_altspr1")
 ambient_sub_off_screen:
+	stz $0e
 	; clear x high bit in tilesz props
 	lda !ambient_twk_tilesz,x
 	and #$FFFE
@@ -66,8 +67,87 @@ ambient_sub_off_screen:
 .no_oam_left:
 	; immediately terminate the ambient sprite routine
 	; by destroying this return val
+	inc $0e
 	pla
 .exit:
+	rts
+ambient_obj_interact:
+	; todo layer 2 collision
+;	ldy #$0000
+;	lda !screen_mode-1
+;	bmi .on_layer_1
+;	ldy #$0048
+;.on_layer_1:
+;	; offset to screen data pointer table
+;	; when interacting with layer 2
+;	sty $0e
+	lda !ambient_y_pos,x
+	clc
+	adc #$0008
+	sta !block_ypos
+	and #$FFF0
+	cmp !exlvl_screen_size
+	bcs .no_interact_p_ok
+	sta $00
+	lda !ambient_x_pos+1,x
+	and #$00FF
+	sta $02
+	; note: no comparison to $5D, number of screens in level
+	asl
+	adc $02
+	; y index = x pos high * 3
+	tay
+	; low/high bytes to map16 data for current screen
+	; TODO LAYER 2 CHECK
+	lda !lm_exlevel_per_scr_dat_ptrs_lo_l1,y
+	;lda $0F
+	;and #$00FF
+	;bne .no_l2
+	;lda !lm_exlevel_per_scr_dat_ptrs_lo_l2,y
+;.no_l2:
+	sta $05
+	lda !ambient_x_pos,x
+	clc
+	adc #$0004
+	sta !block_xpos
+	and #$00F0
+	lsr #4
+	; y index = YYYYYYYYyyyyxxxx
+	; this is the offset to the block in the current screen
+	ora $00
+	tay
+	sep #$20
+
+	lda #$7E
+	sta $07
+	lda [$05],y
+	sta !block_interact_map16_id
+	inc $07
+	lda [$05],y
+	sep #$10
+	; gps uses this to restore the running entity index
+	stx !current_sprite_process
+	jsl lm_block_interact
+	; following is mostly copied from lm's modified
+	; extended block interact routine
+	cmp #$00
+	beq .no_interact
+	lda !block_interact_map16_id
+;	cmp #$00
+	beq .solid_interact
+	cmp #$11
+	bcc .no_interact
+	cmp #$6e
+	bcc .solid_interact
+	;
+.solid_interact:
+	rep #$30
+	sec
+	rts
+.no_interact:
+	rep #$30
+..p_ok:
+	clc
 	rts
 
 ambient_physics:
@@ -163,6 +243,40 @@ ambient_rts_done:
 %set_free_finish("bank2_altspr1", ambient_rts_done)
 
 %set_free_start("bank2_altspr2")
+ambient_alloc_turnblock:
+	phy
+	txy
+	ldx !turnblock_free_index
+	lda turnblock_status_d.timer,x
+	beq .slot_free
+	lda turnblock_status_d.x_pos,x
+	sta !block_xpos
+	lda turnblock_status_d.y_pos,x
+	sta !block_ypos
+	; clean up if all the slots are full
+	lda #$000C
+	sta $9C
+	jsl $00BEB0|!bank
+	; bebo doesnt preserve y
+	ldy !current_ambient_process
+.slot_free:
+	lda !ambient_x_pos,y
+	sta turnblock_status_d.x_pos,x
+	lda !ambient_y_pos,y
+	sta turnblock_status_d.y_pos,x
+	lda #$00FF
+	sta turnblock_status_d.timer,x
+	txa
+	sec
+	sbc #$0006
+	bpl .next_slot_ok
+	lda.w #(!num_turnblock_slots-1)*6
+.next_slot_ok:
+	sta !turnblock_free_index
+	tyx
+	ply
+	rts
+
 ambient_kill_on_timer:
 	lda !ambient_gen_timer,x
 	bne .ok
@@ -220,19 +334,36 @@ ambient_get_slot:
 	and #$00FF
 	xba
 	pha
-	ldy.w #(!num_ambient_sprs*2)-2
+;	ldy.w #(!num_ambient_sprs*2)-2
+	ldy.w !ambient_spr_ring_ix
+	lda.w #$0000
 .loop:
-	; todo make ring
+	sta $0E
 	lda !ambient_rt_ptr,y
 	beq .found
 	dey : dey
-	bpl .loop
+	bpl .y_ok
+	ldy.w #(!num_ambient_sprs*2)-2
+.y_ok:
+	lda $0E
+	inc
+	cmp !num_ambient_sprs-1
+	bne .loop
+	
+;	bpl .loop
 	; tidy the stack
 	pla
 	sep #$30
 	sec
 	rtl
 .found:
+	tya
+	sec
+	sbc #$0002
+	bpl .no_ring_ix_adj
+	lda.w #(!num_ambient_sprs*2)-2
+.no_ring_ix_adj:
+	sta !ambient_spr_ring_ix
 	pla
 	; note: ambinet id stored in high byte
 	; low byte for common use as e.g. phase pointer

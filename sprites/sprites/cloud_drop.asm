@@ -3,7 +3,6 @@ includefrom "list.def"
 ; todo clean this up maybe by moving to bank 1 and using
 ;      thwomps 'direction abstraction' setup, to unify the speed
 ;      change code?
-; todo pos offset with exbyte 2
 
 !cloud_drop_sprnum = $69
 
@@ -13,7 +12,7 @@ includefrom "list.def"
 !cloud_drop_orient  = !spr_extra_bits
 !cloud_drop_turning = !sprite_misc_1570
 !cloud_drop_dir     = !sprite_misc_157c
-!cloud_drop_top_spd = !extra_byte_1
+!cloud_drop_top_spd = !spr_extra_byte_1
 
 ;Graphics defines:
 ; Horizontal
@@ -36,7 +35,9 @@ includefrom "list.def"
 ; todo this clusterfuck can almost certainly be cleaned up. do so
 %set_free_start("bank6")
 cloud_drop_init:
-;	%sprite_init_do_pos_offset(!extra_byte_2,x)
+	lda !spr_extra_byte_2,x
+	jsl spr_init_pos_offset
+
 	lda !cloud_drop_top_spd,x
 	bmi .backwards
 	inc !cloud_drop_dir,x
@@ -45,7 +46,7 @@ cloud_drop_init:
 	bra .continue
 .backwards
 	inc
-	and #$7F                   ; \ need positive speed in extra_byte_1, so fix it.
+	and #$7F                   ; \ need positive speed in spr_extra_byte_1, so fix it.
 	dec                        ; | original code didnt do a 'proper' inversion, so
 	sta !cloud_drop_top_spd,x  ; / adust accordingly
 	sta $00
@@ -214,7 +215,7 @@ GFX:
 	LDA !15F6,x	;store sprite properties
 	STA $04
 
-LDA !7FAB10,x
+LDA !spr_extra_bits,x
 BEQ +
 JMP Vert
 +

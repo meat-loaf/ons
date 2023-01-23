@@ -161,6 +161,13 @@ includeonce
 ; 2 bytes; lm exlevel impl-defined
 !scr_max_y_off_sprspawn  = $0BF2|!addr
 
+!lm_exlevel_per_scr_dat_ptrs_lo_l1 = $0BF6|!addr
+!lm_exlevel_per_scr_dat_ptrs_lo_l2 = $0C26|!addr
+
+
+!lm_exlevel_per_scr_dat_ptrs_hi_l1 = $0C56|!addr
+!lm_exlevel_per_scr_dat_ptrs_hi_l2 = $0C86|!addr
+
 !hdma_channel_enable_mirror = $0D9F|!addr
 !asstd_state_flags_1        = $0DA1|!addr
 
@@ -192,6 +199,9 @@ includeonce
 !player_score_hi        = $0F34+$02|!addr
 
 !ambient_gen_timer      = $0F4A|!addr
+; 20 bytes free here
+!turnblock_run_index    = !ambient_gen_timer+!ambient_tblsz  ; $0F9A
+!turnblock_free_index   = !turnblock_run_index+2
 
 !main_level_num         = $13BF|!addr
 
@@ -240,6 +250,7 @@ includeonce
 
 !player_face_screen_timer   = $1499|!addr
 !player_palette_cycle_timer = $149B|!addr
+!player_shoot_fireball_timer = $149C|!addr
 
 !blue_pswitch_timer     = $14AD|!addr
 !silver_pswitch_timer   = $14AE|!addr
@@ -284,18 +295,25 @@ includeonce
 
 !current_sprite_process = $15E9|!addr
 
+; low byte of tile in smw code, high byte (of acts like) in custom code.
+; y index holds the other in both cases.
+!block_interact_map16_id = $1693|!addr
+
 !sprite_stomp_counter    = $1697|!addr
 ; repurposed: low nybble used as bitfield for object generation parameters
 !sprite_memory_header    = $1692|!addr
 
-!ambient_rt_ptr    = $1699|!addr
+!ambient_rt_ptr    = $1698|!addr
 !ambient_x_pos     = !ambient_rt_ptr+!ambient_tblsz
 !ambient_y_pos     = !ambient_x_pos+!ambient_tblsz
 
+; 1789 through 17ba free
+; 17bb-17bf are used for current frame layer position delta
 ; high byte: decimal low byte: frac
-!ambient_x_speed   = !ambient_y_pos+!ambient_tblsz
+!ambient_y_speed    = $17C0|!addr
+;!ambient_x_speed   = !ambient_y_pos+!ambient_tblsz+1
 ; high byte: decimal low byte: frac
-!ambient_y_speed   = !ambient_x_speed+!ambient_tblsz
+;!ambient_y_speed   = !ambient_x_speed+!ambient_tblsz
 
 assert !ambient_y_speed+(!num_ambient_sprs*2) <= $185C, "ambient sprite ram exceeded bounds"
 
@@ -322,6 +340,8 @@ assert !ambient_y_speed+(!num_ambient_sprs*2) <= $185C, "ambient sprite ram exce
 !player_in_cloud     = $18C2|!addr
 !starkill_counter    = $18D2|!addr
 !spr_touch_tile_high = $18D7|!addr
+!player_duck_on_yoshi = $18DC|!addr
+
 !current_yoshi_slot  = $18DF|!addr
 !yoshi_is_loose      = $18E2|!addr
 !give_player_lives   = $18E4|!addr
@@ -344,9 +364,13 @@ assert !ambient_y_speed+(!num_ambient_sprs*2) <= $185C, "ambient sprite ram exce
 !spr_spriteset_off        = !spr_extra_byte_3+!num_sprites       ; $1A34
 !ambient_twk_tilesz       = !spr_spriteset_off+!num_sprites      ; $1A40
 !ambient_grav_setting     = !ambient_twk_tilesz+!ambient_tblsz   ; $1A90
+!ambient_misc_2           = !ambient_grav_setting+!ambient_tblsz ; $1AE0
+!ambient_x_speed          = !ambient_misc_2+!ambient_tblsz       ; $1B30
 ; two bytes! used as a mirror of $9D to not cause trouble loading
 ; in 16 bit mode
-!ambient_sprlocked_mirror = !ambient_grav_setting+!ambient_tblsz ; $1A90
+!ambient_sprlocked_mirror = !ambient_x_speed+!ambient_tblsz      ; $1B80
+!ambient_playerfireballs = !ambient_sprlocked_mirror+$2          ; $1B82
+assert !ambient_playerfireballs+2 <= $1B84
 ; alt name of above
 
 ; TODO implement - needs to be set to (!ambient_spr_sz*2)-2 on level load
@@ -448,32 +472,12 @@ assert !ambient_misc_1+(!num_ambient_sprs*2) <= $1EA2, "ambient sprite ram excee
 ; todo how big does it need to be?
 
 
-; currently unused, pasue menu setup was removed
-; !pause_menu_oam_ypos_buf      = $7FA000                      ; 0x80 bytes
-; !pause_menu_l3_xpos_orig      = !pause_menu_oam_ypos_buf+$80 ; 0x02 bytes
-; !pause_menu_l3_ypos_orig      = !pause_menu_l3_xpos_orig+$02 ; 0x02 bytes
-; !pause_menu_tilemap_orig      = !pause_menu_l3_ypos_orig+$02 ; 0x02 bytes
-
-
 !wiggler_segment_buffer = $7F9A7B
 ; Dynamic sprite graphics upload buffer
 !dynamic_buffer = !wiggler_segment_buffer+$200
 ; 7FA800 - 7FABFF free
-
-; todo remove these, deprecated
-; 7FB000 - 7FB408 free
-!bounce_blocks_map16_low  = $7FB408
-!bounce_blocks_map16_hi   = !bounce_blocks_map16_low+$4
-!spr_extra_byte_5         = !bounce_blocks_map16_hi+$4
-!spr_extra_byte_6         = !spr_extra_byte_5+!num_sprites
-!spr_extra_byte_7         = !spr_extra_byte_6+!num_sprites
-!spr_extra_byte_8         = !spr_extra_byte_7+!num_sprites
-!spr_extra_byte_9         = !spr_extra_byte_8+!num_sprites
-!spr_extra_byte_10        = !spr_extra_byte_9+!num_sprites
-!spr_extra_byte_11        = !spr_extra_byte_10+!num_sprites
-!spr_extra_byte_12        = !spr_extra_byte_11+!num_sprites
-!spr_extra_prop_1         = !spr_extra_byte_12+!num_sprites
-!spr_extra_prop_2         = !spr_extra_prop_1+!num_sprites
+; 384 bytes - for 64 turn blocks (6 bytes per)
+!turnblock_status = !dynamic_buffer+$800
 
 ; ram defs ;
 !Freeram_SSP_PipeDir    ?= !sspipes_dir

@@ -12,7 +12,7 @@
 
 %set_free_start("bank3_sprites")
 castle_block_init:
-	lda !extra_bits,x
+	lda !spr_extra_bits,x
 	and #$01
 	asl
 	sta !castle_block_phase,x

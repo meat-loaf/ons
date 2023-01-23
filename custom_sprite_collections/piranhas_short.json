@@ -1,5 +1,5 @@
 [{
-	"id":"04",
+	"id":"6F",
 	"name":"Piranha Plant, short stem",
 	"desc":"A short classic-style Piranha Plant. It stays hidden if Mario is near it.",
 	"category": "generic",
@@ -21,7 +21,7 @@
 		}
 	]
 },{
-	"id":"04",
+	"id":"6F",
 	"name":"Piranha Plant, short stem upside-down",
 	"desc":"A short upside-down classic-style Piranha Plant. It stays hidden if Mario is near it.",
 	"category": "generic",
@@ -43,7 +43,7 @@
 		}
 	]
 },{
-	"id":"04",
+	"id":"6F",
 	"name": "Sideways Piranha Plant short stem (left)",
 	"desc": "A short classic-style piranha plant that comes out of pipes from the left. It stays hidden if Mario is near it.",
 	"display_xoff": 1,
@@ -62,7 +62,7 @@
 		"tile": "53A"
 	}]
 },{
-	"id":"04",
+	"id":"6F",
 	"name": "Sideways Piranha Plant short stem (right)",
 	"desc": "A short classic-style piranha plant that comes out of pipes from the right. It stays hidden if Mario is near it.",
 	"display_xoff": -1,
@@ -81,7 +81,7 @@
 		"tile": "56A"
 	}]
 },{
-	"id":"04",
+	"id":"6F",
 	"name":"Piranha Plant, red short stem",
 	"desc":"A short classc-style Piranha Plant. It ignores Mario's proximity.",
 	"category": "generic",
@@ -103,7 +103,7 @@
 		}
 	]
 },{
-	"id":"04",
+	"id":"6F",
 	"name":"Piranha Plant, red short stem upside-down",
 	"desc":"A short upside-down classic-style Piranha Plant. It ignores Mario's proximity.",
 	"category": "generic",
@@ -125,7 +125,7 @@
 		}
 	]
 },{
-	"id":"04",
+	"id":"6F",
 	"name": "Sideways Piranha Plant red short stem (left)",
 	"desc": "A short classic-style piranha plant that comes out of pipes from the left. It ignores Mario's proximity.",
 	"custom":true,
@@ -144,7 +144,7 @@
 		"tile": "52B"
 	}]
 },{
-	"id":"04",
+	"id":"6F",
 	"name": "Sideways Piranha Plant red short stem (right)",
 	"desc": "A short classic-style piranha plant that comes out of pipes from the right. It ignores Mario's proximity.",
 	"custom":true,
@@ -164,7 +164,7 @@
 	}]
 
 },{
-	"id":"04",
+	"id":"6F",
 	"name":"Venus Piranha Plant short stem",
 	"desc":"A short Venus Piranha Plant that shoots one fireball at Mario. It stays hidden if he is near it.",
 	"category": "generic",
@@ -186,7 +186,7 @@
 		}
 	]
 },{
-	"id":"04",
+	"id":"6F",
 	"name":"Venus Piranha Plant, short stem upside-down",
 	"desc":"A short upside-down Venus Piranha Plant that shoots one fireball at Mario. It stays hidden if Mario is near it.",
 	"category": "generic",
@@ -208,7 +208,7 @@
 		}
 	]
 },{
-	"id":"04",
+	"id":"6F",
 	"name": "Sideways Venus Piranha Plant shot stem (left)",
 	"desc": "A short venus Piranha Plant that comes out of pipes from the left and shoots one fireball at Mario. It stays hidden if Mario is near it.",
 	"display_xoff": 1,
@@ -227,7 +227,7 @@
 		"tile": "537"
 	}]
 },{
-	"id":"04",
+	"id":"6F",
 	"name": "Sideways Venus Piranha Plant short stem (right)",
 	"desc": "A short venus piranha plant that comes out of pipes from the right and shoots one fireball at Mario. It stays hidden if Mario is near it.",
 	"display_xoff": -1,
@@ -246,7 +246,7 @@
 		"tile": "5A0"
 	}]
 },{
-	"id":"04",
+	"id":"6F",
 	"name":"Venus Piranha Plant, short stem shoot two",
 	"desc":"A short Venus Piranha Plant that shoots two fireballs at Mario. It stays hidden if he is near it.",
 	"category": "generic",
@@ -268,7 +268,7 @@
 		}
 	]
 },{
-	"id":"04",
+	"id":"6F",
 	"name":"Venus Piranha Plant, short stem upside-down shoot two",
 	"desc":"A short upside-down Venus Piranha Plant that shoots two fireballs at Mario. It stays hidden if Mario is near it.",
 	"category": "generic",
@@ -290,7 +290,7 @@
 		}
 	]
 },{
-	"id":"04",
+	"id":"6F",
 	"name": "Sideways Venus Piranha Plant short stem shoot two (left)",
 	"desc": "A short venus Piranha Plant that comes out of pipes from the left and shoots two fireballs at Mario. It stays hidden if Mario is near it.",
 	"display_xoff": 1,
@@ -309,7 +309,7 @@
 		"tile": "536"
 	}]
 },{
-	"id":"04",
+	"id":"6F",
 	"name": "Sideways Venus Piranha Plant short stem shoot two (right)",
 	"desc": "A short venus piranha plant that comes out of pipes from the right and shoots two fireballs at Mario. It stays hidden if Mario is near it.",
 	"display_xoff": -1,
@@ -330,7 +330,7 @@
 
 },{
 
-	"id":"04",
+	"id":"6F",
 	"name":"Venus Piranha Plant, red short stem",
 	"desc":"A short Venus Piranha Plant that shoots one fireball at Mario. It ignores Mario's proximity.",
 	"category": "generic",
@@ -352,7 +352,7 @@
 		}
 	]
 },{
-	"id":"04",
+	"id":"6F",
 	"name":"Venus Piranha Plant, red short stem upside-down",
 	"desc":"A short upside-down Venus Piranha Plant that shoots one fireball at Mario. It ignores Mario's proximity.",
 	"category": "generic",
@@ -374,7 +374,7 @@
 		}
 	]
 },{
-	"id":"04",
+	"id":"6F",
 	"name": "Sideways Venus Piranha Plant red short stem (left)",
 	"desc": "A short venus Piranha Plant that comes out of pipes from the left and shoots one fireball at Mario. It ignores Mario's proximity.",
 	"display_xoff": 1,
@@ -393,7 +393,7 @@
 		"tile": "527"
 	}]
 },{
-	"id":"04",
+	"id":"6F",
 	"name": "Sideways Venus Piranha Plant red short stem (right)",
 	"desc": "A short venus piranha plant that comes out of pipes from the right and shoots one fireball at Mario. It ignores Mario's proximity.",
 	"display_xoff": -1,
@@ -413,7 +413,7 @@
 	}]
 },{
 
-	"id":"04",
+	"id":"6F",
 	"name":"Venus Piranha Plant, red short stem shoot two",
 	"desc":"A short Venus Piranha Plant that shoots two fireballs at Mario. It ignores Mario's proximity.",
 	"category": "generic",
@@ -435,7 +435,7 @@
 		}
 	]
 },{
-	"id":"04",
+	"id":"6F",
 	"name":"Venus Piranha Plant, red short stem upside-down shoot two",
 	"desc":"A short upside-down Venus Piranha Plant that shoots two fireballs at Mario. It ignores Mario's proximity.",
 	"category": "generic",
@@ -457,7 +457,7 @@
 		}
 	]
 },{
-	"id":"04",
+	"id":"6F",
 	"name": "Sideways Venus Piranha Plant red short stem shoot two (left)",
 	"desc": "A short venus Piranha Plant that comes out of pipes from the left and shoots two fireballs at Mario. It ignores Mario's proximity..",
 	"display_xoff": 1,
@@ -476,7 +476,7 @@
 		"tile": "526"
 	}]
 },{
-	"id":"04",
+	"id":"6F",
 	"name": "Sideways Venus Piranha Plant red short stem shoot two (right)",
 	"desc": "A short venus piranha plant that comes out of pipes from the right and shoots two fireballs at Mario. It ignores Mario's proximity.",
 	"display_xoff": -1,

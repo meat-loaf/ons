@@ -6,7 +6,6 @@ includefrom "list.def"
 	$00, $00, $F5, $80, $00, $00)
 
 !wiggler_segment_face_bit      = !sprite_misc_c2
-!wiggler_bloomer               = !sprite_misc_1504
 !wiggler_angry                 = !sprite_misc_151c
 !wiggler_segbuff_position      = !sprite_misc_1528
 !wiggler_angry_facemario_timer = !sprite_misc_1534
@@ -17,6 +16,7 @@ includefrom "list.def"
 !wiggler_turn_timer            = !sprite_misc_15ac
 !wiggler_segflip_timer         = !sprite_misc_1602
 !wiggler_buffer_index          = !sprite_misc_160e
+!wiggler_bloomer               = !spr_extra_bits
 
 ; note: the head alternate head tile is intended to be 2 16x16s away
 ;       from the 'normal' head tile
@@ -362,6 +362,7 @@ wiggler_small_tile_yoffs:
 wiggler_gfx:
 	jsl get_draw_info
 	lda.w !wiggler_bloomer,x
+	asl #2
 	sta.b $0B
 	lda.w !1570,x     ; \ animation frame counter
 	sta.b $03         ; /

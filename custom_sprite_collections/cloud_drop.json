@@ -1,11 +1,11 @@
 [{
-	"id":"02",
+	"id":"69",
 	"name":"Cloud Drop (left, 3 tiles)",
 	"desc":"A Cloud Drop from Yoshi's Island. It flies left, then right over a range of 3 tiles. Its position can be offset with the second extra byte (YX).",
 	"category": "athletic",
 	"display_xoff": 0,
 	"display_yoff": 0,
-	"custom": true,
+	"custom": false,
 	"extra_bit": false,
 	"n_exbytes": 2,
 	"which_exbyte": 0,
@@ -18,13 +18,13 @@
 			"tile":"50D"
 		}]
 },{
-	"id":"02",
+	"id":"69",
 	"name":"Cloud Drop (right, 3 tiles)",
 	"desc":"A Cloud Drop from Yoshi's Island. It flies right, then left over a range of 3 tiles. Its position can be offset with the second extra byte (YX).",
 	"category": "athletic",
 	"display_xoff": 0,
 	"display_yoff": 0,
-	"custom": true,
+	"custom": false,
 	"extra_bit": false,
 	"n_exbytes": 2,
 	"which_exbyte": 0,
@@ -37,13 +37,13 @@
 			"tile":"51C"
 		}]
 },{
-	"id":"02",
+	"id":"69",
 	"name":"Cloud Drop (left, 4 tiles)",
 	"desc":"A Cloud Drop from Yoshi's Island. It flies left, then right over a range of 4 tiles. Its position can be offset with the second extra byte (YX).",
 	"category": "athletic",
 	"display_xoff": 0,
 	"display_yoff": 0,
-	"custom": true,
+	"custom": false,
 	"extra_bit": false,
 	"n_exbytes": 2,
 	"which_exbyte": 0,
@@ -56,13 +56,13 @@
 			"tile":"50D"
 		}]
 },{
-	"id":"02",
+	"id":"69",
 	"name":"Cloud Drop (right, 4 tiles)",
 	"desc":"A Cloud Drop from Yoshi's Island. It flies right, then left over a range of 4 tiles. Its position can be offset with the second extra byte (YX).",
 	"category": "athletic",
 	"display_xoff": 0,
 	"display_yoff": 0,
-	"custom": true,
+	"custom": false,
 	"extra_bit": false,
 	"n_exbytes": 2,
 	"which_exbyte": 0,
@@ -75,13 +75,13 @@
 			"tile":"51C"
 		}]
 },{
-	"id":"02",
+	"id":"69",
 	"name":"Cloud Drop (left, 6 tiles)",
 	"desc":"A Cloud Drop from Yoshi's Island. It flies left, then right over a range of 6 tiles. Its position can be offset with the second extra byte (YX).",
 	"category": "athletic",
 	"display_xoff": 0,
 	"display_yoff": 0,
-	"custom": true,
+	"custom": false,
 	"extra_bit": false,
 	"n_exbytes": 2,
 	"which_exbyte": 0,
@@ -95,13 +95,13 @@
 		}]
 },{
 
-	"id":"02",
+	"id":"69",
 	"name":"Cloud Drop (right, 6 tiles)",
 	"desc":"A Cloud Drop from Yoshi's Island. It flies right, then left over a range of 6 tiles. Its position can be offset with the second extra byte (YX).",
 	"category": "athletic",
 	"display_xoff": 0,
 	"display_yoff": 0,
-	"custom": true,
+	"custom": false,
 	"extra_bit": false,
 	"n_exbytes": 2,
 	"which_exbyte": 0,
@@ -114,13 +114,13 @@
 			"tile":"51C"
 		}]
 },{
-	"id":"02",
+	"id":"69",
 	"name":"Cloud Drop (down, 3 tiles)",
 	"desc":"A Cloud Drop from Yoshi's Island. It flies down, then up over a range of 3 tiles. Its position can be offset with the second extra byte (YX).",
 	"category": "athletic",
 	"display_xoff": 0,
 	"display_yoff": 0,
-	"custom": true,
+	"custom": false,
 	"extra_bit": true,
 	"n_exbytes": 2,
 	"which_exbyte": 0,
@@ -133,13 +133,13 @@
 			"tile":"50B"
 		}]
 },{
-	"id":"02",
+	"id":"69",
 	"name":"Cloud Drop (up, 3 tiles)",
 	"desc":"A Cloud Drop from Yoshi's Island. It flies up, then down over a range of 3 tiles. Its position can be offset with the second extra byte (YX).",
 	"category": "athletic",
 	"display_xoff": 0,
 	"display_yoff": 0,
-	"custom": true,
+	"custom": false,
 	"extra_bit": true,
 	"n_exbytes": 2,
 	"which_exbyte": 0,
@@ -153,13 +153,13 @@
 		}
 	]
 },{
-	"id":"02",
+	"id":"69",
 	"name":"Cloud Drop (down, 4 tiles)",
 	"desc":"A Cloud Drop from Yoshi's Island. It flies down, then up over a range of 4 tiles. Its position can be offset with the second extra byte (YX).",
 	"category": "athletic",
 	"display_xoff": 0,
 	"display_yoff": 0,
-	"custom": true,
+	"custom": false,
 	"extra_bit": true,
 	"n_exbytes": 2,
 	"which_exbyte": 0,
@@ -172,13 +172,13 @@
 			"tile":"50B"
 		}]
 },{
-	"id":"02",
+	"id":"69",
 	"name":"Cloud Drop (up, 4 tiles)",
 	"desc":"A Cloud Drop from Yoshi's Island. It flies up, then down over a range of 4 tiles. Its position can be offset with the second extra byte (YX).",
 	"category": "athletic",
 	"display_xoff": 0,
 	"display_yoff": 0,
-	"custom": true,
+	"custom": false,
 	"extra_bit": true,
 	"n_exbytes": 2,
 	"which_exbyte": 0,
@@ -192,13 +192,13 @@
 		}
 	]
 },{
-	"id":"02",
+	"id":"69",
 	"name":"Cloud Drop (down, 5 tiles)",
 	"desc":"A Cloud Drop from Yoshi's Island. It flies down, then up over a range of 5 tiles. Its position can be offset with the second extra byte (YX).",
 	"category": "athletic",
 	"display_xoff": 0,
 	"display_yoff": 0,
-	"custom": true,
+	"custom": false,
 	"extra_bit": true,
 	"n_exbytes": 2,
 	"which_exbyte": 0,
@@ -215,13 +215,13 @@
 		}
 	]
 },{
-	"id":"02",
+	"id":"69",
 	"name":"Cloud Drop (up, 5 tiles)",
 	"desc":"A Cloud Drop from Yoshi's Island. It flies up, then down over a range of 5 tiles. Its position can be offset with the second extra byte (YX).",
 	"category": "athletic",
 	"display_xoff": 0,
 	"display_yoff": 0,
-	"custom": true,
+	"custom": false,
 	"extra_bit": true,
 	"n_exbytes": 2,
 	"which_exbyte": 0,

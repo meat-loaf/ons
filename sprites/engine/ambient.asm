@@ -1,5 +1,58 @@
 includefrom "engine.asm"
 
+
+org $00FE94|!addr
+fireball_xspeed:
+;	db $FD,$03
+	db $D0,$30
+;fireball_xoffset:
+;	db $00,$08,$F8,$10,$F8,$10
+
+org $00FEA8|!addr
+mario_shoot_fireball:
+	lda !ambient_playerfireballs
+	cmp #$02
+	bcs .no_shoot
+	lda #$06
+	sta $1DFC|!addr
+	lda #$0a
+	sta !player_shoot_fireball_timer
+	lda #$30
+	sta !ambient_get_slot_yspd
+	ldy !player_dir
+	lda.w $00FE94,y
+;	eor #$30
+;	asl #2
+	sta !ambient_get_slot_xspd
+	lda !player_on_yoshi
+	beq .no_yoshi
+	iny #2
+	lda !player_duck_on_yoshi
+	beq .no_yoshi
+	iny #2
+.no_yoshi:
+	lda.w $00FEA2,y
+	sta $02
+	stz $03
+
+	lda.w $00FE9C,y
+	xba
+	lda.w $00FE96,y
+	rep #$21
+	adc !player_x_next
+	sta !ambient_get_slot_xpos
+	lda $02
+	clc
+	adc !player_y_next
+	sta !ambient_get_slot_ypos
+	lda #$003d
+	jsl ambient_get_slot
+	bcs .no_shoot
+	inc !ambient_playerfireballs
+.no_shoot:
+	rts
+warnpc $00FF07|!addr
+
 ; generic interaction - replace with stub
 org $01AB64|!bank
 	jsl spr_give_points
@@ -69,7 +122,57 @@ org $00FE65|!bank
 	rts
 warnpc $00FE93|!bank
 
+org $028779|!bank
+	jsl shatter_block
+	nop #3
 
+org $028663|!bank
+shatter_block:
+	phx
+;	sta $00
+	ldy #$03
+.spawn_loop:
+	lda !block_xpos
+	clc
+	adc .xoff,y
+	sta !ambient_get_slot_xpos
+	lda !block_xpos+1
+	adc #$00
+	sta !ambient_get_slot_xpos+1
+
+	lda !block_ypos
+	clc
+	adc .yoff,y
+	sta !ambient_get_slot_ypos
+	lda !block_ypos+1
+	adc #$00
+	sta !ambient_get_slot_ypos+1
+	lda .xspd,y
+	sta !ambient_get_slot_xspd
+	lda .yspd,y
+	sta !ambient_get_slot_yspd
+	lda #$3E
+	phy
+	jsl ambient_get_slot
+	ply
+	bcs .abort
+;	lda $00
+	; fractional bits?
+;	sta !ambient_x_speed,y
+	dey
+	bpl .spawn_loop
+.abort:
+	plx
+	rtl
+.xoff:
+	db $00,$08,$00,$08
+.yoff:
+	db $00,$00,$08,$08
+.xspd:
+	db $F8,$08,$F8,$08
+.yspd:
+	db $D0,$D0,$E0,$E0
+warnpc $0286BE|!bank
 
 ; replace bounce block spawns
 ; $04 has the block id

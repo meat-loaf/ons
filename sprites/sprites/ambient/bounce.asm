@@ -81,6 +81,10 @@ ambient_bounce_spr:
 	tay
 	lda .phases,y
 	sta $00
+
+	; run physics after everything else
+	lda #ambient_physics-1
+	pha
 	jmp ($0000)
 ; in 9C format
 ;; todo port a more general map16 spawn routine
@@ -129,9 +133,12 @@ ambient_bounce_spr:
 	and #$00FF
 	asl
 	tay
-	lda .block_draw_death-($3*2),y
-	; todo handle spinning turn block
+	cpy.w #(!turning_turn_block_ambient_id*2)
+	bne .not_turn_block
+	jsr ambient_alloc_turnblock
+.not_turn_block:
 	stz !ambient_rt_ptr,x
+	lda .block_draw_death-($3*2),y
 	jmp ambient_spawn_block
 
 ambient_bounce_done:

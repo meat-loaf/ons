@@ -50,7 +50,7 @@
 !bank4_free_end              = $04A400|!bank
 
 !bank6_free_start            = $068063|!bank
-!bank6_free_end              = $070000|!bank
+!bank6_free_end              = $06F600|!bank
 
 !bank7_free_start            = $078003|!bank
 !bank7_free_end              = $07F0C8|!bank

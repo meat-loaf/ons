@@ -158,10 +158,13 @@ org $028B05|!bank
 	jsr.w _load_spr_from_lvl
 	plb
 	rtl
+warnpc $028B67|!bank
 
+%set_free_start("bank2_altspr1")
 ambient_sprcaller:
 	lda !sprites_locked
 	sta !ambient_sprlocked_mirror
+	stz !ambient_sprlocked_mirror+1
 
 	lda #$24
 	sta !next_oam_index
@@ -176,16 +179,55 @@ ambient_sprcaller:
 	%implement_timer("!ambient_gen_timer,x")
 .no_timer:
 	jsr (!ambient_rt_ptr,x)
-	lda !ambient_twk_tilesz,x
-	bpl .go_next
-	jsr ambient_physics
+;	lda !ambient_twk_tilesz,x
+;	bpl .go_next
+;	jsr ambient_physics
 .go_next:
 	dex : dex
 	bpl .loop
-        sep #$30
-.default:
-       rts
-warnpc $028B67|!bank
+
+handle_turnblocks:
+	lda !ambient_sprlocked_mirror
+	bne .done
+	lda.w #(!num_turnblock_slots-1)
+	sta $45
+	ldx !turnblock_run_index
+.loop:
+	txa
+	sec
+	sbc #$0006
+	bpl .next_ix_ok
+	lda.w #(!num_turnblock_slots-1)*6
+.next_ix_ok:
+	sta $47
+
+	lda turnblock_status_d.timer,x
+	; if current run index has a zero timer,
+	; there is nothing after it to run, this ring
+	; is first-in last-out
+	beq .done
+	dec
+	sta turnblock_status_d.timer,x
+	bne .no_terminate
+	lda turnblock_status_d.x_pos,x
+	sta !block_xpos
+	lda turnblock_status_d.y_pos,x
+	sta !block_ypos
+	; turn block
+	lda #$000C
+	sta $9C
+	jsl $00BEB0|!addr
+	ldx $47
+	stx !turnblock_run_index
+.no_terminate:
+	ldx $47
+	dec $45
+	bpl .loop
+.done:
+	sep #$30
+	rts
+ambient_sprcaller_done:
+%set_free_finish("bank2_altspr1", ambient_sprcaller_done)
 
 org $00A1DA|!bank
 oam_refresh_hijack:

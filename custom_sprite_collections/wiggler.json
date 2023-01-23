@@ -12,27 +12,27 @@
 	"n_exbytes": 0,
 	"smap16":[{
 		"xoff": 30,
-		"yoff": -2,
+		"yoff": -1,
 		"tile": "506"
 	},{
 		"xoff": 22,
-		"yoff": -3,
+		"yoff": -2,
 		"tile": "507"
 	},{
 		"xoff": 16,
-		"yoff": -2,
+		"yoff": -1,
 		"tile": "506"
 	},{
 		"xoff": 8,
-		"yoff": -1,
+		"yoff": 0,
 		"tile": "505"
 	},{
 		"xoff": 0,
-		"yoff": 0,
+		"yoff": 1,
 		"tile": "504"
 	},{
 		"xoff": 0,
-		"yoff": -16,
+		"yoff": -15,
 		"tile": "509"
 	}]
 },
@@ -49,27 +49,27 @@
 	"n_exbytes": 0,
 	"smap16":[{
 		"xoff": 30,
-		"yoff": -2,
+		"yoff": -1,
 		"tile": "506"
 	},{
 		"xoff": 22,
-		"yoff": -3,
+		"yoff": -2,
 		"tile": "507"
 	},{
 		"xoff": 16,
-		"yoff": -2,
+		"yoff": -1,
 		"tile": "506"
 	},{
 		"xoff": 8,
-		"yoff": -1,
+		"yoff": 0,
 		"tile": "505"
 	},{
 		"xoff": 0,
-		"yoff": 0,
+		"yoff": 1,
 		"tile": "508"
 	},{
 		"xoff": 0,
-		"yoff": -16,
+		"yoff": -15,
 		"tile": "509"
 	}]
 }

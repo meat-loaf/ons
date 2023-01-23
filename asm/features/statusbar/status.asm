@@ -384,6 +384,34 @@ endif
 	%draw_digit_tile($10,$d0,$00,B,\
 			!tile_noflip,$00,$00,$00)
 
+	stz $00
+	stz $01
+	lda !ambient_spr_ring_ix
+	beq .noloop
+	lsr
+	sta $02
+.loop2:
+	lda $00
+	inc
+	cmp #$0A
+	bne .noadj
+	lda #$00
+	inc $01
+.noadj:
+	sta $00
+	dec $02
+	bne .loop2
+.noloop:
+
+	%get_next_oam_tile(status_bar_oam_tiles, no_oam_left)
+	%draw_digit_tile($08,$d8,$01,B,\
+			!tile_noflip,$00,$00,$00)
+
+	%get_next_oam_tile(status_bar_oam_tiles, no_oam_left)
+	%draw_digit_tile($10,$d8,$00,B,\
+			!tile_noflip,$00,$00,$00)
+
+
 	rts
 
 .number_tilenums:

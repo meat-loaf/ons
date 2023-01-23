@@ -1,7 +1,10 @@
 incsrc "../main.asm"
 
-org $00FFD8
-;if !use_midway_imem_sram_dma == !true
+org $00A5AB|!bank
+	jsl level_setup_ram_special
+
+org $00FFD8|!bank
+;if !use_midway_imem_ram_dma == !true
 	db $04       ; 16kb sram
 ;else
 ;	db $01       ; 2kb sram
@@ -57,6 +60,25 @@ gamemode_1b:
 warnpc $009557|!bank
 
 freecode
+level_setup_ram_special:
+	; restore hijacked code
+	jsl $05809E|!bank
+	stz !ambient_playerfireballs
+	lda #(!num_ambient_sprs*2)-2
+	sta !ambient_spr_ring_ix
+	ldx #(!num_turnblock_slots-1)*6
+	stx !turnblock_run_index
+	stx !turnblock_free_index
+.loop:
+	lda #$00
+	sta turnblock_status_d.timer,x
+	sta turnblock_status_d.timer+1,x
+	txa
+	sec : sbc #$06
+	tax
+	bpl .loop
+	rtl
+
 EntranceType5Check:
 	LDA $192A|!addr       ; Entrance type-- sw___aaa
 	AND #$07

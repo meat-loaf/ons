@@ -18,6 +18,13 @@ wiggler_flower_main:
 .no_inv:
 	lda #$0B18
 	sta !ambient_props,x
-	jmp ambient_basic_gfx
+	jsr ambient_basic_gfx
+	lda !ambient_sprlocked_mirror
+	bne .exit
+	jmp ambient_physics
+;	jmp ambient_obj_interact
+;	
+.exit
+	rts
 wiggler_flower_done:
 %set_free_finish("bank2_altspr2", wiggler_flower_done)

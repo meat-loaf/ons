@@ -33,6 +33,7 @@ endif
 !JML_OPCODE           = $5C
 !RTL_OPCODE           = $6B
 
+!num_turnblock_slots  = $10
 
 hurt_mario            = $00F5B7|!bank
 

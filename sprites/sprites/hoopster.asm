@@ -1,7 +1,7 @@
 includefrom "list.def"
 
 !hoopster_sprnum = $1E
-%alloc_sprite(!hoopster_sprnum, "smb2_hoopster", hoopster_init, hoopster_main, 1, 1, \
+%alloc_sprite(!hoopster_sprnum, "smb2_hoopster", hoopster_init, hoopster_main, 1, 0, \
 	$00, $00, $0D, $19, $00, $01)
 %alloc_sprite_sharedgfx_entry_2(!hoopster_sprnum, $09, $0B)
 

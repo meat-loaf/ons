@@ -3,12 +3,15 @@
 !feather_sprnum    = $41
 !fireflower_sprnum = $42
 !poison_sprnum     = $43
-!1up_sprnum        = $44
+!star_sprnum       = $44
+!pballoon_sprnum   = $46
+!1up_sprnum        = $47
 
-; not handled by powerup interaction table
-!star_sprnum       = $45
-!pbaloon_sprnum    = $46
 
+!roulette_change_frames = $20
+
+%alloc_sprite(!roulette_sprnum, "item_roulette", powerup_init, roulette_main, 1, 0, \
+	$00, $00, $00, $C2, $28, $40)
 %alloc_sprite(!mushroom_sprnum, "mushroom", powerup_init, powerup_main, 1, 0, \
 	$00, $00, $08, $C2, $28, $40)
 %alloc_sprite(!feather_sprnum, "cape_feather", powerup_init, feather_main, 1, 0, \
@@ -17,22 +20,29 @@
 	$00, $00, $0A, $C2, $28, $40)
 %alloc_sprite(!poison_sprnum, "poison_mushroom", powerup_init, powerup_main, 1, 0, \
 	$00, $00, $08, $C2, $28, $40)
+%alloc_sprite(!star_sprnum, "starman", powerup_init, powerup_main, 1, 0, \
+	$00, $00, $04, $C2, $08, $40)
+
 
 
 %alloc_sprite_sharedgfx_entry_1(!mushroom_sprnum, $24)
 %alloc_sprite_sharedgfx_entry_1(!feather_sprnum, $22)
 %alloc_sprite_sharedgfx_entry_1(!fireflower_sprnum, $26)
 %alloc_sprite_sharedgfx_entry_1(!poison_sprnum, $20)
+%alloc_sprite_sharedgfx_entry_1(!star_sprnum, $28)
+
+%alloc_sprite_sharedgfx_entry_mirror(!roulette_sprnum, !mushroom_sprnum)
 
 !powerup_no_move_flag        = !sprite_misc_c2
+!roulette_current_powerup_ix = !sprite_misc_151c
 !fire_flower_ani_counter     = !sprite_misc_1570
-!roulette_current_powerup    = !sprite_misc_151c
 !feather_fall_accel_dir      = !sprite_misc_1528
 !powerup_face_dir            = !sprite_misc_157c
 !powerup_spawn_wait_timer    = !sprite_misc_1558
 !powerup_rising_from_block   = !sprite_misc_1540
 !powerup_disable_interaction = !sprite_misc_154c
 !powerup_spawned_mask        = !sprite_misc_1594
+!roulette_current_powerup    = !sprite_misc_1602
 
 %set_free_start("bank1_powerups")
 powerup_init:
@@ -64,9 +74,57 @@ powerup_should_interact:
 	clc
 .no:
 	rts
+roulette_init:
+	lda #(!fireflower_sprnum-!mushroom_sprnum)
+	jsr roulette_set_powerup
+
+	lda #!roulette_change_frames
+	sta !powerup_spawn_wait_timer,x
+	rtl
+
+roulette_set_powerup:
+	sta !roulette_current_powerup,x
+	tax
+	lda.l spr_tweaker_166E_tbl+!mushroom_sprnum,x
+	and #$0F
+	ldx !current_sprite_process
+	sta !sprite_oam_properties,x
+	rts
 
 roulette_main:
+	jsr.w sub_spr_gfx_2
+	lda !sprites_locked
+	bne .no_change
+	jsr powerup_should_interact
+	bcc .not_touched
+	jmp spr_give_powerup
+.not_touched:
+	lda !powerup_spawn_wait_timer,x
+	bne .no_change
+	lda #!roulette_change_frames
+	sta !powerup_spawn_wait_timer,x
+	
+	inc !roulette_current_powerup_ix,x
+	lda !roulette_current_powerup_ix,x
+	cmp #$06
+	bcc .ok
+	lda #$00
+	sta !roulette_current_powerup_ix,x
+.ok:
+	tay
+	lda .powerups,y
+	jsr roulette_set_powerup
+.no_change:
 	rtl
+
+.powerups:
+	db !fireflower_sprnum-!mushroom_sprnum
+	db !poison_sprnum-!mushroom_sprnum
+	db !feather_sprnum-!mushroom_sprnum
+	db !poison_sprnum-!mushroom_sprnum
+	db !star_sprnum-!mushroom_sprnum
+	db !poison_sprnum-!mushroom_sprnum
+
 feather_main:
 	jsr.w sub_spr_gfx_2
 	lda !sprites_locked
@@ -173,20 +231,27 @@ powerup_main:
 spr_give_powerup:
 	stz !sprite_status,x
 	lda !sprite_num,x
-	cmp #!poison_sprnum
-	beq powerup_hurt
 	sec
 	sbc #!mushroom_sprnum
 	bpl .not_roulette
 	lda !roulette_current_powerup,x
 	inc
+	tay
+	bra .load_tbl
 .not_roulette:
+	cmp #$03
+	bcc .not_special
+	inc
+	tay
+	bra .load_tbl
+.not_special:
 	asl #2
 	ora !powerup
 	tay
 	; todo handle item box
 	lda power_pointer_index,y
 	tay
+.load_tbl:
 	lda power_pointer_routines_lo,y
 	sta $00
 	lda power_pointer_routines_hi,y
@@ -239,23 +304,28 @@ moving_powerup_x_speeds:
 
 power_pointer_index:
 	; small->mushroom, big->mushroom, fire->mushroom, mushroom->cape
-	db $00, $01, $02, $03
+	db $01, $00, $02, $03
 	; small->cape, big->cape, cape->cape, cape->fire
-	db $02, $02, $01, $03
+	db $02, $02, $00, $03
 	; small->fire, big->fire, fire->cape, fire->fire
-	db $03, $03, $02, $01
+	db $03, $03, $02, $00
 
 
 power_pointer_routines_lo:
-	db give_mushroom
 	db power_do_nothing
+	db give_mushroom
 	db give_cape
 	db give_flower
+	db powerup_hurt
+	;db give_1up
+	;db give_star
+	;db give_pballoon
 power_pointer_routines_hi:
-	db give_mushroom>>8
 	db power_do_nothing>>8
+	db give_mushroom>>8
 	db give_cape>>8
 	db give_flower>>8
+	db powerup_hurt>>8
 powerup_hurt:
 	jml hurt_mario
 
@@ -283,5 +353,7 @@ give_flower:
 	lda #$03
 	sta !powerup
 	bra power_do_nothing
+give_star:
+	rtl
 powerups_done:
 %set_free_finish("bank1_powerups", powerups_done)

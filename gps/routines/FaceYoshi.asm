@@ -14,9 +14,9 @@
 	endif
 
 	-
-	LDA !7FAB10,x	;\If custom sprite, next slot
-	AND #$08	;|
-	BNE ++		;/
+;	LDA !7FAB10,x	;\If custom sprite, next slot
+;	AND #$08	;|
+;	BNE ++		;/
 	LDA !9E,x	;\If other than yoshi, next slot
 	CMP #$35	;|
 	BNE ++		;/

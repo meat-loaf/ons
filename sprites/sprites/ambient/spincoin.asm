@@ -15,6 +15,11 @@ includefrom "ambient_list.def"
 %set_free_start("bank2_altspr1")
 ambient_coin:
 	lda !ambient_sprlocked_mirror
+	bne .no_physics
+	ldy #ambient_physics-1
+	phy
+.no_physics:
+	tay
 	bne .gfx
 	lda !ambient_y_speed+1,x
 	; todo proper check

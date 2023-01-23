@@ -130,25 +130,9 @@ endmacro
 ;$9E,x =  ($B4)
 
 ;sprite tool / pixi defines
-%define_sprite_table("7FAB10",!spr_extra_bits,$6040)
-%define_sprite_table("7FAB28",!spr_extra_prop_1,$6057)
-%define_sprite_table("7FAB34",!spr_extra_prop_2,$606D)
-%define_sprite_table("7FAB40",!spr_extra_byte_1,$6099)
-%define_sprite_table("7FAB4C",!spr_extra_byte_2,$60AF)
-%define_sprite_table("7FAB58",!spr_extra_byte_3,$60C5)
-%define_sprite_table("7FAB64",!spr_extra_byte_4,$60DB)
-
 %define_sprite_table("7FAC00",$7FAC00,$60F1)
 %define_sprite_table("7FAC08",$7FAC08,$6030)
 %define_sprite_table("7FAC10",$7FAC10,$6038)
-
-%define_sprite_table("extra_bits",!spr_extra_bits,$6040)
-%define_sprite_table("extra_prop_1",!spr_extra_prop_1,$6057)
-%define_sprite_table("extra_prop_2",!spr_extra_prop_2,$606D)
-%define_sprite_table("extra_byte_1",!spr_extra_byte_1,$6099)
-%define_sprite_table("extra_byte_2",!spr_extra_byte_2,$60AF)
-%define_sprite_table("extra_byte_3",!spr_extra_byte_3,$60C5)
-%define_sprite_table("extra_byte_4",!spr_extra_byte_4,$60DB)
 
 ;shooter defines
 %define_base2_address(shoot_num,$1783)		; shooter number -#$BC, also has the extra bit in #$40

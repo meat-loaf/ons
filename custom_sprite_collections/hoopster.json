@@ -1,11 +1,11 @@
 {
-	"id":"06",
+	"id":"1E",
 	"name":"Hoopster",
 	"desc":"A Hoopster from SMB2. It climbs on vines, and is able to be jumped on. It moves faster when Mario gets close.",
 	"category": "cave",
 	"display_xoff": 0,
 	"display_yoff": 0,
-	"custom": true,
+	"custom": false,
 	"extra_bit": false,
 	"n_exbytes": 0,
 	"reqfiles": { "sp3" : "10B" },
