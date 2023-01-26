@@ -191,7 +191,7 @@ spriteset_off_ptrs:
 	dw spritesets_castle_blk              ; sprite BB - grey moving castle block
 	dw spritesets_bowser_statue           ; sprite BC - bowser statue
 	dw spritesets_dynamic_sprs            ; sprite BD - yi pswitch (dynamic)
-	dw spritesets_null_spriteset          ; sprite BE - swooper
+	dw spritesets_dynamic_sprs            ; sprite BE - chomp rock
 	dw spritesets_mega_mole               ; sprite BF - mega_mole
 	dw spritesets_rock_grass_plats        ; sprite C0 - sinking grey rock
 	dw spritesets_null_spriteset          ; sprite C1 - flying grey turn blocks

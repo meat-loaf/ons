@@ -97,9 +97,9 @@ spr_gfx_32x32:
 ;   TODO with clipping updates many of these may be able to be unified,
 ;   and the per-sprite offset may not be needed
 .tile_off_x_base:
-	db $00,$F8,$00,$00,$F2,$00,$00,$00,$00,$00,$08
+	db $00,$F8,$00,$00,$F2,$F8,$00,$00,$00,$00,$08
 .tile_off_y_base:
-	db $00,$F6,$00,$00,$00,$00,$F0,$00,$00,$00,$F8
+	db $00,$F6,$00,$00,$00,$F0,$F0,$00,$00,$00,$F8
 ; indexed by yx flip
 .tile_off_start:
 	db $00

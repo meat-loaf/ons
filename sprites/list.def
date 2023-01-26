@@ -20,6 +20,7 @@ incsrc "sprites/castle_block.asm"
 incsrc "sprites/yi_pswitch.asm"
 incsrc "sprites/woozyguy.asm"
 incsrc "sprites/mega_mole.asm"
+incsrc "sprites/chomp_rock.asm"
 
 incsrc "sprites/key.asm"
 incsrc "sprites/springboard.asm"

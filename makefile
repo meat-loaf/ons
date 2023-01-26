@@ -56,8 +56,6 @@ ASM_TWEAKS=optimize_2132_store.asm \
 	solid_slope_assist_131.asm \
 	obj_tiles.asm \
 	no_death_scroll.asm \
-	sspipe_fixes.asm \
-	qblocks_item_mem.asm \
 	level_constrain.asm \
 	timer_backup.asm \
 	left_at_goal.asm \

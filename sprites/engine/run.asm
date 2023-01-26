@@ -169,6 +169,9 @@ ambient_sprcaller:
 	lda #$24
 	sta !next_oam_index
 	rep #$30
+if !ambient_debug
+	stz !ambient_resident
+endif
 	ldx.w #(!num_ambient_sprs*2)-2
 .loop:
 	lda !ambient_rt_ptr,x
@@ -178,6 +181,9 @@ ambient_sprcaller:
 	bne .no_timer
 	%implement_timer("!ambient_gen_timer,x")
 .no_timer:
+if !ambient_debug
+	inc !ambient_resident
+endif
 	jsr (!ambient_rt_ptr,x)
 ;	lda !ambient_twk_tilesz,x
 ;	bpl .go_next

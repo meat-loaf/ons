@@ -140,6 +140,9 @@ includeonce
 
 !savefile_num            = $010A|!addr
 !level_number            = $010B|!addr
+; used when debug toggle is on, total number of resident
+; ambient sprites
+!ambient_resident        = $010D|!addr
 
 !oam_mirror_xpos_lo      = $0200|!addr
 !oam_mirror_ypos_lo      = $0201|!addr

@@ -1,7 +1,5 @@
 includefrom "macros.asm"
 
-
-
 macro dynamic_gfx_rt_bank3(load_frame_code, dyn_name)
 	<load_frame_code>
 	sta !spr_dyn_alloc_slot_arg_frame_num
