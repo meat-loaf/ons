@@ -99,7 +99,7 @@ spr_gfx_32x32:
 .tile_off_x_base:
 	db $00,$F8,$00,$00,$F2,$F8,$00,$00,$00,$00,$08
 .tile_off_y_base:
-	db $00,$F6,$00,$00,$00,$F0,$F0,$00,$00,$00,$F8
+	db $00,$F7,$00,$00,$00,$F0,$F0,$00,$00,$00,$F8
 ; indexed by yx flip
 .tile_off_start:
 	db $00

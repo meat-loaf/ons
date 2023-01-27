@@ -608,19 +608,6 @@ db $06,$06,$FA,$FA
 db $0C,$0C,$F4,$F4
 
 SpitFireball:
-
-
-LDY #$07
-ExSpriteLoop:
-LDA !extended_num,y
-BEQ FoundExSlot
-DEY
-BPL ExSpriteLoop
-RTS
-
-FoundExSlot:
-STY $00
-
 jsl sub_horz_pos
 STZ $03
 TYA
@@ -657,41 +644,32 @@ LDA !E4,x
 LDY $01
 CLC
 ADC FireXOffsetsLo,y
-LDY $00
-STA !extended_x_low,y
+STA !ambient_get_slot_xpos
 LDA !14E0,x
-LDY $01
 ADC FireXOffsetsHi,y
-LDY $00
-STA !extended_x_high,y
+STA !ambient_get_slot_xpos+1
 
 LDA !D8,x
 LDY $01
 CLC
 ADC FireYOffsetsLo,y
-LDY $00
-STA !extended_y_low,y
+STA !ambient_get_slot_ypos
 LDA !14D4,x
 LDY $01
 ADC FireYOffsetsHi,y
-LDY $00
-STA !extended_y_high,y
+STA !ambient_get_slot_ypos+1
 
 LDY $02
 LDA FireXSpeeds,y
-LDY $00
-STA !extended_x_speed,y
+STA !ambient_get_slot_xspd
 LDA $02
 ORA $03
 TAY
 LDA FireYSpeeds,y
-LDY $00
-STA !extended_y_speed,y
+STA !ambient_get_slot_yspd
 
-LDA #$FF
-STA !extended_timer,y
-
-RTS
+lda #!ambient_fireball_enemy_ng
+jml ambient_get_slot
 
 piranhas_done:
 %set_free_finish("bank6", piranhas_done)

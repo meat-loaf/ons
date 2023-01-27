@@ -1,5 +1,9 @@
 includefrom "engine.asm"
 
+; patch out contatct gfx display in generic sprite interaction for now
+org $01A847|!bank
+	nop #4
+
 
 org $00FE94|!addr
 fireball_xspeed:
