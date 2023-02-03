@@ -28,7 +28,6 @@ macro alloc_sprite_dynamic_512k(sprite_id, gfx_name, init_rt, main_rt, n_oam_til
 	if not(defined("n_dyn_gfx"))
 		!n_dyn_gfx #= 0
 	endif
-	!n_dyn_gfx #= !n_dyn_gfx+1
 	if not(getfilestatus("dyn_gfx/<gfx_name>.bin"))
 		error "No read access to file `<gfx_name>.bin', or file doesn't exist."
 	else
@@ -36,13 +35,28 @@ macro alloc_sprite_dynamic_512k(sprite_id, gfx_name, init_rt, main_rt, n_oam_til
 			error "Too many dynamic gfx files. Allocate more space (define dyn_gfx_files_max)"
 		else
 			%set_free_start(<free_tag>)
-			dyn_gfx_!{n_dyn_gfx}_dat:
+			!dyn_spr_<gfx_name>_gfx_id #= !n_dyn_gfx
+			dyn_gfx_<gfx_name>_dat:
+			!{dyn_gfx_!{n_dyn_gfx}_dat} = dyn_gfx_<gfx_name>_dat
 			incbin "../dyn_gfx/<gfx_name>.bin"
-			dyn_gfx_!{n_dyn_gfx}_dat_end:
-			%set_free_finish(<free_tag>, dyn_gfx_!{n_dyn_gfx}_dat_end)
-			!dyn_spr_<gfx_name>_gfx_id #= !n_dyn_gfx-1
+			dyn_gfx_<gfx_name>_dat_end:
+			%set_free_finish(<free_tag>, dyn_gfx_<gfx_name>_dat_end)
+			!n_dyn_gfx #= !n_dyn_gfx+1
 		endif
 	endif
 endmacro
 
-
+macro alloc_sprite_dynamic_free(sprite_id, gfx_name, init_rt, main_rt, n_oam_tiles, n_exbyte, spr_1656_val, spr_1662_val, spr_166E_val, spr_167A_val, spr_1686_val, spr_190F_val)
+	%alloc_sprite(<sprite_id>, <gfx_name>, <init_rt>, <main_rt>, <n_oam_tiles>, <n_exbyte>, <spr_1656_val>, <spr_1662_val>, <spr_166E_val>, <spr_167A_val>, <spr_1686_val>, <spr_190F_val>)
+	if not(defined("n_dyn_gfx"))
+		!n_dyn_gfx #= 0
+	endif
+	if !n_dyn_gfx > !dyn_gfx_files_max
+		error "Too many dynamic gfx files. Allocate more space (define dyn_gfx_files_max)"
+	else
+		!{dyn_gfx_!{n_dyn_gfx}_dat} = <gfx_name>_gfx
+		!{dyn_gfx_!{n_dyn_gfx}_free} = 1
+		!dyn_spr_<gfx_name>_gfx_id #= !n_dyn_gfx
+		!n_dyn_gfx #= !n_dyn_gfx+1
+	endif
+endmacro

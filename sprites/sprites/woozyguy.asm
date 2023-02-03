@@ -1,7 +1,7 @@
 !woozyguy_sprnum = $BA
 
-%alloc_sprite_dynamic_512k(!woozyguy_sprnum, "woozyguy", woozyguy_init, woozyguy_main, 4, 0, \
-	$30, $80, $01, $01, $00, $00, "bank7")
+%alloc_sprite_dynamic_free(!woozyguy_sprnum, "woozyguy", woozyguy_init, woozyguy_main, 4, 0, \
+	$30, $80, $01, $01, $00, $00)
 
 !woozy_phase         = !C2
 !woozy_phase_counter = !1534

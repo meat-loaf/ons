@@ -164,11 +164,11 @@ statusbar_deps=${sbar_dir}/statusbar_defs.asm \
 sprites_asm_main_file=${SPRITES_DIR}/sprites.asm
 sprites_asm_sources= \
 	${sprites_asm_main_file} \
-	${SPRITES_DIR}/list.def \
-	${SPRITES_DIR}/ambient_list.def \
+	${SPRITES_DIR}/*.def \
 	$(wildcard ${SPRITES_DIR}/engine/*.asm) \
 	$(wildcard ${SPRITES_DIR}/engine/spritesets/*.asm) \
 	$(wildcard ${SPRITES_DIR}/include/*.def) \
+	$(wildcard ${SPRITES_DIR}/include/free_areas/*.free) \
 	$(wildcard ${SPRITES_DIR}/macros/*.asm) \
 	$(wildcard ${SPRITES_DIR}/sprites/*.asm) \
 	$(wildcard ${SPRITES_DIR}/sprites/ambient/*.asm) \

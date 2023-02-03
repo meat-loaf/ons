@@ -1,10 +1,10 @@
 incsrc "../asm/main.asm"
-
-incsrc "include/config.def"
-incsrc "include/512kfree.def"
-incsrc "include/smw_routines.def"
+incsrc "freespace.def"
 
 incsrc "macros/macros.asm"
+
+incsrc "include/config.def"
+incsrc "include/smw_routines.def"
 
 incsrc "engine/engine.asm"
 

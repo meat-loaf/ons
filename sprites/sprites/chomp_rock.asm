@@ -1,8 +1,8 @@
 !chomp_rock_sprid = $BE
 
-%alloc_sprite_dynamic_512k(!chomp_rock_sprid, "chomp_rock", chomp_rock_init, chomp_rock_main, 4, 0, \
-	$80,$80,$35,$1b,$19,$c0, \
-	"bank6")
+%alloc_sprite_dynamic_free(!chomp_rock_sprid, "chomp_rock", chomp_rock_init, chomp_rock_main, 4, 0, \
+	$80,$80,$35,$1b,$19,$c0)
+
 	!SPRITEKILLSND = $37
 
 	!ACTSTATUS = $C2                  ; 0=normal,1=crushing

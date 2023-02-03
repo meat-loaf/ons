@@ -1,17 +1,21 @@
 includefrom "macros.asm"
 
 macro write_dynamic_spr_gfx_ptrs()
+print "dyn_table_writer: num dynamic gfx !n_dyn_gfx"
 org !spr_dyn_gfx_tbl
 print "Dynamic gfx pointers start at $", pc, " (max !dyn_gfx_files_max)"
 !ix #= 0
 while !ix < !n_dyn_gfx
-	!ix_real #= !ix+1
-	dl dyn_gfx_!{ix_real}_dat
+	!tbl_e_def = "dl"
+	if defined("dyn_gfx_!{ix}_free")
+		!tbl_e_def = "autoclean dl"
+	endif
+	print "!{dyn_gfx_!{ix}_dat}"
+	!tbl_e_def !{dyn_gfx_!{ix}_dat}
 	!ix #= !ix+1
 endif
 print "Dynamic gfx pointers end at $", pc, " (total used: !ix)"
 undef "ix"
-undef "ix_real"
 
 endmacro
 
