@@ -340,7 +340,9 @@ power_do_nothing:
 	sta !spc_io_1_sfx_1DF9
 ; todo
 .points:
-	rtl
+	lda #$04
+	jml spr_give_points
+;	rtl
 ; todo
 give_cape:
 	rtl

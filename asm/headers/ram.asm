@@ -345,9 +345,10 @@ assert !ambient_y_speed+(!num_ambient_sprs*2) <= $185C, "ambient sprite ram exce
 !spr_touch_tile_high = $18D7|!addr
 !player_duck_on_yoshi = $18DC|!addr
 
-!current_yoshi_slot  = $18DF|!addr
-!yoshi_is_loose      = $18E2|!addr
-!give_player_lives   = $18E4|!addr
+!current_yoshi_slot      = $18DF|!addr
+!yoshi_is_loose          = $18E2|!addr
+!give_player_lives       = $18E4|!addr
+!player_givelives_frames = $18E5|!addr
 
 !sprite_buoyancy         = $190E|!addr
 !level_general_purpose_1 = $1923|!addr

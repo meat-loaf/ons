@@ -298,7 +298,7 @@ endif
 	;JSR.w .rcoins
 	JSR.w .lives
 	;JSR.w .star_coins
-	;JSR.w .score
+	JSR.w .score
 
 if !enable_debug_cpu_meter == !true
 	JSR.w .cpu_meter

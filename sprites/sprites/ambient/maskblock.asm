@@ -9,6 +9,8 @@ includefrom "ambient_list.def"
 ambient_mask:
 	; aborts if timer is zero
 	jsr ambient_kill_on_timer
+	; for oam alloc - one tile
+	stz $0c
 	; aborts if no oam left
 	jsr ambient_sub_off_screen_ok
 	lda $00

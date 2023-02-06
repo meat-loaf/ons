@@ -55,12 +55,17 @@ ambient_sub_off_screen:
 .yok:
 	sta $01
 .next_oam_slot:
+	ldy $0c
+	lda .oam_offs,y
+	sta $0c
+
 	lda !next_oam_index
 	cmp #$0100
 	bcs .no_oam_left
 	tay
-	adc #$0004
+	adc $0c
 	sta !next_oam_index
+	sty $0c
 	rts
 .erase:
 	stz !ambient_rt_ptr,x
@@ -71,6 +76,11 @@ ambient_sub_off_screen:
 	pla
 .exit:
 	rts
+.oam_offs:
+	dw $0004
+	dw $0008
+	dw $000C
+	dw $0010
 ambient_obj_interact:
 	; todo layer 2 collision
 ;	ldy #$0000
@@ -287,6 +297,8 @@ ambient_kill_on_timer:
 	rts
 ; basic 'check despawn and draw single tile' ambient gfx routine.
 ambient_basic_gfx:
+	stz $0c
+.oam_tiles_set:
 	jsr ambient_sub_off_screen
 	lda !sprite_level_props-1
 	and #$FF00
@@ -307,8 +319,6 @@ ambient_basic_gfx:
 	lsr #2
 	tay
 
-	; smw was not designed with 16-bit oam access in mind...
-	; this is better than alternatives, i think
 	sep #$20
 	lda !ambient_twk_tilesz,x
 	and #$03
@@ -317,7 +327,24 @@ ambient_basic_gfx:
 	rts
 ; TODO
 spr_give_points:
-	rtl
+	clc
+	; todo defines
+	adc #(($13-$1)+$5)
+	tay
+	lda !sprite_x_low,x
+	sta !ambient_get_slot_xpos
+	lda !sprite_x_high,x
+	sta !ambient_get_slot_xpos+1
+	lda !sprite_y_low,x
+	sta !ambient_get_slot_ypos
+	lda !sprite_y_high,x
+	sta !ambient_get_slot_ypos+1
+	lda #$30
+	sta !ambient_get_slot_timer
+	stz !ambient_get_slot_xspd
+	stz !ambient_get_slot_yspd
+	tya
+; fallthrough
 
 ; input: a = ambient sprite id to spawn
 ;        $45 = ambient sprite xpos
@@ -334,7 +361,6 @@ ambient_get_slot:
 	and #$00FF
 	xba
 	pha
-;	ldy.w #(!num_ambient_sprs*2)-2
 	ldy.w !ambient_spr_ring_ix
 	lda.w #$0000
 .loop:

@@ -36,17 +36,22 @@ starcoin_main:
 	sec
 	rol !yoshi_coins_collected
 
-;.popcount:
-;	stz.b $00
-;	lda.w !yoshi_coins_collected
-;.loop:
-;	inc $00
-;	lsr
-;	bne .loop
-;	lda.b #$08
-;	clc
-;	adc $00
-;	jsl spr_give_points
+	ldy #$07
+.popcount:
+	stz.b $00
+	lda.w !yoshi_coins_collected
+.loop:
+	lsr
+	bcc .next
+	inc $00
+.next:
+	dey
+	bpl .loop
+
+	lda.b #$03
+	clc
+	adc $00
+	jsl spr_give_points
 
 	stz !sprite_status,x
 	jml sprite_write_item_memory|!bank
