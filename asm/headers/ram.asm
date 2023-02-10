@@ -457,8 +457,8 @@ assert !ambient_misc_1+(!num_ambient_sprs*2) <= $1EA2, "ambient sprite ram excee
 ; todo reorganize a bit. Original free sram starts at $70035A
 !item_memory_mirror_s    = $701000
 !wiggler_segment_buffer_srm = !item_memory_mirror_s+!item_memory_size
-!big_hdma_decomp_buff_rg = !wiggler_segment_buffer_srm+$200
-!big_hdma_decomp_buff_b   = !big_hdma_decomp_buff_rg+$1000
+;!big_hdma_decomp_buff_rg = !wiggler_segment_buffer_srm+$200
+;!big_hdma_decomp_buff_b   = !big_hdma_decomp_buff_rg+$1000
 
 ; 7168 bytes
 ; Item memory, divided in four blocks of 1792 bytes per block.
@@ -470,10 +470,18 @@ assert !ambient_misc_1+(!num_ambient_sprs*2) <= $1EA2, "ambient sprite ram excee
 ; 3 bytes
 !score_bak          = !got_moon_bak+$01
 !player_power_bak   = !score_bak+$03
+; 7F1C07 - 7F1C0F free
 
-; 7F2000-7F3FFF free
-; todo put mfg's scrollable hdma gradient buffer here
-; todo how big does it need to be?
+; skip a few bytes here
+!big_hdma_decomp_buff_rg = $7F1C10
+!big_hdma_decomp_buff_b   = !big_hdma_decomp_buff_rg+$1000
+
+assert bank(!big_hdma_decomp_buff_rg) == bank(!big_hdma_decomp_buff_b), "hdma decompression buffers must be in the same ram bank."
+
+; pointers to above
+!big_hdma_ptr_rg = !big_hdma_decomp_buff_b+$1000
+!big_hdma_ptr_b  = !big_hdma_ptr_rg+$7
+; 7F3C16-7F3FFF free
 
 
 !wiggler_segment_buffer = $7F9A7B

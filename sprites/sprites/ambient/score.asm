@@ -49,7 +49,6 @@
 	!ambient_twk_pos_upd)
 
 %set_free_start("bank2_altspr1")
-skip 1
 ambient_score:
 	jsr ambient_kill_on_timer
 	lda #$0002
@@ -58,6 +57,9 @@ ambient_score:
 	lda !sprite_level_props-1
 	and #$FF00
 	sta $02
+	lda !ambient_twk_tilesz,x
+	and #$0003
+	sta $04
 
 	lda $00
 	sta $0200|!addr,y
@@ -79,6 +81,9 @@ ambient_score:
 	tya
 	lsr #2
 	tay
+	; todo this is actually wrong since the tiles arent stacked
+	;      vertically. its not super noticeable but it should be
+	;      corrected regardless
 	lda !ambient_twk_tilesz,x
 	and #$0003
 	sta $00

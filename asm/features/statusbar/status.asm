@@ -225,6 +225,25 @@ org $00A5A8
        BRA $01 : NOP
 
 freecode
+; low byte in 00, high byte in 01
+hex2dec:
+	stz $00
+	stz $01
+	sta $02
+.loop:
+	beq .done
+	lda $00
+	inc
+	cmp #$0a
+	bcc .lostore
+	inc $01
+	lda #$00
+.lostore:
+	sta $00
+	dec $02
+	bne .loop
+.done:
+	rts
 ; abort
 no_oam_left:
 	PLA            ; \ clean the stack
@@ -295,9 +314,9 @@ endif
 	JSR.w .timer
 	JSR.w .item_box
 	JSR.w .coins
-	;JSR.w .rcoins
+	JSR.w .rcoins
 	JSR.w .lives
-	;JSR.w .star_coins
+	JSR.w .star_coins
 	JSR.w .score
 
 if !enable_debug_cpu_meter == !true
@@ -336,6 +355,22 @@ if !enable_debug_cpu_meter == !true
 !star_props     = $34
 
 .cpu_meter:
+	; dynamic sprite count
+;	lda !dyn_slots
+;	jsr hex2dec
+;	%get_next_oam_tile(status_bar_oam_tiles, no_oam_left)
+;	%draw_digit_tile($28,$d8,$01,B,\
+;			!tile_noflip,$00,$00,$00)
+
+	%get_next_oam_tile(status_bar_oam_tiles, no_oam_left)
+	%draw_digit_tile($20,$d0,!powerup,w,\
+			!tile_noflip,$00,$00,$00)
+
+	%get_next_oam_tile(status_bar_oam_tiles, no_oam_left)
+	%draw_digit_tile($20,$d8,!dyn_slots,w,\
+			!tile_noflip,$00,$00,$00)
+
+
 	%get_next_oam_tile(status_bar_oam_tiles, no_oam_left)
 	LDA $2137       ;   Prepare H/V-count data
 	LDA $213D       ;   Get V-count data
