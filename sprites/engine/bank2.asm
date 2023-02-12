@@ -325,7 +325,16 @@ ambient_basic_gfx:
 	sta $0420|!addr,y
 	rep #$20
 	rts
-; TODO
+
+spr_give_points_y:
+	phy
+	phx
+	tyx
+	jsl spr_give_points
+	plx
+	ply
+	rtl
+
 spr_give_points:
 	clc
 	; todo defines
@@ -376,7 +385,6 @@ ambient_get_slot:
 	cmp !num_ambient_sprs-1
 	bne .loop
 	
-;	bpl .loop
 	; tidy the stack
 	pla
 	sep #$30

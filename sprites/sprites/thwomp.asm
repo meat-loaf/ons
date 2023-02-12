@@ -8,6 +8,11 @@ includefrom "list.def"
 %alloc_sprite(!thwomp_sprnum, "thwomp", thwomp_init, thwomp_main, 5, 0, \
 	$01, $06, $33, $01, $01, $24)
 
+; todo remove this, a shim for fixing level parsing issues during conversion
+!flyguy_sprnum = $A8
+%alloc_sprite(!flyguy_sprnum, "flyguy_temp", flyguy_temp, flyguy_temp, 5, 4, \
+	$00, $00, $00, $00, $00, $00)
+
 !thwomp_angry_face_tile = $06
 
 !thwomp_hit_ground_sfx_id   = $09
@@ -31,6 +36,10 @@ includefrom "list.def"
 ; 02: right
 ; 03: left
 %set_free_start("bank1_koopakids")
+flyguy_temp:
+	stz !sprite_status,x
+	rtl
+
 thwomp_init:
 	ldy !thwomp_dir,x
 	lda .what_blocks,y

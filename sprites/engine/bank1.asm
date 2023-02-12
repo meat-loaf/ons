@@ -11,6 +11,15 @@ spr_upd_yx_no_grav_l:
 	rtl
 warnpc $018029|!bank
 
+org $01A667|!bank
+	jsl spr_give_points
+
+org $01A619|!bank
+	jsl spr_give_points_y
+
+org $01B149|!bank
+	jsl spr_give_points
+
 ; todo i don't feel like relocating these...
 org $01AB75|!bank
 spr_display_contact_gfx_s_nosnd_alt:

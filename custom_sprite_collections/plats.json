@@ -1,0 +1,157 @@
+[{
+	"id":"5F",
+	"name": "Rotating Chained Brown Platform",
+	"desc": "A platform that rotates around its center while Mario stands on it, and slows down when he jumps off.",
+	"category":"athletic",
+	"display_xoff": -1,
+	"display_yoff": -2,
+	"custom": false,
+	"extra_bit": false,
+	"n_exbytes": 1,
+	"reqfiles": {},
+	"smap16":[{
+		"xoff":"20",
+		"yoff":"10",
+		"tile":"55B"
+	},{
+		"xoff":"20",
+		"yoff":"20",
+		"tile":"55B"
+	},{
+		"xoff":"20",
+		"yoff":"30",
+		"tile":"55B"
+	},{
+		"xoff":"20",
+		"yoff":"40",
+		"tile":"55B"
+	},{
+		"xoff":"20",
+		"yoff":"50",
+		"tile":"55B"
+	},{
+		"xoff":8,
+		"yoff":8,
+		"tile":"54D"
+	},{
+		"xoff":"18",
+		"yoff":8,
+		"tile":"54E"
+	},{
+		"xoff":"28",
+		"yoff":8,
+		"tile":"54E"
+	},{
+		"xoff":"38",
+		"yoff":8,
+		"tile":"54F"
+	}]
+},{
+	"id":"5F",
+	"name": "Rotating Chained Grey Platform (always spinning)",
+	"desc": "A platform that rotates around its center at a constant speed, based on the extra byte value.",
+	"category":"athletic",
+	"display_xoff": -1,
+	"display_yoff": -2,
+	"custom": false,
+	"extra_bit": true,
+	"n_exbytes": 1,
+	"reqfiles": {},
+	"smap16":[{
+		"xoff":"20",
+		"yoff":"10",
+		"tile":"55C"
+	},{
+		"xoff":"20",
+		"yoff":"20",
+		"tile":"55C"
+	},{
+		"xoff":"20",
+		"yoff":"30",
+		"tile":"55C"
+	},{
+		"xoff":"20",
+		"yoff":"40",
+		"tile":"55C"
+	},{
+		"xoff":"20",
+		"yoff":"50",
+		"tile":"55C"
+	},{
+		"xoff":8,
+		"yoff":8,
+		"tile":"55D"
+	},{
+		"xoff":"18",
+		"yoff":8,
+		"tile":"55E"
+	},{
+		"xoff":"28",
+		"yoff":8,
+		"tile":"55E"
+	},{
+		"xoff":"38",
+		"yoff":8,
+		"tile":"55F"
+	}]
+},{
+	"id":"A9",
+	"name":"Falling Platform, 2 tiles wide.",
+	"desc":"A grey platform that falls when Mario lands on it. This one is 2 tiles wide.",
+	"category":"generic",
+	"custom":false,
+	"extra_bit":false,
+	"n_exbytes": 1,
+	"smap16":[{
+		"tile":"55D"
+	},{
+		"tile":"55F",
+		"xoff":"10"
+	}]
+},{
+	"id":"A9",
+	"name":"...3 tiles wide.",
+	"desc":"A grey platform that falls when Mario lands on it. This one is 3 tiles wide.",
+	"category":"generic",
+	"custom":false,
+	"extra_bit":true,
+	"n_exbytes": 1,
+	"smap16":[{
+		"tile":"55D"
+	},{
+		"tile":"55E",
+		"xoff":"10"
+	},{
+		"tile":"55F",
+		"xoff":"20"
+	}]
+},{
+
+	"id":"BF",
+	"name":"Mega Mole",
+	"desc":"A Mega Mole, that Mario can jump on from the top to ride, but hurts him when it runs into him.",
+	"category": "cave",
+	"display_xoff": 0,
+	"display_yoff": 0,
+	"custom": false,
+	"extra_bit": false,
+	"reqfiles": { "sp3" : "10B" },
+	"n_exbytes": 0,
+	"smap16":[{
+		"xoff":0,
+		"yoff":-16,
+		"tile":"5E0"
+		},{
+		"xoff": 16,
+		"yoff":-16,
+		"tile":"5E1"
+		},{
+		"xoff":0,
+		"yoff":0,
+		"tile":"5F0"
+		},{
+		"xoff":16,
+		"yoff":0,
+		"tile":"5F1"
+	}]
+}]
