@@ -374,6 +374,7 @@ spr_give_points:
 ;       y: ambient slot index
 print "ambient_get_slot_rt = $",pc
 ambient_get_slot:
+	sty $4d
 	rep #$30
 	and #$00FF
 	xba
@@ -431,6 +432,7 @@ ambient_get_slot:
 	lda !ambient_get_slot_yspd
 	sta !ambient_y_speed+1,y
 	clc
+	ldy $4d
 	rtl
 .done
 %set_free_finish("bank2_altspr2", ambient_get_slot_done)

@@ -3,12 +3,36 @@ incsrc "../main.asm"
 org $00A5AB|!bank
 	jsl level_setup_ram_special
 
+org $00FF30|!bank
+; don't clear rng ram during level to overworld transitions
+clearram_norng:
+	cpx.w #(!rng_calc-!game_paused)
+	bcc .clear
+	cpx.w #((!random_number_output+2)-!game_paused)
+	bcc .noclear
+.clear
+	stz !game_paused,x
+.noclear:
+	rts
+
+; todo the code that copies from the save data buffer to
+;      the overworld ram is right above this. when sram
+;      saving is fixed, probably relocate this a bit to
+;      not need the jsr hijack
+
+org $00A1B5|!bank
+	jsr clearram_norng
+
 org $00FFD8|!bank
 ;if !use_midway_imem_ram_dma == !true
 	db $04       ; 16kb sram
 ;else
 ;	db $01       ; 2kb sram
 ;endif
+
+; don't initialize ow sprites here
+org $009AA4|!bank
+	nop #4
 
 ; yoshi wings ani stuff
 org $00A6DE|!bank        ; prevent entrance type 5 from making levels slippery
@@ -20,10 +44,8 @@ autoclean JML EntranceType5Check
 org $00C82A|!bank
 autoclean JML YwingAniType
 
-org $00C836|!bank
-;	db $80
-;	NOP : NOP
-
+org $00A08A|!bank
+	jml overworld_load
 
 org $00A261|!bank
 if !dbg_start_select_end_level == !true
@@ -250,6 +272,16 @@ level_setup_ram_special:
 	tax
 	bpl .loop
 	rtl
+
+; reload all overworld sprites on actual ow load
+; instead of just in gm04
+overworld_load:
+	jsl $04F675|!bank
+	lda !ow_entering_star_warp
+	beq .cont
+	jsl $04853B|!bank
+.cont:
+	jml $00A093|!bank
 
 EntranceType5Check:
 	LDA $192A|!addr       ; Entrance type-- sw___aaa

@@ -190,6 +190,13 @@ includeonce
 ; $ODC6 gets written with the high byte of sp1 graphics
 ; file due to 16 bit write. it is free after this, however
 
+; note via a hijack in gamemode 0c, overworld sprite ram
+;      is reloaded on overworld load, so this ram is available for use
+;      elsewhere (0ddf through 0ef4 inclusive)
+
+; 12 bytes, gfx file numbers to load during sprite gfx decompression
+!level_spriteset_gfx_files = $0DDF|!addr
+
 !status_bar_tilemap     = $0EF9|!addr
 
 !timer_frame            = $0F30|!addr
@@ -379,6 +386,7 @@ assert !ambient_playerfireballs+2 <= $1B84
 
 ; TODO implement - needs to be set to (!ambient_spr_sz*2)-2 on level load
 !ambient_spr_ring_ix     = $1B97|!addr
+!ow_entering_star_warp   = $1B9C|!addr
 
 !level_load_obj_tile     = $1BA1|!addr
 !time_huns_bak           = $1DEF|!addr
