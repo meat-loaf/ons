@@ -1,5 +1,13 @@
 includefrom "engine.asm"
 
+; replace 'sprite in block' ids.
+org $0288A3|!bank
+; ?, mushroom, flower, star, feather, 1up
+; there's more but this is all i used from the originals
+db $00,$40,$42,$44,$41,$47
+; table repeats at 88b4?
+warnpc $0288C5|!bank
+
 %set_free_start("bank2_altspr1")
 ambient_sub_off_screen:
 	stz $0e

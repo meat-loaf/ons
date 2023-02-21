@@ -11,6 +11,41 @@ spr_upd_yx_no_grav_l:
 	rtl
 warnpc $018029|!bank
 
+org $01A7C9|!bank
+	db $00,$00,$00,$00
+	db $04,$04,$04,$04
+
+; sprite unstun: replace original spike top number check
+; todo check if this is actually used
+org $0196AF|!bank
+	cmp #$04
+
+org $01AA12|!bank
+	bra set_stunned_timer_stun
+; set stunned timer for sprites: generic interaction
+; y has sprite id, a has #$02
+org $01AA18|!bank
+set_stunned_timer:
+	cpy #$A2
+	beq .stun_long
+	cpy #$0D
+	beq .stun_long
+	cpy #$04
+	bcc .stun
+	cpy #$06
+	bcs .stun
+.stun_long:
+	lda #$FF
+.stun:
+	sta !sprite_misc_1540,x
+	lda #$09
+	sta !sprite_status,x
+	rts
+warnpc $01AA33|!bank
+
+org $01A6C1|!bank
+	jsl spr_give_points
+
 org $01A667|!bank
 	jsl spr_give_points
 

@@ -1,0 +1,197 @@
+[{
+	"id":"04",
+	"name":"Koopa, green",
+	"desc":"A green koopa. It slowly walks along the ground, and will walk off ledges, safety be damned. If jumped on, it will hide in its shell for some time.",
+	"category": "generic",
+	"display_xoff": 0,
+	"display_yoff": 0,
+	"custom": false,
+	"extra_bit": false,
+	"smap16":[{
+			"yoff":"2",
+			"tile":"595"
+		},{
+			"yoff":"-0E",
+			"tile":"585"
+		}]
+},{
+	"id":"04",
+	"name":"...yellow",
+	"desc":"A yellow koopa. It quickly walks along the ground, and will walk off ledges, safety be damned. If jumped on, it will hide in its shell for some time.",
+	"category": "generic",
+	"display_xoff": 0,
+	"display_yoff": 0,
+	"custom": false,
+	"extra_bit": true,
+	"smap16":[{
+			"yoff":"2",
+			"tile":"597"
+		},{
+			"yoff":"-0E",
+			"tile":"587"
+		}]
+},{
+	"id":"04",
+	"name":"...red",
+	"desc":"A red koopa. It slowly walks along the ground, and will stay on ledges. If jumped on, it will hide in its shell for some time.",
+	"category": "generic",
+	"display_xoff": 0,
+	"display_yoff": 0,
+	"custom": true,
+	"extra_bit": false,
+	"smap16":[{
+			"yoff":"2",
+			"tile":"594"
+		},{
+			"yoff":"-0E",
+			"tile":"584"
+		}]
+},{
+	"id":"04",
+	"name":"...blue",
+	"desc":"A blue koopa. It quickly walks along the ground, and will stay on ledges. If jumped on, it will hide in its shell for some time.",
+	"category": "generic",
+	"display_xoff": 0,
+	"display_yoff": 0,
+	"custom": true,
+	"extra_bit": true,
+	"smap16":[{
+			"yoff":"2",
+			"tile":"596"
+		},{
+			"yoff":"-0E",
+			"tile":"586"
+		}]
+},{
+	"id":"05",
+	"name":"Koopa shell, green",
+	"desc":"A green koopa shell.",
+	"category": "generic",
+	"display_xoff": 0,
+	"display_yoff": 0,
+	"custom": false,
+	"extra_bit": false,
+	"smap16":[{
+			"yoff":"1",
+			"tile":"589"
+		}]
+},{
+	"id":"05",
+	"name":"...yellow",
+	"desc":"A yellow koopa shell.",
+	"category": "generic",
+	"display_xoff": 0,
+	"display_yoff": 0,
+	"custom": false,
+	"extra_bit": true,
+	"smap16":[{
+			"yoff":"1",
+			"tile":"58B"
+		}]
+},{
+	"id":"05",
+	"name":"...red",
+	"desc":"A red koopa shell.",
+	"category": "generic",
+	"display_xoff": 0,
+	"display_yoff": 0,
+	"custom": true,
+	"extra_bit": false,
+	"smap16":[{
+			"yoff":"1",
+			"tile":"588"
+		}]
+},{
+	"id":"05",
+	"name":"...blue",
+	"desc":"A blue koopa shell.",
+	"category": "generic",
+	"display_xoff": 0,
+	"display_yoff": 0,
+	"custom": true,
+	"extra_bit": true,
+	"smap16":[{
+			"yoff":"1",
+			"tile":"58A"
+		}]
+},{
+	"id":"06",
+	"name":"Lame parakoopa, green",
+	"desc":"A green parakoopa that can't fly. It slowly walks along the ground, and will walk off ledges, safety be damned. If jumped on, it will loose its wings and turn into a normal koopa. It jumps over sprites kicked at it if it is facing them.",
+	"category": "generic",
+	"display_xoff": 0,
+	"display_yoff": 0,
+	"custom": false,
+	"extra_bit": false,
+	"smap16":[{
+			"yoff":"2",
+			"tile":"595"
+		},{
+			"yoff":"-0E",
+			"tile":"585"
+		},{
+			"xoff":"08",
+			"yoff":"-0A",
+			"tile":"5B7"
+		}]
+},{
+	"id":"06",
+	"name":"...yellow",
+	"desc":"A yellow parakoopa that can't fly. It quickly walks along the ground, and will walk off ledges, safety be damned. If jumped on, it will loose its wings and turn into a normal koopa. It jumps over sprites kicked at it if it is facing them.",
+	"category": "generic",
+	"display_xoff": 0,
+	"display_yoff": 0,
+	"custom": false,
+	"extra_bit": true,
+	"smap16":[{
+			"yoff":"2",
+			"tile":"597"
+		},{
+			"yoff":"-0E",
+			"tile":"587"
+		},{
+			"xoff":"08",
+			"yoff":"-0A",
+			"tile":"5B7"
+		}]
+},{
+	"id":"06",
+	"name":"...red",
+	"desc":"A red parakoopa that can't fly. It quickly walks along the ground, and will stay on ledges. If jumped on, it will loose its wings and turn into a normal koopa. It jumps over sprites kicked at it if it is facing them.",
+	"category": "generic",
+	"display_xoff": 0,
+	"display_yoff": 0,
+	"custom": true,
+	"extra_bit": false,
+	"smap16":[{
+			"yoff":"2",
+			"tile":"594"
+		},{
+			"yoff":"-0E",
+			"tile":"584"
+		},{
+			"xoff":"08",
+			"yoff":"-0A",
+			"tile":"5B7"
+		}]
+},{
+	"id":"06",
+	"name":"...blue",
+	"desc":"A blue parakoopa that can't fly. It quickly walks along the ground, and will stay on ledges. If jumped on, it will loose its wings and turn into a normal koopa. It jumps over sprites kicked at it if it is facing them.",
+	"category": "generic",
+	"display_xoff": 0,
+	"display_yoff": 0,
+	"custom": true,
+	"extra_bit": true,
+	"smap16":[{
+			"yoff":"2",
+			"tile":"596"
+		},{
+			"yoff":"-0E",
+			"tile":"586"
+		},{
+			"xoff":"08",
+			"yoff":"-0A",
+			"tile":"5B7"
+		}]
+}]

@@ -63,6 +63,7 @@ endif
 			org !{sprite_size_table}+($100*2)+(!ix*1)
 			db !{sprite_!{ix}_sz}
 			org !{sprite_size_table}+($100*3)+(!ix*1)
+			db !{sprite_!{ix}_sz}
 		else
 			error "Sprite size for sprite id !ix not defined."
 		endif
