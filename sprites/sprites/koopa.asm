@@ -1,16 +1,24 @@
 !koopa_sprnum = $04
 !shell_sprnum = $05
 !lame_parakoopa_sprnum = $06
-!flyin_parakoopa_sprnum = $07
+!flyin_parakoopa_v_sprnum = $07
+!flyin_parakoopa_h_sprnum = $08
 
 !koopa_is_winged_scr    = $45
 
 !koopa_winged             = !sprite_misc_1528
 !koopa_falling_last_frame = !sprite_misc_151c
+!koopa_turn_timer         = !sprite_misc_15ac
+!koopa_ani_timer          = !sprite_misc_1570
 !koopa_face_dir           = !sprite_misc_157c
 !koopa_stays_on_ledges    = !sprite_misc_1594
 !koopa_ani_frame          = !sprite_misc_1602
 !koopa_jumping_over_shell = !sprite_misc_160e
+
+
+!parakoopa_accel_timer    = !sprite_misc_c2
+!parakoopa_accel_dir      = !sprite_misc_151c
+!parakoopa_accel_wait     = !sprite_misc_1540
 
 
 !wing_out_tile = $EC
@@ -31,28 +39,37 @@ org $019E1C|!bank
 	$10, $40, $00, $00, $02, $A0)
 %alloc_sprite(!lame_parakoopa_sprnum, "lame_parakoopa", koopa_init, koopa_main, 3, 0,\
 	$10, $40, $00, $00, $42, $B0)
-%alloc_sprite(!flyin_parakoopa_sprnum, "flyin_parakoopa", koopa_init, koopa_main, 3, 0,\
+%alloc_sprite(!flyin_parakoopa_v_sprnum, "flyin_parakoopa_vert", koopa_init, flyin_parakoopa_main, 3, 0,\
+	$10, $40, $00, $00, $52, $B0)
+%alloc_sprite(!flyin_parakoopa_h_sprnum, "flyin_parakoopa_horz", koopa_init, flyin_parakoopa_main, 3, 0,\
 	$10, $40, $00, $00, $52, $B0)
 
 %alloc_sprite_sharedgfx_entry_9(!koopa_sprnum, $82,$A0,$82,$A2,$84,$A4,$8C,$8A,$8E)
 %alloc_sprite_sharedgfx_entry_mirror(!shell_sprnum, !koopa_sprnum)
 %alloc_sprite_sharedgfx_entry_mirror(!lame_parakoopa_sprnum, !koopa_sprnum)
-%alloc_sprite_sharedgfx_entry_mirror(!flyin_parakoopa_sprnum, !koopa_sprnum)
+%alloc_sprite_sharedgfx_entry_mirror(!flyin_parakoopa_v_sprnum, !koopa_sprnum)
+%alloc_sprite_sharedgfx_entry_mirror(!flyin_parakoopa_h_sprnum, !koopa_sprnum)
 
 %set_free_start("bank1_koopakids")
 koopa_init_stun:
 	; sprite init caller sets state to 08 before calling
 	inc !sprite_status,x
 koopa_init:
+	; flag to not turn in place when falling
+	; needs to be set for flying parakoopas, and
+	; for normal koopas that stay on ledges so they don't
+	; turn in the air
+	inc !koopa_jumping_over_shell,x
 	ldy !spr_extra_bits,x
 	lda .pals,y
 	ora !sprite_oam_properties,x
 	sta !sprite_oam_properties,x
 	cpy #$02
-	bcc .exit
+	bcc .set_facing
 	inc !koopa_stays_on_ledges,x
-.exit:
+.set_facing:
 	jsr _spr_face_mario_rt
+.exit:
 	rtl
 .pals:
 	; green, yellow, blue, red
@@ -91,7 +108,7 @@ koopa_main:
 	jsr koopa_gfx
 
 	lda !sprites_locked
-	bne .exit
+	bne koopa_init_exit
 	jsr _suboffscr0_bank1
 	lda !koopa_is_winged_scr
 	bne .ani_upd
@@ -143,7 +160,10 @@ koopa_main:
 	beq .check_wings
 	; only parakoopas jump over shells
 	lda !koopa_jumping_over_shell,x
+;	and !koopa_is_winged_scr
 	bne .double_ani
+	; todo - koopas that get nudged off ledges will
+	;        spin in the air. fix this
 	jsr _flip_sprite_dir
 	bra .interact
 .check_wings:
@@ -162,6 +182,79 @@ koopa_main:
 	db $08,$F8,$0C,$F4
 
 flyin_parakoopa_main:
+	jsr koopa_gfx_fly_entry
+	lda !sprites_locked
+	bne .exit
+	ldy !sprite_num,x
+	lda .suboff_val-!flyin_parakoopa_v_sprnum,y
+	jsl sub_off_screen
+	ldy !koopa_face_dir,x
+	jsr _spr_update_dir
+	tya
+	cmp !koopa_face_dir,x
+	beq .no_turn
+	lda #$08
+	sta !koopa_turn_timer,x
+.no_turn:
+	jsr _spr_set_ani_frame
+	; todo modify this logic
+	lda !sprite_num,x
+	cmp #!flyin_parakoopa_v_sprnum
+	bne .horz
+	jsr _spr_upd_y_no_grav
+	bra .vert_cont
+
+.horz:
+	ldy #$fc
+	lda !koopa_ani_timer,x
+	and #$20
+	beq .noback
+	ldy #$04
+.noback:
+	sty !sprite_speed_y,x
+	jsr _spr_upd_x_no_grav
+	jsr _spr_upd_y_no_grav
+.vert_cont:
+	; set carry - fast speed
+	lda !spr_extra_bits,x
+	lsr
+
+	lda !parakoopa_accel_wait,x
+	bne .no_accel_yet
+	inc !parakoopa_accel_timer,x
+	lda !parakoopa_accel_timer,x
+	and #$03
+	bne .no_accel_yet
+	lda !parakoopa_accel_dir,x
+	and #$01
+	tay
+	bcc .not_fast
+	iny #2
+.not_fast:
+	lda !sprite_speed_x,x
+	clc
+	adc .accel,y
+	sta !sprite_speed_y,x
+	sta !sprite_speed_x,x
+	cmp .spd_max,y
+	bne .no_accel_yet
+	inc !parakoopa_accel_dir,x
+	lda .timer,y
+	sta !parakoopa_accel_wait,x
+.no_accel_yet:
+	jsr _sprspr_mario_spr_rt
+.exit:
 	rtl
+.suboff_val:
+	db $00,$01
+.accel:
+	db $FF,$01
+	db $FE,$02
+.spd_max:
+	db $F0,$10
+	db $E8,$18
+.timer:
+	db $30,$30
+	db $18,$18
 koopas_done:
 %set_free_finish("bank1_koopakids", koopas_done)

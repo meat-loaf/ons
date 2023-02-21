@@ -194,4 +194,199 @@
 			"yoff":"-0A",
 			"tile":"5B7"
 		}]
+},{
+	"id":"07",
+	"name":"Vertical parakoopa, green",
+	"desc":"A green parakoopa that slowly flies vertically, up 5.5 tiles and then back down. If jumped on, it will loose its wings and turn into a normal koopa..",
+	"category": "generic",
+	"display_xoff": 0,
+	"display_yoff": 0,
+	"custom": false,
+	"extra_bit": false,
+	"smap16":[{
+			"yoff":"2",
+			"tile":"595"
+		},{
+			"yoff":"-12",
+			"xoff":"-4",
+			"tile":"592"
+		},{
+			"yoff":"-0E",
+			"tile":"585"
+		},{
+			"xoff":"08",
+			"yoff":"-0A",
+			"tile":"5B6"
+		}]
+},{
+	"id":"07",
+	"name":"...yellow",
+	"desc":"A yellow parakoopa that quickly flies vertically, up 5.5 tiles and then back down. If jumped on, it will loose its wings and turn into a normal koopa..",
+	"category": "generic",
+	"display_xoff": 0,
+	"display_yoff": 0,
+	"custom": false,
+	"extra_bit": true,
+	"smap16":[{
+			"yoff":"2",
+			"tile":"597"
+		},{
+			"yoff":"-12",
+			"xoff":"-4",
+			"tile":"592"
+		},{
+
+			"yoff":"-0E",
+			"tile":"587"
+		},{
+			"xoff":"08",
+			"yoff":"-0A",
+			"tile":"5B6"
+		}]
+},{
+	"id":"07",
+	"name":"...red",
+	"desc":"A red parakoopa that slowly flies vertically, up 5.5 tiles and then back down. If jumped on, it will loose its wings and turn into a normal koopa..",
+	"category": "generic",
+	"display_xoff": 0,
+	"display_yoff": 0,
+	"custom": true,
+	"extra_bit": false,
+	"smap16":[{
+			"yoff":"2",
+			"tile":"594"
+		},{
+			"yoff":"-12",
+			"xoff":"-4",
+			"tile":"592"
+		},{
+			"yoff":"-0E",
+			"tile":"584"
+		},{
+			"xoff":"08",
+			"yoff":"-0A",
+			"tile":"5B6"
+		}]
+},{
+	"id":"07",
+	"name":"...blue",
+	"desc":"A blue parakoopa that quickly flies vertically, up 5.5 tiles and then back down. If jumped on, it will loose its wings and turn into a normal koopa.",
+	"category": "generic",
+	"display_xoff": 0,
+	"display_yoff": 0,
+	"custom": true,
+	"extra_bit": true,
+	"smap16":[{
+			"yoff":"2",
+			"tile":"596"
+		},{
+			"yoff":"-12",
+			"xoff":"-4",
+			"tile":"592"
+		},{
+			"yoff":"-0E",
+			"tile":"586"
+		},{
+			"xoff":"08",
+			"yoff":"-0A",
+			"tile":"5B6"
+		}]
+},{
+	"id":"08",
+	"name":"Horizontal parakoopa, green",
+	"desc":"A green parakoopa that slowly flies horizontally, left 7 tiles and then back. If jumped on, it will loose its wings and turn into a normal koopa.",
+	"category": "generic",
+	"display_xoff": 0,
+	"display_yoff": 0,
+	"custom": false,
+	"extra_bit": false,
+	"smap16":[{
+			"yoff":"2",
+			"tile":"595"
+		},{
+			"yoff":"-0",
+			"xoff":"-12",
+			"tile":"593"
+		},{
+			"yoff":"-0E",
+			"tile":"585"
+		},{
+			"xoff":"08",
+			"yoff":"-0A",
+			"tile":"5B6"
+		}]
+},{
+	"id":"08",
+	"name":"Horizontal parakoopa, yellow",
+	"desc":"A yellow parakoopa that quickly flies horizontally, left 7 tiles and then back. If jumped on, it will loose its wings and turn into a normal koopa.",
+	"category": "generic",
+	"display_xoff": 0,
+	"display_yoff": 0,
+	"custom": false,
+	"extra_bit": true,
+	"smap16":[{
+			"yoff":"2",
+			"tile":"597"
+		},{
+			"yoff":"-0",
+			"xoff":"-12",
+			"tile":"593"
+		},{
+			"yoff":"-0E",
+			"tile":"585"
+		},{
+			"xoff":"08",
+			"yoff":"-0A",
+			"tile":"5B6"
+		}]
+},{
+	"id":"08",
+	"name":"Horizontal parakoopa, red",
+	"desc":"A red parakoopa that slowly flies horizontally, left 7 tiles and then back. If jumped on, it will loose its wings and turn into a normal koopa.",
+	"category": "generic",
+	"display_xoff": 0,
+	"display_yoff": 0,
+	"custom": false,
+	"extra_bit": false,
+	"smap16":[{
+			"yoff":"2",
+			"tile":"594"
+		},{
+			"yoff":"-0",
+			"xoff":"-12",
+			"tile":"593"
+		},{
+			"yoff":"-0E",
+			"tile":"585"
+		},{
+			"xoff":"08",
+			"yoff":"-0A",
+			"tile":"5B6"
+		}]
+},{
+	"id":"08",
+	"name":"Horizontal parakoopa, blue",
+	"desc":"A blue parakoopa that quickly flies horizontally, left 7 tiles and then back. If jumped on, it will loose its wings and turn into a normal koopa.",
+	"category": "generic",
+	"display_xoff": 0,
+	"display_yoff": 0,
+	"custom": true,
+	"extra_bit": true,
+	"smap16":[{
+			"yoff":"2",
+			"tile":"596"
+		},{
+			"yoff":"-0",
+			"xoff":"-12",
+			"tile":"593"
+		},{
+			"yoff":"-0E",
+			"tile":"585"
+		},{
+			"xoff":"08",
+			"yoff":"-0A",
+			"tile":"5B6"
+		}]
+
+
 }]
