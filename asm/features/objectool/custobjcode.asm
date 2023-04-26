@@ -461,7 +461,11 @@ CustObj0A:
 	SEC : SBC #!cluster_exobjs_start
 	JMP ClusterNormObjects
 CustObj0B:
+	lda !object_argument
+	jmp ledge_random_dirt_obj
 CustObj0C:
+	lda !object_argument
+	jmp random_dirt_obj
 CustObj0D:
 CustObj0E:
 CustObj0F:
@@ -1127,6 +1131,7 @@ SquareObjectsInit:
 .Return
 	RTS
 
+; TODO
 AlternatingBrickTiles:
 	dw $02F7,$02F9,$02FA,$02F7  ; closed on both sides
 	dw $02FA,$02F9,$02FA,$02F7  ; closed on right
@@ -2826,3 +2831,81 @@ ClusterObjsMain:
 	DEC $01
 	BPL .Loop
 	RTS
+
+ledge_rand_setup:
+	; a = a * 5
+	sta !ObjScratch
+	asl #2
+	clc
+	adc !ObjScratch
+
+	; 02 = beginning of relevant `.tiles' entry
+	rep #$20
+	and #$00FF
+	adc #.tiles
+	sta $02
+	sep #$20
+
+	jsr StoreNybbles
+	ldy !object_position
+	lda !scratch_obj_width
+	sta $00
+	lda !scratch_obj_height
+	sta $01
+	jmp BackUpPtrs
+.tiles:
+	dw $0165,$03FC,$03FD,$03FE,$03FF
+
+ledge_random_dirt_obj:
+	jsr ledge_rand_setup
+.hloop:
+	; tile $100
+	lda #$00
+	sta [$6B],y
+	inc
+	sta [$6E],y
+	jsr ShiftObjRight
+	dec $00
+	bpl .hloop
+	bra random_dirt_obj_next_row
+
+; dirt only
+random_dirt_obj:
+	jsr ledge_rand_setup
+.hloop:
+	lda $00
+	bmi .next_row
+	jsl get_rand
+	xba
+	lda #$00
+	xba
+	and #$07
+	tax
+	lda .rand_table,x
+
+	phy
+	tay
+	rep #$20
+	lda ($02),y
+	ply
+	sep #$20
+	sta [$6B],y
+	xba
+	sta [$6E],y
+	
+	jsr ShiftObjRight
+	dec $00
+	bra .hloop
+
+.next_row:
+	lda !scratch_obj_width
+	sta $00
+	jsr RestorePtrs
+	jsr ShiftObjDown
+	dec $01
+	bpl .hloop
+	rts
+
+; half are entry 0 in `.tiles' table, rest are distributed evenly
+.rand_table:
+	db $00,$02,$00,$04,$00,$06,$00,$08

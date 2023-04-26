@@ -346,7 +346,7 @@
 	"category": "generic",
 	"display_xoff": 0,
 	"display_yoff": 0,
-	"custom": false,
+	"custom": true,
 	"extra_bit": false,
 	"smap16":[{
 			"yoff":"2",

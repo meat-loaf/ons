@@ -6,18 +6,38 @@ JMP Cape : JMP Fireball
 JMP MarioCorner : JMP MarioInside : JMP MarioHead
 
 
-!map16_base        = $B0
-!map16_coin_start  = $B3
+!num_rcoin_blocks  = 3
+!map16_base        = $B1
+!map16_coin_done   = !map16_base+!num_rcoin_blocks
+
 !blk_map16_num_lo  = $03
 
 ; first entry is for when mario is small, second is for big
 sprite_to_spawn:
-	; vine
+	; vine (? block)
 	db $29,$29
-	; springboard
+	; springboard (? block)
 	db $2F,$2F
-	; poison mushroom
+	; poison mushroom (? block)
 	db $43,$43
+	; blue shell (? block)
+	db $05,$05
+	; key (? block)
+	db $80,$80
+	; mushroom/flower (brick block)
+	db $40,$42
+	; mushroom/cape (brick block)
+	db $40,$41
+	; poison mushroom (brick block)
+	db $43,$43
+	; green yoshi block (TODO)
+	db $00, $00
+	; yellow yoshi block (TODO)
+	db $00, $00
+	; red yoshi block (TODO)
+	db $00, $00
+	; blue yoshi block (TODO)
+	db $00, $00
 sprite_1540_vals:
 	; vine
 	db $3E,$3E
@@ -25,13 +45,69 @@ sprite_1540_vals:
 	db $00,$00
 	; poison mushroom
 	db $3E,$3E
+	; green/blue shell (? block)
+	db $00,$00
+	; key (? block)
+	db $00,$00
+	; mushroom/flower (brick)
+	db $3E,$3E
+	; mushroom/cape (brick)
+	db $3E,$3E
+	; poison (brick)
+	db $3E,$3E
+	; green yoshi block (TODO)
+	db $00, $00
+	; yellow yoshi block (TODO)
+	db $00, $00
+	; red yoshi block (TODO)
+	db $00, $00
+	; blue yoshi block (TODO)
+	db $00, $00
+sprite_exbit_vals:
+	; vine
+	db $00,$00
+	; springboard
+	db $00,$00
+	; poison mushroom
+	db $00,$00
+	; blue shell
+	db $03,$03
+	; key
+	db $00,$00
+	; mushroom/flower (brick)
+	db $00,$00
+	; mushroom/cape (brick)
+	db $00,$00
+	; poison mushroom (brick)
+	db $00,$00
+	; green yoshi block (TODO)
+	db $00, $00
+	; yellow yoshi block (TODO)
+	db $00, $00
+	; red yoshi block (TODO)
+	db $00, $00
+	; blue yoshi block (TODO)
+	db $00, $00
 
-; ambient id
+; ambient id to spawn
 bounce_spr_to_spawn:
+; -- red coins --
+	db $09
+	db $04
+	db $0B
+; -- item blocks --
 	db $09
 	db $09
 	db $09
 	db $09
+	db $09
+	db $0B
+	db $0B
+	db $0B
+	db $05
+	db $06
+	db $07
+	db $08
 MarioCorner:
 MarioAbove:
 
@@ -62,17 +138,18 @@ SpriteShared:
 MarioBelow:
 Cape:
 
+; todo sfx table probably
 gen_item_block_spawn_item:
 	phx
 	phy
 	lda #$02
 	ldx !blk_map16_num_lo
-	cpx #!map16_base
+	cpx #!map16_coin_done
+	bcc .no_sound_here
+	cpx #!map16_base+!num_rcoin_blocks
 	beq .not_vine
 	lda #$03
 .not_vine:
-	cpx #!map16_coin_start
-	bcs .no_sound_here
 	sta $1DFC|!addr
 .no_sound_here:
 
@@ -99,8 +176,8 @@ gen_item_block_spawn_item:
 	jsl write_item_memory
 
 	lda !blk_map16_num_lo
-	cmp #!map16_coin_start
-	bcc .do_spr_spawn
+	cmp.b #!map16_coin_done
+	bcs .do_spr_spawn
 	jmp .do_coin_spawn
 .do_spr_spawn:
 	ldx #!num_sprites-1
@@ -125,7 +202,7 @@ gen_item_block_spawn_item:
 .small:
 	lda !blk_map16_num_lo
 	sec
-	sbc #!map16_base
+	sbc #!map16_base+!num_rcoin_blocks
 	asl
 	cpy #$00
 	beq .not_odd
@@ -141,6 +218,8 @@ gen_item_block_spawn_item:
 
 	lda sprite_1540_vals,y
 	sta !sprite_misc_1540,x
+	lda sprite_exbit_vals,y
+	sta !spr_extra_bits,x
 
 	lda.b !block_xpos
 	sta.b !sprite_x_low,x

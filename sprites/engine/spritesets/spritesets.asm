@@ -21,11 +21,6 @@ ss_hijack:
 org $0FF8C6|!bank
 	jsl spriteset_setup_lm
 
-; this space is freed by the fish being fully remapped onto SP3/4.
-org $01B110|!bank
-;; todo
-warnpc $01B129|!bank
-
 org $07F78B|!bank
 ;; originally, this routine preserved Y, but doesnt use it itself.
 ;; we get the JSL we want 'for free' by removing pushing Y as we then
@@ -75,8 +70,16 @@ sprset_init:
 	ply
 	rtl
 
+; x has sprite id
+auto_spriteset_alloc:
+	phy
+	ply
+	rts
+
 ; pull spriteset before sprite inits run. By default, it uses the low byte of the SP3 graphics
 ; file number to determine the spriteset.
+!ss_sprite_parser_exlevel = $45
+!ss_temp_sprite_data_ptr  = $46
 ss_set_spriteset:
 	ldx.b #$07         ; \
 .loop:                     ; | restore hijacked code
@@ -85,6 +88,53 @@ ss_set_spriteset:
 	dex                ; |
 	bpl .loop          ; /
 
+; todo implement auto-spriteset
+bra .skip
+	lda !level_sprite_data_ptr
+	sta !ss_temp_sprite_data_ptr
+	lda !level_sprite_data_ptr+1
+	sta !ss_temp_sprite_data_ptr+1
+	lda !level_sprite_data_ptr+2
+	sta !ss_temp_sprite_data_ptr+2
+.parse_sprite_table:
+	ldy #$01
+	lda [!ss_temp_sprite_data_ptr]
+	and #%00100000
+	sta !ss_sprite_parser_exlevel
+..parse_sprite_entry:
+	lda [!ss_temp_sprite_data_ptr],y
+	cmp #$ff
+	bne ..next_sprite
+	lda !ss_sprite_parser_exlevel
+	beq ..done
+	iny
+	lda [!ss_temp_sprite_data_ptr],y
+	cmp #$fe
+	beq ..done
+	cmp #$ff
+	beq ..next_sprite
+	iny
+..next_sprite:
+	iny #2
+	lda [!ss_temp_sprite_data_ptr],y
+	tax
+;	lda.l 
+
+	tya
+	clc
+	adc.l sprite_size_table,x
+	sec
+	sbc #$02
+	tay
+	bpl ..parse_sprite_entry
+	clc
+	adc !ss_temp_sprite_data_ptr
+	sta !ss_temp_sprite_data_ptr
+	ldy #$00
+	bra ..parse_sprite_entry
+
+..done:
+.skip:
 	lda.b #(!exgfx_table>>16)
 	sta $8C
 	rep #$30

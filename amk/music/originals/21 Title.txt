@@ -7,6 +7,8 @@
 
 #option smwvtable
 
+$E4 $FF
+
 #0
 @3 t60 w230
 y15 q3e

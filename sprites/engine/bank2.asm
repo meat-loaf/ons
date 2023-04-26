@@ -89,6 +89,9 @@ ambient_sub_off_screen:
 	dw $0008
 	dw $000C
 	dw $0010
+
+; todo still needs a decent amount of work: tile-checking code
+;      not really properly implemented
 ambient_obj_interact:
 	; todo layer 2 collision
 ;	ldy #$0000
@@ -235,6 +238,34 @@ ambient_physics:
 	rep #$30
 	rts
 
+; set y to desired index. currently intended for use
+; with the original 'check contact' routine
+; note: returns in 8-bit axy
+ambient_set_clipping_a_8a8i:
+	lda !ambient_y_pos,x
+	clc
+	adc .yoffs,y
+	sta $05
+	; store high byte in 0b
+	sta $0b-$1
+	lda .width_height,y
+	sta $06
+	lda !ambient_x_pos,x
+	clc
+	adc .xoffs,y
+
+	sep #$30
+	sta $04
+	xba
+	sta $0a
+	rts
+.xoffs:
+	dw $0003
+.yoffs:
+	dw $0003
+.width_height:
+	db $01, $01
+
 ; TODO spritesets
 ambient_initer:
 	lda !ambient_misc_1,x
@@ -334,6 +365,32 @@ ambient_basic_gfx:
 	rep #$20
 	rts
 
+; a gets tile number to write, use 98-9B for tile nums; ensure low nybbles are clear
+; clobbers y
+ambient_write_map16:
+	sta $45
+;	lda $98
+	ldx $9b+1
+	and #$00FF
+	sta $05
+	lda $9a
+	and #$00FF
+	ora $98
+	tay
+	lda !lm_exlevel_per_scr_dat_ptrs_lo_l1,y
+	sta $05
+	sep #$20
+	lda #$7e
+	sta $07
+	lda $45
+	sta [$05],y
+	inc $07
+	lda $46
+	sta [$05],y
+	sep #$20
+; TODO write to dynamic stripe image ram to perform vram upload
+	rts
+
 spr_give_points_y:
 	phy
 	phx
@@ -374,7 +431,7 @@ spr_give_points:
 ;       y: ambient slot index
 print "ambient_get_slot_rt = $",pc
 ambient_get_slot:
-	sty $4d
+;	sty $4d
 	rep #$30
 	and #$00FF
 	xba
@@ -432,7 +489,7 @@ ambient_get_slot:
 	lda !ambient_get_slot_yspd
 	sta !ambient_y_speed+1,y
 	clc
-	ldy $4d
+;	ldy $4d
 	rtl
 .done
 %set_free_finish("bank2_altspr2", ambient_get_slot_done)

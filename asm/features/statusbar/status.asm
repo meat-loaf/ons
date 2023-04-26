@@ -4,6 +4,28 @@ incsrc "statusbar_defs.asm"
 ; skip the first 3 OAM slots so yoshi's tongue isnt above some tiles and below others
 !oam_tbl_start_index  = $3D
 
+macro hex2dec(ram, ramw, counter, outlo, outhi)
+?hex2dec:
+	stz <outlo>
+	stz <outhi>
+	lda.<ramw> <ram>
+	beq ?.noloop
+	sta <counter>
+?.loop2:
+	lda <outlo>
+	inc
+	cmp #$0A
+	bne ?.noadj
+	lda #$00
+	inc <outhi>
+?.noadj:
+	sta <outlo>
+	dec <counter>
+	bne ?.loop2
+?.noloop:
+endmacro
+
+
 macro get_next_oam_tile(oam_tiles_tbl, abort_func)
 ?loop:
 	DEX
@@ -362,13 +384,13 @@ if !enable_debug_cpu_meter == !true
 ;	%draw_digit_tile($28,$d8,$01,B,\
 ;			!tile_noflip,$00,$00,$00)
 
-	%get_next_oam_tile(status_bar_oam_tiles, no_oam_left)
-	%draw_digit_tile($20,$d0,!powerup,w,\
-			!tile_noflip,$00,$00,$00)
-
-	%get_next_oam_tile(status_bar_oam_tiles, no_oam_left)
-	%draw_digit_tile($20,$d8,!dyn_slots,w,\
-			!tile_noflip,$00,$00,$00)
+;	%get_next_oam_tile(status_bar_oam_tiles, no_oam_left)
+;	%draw_digit_tile($20,$d0,!powerup,w,\
+;			!tile_noflip,$00,$00,$00)
+;
+;	%get_next_oam_tile(status_bar_oam_tiles, no_oam_left)
+;	%draw_digit_tile($20,$d8,!dyn_slots,w,\
+;			!tile_noflip,$00,$00,$00)
 
 
 	%get_next_oam_tile(status_bar_oam_tiles, no_oam_left)
@@ -391,23 +413,61 @@ endif
 
 if !ambient_debug
 .ambient_inf:
-	stz $00
-	stz $01
-	lda !ambient_resident
-	sta $02
-.loop:
-	beq .ambient_count_done
-	lda $00
-	inc
-	cmp #$0a
-	bcc .lostore
-	inc $01
-	lda #$00
-.lostore:
+;	stz $00
+;	stz $01
+;	lda !ambient_resident
+;;	lda !player_x_scr_rel
+;	sta $02
+;.loop:
+;	beq .ambient_count_done
+;	lda $00
+;	inc
+;	cmp #$0a
+;	bcc .lostore
+;	inc $01
+;	lda #$00
+;.lostore:
+;	sta $00
+;	dec $02
+;	bne .loop
+;.ambient_count_done
+;
+;	%get_next_oam_tile(status_bar_oam_tiles, no_oam_left)
+;	%draw_digit_tile($08,$d0,$01,B,\
+;			!tile_noflip,$00,$00,$00)
+;
+;	%get_next_oam_tile(status_bar_oam_tiles, no_oam_left)
+;	%draw_digit_tile($10,$d0,$00,B,\
+;			!tile_noflip,$00,$00,$00)
+;
+;	stz $00
+;	stz $01
+;;	lda !ambient_spr_ring_ix
+;
+;	lda !player_y_scr_rel
+;	beq .noloop
+;	lsr
+;	sta $02
+;.loop2:
+;	lda $00
+;	inc
+;	cmp #$0A
+;	bne .noadj
+;	lda #$00
+;	inc $01
+;.noadj:
+;	sta $00
+;	dec $02
+;	bne .loop2
+;.noloop:
+
+	lda !player_x_scr_rel
+	and #$0F
 	sta $00
-	dec $02
-	bne .loop
-.ambient_count_done
+	lda !player_x_scr_rel
+	and #$F0
+	lsr #4
+	sta $01
 
 	%get_next_oam_tile(status_bar_oam_tiles, no_oam_left)
 	%draw_digit_tile($08,$d0,$01,B,\
@@ -417,24 +477,13 @@ if !ambient_debug
 	%draw_digit_tile($10,$d0,$00,B,\
 			!tile_noflip,$00,$00,$00)
 
-	stz $00
-	stz $01
-	lda !ambient_spr_ring_ix
-	beq .noloop
-	lsr
-	sta $02
-.loop2:
-	lda $00
-	inc
-	cmp #$0A
-	bne .noadj
-	lda #$00
-	inc $01
-.noadj:
+	lda !player_y_scr_rel
+	and #$0F
 	sta $00
-	dec $02
-	bne .loop2
-.noloop:
+	lda !player_y_scr_rel
+	and #$F0
+	lsr #4
+	sta $01
 
 	%get_next_oam_tile(status_bar_oam_tiles, no_oam_left)
 	%draw_digit_tile($08,$d8,$01,B,\
@@ -442,6 +491,125 @@ if !ambient_debug
 
 	%get_next_oam_tile(status_bar_oam_tiles, no_oam_left)
 	%draw_digit_tile($10,$d8,$00,B,\
+			!tile_noflip,$00,$00,$00)
+
+
+	%get_next_oam_tile(status_bar_oam_tiles, no_oam_left)
+	%draw_digit_tile($08,$d8,$01,B,\
+			!tile_noflip,$00,$00,$00)
+
+	%get_next_oam_tile(status_bar_oam_tiles, no_oam_left)
+	%draw_digit_tile($10,$d8,$00,B,\
+			!tile_noflip,$00,$00,$00)
+
+	lda !camera_target_x_pos
+	and #$0F
+	sta $00
+	lda !camera_target_x_pos
+	and #$F0
+	lsr #4
+	sta $01
+
+	%get_next_oam_tile(status_bar_oam_tiles, no_oam_left)
+	%draw_digit_tile($30,$d0,$01,B,\
+			!tile_noflip,$00,$00,$00)
+
+	%get_next_oam_tile(status_bar_oam_tiles, no_oam_left)
+	%draw_digit_tile($38,$d0,$00,B,\
+			!tile_noflip,$00,$00,$00)
+
+	lda !camera_target_x_pos+1
+	and #$0F
+	sta $00
+	lda !camera_target_x_pos+1
+	and #$F0
+	sta $01
+
+	%get_next_oam_tile(status_bar_oam_tiles, no_oam_left)
+	%draw_digit_tile($20,$d0,$01,B,\
+			!tile_noflip,$00,$00,$00)
+
+	%get_next_oam_tile(status_bar_oam_tiles, no_oam_left)
+	%draw_digit_tile($28,$d0,$00,B,\
+			!tile_noflip,$00,$00,$00)
+
+	lda !camera_target_y_pos
+	and #$0F
+	sta $00
+	lda !camera_target_y_pos
+	and #$F0
+	lsr #4
+	sta $01
+
+	%get_next_oam_tile(status_bar_oam_tiles, no_oam_left)
+	%draw_digit_tile($30,$d8,$01,B,\
+			!tile_noflip,$00,$00,$00)
+
+	%get_next_oam_tile(status_bar_oam_tiles, no_oam_left)
+	%draw_digit_tile($38,$d8,$00,B,\
+			!tile_noflip,$00,$00,$00)
+
+	lda !camera_target_y_pos+1
+	and #$0F
+	sta $00
+	lda !camera_target_y_pos+1
+	and #$F0
+	sta $01
+
+	%get_next_oam_tile(status_bar_oam_tiles, no_oam_left)
+	%draw_digit_tile($20,$d8,$01,B,\
+			!tile_noflip,$00,$00,$00)
+
+	%get_next_oam_tile(status_bar_oam_tiles, no_oam_left)
+	%draw_digit_tile($28,$d8,$00,B,\
+			!tile_noflip,$00,$00,$00)
+
+	lda !camera_bound_left_delta
+	and #$0F
+	sta $00
+	lda !camera_bound_left_delta
+	and #$F0
+	lsr #4
+	sta $01
+
+	%get_next_oam_tile(status_bar_oam_tiles, no_oam_left)
+	%draw_digit_tile($60,$d4,$01,B,\
+			!tile_noflip,$00,$00,$00)
+
+	%get_next_oam_tile(status_bar_oam_tiles, no_oam_left)
+	%draw_digit_tile($68,$d4,$00,B,\
+			!tile_noflip,$00,$00,$00)
+
+	lda !camera_target_x_center
+	and #$0F
+	sta $00
+	lda !camera_target_x_center
+	and #$F0
+	lsr #4
+	sta $01
+
+	%get_next_oam_tile(status_bar_oam_tiles, no_oam_left)
+	%draw_digit_tile($78,$d4,$01,B,\
+			!tile_noflip,$00,$00,$00)
+
+	%get_next_oam_tile(status_bar_oam_tiles, no_oam_left)
+	%draw_digit_tile($80,$d4,$00,B,\
+			!tile_noflip,$00,$00,$00)
+
+	lda !camera_bound_right_delta
+	and #$0F
+	sta $00
+	lda !camera_bound_right_delta
+	and #$F0
+	lsr #4
+	sta $01
+
+	%get_next_oam_tile(status_bar_oam_tiles, no_oam_left)
+	%draw_digit_tile($90,$d4,$01,B,\
+			!tile_noflip,$00,$00,$00)
+
+	%get_next_oam_tile(status_bar_oam_tiles, no_oam_left)
+	%draw_digit_tile($98,$d4,$00,B,\
 			!tile_noflip,$00,$00,$00)
 
 

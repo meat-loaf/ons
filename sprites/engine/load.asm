@@ -17,6 +17,13 @@ org $02A846|!bank
 ;      rework) and enable loading said ambient sprites directly
 org $02A866|!bank
 spr_type_hack:
+; TODO need to figure out new lm code for getting sprite positions
+;     i think we just need to account for the 'ff' command offset if we
+;     have new-style level data
+	cmp #$fe
+	bcc .not_control
+	jml load_control_spr
+.not_control:
 	jmp.w load_normal_sprite
 warnpc load_normal_sprite
 
@@ -77,8 +84,50 @@ autoclean \
 	jml sprite_loader_prep_for_next_sprite_no_y_adj
 
 freecode
+; a = sprite id
+; y = index to sprite x position
+load_control_spr:
+	cmp #$ff
+	beq .camera
+	; todo: ambient spawner
+	bra sprite_loader_prep_for_next_sprite
+.camera:
+	; always initialize camera script when in-range
+	stz !sprite_load_table,x
+	; TODO handle new level sizes (y pos changes specifically, when relevant)
+	dey
+	lda [!level_sprite_data_ptr],y
+	and #$F0
+	sta !camera_control_y_pos
+	lda [!level_sprite_data_ptr],y
+	and #$01
+	sta !camera_control_y_pos+1
+
+	iny
+	lda [!level_sprite_data_ptr],y
+	and #$F0
+	sta !camera_control_x_pos
+	lda [!level_sprite_data_ptr],y
+	and #$0F
+	sta !camera_control_x_pos+1
+	iny
+	; don't care about id
+	iny
+	; CAMERA SPRITES ARE ALWAYS 4 BYTES
+	lda [!level_sprite_data_ptr],y
+	;asl
+	cmp !camera_control_resident
+	beq ..ok
+	sta !camera_control_resident
+	stz !camera_state
+..ok:
+	dey
+	bra sprite_loader_prep_for_next_sprite_no_y_adj
+
+; y should be just before sprite id here
 sprite_loader_prep_for_next_sprite:
 	iny
+; y should be at sprite id here
 .no_y_adj:
 	phx
 	lda [!level_sprite_data_ptr],y
@@ -101,4 +150,5 @@ sprite_loader_prep_for_next_sprite:
 	plx
 	inx
 	jml load_next_sprite
+
 endif

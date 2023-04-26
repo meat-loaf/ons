@@ -1,7 +1,7 @@
 includefrom "ambient_list.asm"
-!ambient_fireball_ix       = $3D
-!ambient_fireball_enemy    = $3C
 !ambient_fireball_enemy_ng = $3B
+!ambient_fireball_enemy    = $3C
+!ambient_fireball_ix       = $3D
 
 
 %alloc_ambient_sprite_grav(!ambient_fireball_ix, "fireball", fireballz, !ambient_twk_check_offscr|!ambient_twk_has_grav, $04, $30)
@@ -9,7 +9,6 @@ includefrom "ambient_list.asm"
 %alloc_ambient_sprite(!ambient_fireball_enemy_ng, "enemy_fireball_nograv", fireballz, !ambient_twk_check_offscr)
 
 %set_free_start("bank2_altspr1")
-; todo sprite interaction! the last piece of the puzzle...
 fireballz:
 	lda !ambient_misc_2,x
 	and #$000C
@@ -19,7 +18,7 @@ fireballz:
 	sta !ambient_props,x
 	jsr ambient_basic_gfx
 	lda !ambient_sprlocked_mirror
-	bne ambient_fb_checkobj_spr_exit_real
+	bne exit_short
 	inc !ambient_misc_2,x
 	jsr ambient_physics
 	lda !ambient_misc_1+1,x
@@ -37,11 +36,113 @@ fireballz:
 	dw $042C,$042D
 	dw $C42C,$C42D
 
-ambient_fb_checkplayer:
+exit_short:
 	rts
 
-print "ambient_fb_checkobj_spr: $", pc
+pfireball_set_clipping_b_8a8i:
+	lda !ambient_y_pos,x
+	sec
+	sbc #$0004
+	sta $01
+	sta $08
+	lda !ambient_x_pos,x
+	sec
+	sbc #$0002
+	sta $07
+	sep #$30
+	sta $00
+	lda #$0C
+	sta $02
+	lda #$13
+	sta $03
+	rts
+
+ambient_fb_checkplayer:
+	ldy #$0000
+	jsr ambient_set_clipping_a_8a8i
+	jsl get_mario_clipping
+	jsl check_for_contact
+	bcc .no_contact
+	jsl hurt_mario
+.no_contact:
+	rep #$30
+	rts
+
 ambient_fb_checkobj_spr:
+	lda $0e
+	sta $45
+
+	lda !ambient_x_speed,x
+	; $48 has actual speed
+	sta $47
+
+	jsr pfireball_set_clipping_b_8a8i
+	; iterate through odd/even sprite slots every
+	; other frame
+	lda !true_frame
+	and #$01
+	eor.b #!num_sprites-1
+	tax
+;	ldx #!num_sprites-1
+.sprite_loop:
+	lda !sprite_status,x
+	cmp #$08
+	bcc ..next
+	lda !sprite_tweaker_167a,x
+	and #$02
+	bne ..next
+	jsl get_spr_clipping_a
+	jsl check_for_contact
+	bcc ..next
+
+	lda !sprite_tweaker_166e,x
+	and #$10
+	bne ..die_nokill
+	lda #$02
+	sta !sprite_status,x
+	ldy #$00
+
+	lda #$d0
+	sta !sprite_speed_y,x
+	lda $48
+	bpl ..pos_spd
+	iny
+..pos_spd:
+	lda ..kill_sprite_x_speeds,y
+	sta !sprite_speed_x,x
+..die:
+	lda #$30
+	sta !ambient_get_slot_timer
+
+	rep #$30
+	ldx !current_ambient_process
+	lda !ambient_x_pos,x
+	sta !ambient_get_slot_xpos
+	lda !ambient_y_pos,x
+	sta !ambient_get_slot_ypos
+
+	stz !ambient_get_slot_xspd
+	lda.w #!ambient_score_100pt_id
+	jsl ambient_get_slot
+	rep #$30
+	bra .kill_to_smoke
+
+..die_nokill:
+	rep #$30
+	ldx !current_ambient_process
+	bra .kill_to_smoke
+..kill_sprite_x_speeds:
+	db $10,(~$10)+1
+
+..next:
+	dex : dex
+	bpl .sprite_loop
+.done:
+	rep #$30
+	lda $45
+	sta $0e
+	ldx !current_ambient_process
+
 	jsr ambient_obj_interact
 	bcc .exit
 	inc !ambient_misc_1,x
@@ -52,6 +153,7 @@ ambient_fb_checkobj_spr:
 	lda.w #$D000
 	sta !ambient_y_speed,x
 	bra .exit_no_obji_fc
+
 .exit:
 	lda !ambient_misc_1,x
 	and #$FF00
@@ -64,13 +166,12 @@ ambient_fb_checkobj_spr:
 	rts
 
 .kill_to_smoke:
-	rep #$20
 	dec !ambient_playerfireballs
 	lda #ambient_initer
 	sta !ambient_rt_ptr,x
 	lda #$0100
 	sta !ambient_misc_1,x
-	lda #$0008
+	lda #$000F
 	sta !ambient_gen_timer,x
 	rts
 fireballz_done:

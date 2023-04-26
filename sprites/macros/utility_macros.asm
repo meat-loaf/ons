@@ -43,6 +43,6 @@ endmacro
 
 macro jsl2rts(rtl_addr, target_addr)
 	assert bank(<rtl_addr>) == bank(<target_addr>), "JSL2RTS Bank of RTL and Target do not match."
-	pea.w <rtl_addr>-1
+	pea.w (<rtl_addr>)-1
 	jml.l <target_addr>|!bank
 endmacro

@@ -14,7 +14,7 @@ def clean_line(line, ignore) -> str:
 		return ""
 	elif l.startswith("assert"):
 		return ""
-	return l.replace("\t","").replace(" ", "").replace("|!addr", "").replace("|!bank", "")
+	return l.replace("\t","").replace(" ", "").replace("|!addr", "").replace("|!bank", "").replace("(", "").replace(")", "")
 
 def get_base(s) -> int:
 	base = 10

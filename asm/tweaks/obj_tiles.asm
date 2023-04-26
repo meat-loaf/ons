@@ -114,8 +114,8 @@ org $0DE957             ; extended objects 57 through 5E: originally some random
 db $C3,$C4
 ; smb2 vine top, bottom
 db $53,$54
-; coin blocks (image only)
-db $E0,$E1,$E2
+; coin blocks
+db $B1,$B2,$B3
 
 org $0DB3BB             ; table of tiles on page 1 for object 17. Up to 16 entries
 obj_17_tiles:
@@ -581,7 +581,7 @@ obj_setup_sizes:
 pushpc
 org $0DA8B4
 square_objs_low_bytes:
-	db $BE,$21,$CF,$2A,$2B,$CE,$E9,$13
+	db $DE,$21,$CF,$2A,$2B,$DD,$FF,$13
 	db $1E,$24,$2E,$54,$30,$32,$2C,$2C
 square_objs_routine:
 	LDX $5A
@@ -632,21 +632,21 @@ pullpc
 ; note: lunar magic will use 0 as the map16 page for indices 0-6
 ; and 1 for the others regardless of what is here
 .square_objs_high_bytes:
-	db $03,$00,$03,$00,$00,$03,$03,$01
+	db $00,$00,$03,$00,$00,$00,$00,$01
 	db $01,$01,$01,$03,$01,$01,$01,$00
 
 pushpc
 org $0DA548
 SingleTileExtTiles:
-	db $E8,$22,$24,$42,$43,$D8,$29,$25  ; extended objs 10-17 (object 17 actually uses index 32?)
-	db $6E,$D9,$DA,$DB,$EB,$DC,$C8,$FE  ; extended objs 18-1F
-	db $DE,$DD,$54,$11,$12,$14,$15,$16  ; extended objs 20-27
+	db $B4,$22,$24,$42,$43,$B5,$29,$25  ; extended objs 10-17 (object 17 actually uses index 32?)
+	db $6E,$B6,$B7,$B8,$B9,$Ba,$Bb,$Bc  ; extended objs 18-1F
+	db $Bd,$Be,$Bf,$11,$12,$14,$15,$16  ; extended objs 20-27
 	db $17,$18,$19,$1A,$1B,$1C,$29,$1D  ; extended objs 28-2F
 	db $1F,$20,$21,$22,$23,$25,$26,$27  ; extended objs 30-37
 	db $28,$2A,$DE,$E0,$E2,$E4,$EC,$ED  ; extended objs 38-3F
 	db $2C,$25,$2D                      ; extended objs 40, 41 (unused here), and the green star block
 	skip $14
-	db $FF,$FF,$FF,$FF,$E0,$E1,$E2,$FF  ; extended obj 57-5E
+	db $FF,$FF,$FF,$FF,$B1,$B2,$B3,$FF  ; extended obj 57-5E
 single_tile_objs:
 	TXA
 	SEC : SBC #$10
@@ -689,9 +689,9 @@ org $0DA64D
 pullpc
 	
 .tiles_high_byte:      ; extended objects 10 through 22 will use page 0, the rest will use page 1 (in LM)
-db $03,$00,$00,$00,$00,$03,$00,$00     ; extended objs 10-17 (object 17 actually uses index 32?)
-db $00,$03,$03,$03,$03,$03,$03,$03     ; extended objs 18-1F
-db $03,$03,$00,$01,$03,$01,$01,$01     ; extended objs 20-27
+db $00,$00,$00,$00,$00,$00,$00,$00     ; extended objs 10-17 (object 17 actually uses index 32?)
+db $00,$00,$00,$00,$00,$00,$00,$00     ; extended objs 18-1F
+db $00,$00,$00,$01,$03,$01,$01,$01     ; extended objs 20-27
 db $01,$01,$01,$01,$01,$01,$01,$01     ; extended objs 28-2F
 db $01,$01,$01,$01,$01,$01,$01,$01     ; extended objs 30-37
 db $01,$01,$01,$01,$01,$01,$01,$01     ; extended objs 38-3F
@@ -737,9 +737,9 @@ db $32,$32,$32,$32,$32,$32,$32,$32     ; extended obj 57-5E
 pushpc
 org $0DB3DB
 top_18_to_1b_top_tile:
-	db $BA,$B6,$04,$08
+	db $E6,$E2,$04,$08
 top_18_to_1b_fill_tile:
-	db $B8,$B4,$05,$0B
+	db $E4,$E0,$05,$0B
 ;org $0DB3FD
 ;	JSR set_18_to_1b_high_byte
 org $0DB404
@@ -899,5 +899,62 @@ midway_goal_obj_flip_on_header:
 	LDA.b #$03
 	STA [$6E],y
 	RTS
+
+pushpc
+; left diag plat - bg grass (page 0; sloped portion)
+org $0DB7ED|!bank
+lda #$ea
+; left diag plat - bg grass (page 0; remaining portion)
+org $0DB831|!bank
+lda #$ea
+
+; left diag plat - top slope tile
+org $0DB7C3|!bank
+	lda #$02
+	sta [$6E],y
+	lda #$EC
+	sta [$6B],y
+	jsr.w StoreLoShiftObjRight
+
+org $0DB7D6|!bank
+	jsr.w sta2to6eptr
+	lda #$ec
+org $0DB7DF|!bank
+	jsr.w sta2to6eptr
+	lda #$fc
+
+; right diag plat - top slope tile
+org $0DB884|!bank
+	jsr.w sta2to6eptr
+	lda #$ed
+
+; right diag plat - slope dirt
+org $0DB89D|!bank
+	lda #$ea
+
+; right diag plat - slope assist tiles
+org $0DB8A7|!bank
+	jsr.w sta2to6eptr
+	lda #$fd
+
+; right diag plat - remaining dirt (1?)
+org $0DB8D8|!bank
+	lda #$ea
+
+; right diag plat - remaining dirt (2?)
+org $0DB8F9|!bank
+	lda #$ea
+
+; right diag plat - remaining slope
+org $0DB8AF|!bank
+	jsr.w sta2to6eptr
+	lda #$ed
+
+pullpc
+sta2to6eptr:
+	lda #$02
+	sta [$6E],y
+	rts
+;grassslopebacktilechk:
 
 print "bank 0D end location: $",pc

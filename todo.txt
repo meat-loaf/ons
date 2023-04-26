@@ -11,8 +11,15 @@
     * lives/coins/powerup requires ow loading tweaks
 * Score per-level, save this as well
 * OW display of level percentage, score (sma2 menu like maybe?)
+* Sliding into sprites (goomba, shelless koopa at least) crashes the game
 
 * ~ambient sprites~
+  * fireball freezing bug?
+    * there is a bug that rarely occurs causing player fireballs
+      to seemingly freeze when despawning offscreen to the left:
+      ex. in level 105 if a powerup is placed close to spawn, grab it and
+      shoot fireballs left; freeze when fireball touches edge of screen or so.
+      seen only in snes9x so far.
   * compact ram better
     * ambient x/y speed accitentally tried to use layer1/2 delta
       ram (because smw is dumb and just throws stuff everywhere),
@@ -20,7 +27,7 @@
       it a bit better...the normal sprites stuff can probably go where
       the ambient routine ptr etc are at the moment, as they take up
       far less space
-  * score sprites (implement shim for spawning them also)
+      * this might be moot now, we have overworld ram available
   * minor extended stuff (sparkles for coins,
     sparkles for star coins)
     * maybe move these to a system like the one used for

@@ -134,7 +134,18 @@ includeonce
 !block_to_generate       = $9C
 !sprites_locked          = $9D
 !level_sprite_data_ptr   = $CE
+
+!player_x_current        = $D1
+!player_y_current        = $D3
+
 !wiggler_segment_ptr     = $D5
+
+; allegedly used by LM, but seems free in gm14
+; using dp makes the requisite hijacks nearly free
+; this can actually be used as scratch as it will be set
+; by the camera script every frame before use
+!camera_target_x_pos     = $F0
+!camera_target_y_pos     = $F2
 
 !gamemode                = $0100|!addr
 
@@ -194,8 +205,16 @@ includeonce
 ;      is reloaded on overworld load, so this ram is available for use
 ;      elsewhere (0ddf through 0ef4 inclusive)
 
-; 12 bytes, gfx file numbers to load during sprite gfx decompression
-!level_spriteset_gfx_files = $0DDF|!addr
+; camera ram is all 2 bytes each
+!camera_control_x_pos     = $0DDF|!addr
+!camera_control_y_pos     = !camera_control_x_pos+$2
+!camera_bound_left_delta  = !camera_control_y_pos+$2
+!camera_bound_right_delta = !camera_bound_left_delta+$2
+; scratch
+!camera_state             = !camera_bound_right_delta+$2
+
+; 4 bytes
+;!camera_scratch          = !camera_target_x_pos+2
 
 !status_bar_tilemap     = $0EF9|!addr
 
@@ -208,10 +227,14 @@ includeonce
 !player_score_mid       = $0F34+$01|!addr
 !player_score_hi        = $0F34+$02|!addr
 
-!ambient_gen_timer      = $0F4A|!addr
+; !! no |!addr
+!ambient_gen_timer      = $0F4A
 ; 20 bytes free here
 !turnblock_run_index    = !ambient_gen_timer+!ambient_tblsz  ; $0F9A
 !turnblock_free_index   = !turnblock_run_index+2
+; 12 bytes, gfx file numbers to load during sprite gfx decompression
+; free during levels
+!level_spriteset_gfx_files = !turnblock_free_index+2
 
 !main_level_num         = $13BF|!addr
 
@@ -234,6 +257,7 @@ includeonce
 !exit_counter           = $141A|!addr
 
 !yoshi_coins_collected  = $1420|!addr
+!camera_target_x_center = $142A|!addr
 
 !red_coin_total         = $1473|!addr
 
@@ -282,8 +306,10 @@ includeonce
 ; set by the waterfall block, turned into a proper timer with GM14 uberasm.
 !waterfall_reset_drop_timer = $13E7|!addr
 
-; A byte reserved for use in per-level asm
-!levelasm_scratch_byte = $140B|!addr
+; current camera script.
+; always active - a value of 0 is default smw.
+; should always be an even value
+!camera_control_resident = $140B|!addr
 
 ; 2 bytes
 !layer_1_xpos_next = $1462|!addr
@@ -313,7 +339,8 @@ includeonce
 ; repurposed: low nybble used as bitfield for object generation parameters
 !sprite_memory_header    = $1692|!addr
 
-!ambient_rt_ptr    = $1698|!addr
+; !! no |!addr
+!ambient_rt_ptr    = $1698
 !ambient_x_pos     = !ambient_rt_ptr+!ambient_tblsz
 !ambient_y_pos     = !ambient_x_pos+!ambient_tblsz
 
@@ -321,11 +348,8 @@ includeonce
 ; 17bb-17bf are used for current frame layer position delta
 ; high byte: decimal low byte: frac
 !ambient_y_speed    = $17C0|!addr
-;!ambient_x_speed   = !ambient_y_pos+!ambient_tblsz+1
-; high byte: decimal low byte: frac
-;!ambient_y_speed   = !ambient_x_speed+!ambient_tblsz
 
-assert !ambient_y_speed+(!num_ambient_sprs*2) <= $185C, "ambient sprite ram exceeded bounds"
+assert (!ambient_y_speed)+(!num_ambient_sprs*2) <= $185C, "ambient sprite ram exceeded bounds"
 
 !dyn_slot_ptr  = $0660|!addr
 !dyn_slot_bank = $0662|!addr
@@ -381,10 +405,9 @@ assert !ambient_y_speed+(!num_ambient_sprs*2) <= $185C, "ambient sprite ram exce
 ; in 16 bit mode
 !ambient_sprlocked_mirror = !ambient_x_speed+!ambient_tblsz      ; $1B80
 !ambient_playerfireballs = !ambient_sprlocked_mirror+$2          ; $1B82
-assert !ambient_playerfireballs+2 <= $1B84
-; alt name of above
+assert (!ambient_playerfireballs)+2 <= $1B84
 
-; TODO implement - needs to be set to (!ambient_spr_sz*2)-2 on level load
+; needs to be set to (!ambient_spr_sz*2)-2 on level load
 !ambient_spr_ring_ix     = $1B97|!addr
 !ow_entering_star_warp   = $1B9C|!addr
 
@@ -399,7 +422,7 @@ assert !ambient_playerfireballs+2 <= $1B84
 !ambient_props           = $1E02|!addr
 !ambient_misc_1          = !ambient_props+!ambient_tblsz
 
-assert !ambient_misc_1+(!num_ambient_sprs*2) <= $1EA2, "ambient sprite ram exceeded bounds"
+assert (!ambient_misc_1)+(!num_ambient_sprs*2) <= $1EA2, "ambient sprite ram exceeded bounds"
 
 !red_coin_sfx_port       ?= !spc_io_1_sfx_1DF9
 
@@ -496,8 +519,10 @@ assert bank(!big_hdma_decomp_buff_rg) == bank(!big_hdma_decomp_buff_b), "hdma de
 ; Dynamic sprite graphics upload buffer
 !dynamic_buffer = !wiggler_segment_buffer+$200
 ; 7FA800 - 7FABFF free
-; 384 bytes - for 64 turn blocks (6 bytes per)
+; 16*6 bytes = 96 bytes
 !turnblock_status = !dynamic_buffer+$800
+; 256 bytes
+!level_ss_sprite_offs = !turnblock_status+$60
 
 ; ram defs ;
 !Freeram_SSP_PipeDir    ?= !sspipes_dir

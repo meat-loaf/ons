@@ -196,7 +196,6 @@ powerup_main:
 	beq .gfx_interact
 	lda !powerup_spawned_mask,x
 	bne .gfx_interact
-	; todo make a 'sprite spawn ambient' routine
 	; todo probably get rid of this ambient sprite type,
 	;      it has the unfortunate side effect of also hiding
 	;      mario if he comes up to the block
@@ -205,12 +204,11 @@ powerup_main:
 	lda !sprite_x_high,x
 	sta !ambient_get_slot_xpos+1
 	lda !sprite_y_low,x
-	dec
+	sec
+	sbc #$01
 	sta !ambient_get_slot_ypos
 	lda !sprite_y_high,x
-	bcc ..pos_ok
-	dec
-..pos_ok:
+	sbc #$00
 	sta !ambient_get_slot_ypos+1
 	lda !powerup_rising_from_block,x
 	sta !ambient_get_slot_timer

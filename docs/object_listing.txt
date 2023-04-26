@@ -168,6 +168,13 @@
 |           |                                     | so subtract A6 fro the argument for this arg.     |
 |           |                                     |   note: starts from top-left and works down/right |
 +-----------+-------------------------------------+---------------------------------------------------+
+| 2D (0B)   | FG Ledge - random dirt              | Ledge with randomized dirt tiles. Argument        |
+|           |                                     | selects tile table used.                          |
++-----------+-------------------------------------+---------------------------------------------------+
+| 2D (0C)   | random dirt                         | Randomized dirt tiles Argument selects tile table |
+|           |                                     | used.                                             |
+|           |                                     |                                                   |
++-----------+-------------------------------------+---------------------------------------------------+
 | 30        | Ledge tile for non-solid edges      | ledge originally used in yoshi's house.           |
 |           |                                     | remember to check if it needs to be patched into  |
 |           |                                     | any other tilesets.                               |

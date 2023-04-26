@@ -1,0 +1,25 @@
+[{
+	"id":"00",
+	"name":"Goomba",
+	"desc":"A goomba from SMB3. It slowly walks along the ground, and will walk off ledges. Mario can jump on it to squish it.",
+	"category": "generic",
+	"display_xoff": 0,
+	"display_yoff": 0,
+	"custom": false,
+	"extra_bit": false,
+	"smap16":{
+		"tile":"6A8"
+	}
+},{
+	"id":"00",
+	"name":"...stays on ledges",
+	"desc":"A goomba from SMB3. It slowly walks along the ground, and will stay on ledges. Mario can jump on it to squish it.",
+	"category": "generic",
+	"display_xoff": 0,
+	"display_yoff": 0,
+	"custom": true,
+	"extra_bit": false,
+	"smap16":{
+		"tile":"6AA"
+	}
+}]

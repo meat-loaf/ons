@@ -1,3 +1,11 @@
+!goomba_sprnum = $00
+; todo - not really much to do, just proper configs/update std interaction
+!galoomba_sprnum = $01
+; todo - probably own sprite behavior, its different enough
+!paragoomba_sprnum = $03
+; todo - smb3 flying/microgoomba spawning shithead
+
+!shelless_koopa_sprnum = $02
 !koopa_sprnum = $04
 !shell_sprnum = $05
 !lame_parakoopa_sprnum = $06
@@ -6,20 +14,23 @@
 
 !koopa_is_winged_scr    = $45
 
-!koopa_winged             = !sprite_misc_1528
-!koopa_falling_last_frame = !sprite_misc_151c
-!koopa_turn_timer         = !sprite_misc_15ac
-!koopa_ani_timer          = !sprite_misc_1570
-!koopa_face_dir           = !sprite_misc_157c
-!koopa_stays_on_ledges    = !sprite_misc_1594
-!koopa_ani_frame          = !sprite_misc_1602
-!koopa_jumping_over_shell = !sprite_misc_160e
+!koopa_stays_on_ledges     = !sprite_misc_c2
+!koopa_winged              = !sprite_misc_1528
+!koopa_falling_last_frame  = !sprite_misc_151c
+!koopa_pushed_by_kickable  = !sprite_misc_1534
+!koopa_post_kick_frz_timer = !sprite_misc_1540
+!koopa_ani_timer           = !sprite_misc_1570
+!koopa_face_dir            = !sprite_misc_157c
+!koopa_jumping_over_shell  = !sprite_misc_1594
+!koopa_turn_timer          = !sprite_misc_15ac
+!koopa_ani_frame           = !sprite_misc_1602
+!koopa_kick_shell_slot     = !sprite_misc_160e
+!koopa_kicking_shell_timer = !sprite_misc_163e
+!disco_shell_flag          = !sprite_misc_187b
 
-
-!parakoopa_accel_timer    = !sprite_misc_c2
-!parakoopa_accel_dir      = !sprite_misc_151c
-!parakoopa_accel_wait     = !sprite_misc_1540
-
+!parakoopa_accel_timer     = !sprite_misc_c2
+!parakoopa_accel_dir       = !sprite_misc_151c
+!parakoopa_accel_wait      = !sprite_misc_1540
 
 !wing_out_tile = $EC
 !wing_in_tile  = $FE
@@ -32,6 +43,17 @@
 org $019E1C|!bank
 	db !wing_in_tile, !wing_out_tile
 	db !wing_in_tile, !wing_out_tile
+
+%alloc_sprite_sharedgfx_entry_3(!goomba_sprnum,$AE,$AE,$AE)
+
+%alloc_sprite(!goomba_sprnum, "goomba", koopa_init_goomba, goomba_main, 2, 0,\
+	$30, $00, $00, $00, $00, $00)
+%alloc_sprite_sharedgfx_entry_mirror(!paragoomba_sprnum, !goomba_sprnum)
+
+%alloc_sprite_sharedgfx_entry_3(!shelless_koopa_sprnum,$CE,$CC,$80)
+
+%alloc_sprite(!shelless_koopa_sprnum, "shelless_koopa", koopa_init, shelless_koopa_main, 2, 0,\
+	$70, $00, $00, $00, $00, $00)
 
 %alloc_sprite(!koopa_sprnum, "koopas", koopa_init, koopa_main, 5, 0,\
 	$10, $40, $00, $00, $02, $A0)
@@ -60,6 +82,7 @@ koopa_init:
 	; for normal koopas that stay on ledges so they don't
 	; turn in the air
 	inc !koopa_jumping_over_shell,x
+.goomba:
 	ldy !spr_extra_bits,x
 	lda .pals,y
 	ora !sprite_oam_properties,x
@@ -69,6 +92,8 @@ koopa_init:
 	inc !koopa_stays_on_ledges,x
 .set_facing:
 	jsr _spr_face_mario_rt
+	jsl get_rand
+	sta !koopa_ani_timer,x
 .exit:
 	rtl
 .pals:
@@ -104,14 +129,152 @@ koopa_gfx:
 	sta !sprite_y_low,x
 	rts
 
-koopa_main:
-	jsr koopa_gfx
+goomba_main:
+	lda !sprite_oam_properties,x
+	sta $00
+	
+	lda !koopa_ani_frame,x
+	lsr
+	lda #$40
+	bcc .noflip
+	tsb $00
+	bra .set_props
+.noflip:
+	trb $00
+.set_props:
+	lda $00
+	sta !sprite_oam_properties,x
 
+shelless_koopa_main:
+	stz !koopa_is_winged_scr
+
+	jsr sub_spr_gfx_2
 	lda !sprites_locked
 	bne koopa_init_exit
 	jsr _suboffscr0_bank1
+	lda !koopa_post_kick_frz_timer,x
+	beq .not_finish_kick
+;	jmp .mario_ixn
+	jmp koopa_main_interact
+
+.not_finish_kick:
+	lda !koopa_pushed_by_kickable,x
+	beq .check_kick
+	ldy !koopa_kick_shell_slot,x
+	lda !sprite_status,y
+	cmp #$09
+	bcs .do_catch_slide
+;	cmp #$0a
+;	beq .do_catch_slide
+	jmp koopa_main_interact
+
+.do_catch_slide:
+	lda !sprite_blocked_status,x
+	bit #$03
+	bne ..prep_shell_kick
+	bit #$04
+	beq ..falling
+	; todo original code accounted for 'is level slippery'
+	lda !sprite_speed_x,y
+	cmp #$02
+	bcc ..prep_shell_kick
+	bpl ..subtract_speed
+	clc
+	adc #$02
+	clc
+	adc #$02
+..subtract_speed:
+	sec
+	sbc #$02
+	sta !sprite_speed_x,x
+	sta !sprite_speed_x,y
+	; todo: dust particles
+..falling:
+	stz !koopa_ani_frame,x
+	jmp koopa_main_interact
+;	bra .mario_ixn
+
+..prep_shell_kick:
+	lda #$00
+	sta !sprite_speed_x,y
+	sta !sprite_speed_x,x
+	stz !koopa_pushed_by_kickable,x
+	lda #$09
+	sta !sprite_status,y
+	lda #$20
+	sta !koopa_kicking_shell_timer,x
+	jmp .mario_ixn
+
+.check_kick:
+	lda !koopa_kicking_shell_timer,x
+	beq koopa_main_shelless_entry
+	stz !sprite_speed_x,x
+
+	ldy !koopa_kick_shell_slot,x
+	lda !sprite_status,y
+	cmp #$08
+	bcs .cont
+	stz !koopa_kicking_shell_timer,x
+;	bra .mario_ixn
+	jmp koopa_main_interact
+.cont:
+	lda !koopa_kicking_shell_timer,x
+	cmp #$01
+	beq .do_kick
+	lda #$00
+	sta !koopa_ani_frame,x
+;	bra .mario_ixn
+.abort_kick:
+	jmp koopa_main_interact
+
+.do_kick:
+	; check the shell is still in state 9 or a
+	ldy !koopa_kick_shell_slot,x
+	lda !sprite_status,y
+	cmp #$09
+	bcc .abort_kick
+	cmp #$0b
+	bcs .abort_kick
+
+	lda #$02
+	sta !koopa_ani_frame,x
+	lda #$18
+	sta !koopa_post_kick_frz_timer,x
+
+	ldy !koopa_face_dir,x
+	lda .kick_speeds,y
+	ldy !koopa_kick_shell_slot,x
+	sta !sprite_speed_x,y
+	lda #$0a
+	sta !sprite_status,y
+
+	; check yellow
+	lda !spr_extra_bits,x
+	cmp #$01
+	beq .disco
+	jmp koopa_main_interact
+	;bne .mario_ixn
+.disco:
+	sta !disco_shell_flag,y
+.mario_ixn:
+	jmp koopa_main_interact
+
+;	jsr _mario_spr_interact
+;	jsr _spr_upd_pos
+.exit:
+	rtl
+
+.kick_speeds:
+	db $30,$D0
+
+koopa_main:
+	jsr koopa_gfx
+	lda !sprites_locked
+	bne shelless_koopa_main_exit
+	jsr _suboffscr0_bank1
 	lda !koopa_is_winged_scr
 	bne .ani_upd
+.shelless_entry:
 	lda !koopa_falling_last_frame,x
 	bne .no_ani_upd
 .ani_upd:
@@ -122,6 +285,9 @@ koopa_main:
 	beq .not_blocked_top
 	stz !sprite_speed_y,x
 .not_blocked_top:
+	lda !sprite_blocked_status,x
+	and #$04
+	beq .airborne
 	ldy !koopa_face_dir,x
 	lda !spr_extra_bits,x
 	lsr
@@ -137,9 +303,6 @@ koopa_main:
 	adc !sprite_slope,x
 .slope_speed:
 	sta !sprite_speed_x,x
-	lda !sprite_blocked_status,x
-	and #$04
-	beq .airborne
 	stz !koopa_jumping_over_shell,x
 	stz !koopa_falling_last_frame,x
 	jsr _set_some_y_spd
@@ -152,6 +315,9 @@ koopa_main:
 	bra .interact
 
 .airborne:
+	; todo things turning on steep slopes will fall off
+	; how does the original handle this...?
+	lda !koopa_stays_on_ledges,x
 	lda !koopa_falling_last_frame,x
 	bne .check_flip
 	inc !koopa_falling_last_frame,x
@@ -160,11 +326,12 @@ koopa_main:
 	beq .check_wings
 	; only parakoopas jump over shells
 	lda !koopa_jumping_over_shell,x
-;	and !koopa_is_winged_scr
 	bne .double_ani
 	; todo - koopas that get nudged off ledges will
 	;        spin in the air. fix this
-	jsr _flip_sprite_dir
+	jsr _flip_sprite_dir_imm
+	stz !sprite_speed_y,x
+	stz !koopa_falling_last_frame,x
 	bra .interact
 .check_wings:
 	lda !koopa_is_winged_scr

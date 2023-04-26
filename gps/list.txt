@@ -1,9 +1,22 @@
 ; GPS block list
 009E:0025        teleport_accurate.asm
-00b0:0130        item_block_all.asm
+
 00b1:0130        item_block_all.asm
 00b2:0130        item_block_all.asm
 00b3:0130        item_block_all.asm
+00b4:0130        item_block_all.asm
+00b5:0130        item_block_all.asm
+00b6:0130        item_block_all.asm
+00b7:0130        item_block_all.asm
+00b8:0130        item_block_all.asm
+00b9:0130        item_block_all.asm
+00ba:0130        item_block_all.asm
+00bb:0130        item_block_all.asm
+00bc:0130        item_block_all.asm
+00bd:0130        item_block_all.asm
+00be:0130        item_block_all.asm
+00bf:0130        item_block_all.asm
+00c0:0130        item_block_all.asm
 
 00D0:0025        midway.asm
 00D1:0025        midway.asm
@@ -11,19 +24,32 @@
 00D3:0025        midway.asm
 00D4:0025        midway.asm
 
+; TODO needs bounce sprite modifications
+;00FF:0130       SMB3Brick.asm
+
 002C:0025        red_coin.asm
 ;00E0:0130        item_blocks/rcoin_blocks.asm
 ;00E1:0130        item_blocks/rcoin_blocks.asm
 ;00E2:0130        item_blocks/rcoin_blocks.asm
 
+00E0:0000        waterfall2.asm
+00E1:0130        waterfall.asm
+00E2:0000        waterfall2.asm
+00E3:0130        waterfall.asm
+
+00E5:0130        solids/mario_actslike_sprite_water.asm
+00E7:0130        solids/mario_actslike_sprite_water.asm
+
 00FC:0130        infturn.asm
 
-0153:0153        donutblk.asm
+;0153:0153        donutblk.asm
 
+; TODO need bounce sprite modifications
 ;0312:0130        OnOffBlock.asm
 032D:0130        key_unlock/16x32_V_Keyblk_T.asm
 032E:0130        key_unlock/16x32_V_Keyblk_B.asm
 0354:0130        solids/sprite_solid.asm
+; TODO need ambient donut sprite if reasonable (normal if not)
 ; 0356:0130        donutblk.asm
 
 035C-035F:0130   slip.asm
@@ -31,27 +57,9 @@
 
 0374:0025        frame/hurt_frames_0_7.asm
 0375:0025        frame/hurt_frames_8_F.asm
-00B4:0000        waterfall2.asm
-00B5:0130        waterfall.asm
-00B6:0000        waterfall2.asm
-00B7:0130        waterfall.asm
-00B9:0130        solids/mario_actslike_sprite_water.asm
-00BB:0130        solids/mario_actslike_sprite_water.asm
-03BE:0130        solids/onoff_switch_act_reversed.asm
-03CE:0130        solids/onoff_switch_act.asm
+00DE:0130        solids/onoff_switch_act_reversed.asm
+00DD:0130        solids/onoff_switch_act.asm
 03CF:0130        solids/mario_solid.asm
-;03C8:0130        item_blocks/question/question_vine.asm
-;03D8:0130        item_blocks/brick/brick_cape.asm
-;03D9:0130        item_blocks/brick/brick_key.asm
-;03DA:0130        item_blocks/brick/brick_springboard.asm
-;03DB:0130        item_blocks/question/question_springboard.asm
-;03DC:0130        item_blocks/question/question_poison.asm
-;03DD:0130        item_blocks/brick/brick_vine.asm
-;03DE:0130        item_blocks/yoshi/yoshi_block_egg_grn.asm
-;03E8:0130        item_blocks/brick/brick_flower.asm
-;03E9:0130        SMB3Brick.asm
-;03EB:0130        item_blocks/brick/brick_poison.asm
-;03FE:0130        item_blocks/yoshi/yoshi_block_egg_red.asm
 
 049C:0130        slip.asm
 049D:0130        slip.asm
@@ -233,10 +241,37 @@
 @dsc
 
 001	8	Water, used in the display of custom object 2D.
+00b1	0	A ? block that spawns a red coin. Use extended object 5B to use item memory.
+00b1	10	599
+00b2	0	A turn block that spawns a red coin. Use extended object 5C to use item memory.
+00b2	10	599
+00b3	0	A brick block that spawns a red coin. Use extended object 5C to use item memory.
+00b3	10	599
+00b4	0	A ? block that spawns a vine. Use extended object 10 instead to use item memory.
+00b4	10      539
+00b5	0	A ? block that spawns a springboard. Use extended object 11 instead to use item memory.
+00b5	10	56D
+00b6	0	A ? block that spawns a poison mushroom. Use extended object 19 instead to use item memory.
+00b6	10	6e7
+00b7	0	A ? block that spawns a blue shell. Use extended object 1A instead to use item memory.
+00b7	10	58A
+00b8	0	A ? block that spawns a key. Use extended object 1B instead to use item memory.
+00b8	10	6A7
+00b9	0	A brick block that spawns a Mushroom, or a Flower if Mario is Super Mario. Use extended object 1C instead to use item memory.
+00b9	10	6F4
+00ba	0	A brick block that spawns a Mushroom, or a Feather if Mario is Super Mario. Use extended object 1D instead to use item memory.
+00ba	10	6E6
+00bb	0	A brick block that spawns a Poison Mushroom. Use extended object 1E instead to use item memory.
+00bb	10	6E7
+00bc	0	A block that spawns a green yoshi. Use extended object 1F instead to use item memory.
+00bc	10	5A5
+00bd	0	A block that spawns a yellow yoshi. Use extended object 20 instead to use item memory.
+00bd	10	5A7
+00be	0	A block that spawns a red yoshi. Use extended object 21 instead to use item memory.
+00be	10	5A4
+00bf	0	A block that spawns a blue yoshi. Use extended object 22 instead to use item memory.
+00bf	10	5A6
 
-00b0	0	A ? block that spawns a vine. Use extended object XX instead.
-00b1	0	A ? block that spawns a springboard. Use extended object XX instead.
-00b2	0	A ? block that spawns a poison mushroom. Use extended object XX instead.
 ;09E	2	154
 ;09F	2	006
 ;09F	0	A vine, which appears only if item memory is set. Non-functional, use object 1E with size value x4.

@@ -29,8 +29,15 @@ sprite_size_table_ptr     = !sprite_size_table_ptr
 !sprite_main_table_lo      #= !sprite_init_table_bk+($100)
 !sprite_main_table_hi      #= !sprite_main_table_lo+($100)
 !sprite_main_table_bk      #= !sprite_main_table_hi+($100)
-!sprite_tables_free_start  #= !sprite_main_table_bk+($100)
-!sprite_table_free_end      = $0CC94D|!bank
+; table for number of files
+!sprite_tables_ssnfiles    #= !sprite_main_table_bk+($100)
+; pointer into ssfiles table
+!sprite_tables_ssfoff      #= !sprite_tables_ssnfiles+($100)
+; alloc a little over 1 file/sprite or so
+!sprite_tables_ssfiles     #= !sprite_tables_ssfoff+($200)
+!sprite_table_free_end      = $0CC94E|!bank
+;
+assert !sprite_tables_ssfiles+$200 < !sprite_table_free_end
 
 sprite_size_table         = $0CB800|!bank
 sprite_init_table_lo      = !sprite_init_table_lo
@@ -40,6 +47,10 @@ sprite_init_table_bk      = !sprite_init_table_bk
 sprite_main_table_lo      = !sprite_main_table_lo
 sprite_main_table_hi      = !sprite_main_table_hi
 sprite_main_table_bk      = !sprite_main_table_bk
+
+sprite_tables_ssnfiles    = !sprite_tables_ssnfiles
+sprite_tables_ssfoff      = !sprite_tables_ssfoff
+sprite_tables_ssfiles     = !sprite_tables_ssfiles
 
 sprite_tilemaps           = $019B83|!bank
 sprite_tilemap_offsets    = $019C7F|!bank

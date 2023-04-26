@@ -1,4 +1,4 @@
-@includefrom "spritesets.asm"
+includefrom "spritesets.asm"
 
 spriteset_off_ptrs:
 	dw spritesets_null_spriteset          ; sprite 00 - nakie koopa grn

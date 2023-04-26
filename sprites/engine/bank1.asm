@@ -11,6 +11,11 @@ spr_upd_yx_no_grav_l:
 	rtl
 warnpc $018029|!bank
 
+; remap sprite spinjump smoke tiles
+org $019A4E|!bank
+	db $E4,$E2,$E0,$E2
+
+; 'sprite to spawn' table...
 org $01A7C9|!bank
 	db $00,$00,$00,$00
 	db $04,$04,$04,$04
@@ -43,8 +48,11 @@ set_stunned_timer:
 	rts
 warnpc $01AA33|!bank
 
-org $01A6C1|!bank
+org $01A85A|!bank
 	jsl spr_give_points
+
+org $01A6C1|!bank
+	jsl spr_give_points_y
 
 org $01A667|!bank
 	jsl spr_give_points

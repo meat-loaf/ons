@@ -68,37 +68,41 @@ endif
 			error "Sprite size for sprite id !ix not defined."
 		endif
 		if defined("sprite_!{ix}_init")
-			org !sprite_init_table_lo+(!{ix})
+			autoclean (read1((!sprite_init_table_lo)+(!{ix})))|((read1((!sprite_init_table_hi)+(!{ix})))>>8)|((read1((!sprite_init_table_bk)+(!{ix})))>>16)
+
+			org (!sprite_init_table_lo)+(!{ix})
 			db !{sprite_!{ix}_init}
-			org !sprite_init_table_hi+(!{ix})
+			org (!sprite_init_table_hi)+(!{ix})
 			db (!{sprite_!{ix}_init})>>8
-			org !sprite_init_table_bk+(!{ix})
+			org (!sprite_init_table_bk)+(!{ix})
 			db (!{sprite_!{ix}_init})>>16
 		else
 			error "Init routine for sprite id !ix not defined."
 		endif
 		if defined("sprite_!{ix}_main")
-			org !sprite_main_table_lo+(!{ix})
+			autoclean (read1((!sprite_main_table_lo)+(!{ix})))|((read1((!sprite_main_table_hi)+(!{ix})))>>8)|((read1((!sprite_main_table_bk)+(!{ix})))>>16)
+
+			org (!sprite_main_table_lo)+(!{ix})
 			db !{sprite_!{ix}_main}
-			org !sprite_main_table_hi+(!{ix})
+			org (!sprite_main_table_hi)+(!{ix})
 			db (!{sprite_!{ix}_main})>>8
-			org !sprite_main_table_bk+(!{ix})
+			org (!sprite_main_table_bk)+(!{ix})
 			db (!{sprite_!{ix}_main})>>16
 		else
 			error "Main routine for sprite id !ix not defined."
 		endif
 
-		org !spr_tweaker_1656_tbl+(!ix)
+		org (!spr_tweaker_1656_tbl)+(!ix)
 		db !{sprite_!{ix}_1656}
-		org !spr_tweaker_1662_tbl+(!ix)
+		org (!spr_tweaker_1662_tbl)+(!ix)
 		db !{sprite_!{ix}_1662}
-		org !spr_tweaker_166E_tbl+(!ix)
+		org (!spr_tweaker_166E_tbl)+(!ix)
 		db !{sprite_!{ix}_166E}
-		org !spr_tweaker_167A_tbl+(!ix)
+		org (!spr_tweaker_167A_tbl)+(!ix)
 		db !{sprite_!{ix}_167A}
-		org !spr_tweaker_1686_tbl+(!ix)
+		org (!spr_tweaker_1686_tbl)+(!ix)
 		db !{sprite_!{ix}_1686}
-		org !spr_tweaker_190F_tbl+(!ix)
+		org (!spr_tweaker_190F_tbl)+(!ix)
 		db !{sprite_!{ix}_190F}
 		!fmt = ""
 		if !ix < 16
@@ -109,6 +113,7 @@ endif
 		undef "fmt"
 	else
 	  if !sprites_have_exbytes
+	    if !ix < $fe
 		org !{sprite_size_table}+($100*0)+(!ix*1)
 		db $03
 		org !{sprite_size_table}+($100*1)+(!ix*1)
@@ -117,6 +122,17 @@ endif
 		db $03
 		org !{sprite_size_table}+($100*3)+(!ix*1)
 		db $03
+	    ; camera control / ambient spawner entires are 4 bytes
+	    else
+		org !{sprite_size_table}+($100*0)+(!ix*1)
+		db $04
+		org !{sprite_size_table}+($100*1)+(!ix*1)
+		db $04
+		org !{sprite_size_table}+($100*2)+(!ix*1)
+		db $04
+		org !{sprite_size_table}+($100*3)+(!ix*1)
+		db $04
+	    endif
 	  endif
 		org oam_tile_count+!ix
 			db $00

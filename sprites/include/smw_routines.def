@@ -1,7 +1,7 @@
 
 spr_killed           = $019AA2|!bank
 spr_smushed          = $019AE4|!bank
-spr_spinkill         = $019ACB|!bank
+spr_spinkill         = $019A52|!bank
 spr_lavadie          = $019A7B|!bank
 spr_levelend         = $01816D|!bank
 spr_stunned          = $01953C|!bank
@@ -10,19 +10,24 @@ spr_carried          = $019F71|!bank
 ;spr_goal_power       = $018157|!bank
 
 ; LONG-CALLABLE ROUTINES
+;hurt_mario           = $00F5B7|!bank
 generate_block       = $00BEB0|!bank
 mario_spr_interact_l = $01A7DC|!bank
 update_sprite_pos    = $01802A|!bank
 spr_spr_interact     = $018032|!bank
-get_rand             = $01ACF9|!bank
+;get_rand             = $01ACF9|!bank
 spr_invis_blk_rt_l   = $01B44F|!bank
 spr_obj_interact     = $019138|!bank
+get_spr_clipping_a   = $03B69F|!bank
+get_spr_clipping_b   = $03B6E5|!bank
+get_mario_clipping   = $03B664|!bank
+check_for_contact    = $03B72B|!bank
 
 ; BANK-LOCAL ROUTINES
 ; bank 1
 _spr_jump_over_shell = $018898|!bank
 _spr_face_mario_rt   = $01857C|!bank
-_set_some_y_spd      = $018B51|!bank
+_set_some_y_spd      = $019A04|!bank
 _spr_set_ani_frame   = $018E5F|!bank
 _sprspr_mario_spr_rt = $018FC1|!bank
 _spr_upd_pos         = $019032|!bank
